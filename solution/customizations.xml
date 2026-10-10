@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImportExportXml version="9.2.24.4380" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
   <Entities>
-
     <Entity>
-
+      <Name LocalizedName="Supplier" OriginalName="">cr_supplier</Name>
+      <ObjectTypeCode>10001</ObjectTypeCode>
       <EntityInfo>
         <entity Name="cr_supplier">
           <LocalizedNames>
@@ -17,6 +16,8 @@
             <Description description="Supplier contact information and details" languagecode="1033" />
           </Descriptions>
           <EntitySetName>cr_suppliers</EntitySetName>
+          <PrimaryIdAttribute>cr_supplierid</PrimaryIdAttribute>
+          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
           <IsBPFEntity>0</IsBPFEntity>
           <IsLogicalEntity>0</IsLogicalEntity>
           <IsCustomEntity>1</IsCustomEntity>
@@ -56,7 +57,6 @@
           <EnforceStateTransitions>0</EnforceStateTransitions>
           <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
           <attributes>
-
         <attribute PhysicalName="cr_name">
           <Type>nvarchar</Type>
           <Name>cr_name</Name>
@@ -345,7 +345,6 @@
           </attributes>
         </entity>
       </EntityInfo>
-
     <FormXml>
       <forms type="main">
         <systemform>
@@ -370,7 +369,7 @@
                           <row>
                             <cell id="{00000000-0000-0000-0000-000000000001}">
                               <labels>
-                                <label description="Supplier Name" languagecode="1033" />
+                                <label description="Supplier" languagecode="1033" />
                               </labels>
                               <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
                             </cell>
@@ -391,7 +390,6 @@
         </systemform>
       </forms>
     </FormXml>
-
     <SavedQueries>
       <savedqueries>
         <savedquery>
@@ -432,10 +430,11 @@
         </savedquery>
       </savedqueries>
     </SavedQueries>
+
     </Entity>
-
     <Entity>
-
+      <Name LocalizedName="Pantry Item" OriginalName="">cr_pantryitem</Name>
+      <ObjectTypeCode>10002</ObjectTypeCode>
       <EntityInfo>
         <entity Name="cr_pantryitem">
           <LocalizedNames>
@@ -448,6 +447,8 @@
             <Description description="Inventory catalog of all pantry supplies" languagecode="1033" />
           </Descriptions>
           <EntitySetName>cr_pantryitems</EntitySetName>
+          <PrimaryIdAttribute>cr_pantryitemid</PrimaryIdAttribute>
+          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
           <IsBPFEntity>0</IsBPFEntity>
           <IsLogicalEntity>0</IsLogicalEntity>
           <IsCustomEntity>1</IsCustomEntity>
@@ -487,7 +488,6 @@
           <EnforceStateTransitions>0</EnforceStateTransitions>
           <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
           <attributes>
-
         <attribute PhysicalName="cr_name">
           <Type>nvarchar</Type>
           <Name>cr_name</Name>
@@ -787,7 +787,6 @@
           </attributes>
         </entity>
       </EntityInfo>
-
     <FormXml>
       <forms type="main">
         <systemform>
@@ -812,7 +811,7 @@
                           <row>
                             <cell id="{00000000-0000-0000-0000-000000000001}">
                               <labels>
-                                <label description="Item Name" languagecode="1033" />
+                                <label description="Pantry Item" languagecode="1033" />
                               </labels>
                               <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
                             </cell>
@@ -833,7 +832,6 @@
         </systemform>
       </forms>
     </FormXml>
-
     <SavedQueries>
       <savedqueries>
         <savedquery>
@@ -875,7 +873,6 @@
       </savedqueries>
     </SavedQueries>
     <EntityRelationships>
-
       <EntityRelationship Name="cr_supplier_pantryitem_preferredsupplier">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -893,9 +890,9 @@
       </EntityRelationship>
     </EntityRelationships>
     </Entity>
-
     <Entity>
-
+      <Name LocalizedName="Supply Order" OriginalName="">cr_supplyorder</Name>
+      <ObjectTypeCode>10003</ObjectTypeCode>
       <EntityInfo>
         <entity Name="cr_supplyorder">
           <LocalizedNames>
@@ -908,6 +905,8 @@
             <Description description="Supply order requests and their approval status" languagecode="1033" />
           </Descriptions>
           <EntitySetName>cr_supplyorders</EntitySetName>
+          <PrimaryIdAttribute>cr_supplyorderid</PrimaryIdAttribute>
+          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
           <IsBPFEntity>0</IsBPFEntity>
           <IsLogicalEntity>0</IsLogicalEntity>
           <IsCustomEntity>1</IsCustomEntity>
@@ -947,7 +946,6 @@
           <EnforceStateTransitions>0</EnforceStateTransitions>
           <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
           <attributes>
-
         <attribute PhysicalName="cr_name">
           <Type>nvarchar</Type>
           <Name>cr_name</Name>
@@ -1191,10 +1189,10 @@
             <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
-        <attribute PhysicalName="cr_supplier">
+        <attribute PhysicalName="cr_supplierid_lk">
           <Type>lookup</Type>
-          <Name>cr_supplier</Name>
-          <LogicalName>cr_supplier</LogicalName>
+          <Name>cr_supplierid_lk</Name>
+          <LogicalName>cr_supplierid_lk</LogicalName>
           <RequiredLevel>None</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -1328,7 +1326,6 @@
           </attributes>
         </entity>
       </EntityInfo>
-
     <FormXml>
       <forms type="main">
         <systemform>
@@ -1353,7 +1350,7 @@
                           <row>
                             <cell id="{00000000-0000-0000-0000-000000000001}">
                               <labels>
-                                <label description="Order Number" languagecode="1033" />
+                                <label description="Supply Order" languagecode="1033" />
                               </labels>
                               <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
                             </cell>
@@ -1374,7 +1371,6 @@
         </systemform>
       </forms>
     </FormXml>
-
     <SavedQueries>
       <savedqueries>
         <savedquery>
@@ -1416,7 +1412,6 @@
       </savedqueries>
     </SavedQueries>
     <EntityRelationships>
-
       <EntityRelationship Name="cr_supplier_supplyorder">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -1424,7 +1419,7 @@
         <IsHierarchical>0</IsHierarchical>
         <ReferencingEntityName>cr_supplyorder</ReferencingEntityName>
         <ReferencedEntityName>cr_supplier</ReferencedEntityName>
-        <ReferencingAttributeName>cr_supplier</ReferencingAttributeName>
+        <ReferencingAttributeName>cr_supplierid_lk</ReferencingAttributeName>
         <CascadeAssign>NoCascade</CascadeAssign>
         <CascadeDelete>RemoveLink</CascadeDelete>
         <CascadeReparent>NoCascade</CascadeReparent>
@@ -1434,9 +1429,9 @@
       </EntityRelationship>
     </EntityRelationships>
     </Entity>
-
     <Entity>
-
+      <Name LocalizedName="Order Line Item" OriginalName="">cr_orderlineitem</Name>
+      <ObjectTypeCode>10004</ObjectTypeCode>
       <EntityInfo>
         <entity Name="cr_orderlineitem">
           <LocalizedNames>
@@ -1449,6 +1444,8 @@
             <Description description="Individual items within a supply order" languagecode="1033" />
           </Descriptions>
           <EntitySetName>cr_orderlineitems</EntitySetName>
+          <PrimaryIdAttribute>cr_orderlineitemid</PrimaryIdAttribute>
+          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
           <IsBPFEntity>0</IsBPFEntity>
           <IsLogicalEntity>0</IsLogicalEntity>
           <IsCustomEntity>1</IsCustomEntity>
@@ -1488,7 +1485,6 @@
           <EnforceStateTransitions>0</EnforceStateTransitions>
           <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
           <attributes>
-
         <attribute PhysicalName="cr_name">
           <Type>nvarchar</Type>
           <Name>cr_name</Name>
@@ -1521,10 +1517,10 @@
             <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
-        <attribute PhysicalName="cr_order">
+        <attribute PhysicalName="cr_orderid">
           <Type>lookup</Type>
-          <Name>cr_order</Name>
-          <LogicalName>cr_order</LogicalName>
+          <Name>cr_orderid</Name>
+          <LogicalName>cr_orderid</LogicalName>
           <RequiredLevel>ApplicationRequired</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -1547,10 +1543,10 @@
             <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
-        <attribute PhysicalName="cr_pantryitem">
+        <attribute PhysicalName="cr_pantryitemid">
           <Type>lookup</Type>
-          <Name>cr_pantryitem</Name>
-          <LogicalName>cr_pantryitem</LogicalName>
+          <Name>cr_pantryitemid</Name>
+          <LogicalName>cr_pantryitemid</LogicalName>
           <RequiredLevel>ApplicationRequired</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -1682,7 +1678,6 @@
           </attributes>
         </entity>
       </EntityInfo>
-
     <FormXml>
       <forms type="main">
         <systemform>
@@ -1707,7 +1702,7 @@
                           <row>
                             <cell id="{00000000-0000-0000-0000-000000000001}">
                               <labels>
-                                <label description="Line Item" languagecode="1033" />
+                                <label description="Order Line Item" languagecode="1033" />
                               </labels>
                               <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
                             </cell>
@@ -1728,7 +1723,6 @@
         </systemform>
       </forms>
     </FormXml>
-
     <SavedQueries>
       <savedqueries>
         <savedquery>
@@ -1770,7 +1764,6 @@
       </savedqueries>
     </SavedQueries>
     <EntityRelationships>
-
       <EntityRelationship Name="cr_supplyorder_orderlineitem">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -1778,7 +1771,7 @@
         <IsHierarchical>0</IsHierarchical>
         <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
         <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
-        <ReferencingAttributeName>cr_order</ReferencingAttributeName>
+        <ReferencingAttributeName>cr_orderid</ReferencingAttributeName>
         <CascadeAssign>NoCascade</CascadeAssign>
         <CascadeDelete>Cascade</CascadeDelete>
         <CascadeReparent>NoCascade</CascadeReparent>
@@ -1786,7 +1779,6 @@
         <CascadeUnshare>NoCascade</CascadeUnshare>
         <CascadeRollupView>NoCascade</CascadeRollupView>
       </EntityRelationship>
-
       <EntityRelationship Name="cr_pantryitem_orderlineitem">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -1794,7 +1786,7 @@
         <IsHierarchical>0</IsHierarchical>
         <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
         <ReferencedEntityName>cr_pantryitem</ReferencedEntityName>
-        <ReferencingAttributeName>cr_pantryitem</ReferencingAttributeName>
+        <ReferencingAttributeName>cr_pantryitemid</ReferencingAttributeName>
         <CascadeAssign>NoCascade</CascadeAssign>
         <CascadeDelete>RemoveLink</CascadeDelete>
         <CascadeReparent>NoCascade</CascadeReparent>
@@ -1804,9 +1796,9 @@
       </EntityRelationship>
     </EntityRelationships>
     </Entity>
-
     <Entity>
-
+      <Name LocalizedName="Approval History" OriginalName="">cr_approvalhistory</Name>
+      <ObjectTypeCode>10005</ObjectTypeCode>
       <EntityInfo>
         <entity Name="cr_approvalhistory">
           <LocalizedNames>
@@ -1819,6 +1811,8 @@
             <Description description="Audit trail for all approval decisions" languagecode="1033" />
           </Descriptions>
           <EntitySetName>cr_approvalhistories</EntitySetName>
+          <PrimaryIdAttribute>cr_approvalhistoryid</PrimaryIdAttribute>
+          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
           <IsBPFEntity>0</IsBPFEntity>
           <IsLogicalEntity>0</IsLogicalEntity>
           <IsCustomEntity>1</IsCustomEntity>
@@ -1858,7 +1852,6 @@
           <EnforceStateTransitions>0</EnforceStateTransitions>
           <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
           <attributes>
-
         <attribute PhysicalName="cr_name">
           <Type>nvarchar</Type>
           <Name>cr_name</Name>
@@ -1891,10 +1884,10 @@
             <Description description="" languagecode="1033" />
           </Descriptions>
         </attribute>
-        <attribute PhysicalName="cr_order">
+        <attribute PhysicalName="cr_orderid">
           <Type>lookup</Type>
-          <Name>cr_order</Name>
-          <LogicalName>cr_order</LogicalName>
+          <Name>cr_orderid</Name>
+          <LogicalName>cr_orderid</LogicalName>
           <RequiredLevel>ApplicationRequired</RequiredLevel>
           <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
           <ValidForUpdateApi>1</ValidForUpdateApi>
@@ -1996,7 +1989,6 @@
           </attributes>
         </entity>
       </EntityInfo>
-
     <FormXml>
       <forms type="main">
         <systemform>
@@ -2021,7 +2013,7 @@
                           <row>
                             <cell id="{00000000-0000-0000-0000-000000000001}">
                               <labels>
-                                <label description="Record" languagecode="1033" />
+                                <label description="Approval History" languagecode="1033" />
                               </labels>
                               <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
                             </cell>
@@ -2042,7 +2034,6 @@
         </systemform>
       </forms>
     </FormXml>
-
     <SavedQueries>
       <savedqueries>
         <savedquery>
@@ -2084,7 +2075,6 @@
       </savedqueries>
     </SavedQueries>
     <EntityRelationships>
-
       <EntityRelationship Name="cr_supplyorder_approvalhistory">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -2092,7 +2082,7 @@
         <IsHierarchical>0</IsHierarchical>
         <ReferencingEntityName>cr_approvalhistory</ReferencingEntityName>
         <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
-        <ReferencingAttributeName>cr_order</ReferencingAttributeName>
+        <ReferencingAttributeName>cr_orderid</ReferencingAttributeName>
         <CascadeAssign>NoCascade</CascadeAssign>
         <CascadeDelete>Cascade</CascadeDelete>
         <CascadeReparent>NoCascade</CascadeReparent>
@@ -2103,9 +2093,14 @@
     </EntityRelationships>
     </Entity>
   </Entities>
-
+  <Roles />
+  <Workflows />
+  <FieldSecurityProfiles />
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
   <optionsets>
-
     <optionset Name="cr_itemcategory" localizedName="Item Category">
       <OptionSetType>Picklist</OptionSetType>
       <IsGlobal>true</IsGlobal>
@@ -2245,9 +2240,9 @@
       </options>
     </optionset>
   </optionsets>
-
+  <CustomControls />
+  <EntityDataProviders />
   <Languages>
     <Language>1033</Language>
   </Languages>
-
 </ImportExportXml>
