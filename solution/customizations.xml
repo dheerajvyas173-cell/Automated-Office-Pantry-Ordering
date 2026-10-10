@@ -1,886 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.24.4380" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.24081.10375" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Entities>
     <Entity>
-      <Name LocalizedName="Supplier" OriginalName="">cr_supplier</Name>
-      <ObjectTypeCode>10001</ObjectTypeCode>
+      <Name LocalizedName="Supplier" OriginalName="cr_supplier">cr_supplier</Name>
       <EntityInfo>
         <entity Name="cr_supplier">
           <LocalizedNames>
-            <LocalizedName description="Supplier" languagecode="1033" />
+            <LocalizedName description="Supplier" languagecode="1033"/>
           </LocalizedNames>
           <LocalizedCollectionNames>
-            <LocalizedCollectionName description="Suppliers" languagecode="1033" />
+            <LocalizedCollectionName description="Suppliers" languagecode="1033"/>
           </LocalizedCollectionNames>
           <Descriptions>
-            <Description description="Supplier contact information and details" languagecode="1033" />
+            <Description description="Supplier contact information and details" languagecode="1033"/>
           </Descriptions>
-          <EntitySetName>cr_suppliers</EntitySetName>
           <PrimaryIdAttribute>cr_supplierid</PrimaryIdAttribute>
           <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
-          <IsBPFEntity>0</IsBPFEntity>
-          <IsLogicalEntity>0</IsLogicalEntity>
-          <IsCustomEntity>1</IsCustomEntity>
-          <IsActivity>0</IsActivity>
-          <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>1</OwnershipTypeMask>
-          <IsAvailableOffline>1</IsAvailableOffline>
-          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
-          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
-          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
-          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
-          <CanCreateAttributes>1</CanCreateAttributes>
-          <CanCreateForms>1</CanCreateForms>
-          <CanCreateViews>1</CanCreateViews>
-          <CanCreateCharts>1</CanCreateCharts>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsConnectionsEnabled>0</IsConnectionsEnabled>
-          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
-          <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
-          <IsMailMergeEnabled>0</IsMailMergeEnabled>
-          <IsEnabledForCharts>1</IsEnabledForCharts>
-          <HasNotes>1</HasNotes>
-          <HasActivities>0</HasActivities>
-          <HasFeedback>0</HasFeedback>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
-          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
-          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
-          <IsManaged>0</IsManaged>
-          <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
-          <IsSLAEnabled>0</IsSLAEnabled>
-          <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
-          
-          <EnforceStateTransitions>0</EnforceStateTransitions>
-          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
-          <attributes>
-        <attribute PhysicalName="cr_name">
-          <Type>nvarchar</Type>
-          <Name>cr_name</Name>
-          <LogicalName>cr_name</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>Auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>0</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          <IsPrimaryName>1</IsPrimaryName>
-          
-          
-          <MaxLength>200</MaxLength>
-          <Format>Text</Format>
-          <displaynames>
-            <displayname description="Supplier Name" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_contactperson">
-          <Type>nvarchar</Type>
-          <Name>cr_contactperson</Name>
-          <LogicalName>cr_contactperson</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>Auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          
-          
-          
-          <MaxLength>100</MaxLength>
-          <Format>Text</Format>
-          <displaynames>
-            <displayname description="Contact Person" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_email">
-          <Type>nvarchar</Type>
-          <Name>cr_email</Name>
-          <LogicalName>cr_email</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>Auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          
-          
-          <FormatName>Email</FormatName>
-          <MaxLength>200</MaxLength>
-          <Format>Text</Format>
-          <displaynames>
-            <displayname description="Email" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_phone">
-          <Type>nvarchar</Type>
-          <Name>cr_phone</Name>
-          <LogicalName>cr_phone</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>Auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          
-          
-          <FormatName>Phone</FormatName>
-          <MaxLength>50</MaxLength>
-          <Format>Text</Format>
-          <displaynames>
-            <displayname description="Phone" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_address">
-          <Type>ntext</Type>
-          <Name>cr_address</Name>
-          <LogicalName>cr_address</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MaxLength>2000</MaxLength>
-          <Format>TextArea</Format>
-          <displaynames>
-            <displayname description="Address" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_category">
-          <Type>multiselectpicklist</Type>
-          <Name>cr_category</Name>
-          <LogicalName>cr_category</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <OptionSetName>cr_suppliercategory</OptionSetName>
-          <displaynames>
-            <displayname description="Category" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_leadtimedays">
-          <Type>int</Type>
-          <Name>cr_leadtimedays</Name>
-          <LogicalName>cr_leadtimedays</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>365</MaxValue>
-          <Format>None</Format>
-          <displaynames>
-            <displayname description="Lead Time (Days)" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_isactive">
-          <Type>bit</Type>
-          <Name>cr_isactive</Name>
-          <LogicalName>cr_isactive</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <DefaultValue>1</DefaultValue>
-          <optionset>
-            <optionsettype>Boolean</optionsettype>
-            <options>
-              <option value="0"><labels><label description="No" languagecode="1033" /></labels></option>
-              <option value="1"><labels><label description="Yes" languagecode="1033" /></labels></option>
-            </options>
-          </optionset>
-          <displaynames>
-            <displayname description="Is Active" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_contractenddate">
-          <Type>datetime</Type>
-          <Name>cr_contractenddate</Name>
-          <LogicalName>cr_contractenddate</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <Format>DateOnly</Format>
-          <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
-          <DateTimeBehavior>UserLocal</DateTimeBehavior>
-          <displaynames>
-            <displayname description="Contract End Date" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_notes">
-          <Type>ntext</Type>
-          <Name>cr_notes</Name>
-          <LogicalName>cr_notes</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MaxLength>4000</MaxLength>
-          <Format>TextArea</Format>
-          <displaynames>
-            <displayname description="Notes" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-          </attributes>
+          <OwnershipType>OrganizationOwned</OwnershipType>
+          <IsActivity>false</IsActivity>
+          <IsAvailableOffline>true</IsAvailableOffline>
+          <IsBusinessProcessEnabled>false</IsBusinessProcessEnabled>
+          <IsMailMergeEnabled>false</IsMailMergeEnabled>
+          <IsValidForQueue>false</IsValidForQueue>
+          <IsConnectionsEnabled>false</IsConnectionsEnabled>
+          <HasNotes>false</HasNotes>
+          <HasActivities>false</HasActivities>
+          <IsQuickCreateEnabled>false</IsQuickCreateEnabled>
+          <IsDuplicateDetectionEnabled>false</IsDuplicateDetectionEnabled>
+          <IsAuditEnabled>false</IsAuditEnabled>
+          <IsRenameable>true</IsRenameable>
+          <IsMappable>true</IsMappable>
+          <ChangeTrackingEnabled>false</ChangeTrackingEnabled>
         </entity>
+        <attributes>
+          <attribute PhysicalName="cr_supplierid" Type="uniqueidentifier">
+            <Type>uniqueidentifier</Type>
+            <Name>cr_supplierid</Name>
+            <LogicalName>cr_supplierid</LogicalName>
+            <RequiredLevel>SystemRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind</DisplayMask>
+            <IsPrimaryId>true</IsPrimaryId>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>false</IsCustom>
+            <SourceType>0</SourceType>
+          </attribute>
+          <attribute PhysicalName="cr_name" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsPrimaryName>true</IsPrimaryName>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Supplier Name" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_contactperson" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_contactperson</Name>
+            <LogicalName>cr_contactperson</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>100</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Contact Person" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_email" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_email</Name>
+            <LogicalName>cr_email</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Email" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_phone" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_phone</Name>
+            <LogicalName>cr_phone</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>50</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Phone" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_address" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_address</Name>
+            <LogicalName>cr_address</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>500</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Address" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_website" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_website</Name>
+            <LogicalName>cr_website</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Website" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_category" Type="picklist">
+            <Type>picklist</Type>
+            <Name>cr_category</Name>
+            <LogicalName>cr_category</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <OptionSetName>cr_suppliercategory</OptionSetName>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Category" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_isactive" Type="bit">
+            <Type>bit</Type>
+            <Name>cr_isactive</Name>
+            <LogicalName>cr_isactive</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <DefaultValue>1</DefaultValue>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <optionset>
+              <optionsettype>Boolean</optionsettype>
+              <options>
+                <option value="0"><labels><label description="No" languagecode="1033"/></labels></option>
+                <option value="1"><labels><label description="Yes" languagecode="1033"/></labels></option>
+              </options>
+            </optionset>
+            <LocalizedNames>
+              <LocalizedName description="Is Active" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_ispreferred" Type="bit">
+            <Type>bit</Type>
+            <Name>cr_ispreferred</Name>
+            <LogicalName>cr_ispreferred</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <DefaultValue>0</DefaultValue>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <optionset>
+              <optionsettype>Boolean</optionsettype>
+              <options>
+                <option value="0"><labels><label description="No" languagecode="1033"/></labels></option>
+                <option value="1"><labels><label description="Yes" languagecode="1033"/></labels></option>
+              </options>
+            </optionset>
+            <LocalizedNames>
+              <LocalizedName description="Is Preferred" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_notes" Type="ntext">
+            <Type>ntext</Type>
+            <Name>cr_notes</Name>
+            <LogicalName>cr_notes</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>4000</Length>
+            <Format>TextArea</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Notes" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+        </attributes>
       </EntityInfo>
-    <FormXml>
-      <forms type="main">
-        <systemform>
-          <formid>{a1b2c3d4-1111-4111-8111-aaaaaaaaa001}</formid>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <FormPresentation>2</FormPresentation>
-          <formActivationState>1</formActivationState>
-          <form>
-            <tabs>
-              <tab name="tab_general" id="{c1c2c3c4-1111-4111-8111-aaaaaaaaa001}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
-                <labels>
-                  <label description="General" languagecode="1033" />
-                </labels>
-                <columns>
-                  <column width="100%">
-                    <sections>
-                      <section name="sec_general" showlabel="false" showbar="false" id="{d1d2d3d4-1111-4111-8111-aaaaaaaaa001}" IsUserDefined="0" layout="varwidth" columns="2" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
-                        <labels>
-                          <label description="General" languagecode="1033" />
-                        </labels>
-                        <rows>
-                          <row>
-                            <cell id="{00000000-0000-0000-0000-000000000001}">
-                              <labels>
-                                <label description="Supplier" languagecode="1033" />
-                              </labels>
-                              <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
-                            </cell>
-                          </row>
-                        </rows>
-                      </section>
-                    </sections>
-                  </column>
-                </columns>
-              </tab>
-            </tabs>
-          </form>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>1</CanBeDeleted>
-          <LocalizedNames>
-            <LocalizedName description="Information" languagecode="1033" />
-          </LocalizedNames>
-        </systemform>
-      </forms>
-    </FormXml>
-    <SavedQueries>
-      <savedqueries>
-        <savedquery>
-          <savedqueryid>{b1c2d3e4-1111-4111-8111-aaaaaaaaa001}</savedqueryid>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>0</CanBeDeleted>
-          <isquickfindquery>0</isquickfindquery>
-          <isprivate>0</isprivate>
-          <isdefault>1</isdefault>
-          <querytype>0</querytype>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <LocalizedNames>
-            <LocalizedName description="Active Suppliers" languagecode="1033" />
-          </LocalizedNames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-          <fetchxml>
-            <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-              <entity name="cr_supplier">
-                <attribute name="cr_name" />
-                <attribute name="createdon" />
-                <order attribute="cr_name" descending="false" />
-                <filter type="and">
-                  <condition attribute="statecode" operator="eq" value="0" />
-                </filter>
-              </entity>
-            </fetch>
-          </fetchxml>
-          <layoutxml>
-            <grid name="resultset" jump="cr_name" select="1" icon="1" preview="1">
-              <row name="result" id="cr_supplierid">
-                <cell name="cr_name" width="200" />
-                <cell name="createdon" width="125" />
-              </row>
-            </grid>
-          </layoutxml>
-        </savedquery>
-      </savedqueries>
-    </SavedQueries>
-
-    </Entity>
-    <Entity>
-      <Name LocalizedName="Pantry Item" OriginalName="">cr_pantryitem</Name>
-      <ObjectTypeCode>10002</ObjectTypeCode>
-      <EntityInfo>
-        <entity Name="cr_pantryitem">
-          <LocalizedNames>
-            <LocalizedName description="Pantry Item" languagecode="1033" />
-          </LocalizedNames>
-          <LocalizedCollectionNames>
-            <LocalizedCollectionName description="Pantry Items" languagecode="1033" />
-          </LocalizedCollectionNames>
-          <Descriptions>
-            <Description description="Inventory catalog of all pantry supplies" languagecode="1033" />
-          </Descriptions>
-          <EntitySetName>cr_pantryitems</EntitySetName>
-          <PrimaryIdAttribute>cr_pantryitemid</PrimaryIdAttribute>
-          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
-          <IsBPFEntity>0</IsBPFEntity>
-          <IsLogicalEntity>0</IsLogicalEntity>
-          <IsCustomEntity>1</IsCustomEntity>
-          <IsActivity>0</IsActivity>
-          <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>1</OwnershipTypeMask>
-          <IsAvailableOffline>1</IsAvailableOffline>
-          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
-          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
-          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
-          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
-          <CanCreateAttributes>1</CanCreateAttributes>
-          <CanCreateForms>1</CanCreateForms>
-          <CanCreateViews>1</CanCreateViews>
-          <CanCreateCharts>1</CanCreateCharts>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsConnectionsEnabled>0</IsConnectionsEnabled>
-          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
-          <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
-          <IsMailMergeEnabled>0</IsMailMergeEnabled>
-          <IsEnabledForCharts>1</IsEnabledForCharts>
-          <HasNotes>1</HasNotes>
-          <HasActivities>0</HasActivities>
-          <HasFeedback>0</HasFeedback>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
-          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
-          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
-          <IsManaged>0</IsManaged>
-          <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
-          <IsSLAEnabled>0</IsSLAEnabled>
-          <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
-          
-          <EnforceStateTransitions>0</EnforceStateTransitions>
-          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
-          <attributes>
-        <attribute PhysicalName="cr_name">
-          <Type>nvarchar</Type>
-          <Name>cr_name</Name>
-          <LogicalName>cr_name</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>Auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>0</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          <IsPrimaryName>1</IsPrimaryName>
-          
-          
-          <MaxLength>100</MaxLength>
-          <Format>Text</Format>
-          <displaynames>
-            <displayname description="Item Name" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_category">
-          <Type>picklist</Type>
-          <Name>cr_category</Name>
-          <LogicalName>cr_category</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          
-          <OptionSetName>cr_itemcategory</OptionSetName>
-          <displaynames>
-            <displayname description="Category" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_currentstock">
-          <Type>int</Type>
-          <Name>cr_currentstock</Name>
-          <LogicalName>cr_currentstock</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>999999</MaxValue>
-          <Format>None</Format>
-          <displaynames>
-            <displayname description="Current Stock" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_maxstocklevel">
-          <Type>int</Type>
-          <Name>cr_maxstocklevel</Name>
-          <LogicalName>cr_maxstocklevel</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>1</MinValue>
-          <MaxValue>999999</MaxValue>
-          <Format>None</Format>
-          <displaynames>
-            <displayname description="Max Stock Level" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_reorderpoint">
-          <Type>int</Type>
-          <Name>cr_reorderpoint</Name>
-          <LogicalName>cr_reorderpoint</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>999999</MaxValue>
-          <Format>None</Format>
-          <displaynames>
-            <displayname description="Reorder Point" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_unit">
-          <Type>picklist</Type>
-          <Name>cr_unit</Name>
-          <LogicalName>cr_unit</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          
-          <OptionSetName>cr_itemunit</OptionSetName>
-          <displaynames>
-            <displayname description="Unit" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_unitprice">
-          <Type>money</Type>
-          <Name>cr_unitprice</Name>
-          <LogicalName>cr_unitprice</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>999999</MaxValue>
-          <Precision>2</Precision>
-          <IsBaseCurrency>0</IsBaseCurrency>
-          <displaynames>
-            <displayname description="Unit Price" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_preferredsupplier">
-          <Type>lookup</Type>
-          <Name>cr_preferredsupplier</Name>
-          <LogicalName>cr_preferredsupplier</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <LookupTypes>
-            <LookupType id="10001">cr_supplier</LookupType>
-          </LookupTypes>
-          <displaynames>
-            <displayname description="Preferred Supplier" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_lastordereddate">
-          <Type>datetime</Type>
-          <Name>cr_lastordereddate</Name>
-          <LogicalName>cr_lastordereddate</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <Format>DateOnly</Format>
-          <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
-          <DateTimeBehavior>UserLocal</DateTimeBehavior>
-          <displaynames>
-            <displayname description="Last Ordered Date" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_lastrestockeddate">
-          <Type>datetime</Type>
-          <Name>cr_lastrestockeddate</Name>
-          <LogicalName>cr_lastrestockeddate</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <Format>DateOnly</Format>
-          <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
-          <DateTimeBehavior>UserLocal</DateTimeBehavior>
-          <displaynames>
-            <displayname description="Last Restocked Date" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_isactive">
-          <Type>bit</Type>
-          <Name>cr_isactive</Name>
-          <LogicalName>cr_isactive</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <DefaultValue>1</DefaultValue>
-          <optionset>
-            <optionsettype>Boolean</optionsettype>
-            <options>
-              <option value="0"><labels><label description="No" languagecode="1033" /></labels></option>
-              <option value="1"><labels><label description="Yes" languagecode="1033" /></labels></option>
-            </options>
-          </optionset>
-          <displaynames>
-            <displayname description="Is Active" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-          </attributes>
-        </entity>
-      </EntityInfo>
-    <FormXml>
-      <forms type="main">
-        <systemform>
-          <formid>{a1b2c3d4-2222-4222-8222-bbbbbbbbb002}</formid>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <FormPresentation>2</FormPresentation>
-          <formActivationState>1</formActivationState>
-          <form>
-            <tabs>
-              <tab name="tab_general" id="{c1c2c3c4-2222-4222-8222-bbbbbbbbb002}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
-                <labels>
-                  <label description="General" languagecode="1033" />
-                </labels>
-                <columns>
-                  <column width="100%">
-                    <sections>
-                      <section name="sec_general" showlabel="false" showbar="false" id="{d1d2d3d4-2222-4222-8222-bbbbbbbbb002}" IsUserDefined="0" layout="varwidth" columns="2" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
-                        <labels>
-                          <label description="General" languagecode="1033" />
-                        </labels>
-                        <rows>
-                          <row>
-                            <cell id="{00000000-0000-0000-0000-000000000001}">
-                              <labels>
-                                <label description="Pantry Item" languagecode="1033" />
-                              </labels>
-                              <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
-                            </cell>
-                          </row>
-                        </rows>
-                      </section>
-                    </sections>
-                  </column>
-                </columns>
-              </tab>
-            </tabs>
-          </form>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>1</CanBeDeleted>
-          <LocalizedNames>
-            <LocalizedName description="Information" languagecode="1033" />
-          </LocalizedNames>
-        </systemform>
-      </forms>
-    </FormXml>
-    <SavedQueries>
-      <savedqueries>
-        <savedquery>
-          <savedqueryid>{b1c2d3e4-2222-4222-8222-bbbbbbbbb002}</savedqueryid>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>0</CanBeDeleted>
-          <isquickfindquery>0</isquickfindquery>
-          <isprivate>0</isprivate>
-          <isdefault>1</isdefault>
-          <querytype>0</querytype>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <LocalizedNames>
-            <LocalizedName description="Active Pantry Items" languagecode="1033" />
-          </LocalizedNames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-          <fetchxml>
-            <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-              <entity name="cr_pantryitem">
-                <attribute name="cr_name" />
-                <attribute name="createdon" />
-                <order attribute="cr_name" descending="false" />
-                <filter type="and">
-                  <condition attribute="statecode" operator="eq" value="0" />
-                </filter>
-              </entity>
-            </fetch>
-          </fetchxml>
-          <layoutxml>
-            <grid name="resultset" jump="cr_name" select="1" icon="1" preview="1">
-              <row name="result" id="cr_pantryitemid">
-                <cell name="cr_name" width="200" />
-                <cell name="createdon" width="125" />
-              </row>
-            </grid>
-          </layoutxml>
-        </savedquery>
-      </savedqueries>
-    </SavedQueries>
     <EntityRelationships>
-      <EntityRelationship Name="cr_supplier_pantryitem_preferredsupplier">
+      <EntityRelationship Name="cr_supplier_pantryitems">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
         <IsCustomizable>1</IsCustomizable>
         <IsHierarchical>0</IsHierarchical>
         <ReferencingEntityName>cr_pantryitem</ReferencingEntityName>
         <ReferencedEntityName>cr_supplier</ReferencedEntityName>
-        <ReferencingAttributeName>cr_preferredsupplier</ReferencingAttributeName>
+        <ReferencingAttributeName>cr_preferredsupplierid</ReferencingAttributeName>
         <CascadeAssign>NoCascade</CascadeAssign>
         <CascadeDelete>RemoveLink</CascadeDelete>
         <CascadeReparent>NoCascade</CascadeReparent>
@@ -888,538 +259,14 @@
         <CascadeUnshare>NoCascade</CascadeUnshare>
         <CascadeRollupView>NoCascade</CascadeRollupView>
       </EntityRelationship>
-    </EntityRelationships>
-    </Entity>
-    <Entity>
-      <Name LocalizedName="Supply Order" OriginalName="">cr_supplyorder</Name>
-      <ObjectTypeCode>10003</ObjectTypeCode>
-      <EntityInfo>
-        <entity Name="cr_supplyorder">
-          <LocalizedNames>
-            <LocalizedName description="Supply Order" languagecode="1033" />
-          </LocalizedNames>
-          <LocalizedCollectionNames>
-            <LocalizedCollectionName description="Supply Orders" languagecode="1033" />
-          </LocalizedCollectionNames>
-          <Descriptions>
-            <Description description="Supply order requests and their approval status" languagecode="1033" />
-          </Descriptions>
-          <EntitySetName>cr_supplyorders</EntitySetName>
-          <PrimaryIdAttribute>cr_supplyorderid</PrimaryIdAttribute>
-          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
-          <IsBPFEntity>0</IsBPFEntity>
-          <IsLogicalEntity>0</IsLogicalEntity>
-          <IsCustomEntity>1</IsCustomEntity>
-          <IsActivity>0</IsActivity>
-          <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>8</OwnershipTypeMask>
-          <IsAvailableOffline>1</IsAvailableOffline>
-          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
-          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
-          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
-          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
-          <CanCreateAttributes>1</CanCreateAttributes>
-          <CanCreateForms>1</CanCreateForms>
-          <CanCreateViews>1</CanCreateViews>
-          <CanCreateCharts>1</CanCreateCharts>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsConnectionsEnabled>0</IsConnectionsEnabled>
-          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
-          <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
-          <IsMailMergeEnabled>0</IsMailMergeEnabled>
-          <IsEnabledForCharts>1</IsEnabledForCharts>
-          <HasNotes>1</HasNotes>
-          <HasActivities>0</HasActivities>
-          <HasFeedback>0</HasFeedback>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
-          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
-          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
-          <IsManaged>0</IsManaged>
-          <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
-          <IsSLAEnabled>0</IsSLAEnabled>
-          <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
-          <AutoCreateAccessTeams>0</AutoCreateAccessTeams>
-          <EnforceStateTransitions>0</EnforceStateTransitions>
-          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
-          <attributes>
-        <attribute PhysicalName="cr_name">
-          <Type>nvarchar</Type>
-          <Name>cr_name</Name>
-          <LogicalName>cr_name</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>Auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>0</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          <IsPrimaryName>1</IsPrimaryName>
-          <AutoNumberFormat>ORD-{SEQNUM:5}</AutoNumberFormat>
-          
-          <MaxLength>20</MaxLength>
-          <Format>Text</Format>
-          <displaynames>
-            <displayname description="Order Number" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_orderdate">
-          <Type>datetime</Type>
-          <Name>cr_orderdate</Name>
-          <LogicalName>cr_orderdate</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <Format>DateAndTime</Format>
-          <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
-          <DateTimeBehavior>UserLocal</DateTimeBehavior>
-          <displaynames>
-            <displayname description="Order Date" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_orderstatus">
-          <Type>picklist</Type>
-          <Name>cr_orderstatus</Name>
-          <LogicalName>cr_orderstatus</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <DefaultFormValue>100000000</DefaultFormValue>
-          <OptionSetName>cr_orderstatus</OptionSetName>
-          <displaynames>
-            <displayname description="Order Status" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_totalamount">
-          <Type>money</Type>
-          <Name>cr_totalamount</Name>
-          <LogicalName>cr_totalamount</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>9999999</MaxValue>
-          <Precision>2</Precision>
-          <IsBaseCurrency>0</IsBaseCurrency>
-          <displaynames>
-            <displayname description="Total Amount" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_totalquantity">
-          <Type>int</Type>
-          <Name>cr_totalquantity</Name>
-          <LogicalName>cr_totalquantity</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>999999</MaxValue>
-          <Format>None</Format>
-          <displaynames>
-            <displayname description="Total Quantity" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_requiresapproval">
-          <Type>bit</Type>
-          <Name>cr_requiresapproval</Name>
-          <LogicalName>cr_requiresapproval</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <DefaultValue>0</DefaultValue>
-          <optionset>
-            <optionsettype>Boolean</optionsettype>
-            <options>
-              <option value="0"><labels><label description="No" languagecode="1033" /></labels></option>
-              <option value="1"><labels><label description="Yes" languagecode="1033" /></labels></option>
-            </options>
-          </optionset>
-          <displaynames>
-            <displayname description="Requires Approval" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_approvalstatus">
-          <Type>picklist</Type>
-          <Name>cr_approvalstatus</Name>
-          <LogicalName>cr_approvalstatus</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          
-          <OptionSetName>cr_approvalstatus</OptionSetName>
-          <displaynames>
-            <displayname description="Approval Status" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_approvaldate">
-          <Type>datetime</Type>
-          <Name>cr_approvaldate</Name>
-          <LogicalName>cr_approvaldate</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <Format>DateAndTime</Format>
-          <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
-          <DateTimeBehavior>UserLocal</DateTimeBehavior>
-          <displaynames>
-            <displayname description="Approval Date" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_approvalcomments">
-          <Type>ntext</Type>
-          <Name>cr_approvalcomments</Name>
-          <LogicalName>cr_approvalcomments</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MaxLength>4000</MaxLength>
-          <Format>TextArea</Format>
-          <displaynames>
-            <displayname description="Approval Comments" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_supplierid_lk">
-          <Type>lookup</Type>
-          <Name>cr_supplierid_lk</Name>
-          <LogicalName>cr_supplierid_lk</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <LookupTypes>
-            <LookupType id="10001">cr_supplier</LookupType>
-          </LookupTypes>
-          <displaynames>
-            <displayname description="Supplier" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_supplieremailsent">
-          <Type>bit</Type>
-          <Name>cr_supplieremailsent</Name>
-          <LogicalName>cr_supplieremailsent</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <DefaultValue>0</DefaultValue>
-          <optionset>
-            <optionsettype>Boolean</optionsettype>
-            <options>
-              <option value="0"><labels><label description="No" languagecode="1033" /></labels></option>
-              <option value="1"><labels><label description="Yes" languagecode="1033" /></labels></option>
-            </options>
-          </optionset>
-          <displaynames>
-            <displayname description="Supplier Email Sent" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_expecteddelivery">
-          <Type>datetime</Type>
-          <Name>cr_expecteddelivery</Name>
-          <LogicalName>cr_expecteddelivery</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <Format>DateOnly</Format>
-          <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
-          <DateTimeBehavior>UserLocal</DateTimeBehavior>
-          <displaynames>
-            <displayname description="Expected Delivery" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_deliverydate">
-          <Type>datetime</Type>
-          <Name>cr_deliverydate</Name>
-          <LogicalName>cr_deliverydate</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <Format>DateOnly</Format>
-          <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
-          <DateTimeBehavior>UserLocal</DateTimeBehavior>
-          <displaynames>
-            <displayname description="Delivery Date" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_notes">
-          <Type>ntext</Type>
-          <Name>cr_notes</Name>
-          <LogicalName>cr_notes</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MaxLength>4000</MaxLength>
-          <Format>TextArea</Format>
-          <displaynames>
-            <displayname description="Notes" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-          </attributes>
-        </entity>
-      </EntityInfo>
-    <FormXml>
-      <forms type="main">
-        <systemform>
-          <formid>{a1b2c3d4-3333-4333-8333-ccccccccc003}</formid>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <FormPresentation>2</FormPresentation>
-          <formActivationState>1</formActivationState>
-          <form>
-            <tabs>
-              <tab name="tab_general" id="{c1c2c3c4-3333-4333-8333-ccccccccc003}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
-                <labels>
-                  <label description="General" languagecode="1033" />
-                </labels>
-                <columns>
-                  <column width="100%">
-                    <sections>
-                      <section name="sec_general" showlabel="false" showbar="false" id="{d1d2d3d4-3333-4333-8333-ccccccccc003}" IsUserDefined="0" layout="varwidth" columns="2" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
-                        <labels>
-                          <label description="General" languagecode="1033" />
-                        </labels>
-                        <rows>
-                          <row>
-                            <cell id="{00000000-0000-0000-0000-000000000001}">
-                              <labels>
-                                <label description="Supply Order" languagecode="1033" />
-                              </labels>
-                              <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
-                            </cell>
-                          </row>
-                        </rows>
-                      </section>
-                    </sections>
-                  </column>
-                </columns>
-              </tab>
-            </tabs>
-          </form>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>1</CanBeDeleted>
-          <LocalizedNames>
-            <LocalizedName description="Information" languagecode="1033" />
-          </LocalizedNames>
-        </systemform>
-      </forms>
-    </FormXml>
-    <SavedQueries>
-      <savedqueries>
-        <savedquery>
-          <savedqueryid>{b1c2d3e4-3333-4333-8333-ccccccccc003}</savedqueryid>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>0</CanBeDeleted>
-          <isquickfindquery>0</isquickfindquery>
-          <isprivate>0</isprivate>
-          <isdefault>1</isdefault>
-          <querytype>0</querytype>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <LocalizedNames>
-            <LocalizedName description="Active Supply Orders" languagecode="1033" />
-          </LocalizedNames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-          <fetchxml>
-            <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-              <entity name="cr_supplyorder">
-                <attribute name="cr_name" />
-                <attribute name="createdon" />
-                <order attribute="cr_name" descending="false" />
-                <filter type="and">
-                  <condition attribute="statecode" operator="eq" value="0" />
-                </filter>
-              </entity>
-            </fetch>
-          </fetchxml>
-          <layoutxml>
-            <grid name="resultset" jump="cr_name" select="1" icon="1" preview="1">
-              <row name="result" id="cr_supplyorderid">
-                <cell name="cr_name" width="200" />
-                <cell name="createdon" width="125" />
-              </row>
-            </grid>
-          </layoutxml>
-        </savedquery>
-      </savedqueries>
-    </SavedQueries>
-    <EntityRelationships>
-      <EntityRelationship Name="cr_supplier_supplyorder">
+      <EntityRelationship Name="cr_supplier_orderlineitems">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
         <IsCustomizable>1</IsCustomizable>
         <IsHierarchical>0</IsHierarchical>
-        <ReferencingEntityName>cr_supplyorder</ReferencingEntityName>
+        <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
         <ReferencedEntityName>cr_supplier</ReferencedEntityName>
-        <ReferencingAttributeName>cr_supplierid_lk</ReferencingAttributeName>
+        <ReferencingAttributeName>cr_supplierid</ReferencingAttributeName>
         <CascadeAssign>NoCascade</CascadeAssign>
         <CascadeDelete>RemoveLink</CascadeDelete>
         <CascadeReparent>NoCascade</CascadeReparent>
@@ -1430,363 +277,558 @@
     </EntityRelationships>
     </Entity>
     <Entity>
-      <Name LocalizedName="Order Line Item" OriginalName="">cr_orderlineitem</Name>
-      <ObjectTypeCode>10004</ObjectTypeCode>
+      <Name LocalizedName="Pantry Item" OriginalName="cr_pantryitem">cr_pantryitem</Name>
       <EntityInfo>
-        <entity Name="cr_orderlineitem">
+        <entity Name="cr_pantryitem">
           <LocalizedNames>
-            <LocalizedName description="Order Line Item" languagecode="1033" />
+            <LocalizedName description="Pantry Item" languagecode="1033"/>
           </LocalizedNames>
           <LocalizedCollectionNames>
-            <LocalizedCollectionName description="Order Line Items" languagecode="1033" />
+            <LocalizedCollectionName description="Pantry Items" languagecode="1033"/>
           </LocalizedCollectionNames>
           <Descriptions>
-            <Description description="Individual items within a supply order" languagecode="1033" />
+            <Description description="Inventory catalog of all pantry supplies" languagecode="1033"/>
           </Descriptions>
-          <EntitySetName>cr_orderlineitems</EntitySetName>
-          <PrimaryIdAttribute>cr_orderlineitemid</PrimaryIdAttribute>
+          <PrimaryIdAttribute>cr_pantryitemid</PrimaryIdAttribute>
           <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
-          <IsBPFEntity>0</IsBPFEntity>
-          <IsLogicalEntity>0</IsLogicalEntity>
-          <IsCustomEntity>1</IsCustomEntity>
-          <IsActivity>0</IsActivity>
-          <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>1</OwnershipTypeMask>
-          <IsAvailableOffline>1</IsAvailableOffline>
-          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
-          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
-          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
-          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
-          <CanCreateAttributes>1</CanCreateAttributes>
-          <CanCreateForms>1</CanCreateForms>
-          <CanCreateViews>1</CanCreateViews>
-          <CanCreateCharts>1</CanCreateCharts>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsConnectionsEnabled>0</IsConnectionsEnabled>
-          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
-          <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
-          <IsMailMergeEnabled>0</IsMailMergeEnabled>
-          <IsEnabledForCharts>1</IsEnabledForCharts>
-          <HasNotes>0</HasNotes>
-          <HasActivities>0</HasActivities>
-          <HasFeedback>0</HasFeedback>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
-          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
-          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
-          <IsManaged>0</IsManaged>
-          <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
-          <IsSLAEnabled>0</IsSLAEnabled>
-          <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
-          
-          <EnforceStateTransitions>0</EnforceStateTransitions>
-          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
-          <attributes>
-        <attribute PhysicalName="cr_name">
-          <Type>nvarchar</Type>
-          <Name>cr_name</Name>
-          <LogicalName>cr_name</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>Auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>0</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          <IsPrimaryName>1</IsPrimaryName>
-          
-          
-          <MaxLength>100</MaxLength>
-          <Format>Text</Format>
-          <displaynames>
-            <displayname description="Line Item" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_orderid">
-          <Type>lookup</Type>
-          <Name>cr_orderid</Name>
-          <LogicalName>cr_orderid</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <LookupTypes>
-            <LookupType id="10003">cr_supplyorder</LookupType>
-          </LookupTypes>
-          <displaynames>
-            <displayname description="Order" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_pantryitemid">
-          <Type>lookup</Type>
-          <Name>cr_pantryitemid</Name>
-          <LogicalName>cr_pantryitemid</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <LookupTypes>
-            <LookupType id="10002">cr_pantryitem</LookupType>
-          </LookupTypes>
-          <displaynames>
-            <displayname description="Pantry Item" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_quantity">
-          <Type>int</Type>
-          <Name>cr_quantity</Name>
-          <LogicalName>cr_quantity</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>1</MinValue>
-          <MaxValue>999999</MaxValue>
-          <Format>None</Format>
-          <displaynames>
-            <displayname description="Quantity" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_unitprice">
-          <Type>money</Type>
-          <Name>cr_unitprice</Name>
-          <LogicalName>cr_unitprice</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>999999</MaxValue>
-          <Precision>2</Precision>
-          <IsBaseCurrency>0</IsBaseCurrency>
-          <displaynames>
-            <displayname description="Unit Price" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_linetotal">
-          <Type>money</Type>
-          <Name>cr_linetotal</Name>
-          <LogicalName>cr_linetotal</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>9999999</MaxValue>
-          <Precision>2</Precision>
-          <IsBaseCurrency>0</IsBaseCurrency>
-          <displaynames>
-            <displayname description="Line Total" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_currentstockatorder">
-          <Type>int</Type>
-          <Name>cr_currentstockatorder</Name>
-          <LogicalName>cr_currentstockatorder</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MinValue>0</MinValue>
-          <MaxValue>999999</MaxValue>
-          <Format>None</Format>
-          <displaynames>
-            <displayname description="Current Stock at Order" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-          </attributes>
+          <OwnershipType>OrganizationOwned</OwnershipType>
+          <IsActivity>false</IsActivity>
+          <IsAvailableOffline>true</IsAvailableOffline>
+          <IsBusinessProcessEnabled>false</IsBusinessProcessEnabled>
+          <IsMailMergeEnabled>false</IsMailMergeEnabled>
+          <IsValidForQueue>false</IsValidForQueue>
+          <IsConnectionsEnabled>false</IsConnectionsEnabled>
+          <HasNotes>false</HasNotes>
+          <HasActivities>false</HasActivities>
+          <IsQuickCreateEnabled>false</IsQuickCreateEnabled>
+          <IsDuplicateDetectionEnabled>false</IsDuplicateDetectionEnabled>
+          <IsAuditEnabled>false</IsAuditEnabled>
+          <IsRenameable>true</IsRenameable>
+          <IsMappable>true</IsMappable>
+          <ChangeTrackingEnabled>false</ChangeTrackingEnabled>
         </entity>
+        <attributes>
+          <attribute PhysicalName="cr_pantryitemid" Type="uniqueidentifier">
+            <Type>uniqueidentifier</Type>
+            <Name>cr_pantryitemid</Name>
+            <LogicalName>cr_pantryitemid</LogicalName>
+            <RequiredLevel>SystemRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind</DisplayMask>
+            <IsPrimaryId>true</IsPrimaryId>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>false</IsCustom>
+            <SourceType>0</SourceType>
+          </attribute>
+          <attribute PhysicalName="cr_name" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsPrimaryName>true</IsPrimaryName>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Item Name" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_sku" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_sku</Name>
+            <LogicalName>cr_sku</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>50</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="SKU" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_category" Type="picklist">
+            <Type>picklist</Type>
+            <Name>cr_category</Name>
+            <LogicalName>cr_category</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <OptionSetName>cr_itemcategory</OptionSetName>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Category" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_unit" Type="picklist">
+            <Type>picklist</Type>
+            <Name>cr_unit</Name>
+            <LogicalName>cr_unit</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <OptionSetName>cr_itemunit</OptionSetName>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Unit of Measure" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_currentstock" Type="int">
+            <Type>int</Type>
+            <Name>cr_currentstock</Name>
+            <LogicalName>cr_currentstock</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <MinValue>0</MinValue>
+            <MaxValue>999999</MaxValue>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Current Stock" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_minimumstock" Type="int">
+            <Type>int</Type>
+            <Name>cr_minimumstock</Name>
+            <LogicalName>cr_minimumstock</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <MinValue>0</MinValue>
+            <MaxValue>999999</MaxValue>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Minimum Stock Level" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_reorderquantity" Type="int">
+            <Type>int</Type>
+            <Name>cr_reorderquantity</Name>
+            <LogicalName>cr_reorderquantity</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <MinValue>0</MinValue>
+            <MaxValue>999999</MaxValue>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Reorder Quantity" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_unitprice" Type="money">
+            <Type>money</Type>
+            <Name>cr_unitprice</Name>
+            <LogicalName>cr_unitprice</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <MinValue>0</MinValue>
+            <MaxValue>1000000</MaxValue>
+            <Precision>2</Precision>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Unit Price" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_preferredsupplierid" Type="lookup">
+            <Type>lookup</Type>
+            <Name>cr_preferredsupplierid</Name>
+            <LogicalName>cr_preferredsupplierid</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Preferred Supplier" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_isactive" Type="bit">
+            <Type>bit</Type>
+            <Name>cr_isactive</Name>
+            <LogicalName>cr_isactive</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <DefaultValue>1</DefaultValue>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <optionset>
+              <optionsettype>Boolean</optionsettype>
+              <options>
+                <option value="0"><labels><label description="No" languagecode="1033"/></labels></option>
+                <option value="1"><labels><label description="Yes" languagecode="1033"/></labels></option>
+              </options>
+            </optionset>
+            <LocalizedNames>
+              <LocalizedName description="Is Active" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_location" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_location</Name>
+            <LogicalName>cr_location</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Storage Location" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_description" Type="ntext">
+            <Type>ntext</Type>
+            <Name>cr_description</Name>
+            <LogicalName>cr_description</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>4000</Length>
+            <Format>TextArea</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Description" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+        </attributes>
       </EntityInfo>
-    <FormXml>
-      <forms type="main">
-        <systemform>
-          <formid>{a1b2c3d4-4444-4444-8444-ddddddddd004}</formid>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <FormPresentation>2</FormPresentation>
-          <formActivationState>1</formActivationState>
-          <form>
-            <tabs>
-              <tab name="tab_general" id="{c1c2c3c4-4444-4444-8444-ddddddddd004}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
-                <labels>
-                  <label description="General" languagecode="1033" />
-                </labels>
-                <columns>
-                  <column width="100%">
-                    <sections>
-                      <section name="sec_general" showlabel="false" showbar="false" id="{d1d2d3d4-4444-4444-8444-ddddddddd004}" IsUserDefined="0" layout="varwidth" columns="2" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
-                        <labels>
-                          <label description="General" languagecode="1033" />
-                        </labels>
-                        <rows>
-                          <row>
-                            <cell id="{00000000-0000-0000-0000-000000000001}">
-                              <labels>
-                                <label description="Order Line Item" languagecode="1033" />
-                              </labels>
-                              <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
-                            </cell>
-                          </row>
-                        </rows>
-                      </section>
-                    </sections>
-                  </column>
-                </columns>
-              </tab>
-            </tabs>
-          </form>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>1</CanBeDeleted>
+
+    </Entity>
+    <Entity>
+      <Name LocalizedName="Supply Order" OriginalName="cr_supplyorder">cr_supplyorder</Name>
+      <EntityInfo>
+        <entity Name="cr_supplyorder">
           <LocalizedNames>
-            <LocalizedName description="Information" languagecode="1033" />
+            <LocalizedName description="Supply Order" languagecode="1033"/>
           </LocalizedNames>
-        </systemform>
-      </forms>
-    </FormXml>
-    <SavedQueries>
-      <savedqueries>
-        <savedquery>
-          <savedqueryid>{b1c2d3e4-4444-4444-8444-ddddddddd004}</savedqueryid>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>0</CanBeDeleted>
-          <isquickfindquery>0</isquickfindquery>
-          <isprivate>0</isprivate>
-          <isdefault>1</isdefault>
-          <querytype>0</querytype>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <LocalizedNames>
-            <LocalizedName description="Active Order Line Items" languagecode="1033" />
-          </LocalizedNames>
+          <LocalizedCollectionNames>
+            <LocalizedCollectionName description="Supply Orders" languagecode="1033"/>
+          </LocalizedCollectionNames>
           <Descriptions>
-            <Description description="" languagecode="1033" />
+            <Description description="Supply order requests and their approval status" languagecode="1033"/>
           </Descriptions>
-          <fetchxml>
-            <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-              <entity name="cr_orderlineitem">
-                <attribute name="cr_name" />
-                <attribute name="createdon" />
-                <order attribute="cr_name" descending="false" />
-                <filter type="and">
-                  <condition attribute="statecode" operator="eq" value="0" />
-                </filter>
-              </entity>
-            </fetch>
-          </fetchxml>
-          <layoutxml>
-            <grid name="resultset" jump="cr_name" select="1" icon="1" preview="1">
-              <row name="result" id="cr_orderlineitemid">
-                <cell name="cr_name" width="200" />
-                <cell name="createdon" width="125" />
-              </row>
-            </grid>
-          </layoutxml>
-        </savedquery>
-      </savedqueries>
-    </SavedQueries>
+          <PrimaryIdAttribute>cr_supplyorderid</PrimaryIdAttribute>
+          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
+          <OwnershipType>UserOwned</OwnershipType>
+          <IsActivity>false</IsActivity>
+          <IsAvailableOffline>true</IsAvailableOffline>
+          <IsBusinessProcessEnabled>false</IsBusinessProcessEnabled>
+          <IsMailMergeEnabled>false</IsMailMergeEnabled>
+          <IsValidForQueue>false</IsValidForQueue>
+          <IsConnectionsEnabled>false</IsConnectionsEnabled>
+          <HasNotes>false</HasNotes>
+          <HasActivities>false</HasActivities>
+          <IsQuickCreateEnabled>false</IsQuickCreateEnabled>
+          <IsDuplicateDetectionEnabled>false</IsDuplicateDetectionEnabled>
+          <IsAuditEnabled>false</IsAuditEnabled>
+          <IsRenameable>true</IsRenameable>
+          <IsMappable>true</IsMappable>
+          <ChangeTrackingEnabled>false</ChangeTrackingEnabled>
+        </entity>
+        <attributes>
+          <attribute PhysicalName="cr_supplyorderid" Type="uniqueidentifier">
+            <Type>uniqueidentifier</Type>
+            <Name>cr_supplyorderid</Name>
+            <LogicalName>cr_supplyorderid</LogicalName>
+            <RequiredLevel>SystemRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind</DisplayMask>
+            <IsPrimaryId>true</IsPrimaryId>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>false</IsCustom>
+            <SourceType>0</SourceType>
+          </attribute>
+          <attribute PhysicalName="cr_name" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsPrimaryName>true</IsPrimaryName>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Order Number" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_orderstatus" Type="picklist">
+            <Type>picklist</Type>
+            <Name>cr_orderstatus</Name>
+            <LogicalName>cr_orderstatus</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <OptionSetName>cr_orderstatus</OptionSetName>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Order Status" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approvalstatus" Type="picklist">
+            <Type>picklist</Type>
+            <Name>cr_approvalstatus</Name>
+            <LogicalName>cr_approvalstatus</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <OptionSetName>cr_approvalstatus</OptionSetName>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Approval Status" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_orderdate" Type="datetime">
+            <Type>datetime</Type>
+            <Name>cr_orderdate</Name>
+            <LogicalName>cr_orderdate</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Format>DateOnly</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Order Date" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_requiredbydate" Type="datetime">
+            <Type>datetime</Type>
+            <Name>cr_requiredbydate</Name>
+            <LogicalName>cr_requiredbydate</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Format>DateOnly</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Required By Date" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approvaldate" Type="datetime">
+            <Type>datetime</Type>
+            <Name>cr_approvaldate</Name>
+            <LogicalName>cr_approvaldate</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Format>DateAndTime</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Approval Date" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_totalamount" Type="money">
+            <Type>money</Type>
+            <Name>cr_totalamount</Name>
+            <LogicalName>cr_totalamount</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <MinValue>0</MinValue>
+            <MaxValue>10000000</MaxValue>
+            <Precision>2</Precision>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Total Amount" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_requestedby" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_requestedby</Name>
+            <LogicalName>cr_requestedby</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Requested By" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approvedby" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_approvedby</Name>
+            <LogicalName>cr_approvedby</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Approved By" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_justification" Type="ntext">
+            <Type>ntext</Type>
+            <Name>cr_justification</Name>
+            <LogicalName>cr_justification</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>4000</Length>
+            <Format>TextArea</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Justification" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approvercomments" Type="ntext">
+            <Type>ntext</Type>
+            <Name>cr_approvercomments</Name>
+            <LogicalName>cr_approvercomments</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>4000</Length>
+            <Format>TextArea</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Approver Comments" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_deliveryaddress" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_deliveryaddress</Name>
+            <LogicalName>cr_deliveryaddress</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>500</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Delivery Address" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+        </attributes>
+      </EntityInfo>
     <EntityRelationships>
-      <EntityRelationship Name="cr_supplyorder_orderlineitem">
+      <EntityRelationship Name="cr_supplyorder_lineitems">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
         <IsCustomizable>1</IsCustomizable>
         <IsHierarchical>0</IsHierarchical>
         <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
         <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
-        <ReferencingAttributeName>cr_orderid</ReferencingAttributeName>
-        <CascadeAssign>NoCascade</CascadeAssign>
-        <CascadeDelete>Cascade</CascadeDelete>
-        <CascadeReparent>NoCascade</CascadeReparent>
-        <CascadeShare>NoCascade</CascadeShare>
-        <CascadeUnshare>NoCascade</CascadeUnshare>
-        <CascadeRollupView>NoCascade</CascadeRollupView>
-      </EntityRelationship>
-      <EntityRelationship Name="cr_pantryitem_orderlineitem">
-        <EntityRelationshipType>OneToMany</EntityRelationshipType>
-        <IntroducedVersion>1.0.0.0</IntroducedVersion>
-        <IsCustomizable>1</IsCustomizable>
-        <IsHierarchical>0</IsHierarchical>
-        <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
-        <ReferencedEntityName>cr_pantryitem</ReferencedEntityName>
-        <ReferencingAttributeName>cr_pantryitemid</ReferencingAttributeName>
+        <ReferencingAttributeName>cr_supplyorderid</ReferencingAttributeName>
         <CascadeAssign>NoCascade</CascadeAssign>
         <CascadeDelete>RemoveLink</CascadeDelete>
         <CascadeReparent>NoCascade</CascadeReparent>
@@ -1794,303 +836,411 @@
         <CascadeUnshare>NoCascade</CascadeUnshare>
         <CascadeRollupView>NoCascade</CascadeRollupView>
       </EntityRelationship>
-    </EntityRelationships>
-    </Entity>
-    <Entity>
-      <Name LocalizedName="Approval History" OriginalName="">cr_approvalhistory</Name>
-      <ObjectTypeCode>10005</ObjectTypeCode>
-      <EntityInfo>
-        <entity Name="cr_approvalhistory">
-          <LocalizedNames>
-            <LocalizedName description="Approval History" languagecode="1033" />
-          </LocalizedNames>
-          <LocalizedCollectionNames>
-            <LocalizedCollectionName description="Approval History" languagecode="1033" />
-          </LocalizedCollectionNames>
-          <Descriptions>
-            <Description description="Audit trail for all approval decisions" languagecode="1033" />
-          </Descriptions>
-          <EntitySetName>cr_approvalhistories</EntitySetName>
-          <PrimaryIdAttribute>cr_approvalhistoryid</PrimaryIdAttribute>
-          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
-          <IsBPFEntity>0</IsBPFEntity>
-          <IsLogicalEntity>0</IsLogicalEntity>
-          <IsCustomEntity>1</IsCustomEntity>
-          <IsActivity>0</IsActivity>
-          <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>1</OwnershipTypeMask>
-          <IsAvailableOffline>1</IsAvailableOffline>
-          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
-          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
-          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
-          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
-          <CanCreateAttributes>1</CanCreateAttributes>
-          <CanCreateForms>1</CanCreateForms>
-          <CanCreateViews>1</CanCreateViews>
-          <CanCreateCharts>1</CanCreateCharts>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsConnectionsEnabled>0</IsConnectionsEnabled>
-          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
-          <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
-          <IsMailMergeEnabled>0</IsMailMergeEnabled>
-          <IsEnabledForCharts>1</IsEnabledForCharts>
-          <HasNotes>0</HasNotes>
-          <HasActivities>0</HasActivities>
-          <HasFeedback>0</HasFeedback>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
-          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
-          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
-          <IsManaged>0</IsManaged>
-          <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
-          <IsSLAEnabled>0</IsSLAEnabled>
-          <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
-          
-          <EnforceStateTransitions>0</EnforceStateTransitions>
-          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
-          <attributes>
-        <attribute PhysicalName="cr_name">
-          <Type>nvarchar</Type>
-          <Name>cr_name</Name>
-          <LogicalName>cr_name</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ImeMode>Auto</ImeMode>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>0</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <CanModifySearchSettings>1</CanModifySearchSettings>
-          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
-          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
-          <SourceType>0</SourceType>
-          <IsPrimaryName>1</IsPrimaryName>
-          <AutoNumberFormat>APR-{SEQNUM:5}</AutoNumberFormat>
-          
-          <MaxLength>100</MaxLength>
-          <Format>Text</Format>
-          <displaynames>
-            <displayname description="Record" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_orderid">
-          <Type>lookup</Type>
-          <Name>cr_orderid</Name>
-          <LogicalName>cr_orderid</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <LookupTypes>
-            <LookupType id="10003">cr_supplyorder</LookupType>
-          </LookupTypes>
-          <displaynames>
-            <displayname description="Order" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_action">
-          <Type>picklist</Type>
-          <Name>cr_action</Name>
-          <LogicalName>cr_action</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          
-          <OptionSetName>cr_approvalaction</OptionSetName>
-          <displaynames>
-            <displayname description="Action" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_actiondate">
-          <Type>datetime</Type>
-          <Name>cr_actiondate</Name>
-          <LogicalName>cr_actiondate</LogicalName>
-          <RequiredLevel>ApplicationRequired</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <Format>DateAndTime</Format>
-          <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
-          <DateTimeBehavior>UserLocal</DateTimeBehavior>
-          <displaynames>
-            <displayname description="Action Date" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-        <attribute PhysicalName="cr_comments">
-          <Type>ntext</Type>
-          <Name>cr_comments</Name>
-          <LogicalName>cr_comments</LogicalName>
-          <RequiredLevel>None</RequiredLevel>
-          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-          <ValidForUpdateApi>1</ValidForUpdateApi>
-          <ValidForReadApi>1</ValidForReadApi>
-          <ValidForCreateApi>1</ValidForCreateApi>
-          <IsCustomField>1</IsCustomField>
-          <IsAuditEnabled>1</IsAuditEnabled>
-          <IsSecured>0</IsSecured>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <IsCustomizable>1</IsCustomizable>
-          <IsRenameable>1</IsRenameable>
-          <SourceType>0</SourceType>
-          <MaxLength>4000</MaxLength>
-          <Format>TextArea</Format>
-          <displaynames>
-            <displayname description="Comments" languagecode="1033" />
-          </displaynames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-        </attribute>
-          </attributes>
-        </entity>
-      </EntityInfo>
-    <FormXml>
-      <forms type="main">
-        <systemform>
-          <formid>{a1b2c3d4-5555-4555-8555-eeeeeeeee005}</formid>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <FormPresentation>2</FormPresentation>
-          <formActivationState>1</formActivationState>
-          <form>
-            <tabs>
-              <tab name="tab_general" id="{c1c2c3c4-5555-4555-8555-eeeeeeeee005}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
-                <labels>
-                  <label description="General" languagecode="1033" />
-                </labels>
-                <columns>
-                  <column width="100%">
-                    <sections>
-                      <section name="sec_general" showlabel="false" showbar="false" id="{d1d2d3d4-5555-4555-8555-eeeeeeeee005}" IsUserDefined="0" layout="varwidth" columns="2" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
-                        <labels>
-                          <label description="General" languagecode="1033" />
-                        </labels>
-                        <rows>
-                          <row>
-                            <cell id="{00000000-0000-0000-0000-000000000001}">
-                              <labels>
-                                <label description="Approval History" languagecode="1033" />
-                              </labels>
-                              <control id="cr_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cr_name" />
-                            </cell>
-                          </row>
-                        </rows>
-                      </section>
-                    </sections>
-                  </column>
-                </columns>
-              </tab>
-            </tabs>
-          </form>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>1</CanBeDeleted>
-          <LocalizedNames>
-            <LocalizedName description="Information" languagecode="1033" />
-          </LocalizedNames>
-        </systemform>
-      </forms>
-    </FormXml>
-    <SavedQueries>
-      <savedqueries>
-        <savedquery>
-          <savedqueryid>{b1c2d3e4-5555-4555-8555-eeeeeeeee005}</savedqueryid>
-          <IsCustomizable>1</IsCustomizable>
-          <CanBeDeleted>0</CanBeDeleted>
-          <isquickfindquery>0</isquickfindquery>
-          <isprivate>0</isprivate>
-          <isdefault>1</isdefault>
-          <querytype>0</querytype>
-          <IntroducedVersion>1.0.0.0</IntroducedVersion>
-          <LocalizedNames>
-            <LocalizedName description="Active Approval History" languagecode="1033" />
-          </LocalizedNames>
-          <Descriptions>
-            <Description description="" languagecode="1033" />
-          </Descriptions>
-          <fetchxml>
-            <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
-              <entity name="cr_approvalhistory">
-                <attribute name="cr_name" />
-                <attribute name="createdon" />
-                <order attribute="cr_name" descending="false" />
-                <filter type="and">
-                  <condition attribute="statecode" operator="eq" value="0" />
-                </filter>
-              </entity>
-            </fetch>
-          </fetchxml>
-          <layoutxml>
-            <grid name="resultset" jump="cr_name" select="1" icon="1" preview="1">
-              <row name="result" id="cr_approvalhistoryid">
-                <cell name="cr_name" width="200" />
-                <cell name="createdon" width="125" />
-              </row>
-            </grid>
-          </layoutxml>
-        </savedquery>
-      </savedqueries>
-    </SavedQueries>
-    <EntityRelationships>
-      <EntityRelationship Name="cr_supplyorder_approvalhistory">
+      <EntityRelationship Name="cr_supplyorder_approvals">
         <EntityRelationshipType>OneToMany</EntityRelationshipType>
         <IntroducedVersion>1.0.0.0</IntroducedVersion>
         <IsCustomizable>1</IsCustomizable>
         <IsHierarchical>0</IsHierarchical>
         <ReferencingEntityName>cr_approvalhistory</ReferencingEntityName>
         <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
-        <ReferencingAttributeName>cr_orderid</ReferencingAttributeName>
+        <ReferencingAttributeName>cr_supplyorderid</ReferencingAttributeName>
         <CascadeAssign>NoCascade</CascadeAssign>
-        <CascadeDelete>Cascade</CascadeDelete>
+        <CascadeDelete>RemoveLink</CascadeDelete>
         <CascadeReparent>NoCascade</CascadeReparent>
         <CascadeShare>NoCascade</CascadeShare>
         <CascadeUnshare>NoCascade</CascadeUnshare>
         <CascadeRollupView>NoCascade</CascadeRollupView>
       </EntityRelationship>
     </EntityRelationships>
+    </Entity>
+    <Entity>
+      <Name LocalizedName="Order Line Item" OriginalName="cr_orderlineitem">cr_orderlineitem</Name>
+      <EntityInfo>
+        <entity Name="cr_orderlineitem">
+          <LocalizedNames>
+            <LocalizedName description="Order Line Item" languagecode="1033"/>
+          </LocalizedNames>
+          <LocalizedCollectionNames>
+            <LocalizedCollectionName description="Order Line Items" languagecode="1033"/>
+          </LocalizedCollectionNames>
+          <Descriptions>
+            <Description description="Individual items within a supply order" languagecode="1033"/>
+          </Descriptions>
+          <PrimaryIdAttribute>cr_orderlineitemid</PrimaryIdAttribute>
+          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
+          <OwnershipType>OrganizationOwned</OwnershipType>
+          <IsActivity>false</IsActivity>
+          <IsAvailableOffline>true</IsAvailableOffline>
+          <IsBusinessProcessEnabled>false</IsBusinessProcessEnabled>
+          <IsMailMergeEnabled>false</IsMailMergeEnabled>
+          <IsValidForQueue>false</IsValidForQueue>
+          <IsConnectionsEnabled>false</IsConnectionsEnabled>
+          <HasNotes>false</HasNotes>
+          <HasActivities>false</HasActivities>
+          <IsQuickCreateEnabled>false</IsQuickCreateEnabled>
+          <IsDuplicateDetectionEnabled>false</IsDuplicateDetectionEnabled>
+          <IsAuditEnabled>false</IsAuditEnabled>
+          <IsRenameable>true</IsRenameable>
+          <IsMappable>true</IsMappable>
+          <ChangeTrackingEnabled>false</ChangeTrackingEnabled>
+        </entity>
+        <attributes>
+          <attribute PhysicalName="cr_orderlineitemid" Type="uniqueidentifier">
+            <Type>uniqueidentifier</Type>
+            <Name>cr_orderlineitemid</Name>
+            <LogicalName>cr_orderlineitemid</LogicalName>
+            <RequiredLevel>SystemRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind</DisplayMask>
+            <IsPrimaryId>true</IsPrimaryId>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>false</IsCustom>
+            <SourceType>0</SourceType>
+          </attribute>
+          <attribute PhysicalName="cr_name" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsPrimaryName>true</IsPrimaryName>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Line Item Name" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_supplyorderid" Type="lookup">
+            <Type>lookup</Type>
+            <Name>cr_supplyorderid</Name>
+            <LogicalName>cr_supplyorderid</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Supply Order" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_pantryitemid" Type="lookup">
+            <Type>lookup</Type>
+            <Name>cr_pantryitemid</Name>
+            <LogicalName>cr_pantryitemid</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Pantry Item" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_supplierid" Type="lookup">
+            <Type>lookup</Type>
+            <Name>cr_supplierid</Name>
+            <LogicalName>cr_supplierid</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Supplier" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_quantity" Type="int">
+            <Type>int</Type>
+            <Name>cr_quantity</Name>
+            <LogicalName>cr_quantity</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <MinValue>1</MinValue>
+            <MaxValue>999999</MaxValue>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Quantity" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_unitprice" Type="money">
+            <Type>money</Type>
+            <Name>cr_unitprice</Name>
+            <LogicalName>cr_unitprice</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <MinValue>0</MinValue>
+            <MaxValue>1000000</MaxValue>
+            <Precision>2</Precision>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Unit Price" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_totalcost" Type="money">
+            <Type>money</Type>
+            <Name>cr_totalcost</Name>
+            <LogicalName>cr_totalcost</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <MinValue>0</MinValue>
+            <MaxValue>10000000</MaxValue>
+            <Precision>2</Precision>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Total Cost" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_notes" Type="ntext">
+            <Type>ntext</Type>
+            <Name>cr_notes</Name>
+            <LogicalName>cr_notes</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>4000</Length>
+            <Format>TextArea</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Notes" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+        </attributes>
+      </EntityInfo>
+
+    </Entity>
+    <Entity>
+      <Name LocalizedName="Approval History" OriginalName="cr_approvalhistory">cr_approvalhistory</Name>
+      <EntityInfo>
+        <entity Name="cr_approvalhistory">
+          <LocalizedNames>
+            <LocalizedName description="Approval History" languagecode="1033"/>
+          </LocalizedNames>
+          <LocalizedCollectionNames>
+            <LocalizedCollectionName description="Approval History" languagecode="1033"/>
+          </LocalizedCollectionNames>
+          <Descriptions>
+            <Description description="Audit trail for all approval decisions" languagecode="1033"/>
+          </Descriptions>
+          <PrimaryIdAttribute>cr_approvalhistoryid</PrimaryIdAttribute>
+          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
+          <OwnershipType>OrganizationOwned</OwnershipType>
+          <IsActivity>false</IsActivity>
+          <IsAvailableOffline>true</IsAvailableOffline>
+          <IsBusinessProcessEnabled>false</IsBusinessProcessEnabled>
+          <IsMailMergeEnabled>false</IsMailMergeEnabled>
+          <IsValidForQueue>false</IsValidForQueue>
+          <IsConnectionsEnabled>false</IsConnectionsEnabled>
+          <HasNotes>false</HasNotes>
+          <HasActivities>false</HasActivities>
+          <IsQuickCreateEnabled>false</IsQuickCreateEnabled>
+          <IsDuplicateDetectionEnabled>false</IsDuplicateDetectionEnabled>
+          <IsAuditEnabled>false</IsAuditEnabled>
+          <IsRenameable>true</IsRenameable>
+          <IsMappable>true</IsMappable>
+          <ChangeTrackingEnabled>false</ChangeTrackingEnabled>
+        </entity>
+        <attributes>
+          <attribute PhysicalName="cr_approvalhistoryid" Type="uniqueidentifier">
+            <Type>uniqueidentifier</Type>
+            <Name>cr_approvalhistoryid</Name>
+            <LogicalName>cr_approvalhistoryid</LogicalName>
+            <RequiredLevel>SystemRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind</DisplayMask>
+            <IsPrimaryId>true</IsPrimaryId>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>false</IsCustom>
+            <SourceType>0</SourceType>
+          </attribute>
+          <attribute PhysicalName="cr_name" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsPrimaryName>true</IsPrimaryName>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Approval Record" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_supplyorderid" Type="lookup">
+            <Type>lookup</Type>
+            <Name>cr_supplyorderid</Name>
+            <LogicalName>cr_supplyorderid</LogicalName>
+            <RequiredLevel>ApplicationRequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Supply Order" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_action" Type="picklist">
+            <Type>picklist</Type>
+            <Name>cr_action</Name>
+            <LogicalName>cr_action</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <OptionSetName>cr_approvalaction</OptionSetName>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Action" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approver" Type="nvarchar">
+            <Type>nvarchar</Type>
+            <Name>cr_approver</Name>
+            <LogicalName>cr_approver</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>200</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Approver" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_actiondate" Type="datetime">
+            <Type>datetime</Type>
+            <Name>cr_actiondate</Name>
+            <LogicalName>cr_actiondate</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Format>DateAndTime</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Action Date" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_comments" Type="ntext">
+            <Type>ntext</Type>
+            <Name>cr_comments</Name>
+            <LogicalName>cr_comments</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <Length>4000</Length>
+            <Format>TextArea</Format>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Comments" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_previousstatus" Type="picklist">
+            <Type>picklist</Type>
+            <Name>cr_previousstatus</Name>
+            <LogicalName>cr_previousstatus</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <OptionSetName>cr_approvalstatus</OptionSetName>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="Previous Status" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_newstatus" Type="picklist">
+            <Type>picklist</Type>
+            <Name>cr_newstatus</Name>
+            <LogicalName>cr_newstatus</LogicalName>
+            <RequiredLevel>None</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <OptionSetName>cr_approvalstatus</OptionSetName>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
+            <LocalizedNames>
+              <LocalizedName description="New Status" languagecode="1033"/>
+            </LocalizedNames>
+            <Descriptions>
+              <Description description="" languagecode="1033"/>
+            </Descriptions>
+          </attribute>
+        </attributes>
+      </EntityInfo>
+
     </Entity>
   </Entities>
   <Roles />
@@ -2101,148 +1251,301 @@
   <EntityRelationships />
   <OrganizationSettings />
   <optionsets>
-    <optionset Name="cr_itemcategory" localizedName="Item Category">
+    <optionset Name="cr_itemcategory">
       <OptionSetType>Picklist</OptionSetType>
-      <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
+      <displaynames>
+        <displayname description="Item Category" languagecode="1033"/>
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033"/>
+      </Descriptions>
       <options>
         <option value="100000000">
-          <labels><label description="Coffee" languagecode="1033" /></labels>
+          <labels>
+            <label description="Beverages" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000001">
-          <labels><label description="Snacks" languagecode="1033" /></labels>
+          <labels>
+            <label description="Snacks" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000002">
-          <labels><label description="Beverages" languagecode="1033" /></labels>
+          <labels>
+            <label description="Coffee & Tea" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000003">
-          <labels><label description="Condiments" languagecode="1033" /></labels>
+          <labels>
+            <label description="Dairy" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000004">
-          <labels><label description="Cleaning Supplies" languagecode="1033" /></labels>
+          <labels>
+            <label description="Fruits" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000005">
-          <labels><label description="Other" languagecode="1033" /></labels>
-        </option>
-      </options>
-    </optionset>
-    <optionset Name="cr_itemunit" localizedName="Item Unit">
-      <OptionSetType>Picklist</OptionSetType>
-      <IsGlobal>true</IsGlobal>
-      <IntroducedVersion>1.0.0.0</IntroducedVersion>
-      <IsCustomizable>1</IsCustomizable>
-      <options>
-        <option value="100000000">
-          <labels><label description="Pods" languagecode="1033" /></labels>
-        </option>
-        <option value="100000001">
-          <labels><label description="Packets" languagecode="1033" /></labels>
-        </option>
-        <option value="100000002">
-          <labels><label description="Boxes" languagecode="1033" /></labels>
-        </option>
-        <option value="100000003">
-          <labels><label description="Bottles" languagecode="1033" /></labels>
-        </option>
-        <option value="100000004">
-          <labels><label description="Units" languagecode="1033" /></labels>
-        </option>
-      </options>
-    </optionset>
-    <optionset Name="cr_orderstatus" localizedName="Order Status">
-      <OptionSetType>Picklist</OptionSetType>
-      <IsGlobal>true</IsGlobal>
-      <IntroducedVersion>1.0.0.0</IntroducedVersion>
-      <IsCustomizable>1</IsCustomizable>
-      <options>
-        <option value="100000000">
-          <labels><label description="Draft" languagecode="1033" /></labels>
-        </option>
-        <option value="100000001">
-          <labels><label description="Submitted" languagecode="1033" /></labels>
-        </option>
-        <option value="100000002">
-          <labels><label description="Pending Approval" languagecode="1033" /></labels>
-        </option>
-        <option value="100000003">
-          <labels><label description="Approved" languagecode="1033" /></labels>
-        </option>
-        <option value="100000004">
-          <labels><label description="Rejected" languagecode="1033" /></labels>
-        </option>
-        <option value="100000005">
-          <labels><label description="Sent to Supplier" languagecode="1033" /></labels>
+          <labels>
+            <label description="Cleaning Supplies" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000006">
-          <labels><label description="Delivered" languagecode="1033" /></labels>
+          <labels>
+            <label description="Paper Products" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000007">
-          <labels><label description="Cancelled" languagecode="1033" /></labels>
+          <labels>
+            <label description="Kitchen Supplies" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000008">
+          <labels>
+            <label description="Other" languagecode="1033"/>
+          </labels>
         </option>
       </options>
     </optionset>
-    <optionset Name="cr_approvalstatus" localizedName="Approval Status">
+    <optionset Name="cr_itemunit">
       <OptionSetType>Picklist</OptionSetType>
-      <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
-      <options>
-        <option value="100000000">
-          <labels><label description="Pending" languagecode="1033" /></labels>
-        </option>
-        <option value="100000001">
-          <labels><label description="Approved" languagecode="1033" /></labels>
-        </option>
-        <option value="100000002">
-          <labels><label description="Rejected" languagecode="1033" /></labels>
-        </option>
-      </options>
-    </optionset>
-    <optionset Name="cr_approvalaction" localizedName="Approval Action">
-      <OptionSetType>Picklist</OptionSetType>
       <IsGlobal>true</IsGlobal>
-      <IntroducedVersion>1.0.0.0</IntroducedVersion>
-      <IsCustomizable>1</IsCustomizable>
+      <displaynames>
+        <displayname description="Item Unit" languagecode="1033"/>
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033"/>
+      </Descriptions>
       <options>
         <option value="100000000">
-          <labels><label description="Submitted" languagecode="1033" /></labels>
+          <labels>
+            <label description="Each" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000001">
-          <labels><label description="Approved" languagecode="1033" /></labels>
+          <labels>
+            <label description="Pack" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000002">
-          <labels><label description="Rejected" languagecode="1033" /></labels>
+          <labels>
+            <label description="Box" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000003">
-          <labels><label description="Escalated" languagecode="1033" /></labels>
+          <labels>
+            <label description="Case" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Bag" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="Bottle" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000006">
+          <labels>
+            <label description="Carton" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000007">
+          <labels>
+            <label description="Roll" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000008">
+          <labels>
+            <label description="Kg" languagecode="1033"/>
+          </labels>
         </option>
       </options>
     </optionset>
-    <optionset Name="cr_suppliercategory" localizedName="Supplier Category">
+    <optionset Name="cr_orderstatus">
       <OptionSetType>Picklist</OptionSetType>
-      <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
+      <displaynames>
+        <displayname description="Order Status" languagecode="1033"/>
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033"/>
+      </Descriptions>
       <options>
         <option value="100000000">
-          <labels><label description="Coffee" languagecode="1033" /></labels>
+          <labels>
+            <label description="Draft" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000001">
-          <labels><label description="Snacks" languagecode="1033" /></labels>
+          <labels>
+            <label description="Submitted" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000002">
-          <labels><label description="Beverages" languagecode="1033" /></labels>
+          <labels>
+            <label description="Approved" languagecode="1033"/>
+          </labels>
         </option>
         <option value="100000003">
-          <labels><label description="General" languagecode="1033" /></labels>
+          <labels>
+            <label description="Rejected" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Ordered" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="Partially Received" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000006">
+          <labels>
+            <label description="Received" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000007">
+          <labels>
+            <label description="Cancelled" languagecode="1033"/>
+          </labels>
+        </option>
+      </options>
+    </optionset>
+    <optionset Name="cr_approvalstatus">
+      <OptionSetType>Picklist</OptionSetType>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
+      <displaynames>
+        <displayname description="Approval Status" languagecode="1033"/>
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033"/>
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Pending" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Approved" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Rejected" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Returned for Revision" languagecode="1033"/>
+          </labels>
+        </option>
+      </options>
+    </optionset>
+    <optionset Name="cr_approvalaction">
+      <OptionSetType>Picklist</OptionSetType>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
+      <displaynames>
+        <displayname description="Approval Action" languagecode="1033"/>
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033"/>
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Submitted" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Approved" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Rejected" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Returned" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Cancelled" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="Resubmitted" languagecode="1033"/>
+          </labels>
+        </option>
+      </options>
+    </optionset>
+    <optionset Name="cr_suppliercategory">
+      <OptionSetType>Picklist</OptionSetType>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
+      <displaynames>
+        <displayname description="Supplier Category" languagecode="1033"/>
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033"/>
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Food & Beverage" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Office Supplies" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Cleaning Products" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Kitchen Equipment" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Paper Products" languagecode="1033"/>
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="General" languagecode="1033"/>
+          </labels>
         </option>
       </options>
     </optionset>
   </optionsets>
   <CustomControls />
   <EntityDataProviders />
-  <Languages>
-    <Language>1033</Language>
-  </Languages>
 </ImportExportXml>
