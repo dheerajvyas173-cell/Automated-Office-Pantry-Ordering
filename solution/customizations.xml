@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.24081.10375" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Entities>
     <Entity>
       <Name LocalizedName="Supplier" OriginalName="cr_supplier">cr_supplier</Name>
@@ -243,38 +243,6 @@
           </attribute>
         </attributes>
       </EntityInfo>
-    <EntityRelationships>
-      <EntityRelationship Name="cr_supplier_pantryitems">
-        <EntityRelationshipType>OneToMany</EntityRelationshipType>
-        <IntroducedVersion>1.0.0.0</IntroducedVersion>
-        <IsCustomizable>1</IsCustomizable>
-        <IsHierarchical>0</IsHierarchical>
-        <ReferencingEntityName>cr_pantryitem</ReferencingEntityName>
-        <ReferencedEntityName>cr_supplier</ReferencedEntityName>
-        <ReferencingAttributeName>cr_preferredsupplierid</ReferencingAttributeName>
-        <CascadeAssign>NoCascade</CascadeAssign>
-        <CascadeDelete>RemoveLink</CascadeDelete>
-        <CascadeReparent>NoCascade</CascadeReparent>
-        <CascadeShare>NoCascade</CascadeShare>
-        <CascadeUnshare>NoCascade</CascadeUnshare>
-        <CascadeRollupView>NoCascade</CascadeRollupView>
-      </EntityRelationship>
-      <EntityRelationship Name="cr_supplier_orderlineitems">
-        <EntityRelationshipType>OneToMany</EntityRelationshipType>
-        <IntroducedVersion>1.0.0.0</IntroducedVersion>
-        <IsCustomizable>1</IsCustomizable>
-        <IsHierarchical>0</IsHierarchical>
-        <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
-        <ReferencedEntityName>cr_supplier</ReferencedEntityName>
-        <ReferencingAttributeName>cr_supplierid</ReferencingAttributeName>
-        <CascadeAssign>NoCascade</CascadeAssign>
-        <CascadeDelete>RemoveLink</CascadeDelete>
-        <CascadeReparent>NoCascade</CascadeReparent>
-        <CascadeShare>NoCascade</CascadeShare>
-        <CascadeUnshare>NoCascade</CascadeUnshare>
-        <CascadeRollupView>NoCascade</CascadeRollupView>
-      </EntityRelationship>
-    </EntityRelationships>
     </Entity>
     <Entity>
       <Name LocalizedName="Pantry Item" OriginalName="cr_pantryitem">cr_pantryitem</Name>
@@ -551,7 +519,6 @@
           </attribute>
         </attributes>
       </EntityInfo>
-
     </Entity>
     <Entity>
       <Name LocalizedName="Supply Order" OriginalName="cr_supplyorder">cr_supplyorder</Name>
@@ -820,38 +787,6 @@
           </attribute>
         </attributes>
       </EntityInfo>
-    <EntityRelationships>
-      <EntityRelationship Name="cr_supplyorder_lineitems">
-        <EntityRelationshipType>OneToMany</EntityRelationshipType>
-        <IntroducedVersion>1.0.0.0</IntroducedVersion>
-        <IsCustomizable>1</IsCustomizable>
-        <IsHierarchical>0</IsHierarchical>
-        <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
-        <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
-        <ReferencingAttributeName>cr_supplyorderid</ReferencingAttributeName>
-        <CascadeAssign>NoCascade</CascadeAssign>
-        <CascadeDelete>RemoveLink</CascadeDelete>
-        <CascadeReparent>NoCascade</CascadeReparent>
-        <CascadeShare>NoCascade</CascadeShare>
-        <CascadeUnshare>NoCascade</CascadeUnshare>
-        <CascadeRollupView>NoCascade</CascadeRollupView>
-      </EntityRelationship>
-      <EntityRelationship Name="cr_supplyorder_approvals">
-        <EntityRelationshipType>OneToMany</EntityRelationshipType>
-        <IntroducedVersion>1.0.0.0</IntroducedVersion>
-        <IsCustomizable>1</IsCustomizable>
-        <IsHierarchical>0</IsHierarchical>
-        <ReferencingEntityName>cr_approvalhistory</ReferencingEntityName>
-        <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
-        <ReferencingAttributeName>cr_supplyorderid</ReferencingAttributeName>
-        <CascadeAssign>NoCascade</CascadeAssign>
-        <CascadeDelete>RemoveLink</CascadeDelete>
-        <CascadeReparent>NoCascade</CascadeReparent>
-        <CascadeShare>NoCascade</CascadeShare>
-        <CascadeUnshare>NoCascade</CascadeUnshare>
-        <CascadeRollupView>NoCascade</CascadeRollupView>
-      </EntityRelationship>
-    </EntityRelationships>
     </Entity>
     <Entity>
       <Name LocalizedName="Order Line Item" OriginalName="cr_orderlineitem">cr_orderlineitem</Name>
@@ -1047,7 +982,6 @@
           </attribute>
         </attributes>
       </EntityInfo>
-
     </Entity>
     <Entity>
       <Name LocalizedName="Approval History" OriginalName="cr_approvalhistory">cr_approvalhistory</Name>
@@ -1240,16 +1174,8 @@
           </attribute>
         </attributes>
       </EntityInfo>
-
     </Entity>
   </Entities>
-  <Roles />
-  <Workflows />
-  <FieldSecurityProfiles />
-  <Templates />
-  <EntityMaps />
-  <EntityRelationships />
-  <OrganizationSettings />
   <optionsets>
     <optionset Name="cr_itemcategory">
       <OptionSetType>Picklist</OptionSetType>
@@ -1546,6 +1472,4 @@
       </options>
     </optionset>
   </optionsets>
-  <CustomControls />
-  <EntityDataProviders />
 </ImportExportXml>
