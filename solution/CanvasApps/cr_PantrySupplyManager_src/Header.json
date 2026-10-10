@@ -1,0 +1,33 @@
+{
+  "DocVersion": "1.373",
+  "MinVersionToLoad": "2.2.0",
+  "IsComponentLibrary": false,
+  "AppPreviewFlagsKey": [],
+  "PublishTarget": "Environment",
+  "PublishResourcesTarget": "Environment",
+  "Themes": [
+    {
+      "name": "PantryTheme",
+      "palette": {
+        "primaryColor": "#2E86AB",
+        "primaryDarkColor": "#1B5E7E",
+        "primaryLightColor": "#A7D5E8",
+        "accentColor": "#4CAF50",
+        "accentDarkColor": "#2E7D32",
+        "accentLightColor": "#A5D6A7",
+        "backgroundColor": "#FFFFFF",
+        "backgroundDarkColor": "#F5F5F5",
+        "foregroundColor": "#333333",
+        "foregroundLightColor": "#757575",
+        "warningColor": "#FF9800",
+        "errorColor": "#D32F2F",
+        "successColor": "#4CAF50"
+      },
+      "font": {
+        "fontFamily": "Segoe UI",
+        "fontSize": 14,
+        "fontWeight": "Normal"
+      }
+    }
+  ]
+}

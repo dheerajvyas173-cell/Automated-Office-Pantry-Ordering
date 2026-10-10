@@ -1,0 +1,54 @@
+{
+  "DataSources": {
+    "PantryItems": {
+      "Type": "ServiceProvider",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "DatasetName": "default",
+      "TableName": "cr_pantryitems",
+      "TableDisplayName": "Pantry Items",
+      "Parameters": {},
+      "IsSampleData": false,
+      "IsWritable": true
+    },
+    "SupplyOrders": {
+      "Type": "ServiceProvider",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "DatasetName": "default",
+      "TableName": "cr_supplyorders",
+      "TableDisplayName": "Supply Orders",
+      "Parameters": {},
+      "IsSampleData": false,
+      "IsWritable": true
+    },
+    "OrderLineItems": {
+      "Type": "ServiceProvider",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "DatasetName": "default",
+      "TableName": "cr_orderlineitems",
+      "TableDisplayName": "Order Line Items",
+      "Parameters": {},
+      "IsSampleData": false,
+      "IsWritable": true
+    },
+    "Suppliers": {
+      "Type": "ServiceProvider",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "DatasetName": "default",
+      "TableName": "cr_suppliers",
+      "TableDisplayName": "Suppliers",
+      "Parameters": {},
+      "IsSampleData": false,
+      "IsWritable": false
+    },
+    "ApprovalHistory": {
+      "Type": "ServiceProvider",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "DatasetName": "default",
+      "TableName": "cr_approvalhistories",
+      "TableDisplayName": "Approval History",
+      "Parameters": {},
+      "IsSampleData": false,
+      "IsWritable": false
+    }
+  }
+}

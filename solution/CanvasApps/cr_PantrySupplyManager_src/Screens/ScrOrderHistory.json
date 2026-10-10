@@ -1,0 +1,137 @@
+{
+  "Screen": {
+    "Name": "ScrOrderHistory",
+    "Fill": "RGBA(245, 245, 245, 1)",
+    "Controls": {
+      "icoBackHist": {
+        "Type": "Icon",
+        "Properties": {
+          "Icon": "Icon.BackArrow",
+          "OnSelect": "Navigate(ScrHome, ScreenTransition.Fade)",
+          "X": 10,
+          "Y": 10,
+          "Width": 40,
+          "Height": 40,
+          "Color": "RGBA(255, 255, 255, 1)"
+        }
+      },
+      "lblHistTitle": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"My Orders\"",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 22,
+          "Color": "RGBA(255, 255, 255, 1)",
+          "Fill": "RGBA(46, 134, 171, 1)",
+          "X": 0,
+          "Y": 0,
+          "Width": "Parent.Width",
+          "Height": 60,
+          "PaddingLeft": 60
+        }
+      },
+      "drpStatusFilter": {
+        "Type": "Dropdown",
+        "Properties": {
+          "Items": "[\"All\", \"Pending Approval\", \"Approved\", \"Rejected\", \"Sent to Supplier\", \"Delivered\"]",
+          "Default": "\"All\"",
+          "X": 40,
+          "Y": 75,
+          "Width": 200,
+          "Height": 40
+        }
+      },
+      "galOrders": {
+        "Type": "Gallery",
+        "Properties": {
+          "Items": "SortByColumns(Filter(SupplyOrders, cr_requestedby.'Primary Email' = varCurrentUser.Email, drpStatusFilter.Selected.Value = \"All\" Or Switch(drpStatusFilter.Selected.Value, \"Pending Approval\", cr_orderstatus.Value = 100000002, \"Approved\", cr_orderstatus.Value = 100000003, \"Rejected\", cr_orderstatus.Value = 100000004, \"Sent to Supplier\", cr_orderstatus.Value = 100000005, \"Delivered\", cr_orderstatus.Value = 100000006, true)), \"cr_orderdate\", SortOrder.Descending)",
+          "TemplateSize": 90,
+          "X": 40,
+          "Y": 130,
+          "Width": "Parent.Width - 80",
+          "Height": "Parent.Height - 150",
+          "Layout": "Vertical",
+          "ShowScrollbar": true,
+          "TemplateFill": "RGBA(255, 255, 255, 1)",
+          "TemplatePadding": 8,
+          "TemplateControls": {
+            "lblOrdNum": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.cr_name",
+                "FontWeight": "FontWeight.Bold",
+                "Size": 16,
+                "X": 15,
+                "Y": 8,
+                "Width": 150,
+                "Height": 25
+              }
+            },
+            "lblOrdDate": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "Text(ThisItem.cr_orderdate, \"mmmm dd, yyyy\")",
+                "Color": "RGBA(117, 117, 117, 1)",
+                "X": 170,
+                "Y": 8,
+                "Width": 200,
+                "Height": 25
+              }
+            },
+            "lblOrdStatus": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "Switch(ThisItem.cr_orderstatus.Value, 100000000, \"Draft\", 100000001, \"Submitted\", 100000002, \"Pending Approval\", 100000003, \"Approved\", 100000004, \"Rejected\", 100000005, \"Sent to Supplier\", 100000006, \"Delivered\", 100000007, \"Cancelled\")",
+                "Color": "Switch(ThisItem.cr_orderstatus.Value, 100000003, RGBA(76, 175, 80, 1), 100000004, RGBA(211, 47, 47, 1), 100000002, RGBA(255, 152, 0, 1), 100000006, RGBA(46, 134, 171, 1), RGBA(51, 51, 51, 1))",
+                "FontWeight": "FontWeight.Semibold",
+                "X": 400,
+                "Y": 8,
+                "Width": 180,
+                "Height": 25
+              }
+            },
+            "lblOrdTotal": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "Text(ThisItem.cr_totalamount, \"$#,##0.00\")",
+                "FontWeight": "FontWeight.Bold",
+                "Size": 16,
+                "X": 600,
+                "Y": 8,
+                "Width": 120,
+                "Height": 25,
+                "Align": "Align.Right"
+              }
+            },
+            "lblOrdItems": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.cr_totalquantity & \" items\"",
+                "Color": "RGBA(117, 117, 117, 1)",
+                "Size": 12,
+                "X": 15,
+                "Y": 40,
+                "Width": 300,
+                "Height": 20
+              }
+            },
+            "lblOrdComments": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "If(!IsBlank(ThisItem.cr_approvalcomments), \"Comment: \" & ThisItem.cr_approvalcomments, \"\")",
+                "Color": "RGBA(117, 117, 117, 1)",
+                "Size": 11,
+                "Italic": true,
+                "X": 15,
+                "Y": 60,
+                "Width": 700,
+                "Height": 20,
+                "Visible": "!IsBlank(ThisItem.cr_approvalcomments)"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

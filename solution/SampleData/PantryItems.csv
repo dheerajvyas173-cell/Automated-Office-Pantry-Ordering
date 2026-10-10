@@ -1,0 +1,16 @@
+cr_name,cr_category,cr_currentstock,cr_maxstocklevel,cr_reorderpoint,cr_unit,cr_unitprice,cr_preferredsupplier,cr_isactive
+"Premium Coffee Pods (Dark Roast)",100000000,45,200,50,100000000,0.85,"Office Coffee Co.",true
+"Premium Coffee Pods (Medium Roast)",100000000,120,200,50,100000000,0.85,"Office Coffee Co.",true
+"Decaf Coffee Pods",100000000,30,100,25,100000000,0.90,"Office Coffee Co.",true
+"Hot Chocolate Pods",100000000,60,100,25,100000000,0.75,"Office Coffee Co.",true
+"Green Tea Bags (Box of 50)",100000002,8,30,10,100000002,12.50,"Office Coffee Co.",true
+"Granola Bars (Variety Pack)",100000001,15,50,15,100000001,1.25,"SnackBox Distributors",true
+"Mixed Nuts (Individual Packs)",100000001,40,80,20,100000001,1.50,"SnackBox Distributors",true
+"Dried Fruit Packs",100000001,25,60,15,100000001,1.35,"SnackBox Distributors",true
+"Potato Chips (Assorted)",100000001,50,100,25,100000001,0.95,"SnackBox Distributors",true
+"Sparkling Water (Case of 24)",100000002,3,20,5,100000002,15.99,"SnackBox Distributors",true
+"Sugar Packets (Box of 500)",100000003,2,10,3,100000002,8.99,"Office Coffee Co.",true
+"Creamer Cups (Box of 100)",100000003,4,15,5,100000002,12.50,"Office Coffee Co.",true
+"Paper Towel Rolls",100000004,10,30,8,100000003,3.50,"CleanPro Supplies",true
+"Dish Soap (Bottle)",100000004,5,12,4,100000003,4.99,"CleanPro Supplies",true
+"Hand Soap Refills",100000004,6,15,5,100000003,6.99,"CleanPro Supplies",true

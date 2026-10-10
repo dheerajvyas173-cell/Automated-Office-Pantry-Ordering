@@ -1,0 +1,265 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+        "tier": "NotSpecified"
+      },
+      "shared_office365": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_office365",
+        "tier": "NotSpecified"
+      },
+      "shared_teams": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_teams",
+        "tier": "NotSpecified"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "Daily_Stock_Check": {
+          "type": "Recurrence",
+          "recurrence": {
+            "frequency": "Day",
+            "interval": 1,
+            "schedule": {
+              "hours": ["8"],
+              "minutes": ["0"]
+            },
+            "timeZone": "UTC"
+          },
+          "description": "Runs every day at 8:00 AM to check inventory levels"
+        }
+      },
+      "actions": {
+        "List_Low_Stock_Items": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "cr_pantryitems",
+              "$filter": "cr_isactive eq true and cr_currentstock le cr_reorderpoint",
+              "$orderby": "cr_currentstock asc",
+              "$expand": "cr_preferredsupplier($select=cr_name,cr_email)"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {}
+        },
+        "Check_If_Any_Low_Stock": {
+          "type": "If",
+          "expression": {
+            "greater": [
+              "@length(body('List_Low_Stock_Items')?['value'])",
+              0
+            ]
+          },
+          "actions": {
+            "Initialize_Alert_HTML": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "varAlertHTML",
+                    "type": "string",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "Initialize_Critical_Count": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "varCriticalCount",
+                    "type": "integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_Alert_HTML": ["Succeeded"]
+              }
+            },
+            "Initialize_OutOfStock_Count": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "varOutOfStockCount",
+                    "type": "integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_Critical_Count": ["Succeeded"]
+              }
+            },
+            "Process_Each_Item": {
+              "type": "Foreach",
+              "foreach": "@body('List_Low_Stock_Items')?['value']",
+              "actions": {
+                "Determine_Severity": {
+                  "type": "Compose",
+                  "inputs": "@if(equals(items('Process_Each_Item')?['cr_currentstock'], 0), 'OUT OF STOCK', if(less(items('Process_Each_Item')?['cr_currentstock'], div(items('Process_Each_Item')?['cr_reorderpoint'], 2)), 'CRITICAL', 'LOW'))"
+                },
+                "Determine_Row_Color": {
+                  "type": "Compose",
+                  "inputs": "@if(equals(outputs('Determine_Severity'), 'OUT OF STOCK'), '#FFE0E0', if(equals(outputs('Determine_Severity'), 'CRITICAL'), '#FFF3E0', '#FFFDE0'))",
+                  "runAfter": {
+                    "Determine_Severity": ["Succeeded"]
+                  }
+                },
+                "Determine_Text_Color": {
+                  "type": "Compose",
+                  "inputs": "@if(equals(outputs('Determine_Severity'), 'OUT OF STOCK'), 'red', if(equals(outputs('Determine_Severity'), 'CRITICAL'), '#E65100', '#F57F17'))",
+                  "runAfter": {
+                    "Determine_Row_Color": ["Succeeded"]
+                  }
+                },
+                "Append_Row_HTML": {
+                  "type": "AppendToStringVariable",
+                  "inputs": {
+                    "name": "varAlertHTML",
+                    "value": "<tr style='background-color:@{outputs('Determine_Row_Color')}'><td>@{items('Process_Each_Item')?['cr_name']}</td><td style='text-align:center'>@{items('Process_Each_Item')?['cr_currentstock']}</td><td style='text-align:center'>@{items('Process_Each_Item')?['cr_maxstocklevel']}</td><td style='text-align:center'>@{items('Process_Each_Item')?['cr_reorderpoint']}</td><td style='text-align:center;font-weight:bold;color:@{outputs('Determine_Text_Color')}'>@{outputs('Determine_Severity')}</td><td>@{coalesce(items('Process_Each_Item')?['cr_preferredsupplier']?['cr_name'], 'N/A')}</td></tr>"
+                  },
+                  "runAfter": {
+                    "Determine_Text_Color": ["Succeeded"]
+                  }
+                },
+                "Count_OutOfStock": {
+                  "type": "If",
+                  "expression": {
+                    "equals": [
+                      "@items('Process_Each_Item')?['cr_currentstock']",
+                      0
+                    ]
+                  },
+                  "actions": {
+                    "Increment_OutOfStock": {
+                      "type": "IncrementVariable",
+                      "inputs": {
+                        "name": "varOutOfStockCount",
+                        "value": 1
+                      }
+                    }
+                  },
+                  "else": {
+                    "actions": {
+                      "Check_Critical": {
+                        "type": "If",
+                        "expression": {
+                          "less": [
+                            "@items('Process_Each_Item')?['cr_currentstock']",
+                            "@div(items('Process_Each_Item')?['cr_reorderpoint'], 2)"
+                          ]
+                        },
+                        "actions": {
+                          "Increment_Critical": {
+                            "type": "IncrementVariable",
+                            "inputs": {
+                              "name": "varCriticalCount",
+                              "value": 1
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Append_Row_HTML": ["Succeeded"]
+                  }
+                }
+              },
+              "runAfter": {
+                "Initialize_OutOfStock_Count": ["Succeeded"]
+              },
+              "runtimeConfiguration": {
+                "concurrency": {
+                  "repetitions": 1
+                }
+              }
+            },
+            "Compose_Full_Alert_Email": {
+              "type": "Compose",
+              "inputs": "<div style='font-family:Arial,sans-serif;max-width:700px;'><div style='background-color:#D32F2F;color:white;padding:15px;text-align:center;'><h2 style='margin:0;'>Pantry Low Stock Alert</h2><p style='margin:5px 0 0;'>@{formatDateTime(utcNow(),'MMMM dd, yyyy')}</p></div><div style='padding:15px;background-color:#FFF3E0;border-left:4px solid #FF9800;'><p><strong>Summary:</strong> @{variables('varOutOfStockCount')} item(s) out of stock, @{variables('varCriticalCount')} item(s) at critical level, @{length(body('List_Low_Stock_Items')?['value'])} total item(s) need attention.</p></div><table border='1' cellpadding='8' cellspacing='0' style='border-collapse:collapse;width:100%;margin-top:15px;'><tr style='background-color:#424242;color:white;'><th>Item</th><th>Current Stock</th><th>Max Stock</th><th>Reorder Point</th><th>Status</th><th>Supplier</th></tr>@{variables('varAlertHTML')}</table><div style='margin-top:15px;padding:15px;background-color:#E8F5E9;border-radius:5px;'><p><strong>Action Required:</strong></p><ul><li>Review the items listed above</li><li>Create a supply order in the Pantry Supply Manager app</li><li>Contact suppliers directly for urgent OUT OF STOCK items</li></ul></div></div>",
+              "runAfter": {
+                "Process_Each_Item": ["Succeeded"]
+              }
+            },
+            "Send_Alert_Email": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_office365",
+                  "operationId": "SendEmailV2",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                },
+                "parameters": {
+                  "emailMessage/To": "@parameters('cr_LowStockAlertRecipients')",
+                  "emailMessage/Subject": "Pantry Alert: @{length(body('List_Low_Stock_Items')?['value'])} items need restocking (@{formatDateTime(utcNow(),'MMM dd')})",
+                  "emailMessage/Body": "@{outputs('Compose_Full_Alert_Email')}",
+                  "emailMessage/Importance": "@{if(greater(variables('varOutOfStockCount'), 0), 'High', 'Normal')}"
+                },
+                "authentication": "@parameters('$authentication')"
+              },
+              "runAfter": {
+                "Compose_Full_Alert_Email": ["Succeeded"]
+              }
+            },
+            "Post_Teams_Alert": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_teams",
+                  "operationId": "PostMessageToConversation",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams"
+                },
+                "parameters": {
+                  "poster": "Flow bot",
+                  "location": "Channel",
+                  "body/messageBody": "<p><strong>Pantry Low Stock Alert</strong></p><p>@{length(body('List_Low_Stock_Items')?['value'])} items need restocking. @{variables('varOutOfStockCount')} out of stock, @{variables('varCriticalCount')} critical.</p><p>Check the Pantry Supply Manager app to create orders.</p>"
+                },
+                "authentication": "@parameters('$authentication')"
+              },
+              "runAfter": {
+                "Send_Alert_Email": ["Succeeded"]
+              }
+            }
+          },
+          "else": {
+            "actions": {}
+          },
+          "runAfter": {
+            "List_Low_Stock_Items": ["Succeeded"]
+          }
+        }
+      },
+      "outputs": {}
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}

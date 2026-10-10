@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.24.4380" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>PantrySupplyOrdering</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="Pantry Supply Ordering" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Automated Office Pantry Supply Ordering System - manages inventory, orders, approvals, supplier communication, and AI-powered supply insights." languagecode="1033" />
+    </Descriptions>
+    <Version>1.0.0.0</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>PantryDev</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Pantry Dev" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description description="Publisher for Pantry Supply Ordering solution" languagecode="1033" />
+      </Descriptions>
+      <EMailAddress xsi:nil="true" />
+      <SupportingWebsiteUrl xsi:nil="true" />
+      <CustomizationPrefix>cr</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>10000</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true" />
+          <County xsi:nil="true" />
+          <Country xsi:nil="true" />
+          <Fax xsi:nil="true" />
+          <FreightTermsCode xsi:nil="true" />
+          <ImportSequenceNumber xsi:nil="true" />
+          <Latitude xsi:nil="true" />
+          <Line1 xsi:nil="true" />
+          <Line2 xsi:nil="true" />
+          <Line3 xsi:nil="true" />
+          <Longitude xsi:nil="true" />
+          <Name xsi:nil="true" />
+          <PostalCode xsi:nil="true" />
+          <PostOfficeBox xsi:nil="true" />
+          <PrimaryContactName xsi:nil="true" />
+          <ShippingMethodCode xsi:nil="true" />
+          <StateOrProvince xsi:nil="true" />
+          <Telephone1 xsi:nil="true" />
+          <Telephone2 xsi:nil="true" />
+          <Telephone3 xsi:nil="true" />
+          <TimeZoneRuleVersionNumber xsi:nil="true" />
+          <UPSZone xsi:nil="true" />
+          <UTCOffset xsi:nil="true" />
+          <UTCConversionTimeZoneCode xsi:nil="true" />
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true" />
+          <County xsi:nil="true" />
+          <Country xsi:nil="true" />
+          <Fax xsi:nil="true" />
+          <FreightTermsCode xsi:nil="true" />
+          <ImportSequenceNumber xsi:nil="true" />
+          <Latitude xsi:nil="true" />
+          <Line1 xsi:nil="true" />
+          <Line2 xsi:nil="true" />
+          <Line3 xsi:nil="true" />
+          <Longitude xsi:nil="true" />
+          <Name xsi:nil="true" />
+          <PostalCode xsi:nil="true" />
+          <PostOfficeBox xsi:nil="true" />
+          <PrimaryContactName xsi:nil="true" />
+          <ShippingMethodCode xsi:nil="true" />
+          <StateOrProvince xsi:nil="true" />
+          <Telephone1 xsi:nil="true" />
+          <Telephone2 xsi:nil="true" />
+          <Telephone3 xsi:nil="true" />
+          <TimeZoneRuleVersionNumber xsi:nil="true" />
+          <UPSZone xsi:nil="true" />
+          <UTCOffset xsi:nil="true" />
+          <UTCConversionTimeZoneCode xsi:nil="true" />
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="cr_pantryitem" behavior="0" />
+      <RootComponent type="1" schemaName="cr_supplyorder" behavior="0" />
+      <RootComponent type="1" schemaName="cr_orderlineitem" behavior="0" />
+      <RootComponent type="1" schemaName="cr_supplier" behavior="0" />
+      <RootComponent type="1" schemaName="cr_approvalhistory" behavior="0" />
+      <RootComponent type="9" schemaName="cr_itemcategory" behavior="0" />
+      <RootComponent type="9" schemaName="cr_itemunit" behavior="0" />
+      <RootComponent type="9" schemaName="cr_orderstatus" behavior="0" />
+      <RootComponent type="9" schemaName="cr_approvalstatus" behavior="0" />
+      <RootComponent type="9" schemaName="cr_approvalaction" behavior="0" />
+      <RootComponent type="9" schemaName="cr_suppliercategory" behavior="0" />
+      <RootComponent type="29" id="{20000001-0001-0001-0001-000000000001}" behavior="0" />
+      <RootComponent type="29" id="{20000001-0001-0001-0001-000000000002}" behavior="0" />
+      <RootComponent type="29" id="{20000001-0001-0001-0001-000000000003}" behavior="0" />
+      <RootComponent type="380" id="{30000001-0001-0001-0001-000000000001}" behavior="0" />
+      <RootComponent type="380" id="{30000001-0001-0001-0001-000000000002}" behavior="0" />
+      <RootComponent type="380" id="{30000001-0001-0001-0001-000000000003}" behavior="0" />
+      <RootComponent type="380" id="{30000001-0001-0001-0001-000000000004}" behavior="0" />
+    </RootComponents>
+    <MissingDependencies />
+  </SolutionManifest>
+</ImportExportXml>

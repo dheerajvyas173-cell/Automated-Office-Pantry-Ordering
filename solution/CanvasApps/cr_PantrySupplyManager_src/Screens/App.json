@@ -1,0 +1,10 @@
+{
+  "App": {
+    "OnStart": "Set(varCurrentUser, User()); Set(varBudgetThreshold, 200); Set(varQuantityThreshold, 50); ClearCollect(colOrderItems, Blank()); Clear(colOrderItems);",
+    "StartScreen": "ScrHome",
+    "Theme": "PantryTheme",
+    "Formulas": {
+      "varNeedsApproval": "Sum(colOrderItems, LineTotal) > varBudgetThreshold Or Sum(colOrderItems, Quantity) > varQuantityThreshold"
+    }
+  }
+}

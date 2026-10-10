@@ -1,0 +1,239 @@
+{
+  "Screen": {
+    "Name": "ScrDashboard",
+    "Fill": "RGBA(245, 245, 245, 1)",
+    "OnVisible": "ClearCollect(colCategoryStock, AddColumns(GroupBy(Filter(PantryItems, cr_isactive = true), \"cr_category\", \"Items\"), \"StockPercent\", Round(Sum(Items, cr_currentstock) / Sum(Items, cr_maxstocklevel) * 100, 0)))",
+    "Controls": {
+      "icoBackDash": {
+        "Type": "Icon",
+        "Properties": {
+          "Icon": "Icon.BackArrow",
+          "OnSelect": "Navigate(ScrHome, ScreenTransition.Fade)",
+          "X": 10,
+          "Y": 10,
+          "Width": 40,
+          "Height": 40,
+          "Color": "RGBA(255, 255, 255, 1)"
+        }
+      },
+      "lblDashTitle": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Inventory Dashboard\"",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 22,
+          "Color": "RGBA(255, 255, 255, 1)",
+          "Fill": "RGBA(46, 134, 171, 1)",
+          "X": 0,
+          "Y": 0,
+          "Width": "Parent.Width",
+          "Height": 60,
+          "PaddingLeft": 60
+        }
+      },
+      "rectTotalItems": {
+        "Type": "Rectangle",
+        "Properties": {
+          "Fill": "RGBA(46, 134, 171, 1)",
+          "X": 40,
+          "Y": 80,
+          "Width": 250,
+          "Height": 100,
+          "BorderRadius": 10
+        }
+      },
+      "lblTotalItemsLabel": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Total Items\"",
+          "Color": "RGBA(255, 255, 255, 0.8)",
+          "X": 40,
+          "Y": 85,
+          "Width": 250,
+          "Height": 25,
+          "Align": "Align.Center"
+        }
+      },
+      "lblTotalItemsCount": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "Text(CountRows(Filter(PantryItems, cr_isactive = true)))",
+          "Color": "RGBA(255, 255, 255, 1)",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 36,
+          "X": 40,
+          "Y": 110,
+          "Width": 250,
+          "Height": 55,
+          "Align": "Align.Center"
+        }
+      },
+      "rectLowStock": {
+        "Type": "Rectangle",
+        "Properties": {
+          "Fill": "RGBA(255, 152, 0, 1)",
+          "X": 310,
+          "Y": 80,
+          "Width": 250,
+          "Height": 100,
+          "BorderRadius": 10
+        }
+      },
+      "lblLowStockLabel": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Low Stock\"",
+          "Color": "RGBA(255, 255, 255, 0.8)",
+          "X": 310,
+          "Y": 85,
+          "Width": 250,
+          "Height": 25,
+          "Align": "Align.Center"
+        }
+      },
+      "lblLowStockCount": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "Text(CountRows(Filter(PantryItems, cr_isactive = true, cr_currentstock <= cr_reorderpoint, cr_currentstock > 0)))",
+          "Color": "RGBA(255, 255, 255, 1)",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 36,
+          "X": 310,
+          "Y": 110,
+          "Width": 250,
+          "Height": 55,
+          "Align": "Align.Center"
+        }
+      },
+      "rectOutOfStock": {
+        "Type": "Rectangle",
+        "Properties": {
+          "Fill": "RGBA(211, 47, 47, 1)",
+          "X": 580,
+          "Y": 80,
+          "Width": 250,
+          "Height": 100,
+          "BorderRadius": 10
+        }
+      },
+      "lblOutOfStockLabel": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Out of Stock\"",
+          "Color": "RGBA(255, 255, 255, 0.8)",
+          "X": 580,
+          "Y": 85,
+          "Width": 250,
+          "Height": 25,
+          "Align": "Align.Center"
+        }
+      },
+      "lblOutOfStockCount": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "Text(CountRows(Filter(PantryItems, cr_isactive = true, cr_currentstock = 0)))",
+          "Color": "RGBA(255, 255, 255, 1)",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 36,
+          "X": 580,
+          "Y": 110,
+          "Width": 250,
+          "Height": 55,
+          "Align": "Align.Center"
+        }
+      },
+      "lblBelowReorderHeader": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Items Below Reorder Point\"",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 18,
+          "X": 40,
+          "Y": 200,
+          "Width": 400,
+          "Height": 35
+        }
+      },
+      "galBelowReorder": {
+        "Type": "Gallery",
+        "Properties": {
+          "Items": "Sort(Filter(PantryItems, cr_isactive = true, cr_currentstock <= cr_reorderpoint), cr_currentstock, SortOrder.Ascending)",
+          "TemplateSize": 55,
+          "X": 40,
+          "Y": 240,
+          "Width": 800,
+          "Height": 400,
+          "Layout": "Vertical",
+          "TemplateFill": "If(ThisItem.cr_currentstock = 0, RGBA(255, 224, 224, 1), RGBA(255, 255, 255, 1))",
+          "TemplateControls": {
+            "lblDashItemName": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.cr_name",
+                "FontWeight": "FontWeight.Semibold",
+                "X": 10,
+                "Width": 250
+              }
+            },
+            "rectStockBar": {
+              "Type": "Rectangle",
+              "Properties": {
+                "Fill": "If(ThisItem.cr_currentstock / ThisItem.cr_maxstocklevel <= 0.2, RGBA(211, 47, 47, 1), If(ThisItem.cr_currentstock / ThisItem.cr_maxstocklevel <= 0.5, RGBA(255, 152, 0, 1), RGBA(76, 175, 80, 1)))",
+                "X": 270,
+                "Y": 15,
+                "Width": "(ThisItem.cr_currentstock / ThisItem.cr_maxstocklevel) * 200",
+                "Height": 20,
+                "BorderRadius": 3
+              }
+            },
+            "rectStockBarBg": {
+              "Type": "Rectangle",
+              "Properties": {
+                "Fill": "RGBA(230, 230, 230, 1)",
+                "X": 270,
+                "Y": 15,
+                "Width": 200,
+                "Height": 20,
+                "BorderRadius": 3
+              }
+            },
+            "lblDashStock": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.cr_currentstock & \" / \" & ThisItem.cr_maxstocklevel",
+                "X": 480,
+                "Width": 100,
+                "Align": "Align.Center"
+              }
+            },
+            "lblDashSuggest": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "\"Need: \" & (ThisItem.cr_maxstocklevel - ThisItem.cr_currentstock)",
+                "Color": "RGBA(211, 47, 47, 1)",
+                "FontWeight": "FontWeight.Semibold",
+                "X": 590,
+                "Width": 100
+              }
+            },
+            "btnQuickOrder": {
+              "Type": "Button",
+              "Properties": {
+                "Text": "\"Order\"",
+                "OnSelect": "Collect(colOrderItems, {ItemID: ThisItem.cr_pantryitemid, ItemName: ThisItem.cr_name, Category: ThisItem.cr_category, UnitPrice: ThisItem.cr_unitprice, Quantity: ThisItem.cr_maxstocklevel - ThisItem.cr_currentstock, Unit: ThisItem.cr_unit, LineTotal: ThisItem.cr_unitprice * (ThisItem.cr_maxstocklevel - ThisItem.cr_currentstock), CurrentStock: ThisItem.cr_currentstock, PreferredSupplier: ThisItem.cr_preferredsupplier}); Navigate(ScrNewOrder, ScreenTransition.Fade)",
+                "Fill": "RGBA(76, 175, 80, 1)",
+                "Color": "RGBA(255, 255, 255, 1)",
+                "X": 700,
+                "Y": 10,
+                "Width": 80,
+                "Height": 35,
+                "BorderRadius": 5,
+                "Size": 12
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

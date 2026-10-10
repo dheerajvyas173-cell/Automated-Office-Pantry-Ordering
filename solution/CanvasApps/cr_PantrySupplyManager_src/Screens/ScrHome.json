@@ -1,0 +1,194 @@
+{
+  "Screen": {
+    "Name": "ScrHome",
+    "Fill": "RGBA(245, 245, 245, 1)",
+    "Controls": {
+      "lblAppTitle": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Office Pantry Supply Manager\"",
+          "Font": "Font.'Segoe UI'",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 24,
+          "Color": "RGBA(255, 255, 255, 1)",
+          "Fill": "RGBA(46, 134, 171, 1)",
+          "X": 0,
+          "Y": 0,
+          "Width": "Parent.Width",
+          "Height": 60,
+          "PaddingLeft": 20,
+          "Align": "Align.Left"
+        }
+      },
+      "lblUserName": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "varCurrentUser.FullName",
+          "Color": "RGBA(255, 255, 255, 1)",
+          "X": "Parent.Width - 250",
+          "Y": 15,
+          "Width": 230,
+          "Height": 30,
+          "Align": "Align.Right"
+        }
+      },
+      "btnNewOrder": {
+        "Type": "Button",
+        "Properties": {
+          "Text": "\"New Order\"",
+          "OnSelect": "Navigate(ScrNewOrder, ScreenTransition.Fade)",
+          "X": 40,
+          "Y": 90,
+          "Width": 200,
+          "Height": 100,
+          "Fill": "RGBA(46, 134, 171, 1)",
+          "Color": "RGBA(255, 255, 255, 1)",
+          "BorderRadius": 10,
+          "FontWeight": "FontWeight.Bold",
+          "Size": 16
+        }
+      },
+      "btnMyOrders": {
+        "Type": "Button",
+        "Properties": {
+          "Text": "\"My Orders\"",
+          "OnSelect": "Navigate(ScrOrderHistory, ScreenTransition.Fade)",
+          "X": 260,
+          "Y": 90,
+          "Width": 200,
+          "Height": 100,
+          "Fill": "RGBA(76, 175, 80, 1)",
+          "Color": "RGBA(255, 255, 255, 1)",
+          "BorderRadius": 10,
+          "FontWeight": "FontWeight.Bold",
+          "Size": 16
+        }
+      },
+      "btnDashboard": {
+        "Type": "Button",
+        "Properties": {
+          "Text": "\"Inventory Dashboard\"",
+          "OnSelect": "Navigate(ScrDashboard, ScreenTransition.Fade)",
+          "X": 480,
+          "Y": 90,
+          "Width": 200,
+          "Height": 100,
+          "Fill": "RGBA(255, 152, 0, 1)",
+          "Color": "RGBA(255, 255, 255, 1)",
+          "BorderRadius": 10,
+          "FontWeight": "FontWeight.Bold",
+          "Size": 16
+        }
+      },
+      "lblLowStockHeader": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Low Stock Alerts\"",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 18,
+          "X": 40,
+          "Y": 220,
+          "Width": 400,
+          "Height": 35
+        }
+      },
+      "galLowStock": {
+        "Type": "Gallery",
+        "Properties": {
+          "Items": "Sort(Filter(PantryItems, cr_isactive = true, cr_currentstock <= cr_reorderpoint), cr_currentstock, SortOrder.Ascending)",
+          "TemplateFill": "If(ThisItem.cr_currentstock = 0, RGBA(255, 224, 224, 1), RGBA(255, 243, 224, 1))",
+          "TemplateSize": 50,
+          "X": 40,
+          "Y": 260,
+          "Width": 640,
+          "Height": 200,
+          "Layout": "Vertical",
+          "ShowNavigation": false,
+          "ShowScrollbar": true,
+          "TemplateControls": {
+            "lblItemName": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.cr_name",
+                "FontWeight": "FontWeight.Semibold",
+                "X": 10,
+                "Width": 300
+              }
+            },
+            "lblStockInfo": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.cr_currentstock & \" / \" & ThisItem.cr_maxstocklevel & \" remaining\"",
+                "Color": "If(ThisItem.cr_currentstock = 0, RGBA(211, 47, 47, 1), RGBA(230, 81, 0, 1))",
+                "X": 320,
+                "Width": 300,
+                "Align": "Align.Right"
+              }
+            }
+          }
+        }
+      },
+      "lblRecentOrdersHeader": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Recent Orders\"",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 18,
+          "X": 720,
+          "Y": 220,
+          "Width": 400,
+          "Height": 35
+        }
+      },
+      "galRecentOrders": {
+        "Type": "Gallery",
+        "Properties": {
+          "Items": "FirstN(SortByColumns(Filter(SupplyOrders, cr_requestedby.'Primary Email' = varCurrentUser.Email), \"cr_orderdate\", SortOrder.Descending), 5)",
+          "TemplateSize": 60,
+          "X": 720,
+          "Y": 260,
+          "Width": 600,
+          "Height": 200,
+          "Layout": "Vertical",
+          "TemplateControls": {
+            "lblOrderNum": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.cr_name",
+                "FontWeight": "FontWeight.Semibold",
+                "X": 10,
+                "Width": 120
+              }
+            },
+            "lblOrderDate": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "Text(ThisItem.cr_orderdate, \"mmm dd\")",
+                "X": 140,
+                "Width": 100
+              }
+            },
+            "lblOrderStatus": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "Switch(ThisItem.cr_orderstatus, 100000000, \"Draft\", 100000001, \"Submitted\", 100000002, \"Pending\", 100000003, \"Approved\", 100000004, \"Rejected\", 100000005, \"Sent\", 100000006, \"Delivered\", 100000007, \"Cancelled\")",
+                "X": 250,
+                "Width": 120
+              }
+            },
+            "lblOrderTotal": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "Text(ThisItem.cr_totalamount, \"$#,##0.00\")",
+                "FontWeight": "FontWeight.Semibold",
+                "X": 380,
+                "Width": 100,
+                "Align": "Align.Right"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

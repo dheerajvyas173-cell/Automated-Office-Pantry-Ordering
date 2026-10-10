@@ -1,0 +1,306 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+        "tier": "NotSpecified"
+      },
+      "shared_approvals": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_approvals",
+        "tier": "NotSpecified"
+      },
+      "shared_office365": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_office365",
+        "tier": "NotSpecified"
+      },
+      "shared_teams": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_teams",
+        "tier": "NotSpecified"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_order_requires_approval": {
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "subscriptionRequest/message": 3,
+              "subscriptionRequest/entityname": "cr_supplyorder",
+              "subscriptionRequest/scope": 4,
+              "subscriptionRequest/filterexpression": "cr_orderstatus eq 100000002"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "description": "Triggers when a Supply Order status is set to Pending Approval (100000002)"
+        }
+      },
+      "actions": {
+        "Get_Order_Details": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "cr_supplyorders",
+              "recordId": "@triggerOutputs()?['body/cr_supplyorderid']",
+              "$expand": "cr_supplier($select=cr_name,cr_email)"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {},
+          "description": "Retrieve the full order record with supplier details"
+        },
+        "List_Order_Line_Items": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "cr_orderlineitems",
+              "$filter": "_cr_order_value eq '@{triggerOutputs()?['body/cr_supplyorderid']}'",
+              "$expand": "cr_pantryitem($select=cr_name,cr_unit,cr_unitprice,cr_category)"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {
+            "Get_Order_Details": ["Succeeded"]
+          },
+          "description": "Get all line items for this order with item details"
+        },
+        "Build_HTML_Items_Table": {
+          "type": "Table",
+          "inputs": {
+            "from": "@body('List_Order_Line_Items')?['value']",
+            "format": "HTML",
+            "columns": [
+              {
+                "header": "Item",
+                "value": "@item()?['cr_pantryitem']?['cr_name']"
+              },
+              {
+                "header": "Quantity",
+                "value": "@item()?['cr_quantity']"
+              },
+              {
+                "header": "Unit Price",
+                "value": "@concat('$', string(item()?['cr_unitprice']))"
+              },
+              {
+                "header": "Line Total",
+                "value": "@concat('$', string(item()?['cr_linetotal']))"
+              }
+            ]
+          },
+          "runAfter": {
+            "List_Order_Line_Items": ["Succeeded"]
+          }
+        },
+        "Compose_Approval_Details": {
+          "type": "Compose",
+          "inputs": "<h2>Pantry Supply Order Approval Request</h2><table border='1' cellpadding='8' cellspacing='0' style='border-collapse:collapse;font-family:Arial;'><tr style='background-color:#4472C4;color:white;'><th>Order Number</th><th>Order Date</th><th>Total Amount</th><th>Total Quantity</th></tr><tr><td>@{outputs('Get_Order_Details')?['body/cr_name']}</td><td>@{formatDateTime(outputs('Get_Order_Details')?['body/cr_orderdate'],'MMMM dd, yyyy')}</td><td>$@{outputs('Get_Order_Details')?['body/cr_totalamount']}</td><td>@{outputs('Get_Order_Details')?['body/cr_totalquantity']}</td></tr></table><h3>Order Items:</h3>@{body('Build_HTML_Items_Table')}<p><strong>Reason for Approval:</strong> @{if(greater(outputs('Get_Order_Details')?['body/cr_totalamount'],200),'Order exceeds $200 budget threshold. ','')}@{if(greater(outputs('Get_Order_Details')?['body/cr_totalquantity'],50),'Order exceeds 50-unit quantity threshold.','')}</p><p><strong>Notes:</strong> @{outputs('Get_Order_Details')?['body/cr_notes']}</p>",
+          "runAfter": {
+            "Build_HTML_Items_Table": ["Succeeded"]
+          }
+        },
+        "Start_Approval": {
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_approvals",
+              "operationId": "StartAndWaitForAnApproval",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_approvals"
+            },
+            "parameters": {
+              "approvalType": "Basic",
+              "ApprovalCreationInput/title": "Pantry Order: @{outputs('Get_Order_Details')?['body/cr_name']} - $@{outputs('Get_Order_Details')?['body/cr_totalamount']}",
+              "ApprovalCreationInput/assignedTo": "@parameters('cr_ApproverEmail')",
+              "ApprovalCreationInput/details": "@{outputs('Compose_Approval_Details')}",
+              "ApprovalCreationInput/enableNotifications": true,
+              "ApprovalCreationInput/enableReassignment": true
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {
+            "Compose_Approval_Details": ["Succeeded"]
+          },
+          "limit": {
+            "timeout": "P3D"
+          },
+          "description": "Send approval request to office manager with 72-hour timeout"
+        },
+        "Check_Approval_Response": {
+          "type": "If",
+          "expression": {
+            "equals": [
+              "@outputs('Start_Approval')?['body/outcome']",
+              "Approve"
+            ]
+          },
+          "actions": {
+            "Update_Order_Approved": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "UpdateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "cr_supplyorders",
+                  "recordId": "@triggerOutputs()?['body/cr_supplyorderid']",
+                  "item/cr_orderstatus": 100000003,
+                  "item/cr_approvalstatus": 100000001,
+                  "item/cr_approvaldate": "@utcNow()",
+                  "item/cr_approvalcomments": "@{outputs('Start_Approval')?['body/responses']?[0]?['comments']}"
+                },
+                "authentication": "@parameters('$authentication')"
+              },
+              "description": "Set order status to Approved"
+            },
+            "Create_Approval_History_Approved": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "CreateRecord",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "cr_approvalhistories",
+                  "item/cr_action": 100000001,
+                  "item/cr_actiondate": "@utcNow()",
+                  "item/cr_comments": "@{outputs('Start_Approval')?['body/responses']?[0]?['comments']}",
+                  "item/cr_order@odata.bind": "cr_supplyorders(@{triggerOutputs()?['body/cr_supplyorderid']})"
+                },
+                "authentication": "@parameters('$authentication')"
+              },
+              "runAfter": {
+                "Update_Order_Approved": ["Succeeded"]
+              }
+            },
+            "Send_Approval_Notification": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_office365",
+                  "operationId": "SendEmailV2",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                },
+                "parameters": {
+                  "emailMessage/To": "@{outputs('Get_Order_Details')?['body/_ownerid_value@OData.Community.Display.V1.FormattedValue']}",
+                  "emailMessage/Subject": "Your pantry order @{outputs('Get_Order_Details')?['body/cr_name']} has been approved",
+                  "emailMessage/Body": "<p>Your pantry supply order <strong>@{outputs('Get_Order_Details')?['body/cr_name']}</strong> for <strong>$@{outputs('Get_Order_Details')?['body/cr_totalamount']}</strong> has been <span style='color:green;font-weight:bold;'>APPROVED</span>.</p><p>The order will now be sent to the supplier automatically.</p><p><strong>Approver Comments:</strong> @{outputs('Start_Approval')?['body/responses']?[0]?['comments']}</p>",
+                  "emailMessage/Importance": "Normal"
+                },
+                "authentication": "@parameters('$authentication')"
+              },
+              "runAfter": {
+                "Create_Approval_History_Approved": ["Succeeded"]
+              }
+            }
+          },
+          "else": {
+            "actions": {
+              "Update_Order_Rejected": {
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "host": {
+                    "connectionName": "shared_commondataserviceforapps",
+                    "operationId": "UpdateRecord",
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                  },
+                  "parameters": {
+                    "entityName": "cr_supplyorders",
+                    "recordId": "@triggerOutputs()?['body/cr_supplyorderid']",
+                    "item/cr_orderstatus": 100000004,
+                    "item/cr_approvalstatus": 100000002,
+                    "item/cr_approvaldate": "@utcNow()",
+                    "item/cr_approvalcomments": "@{outputs('Start_Approval')?['body/responses']?[0]?['comments']}"
+                  },
+                  "authentication": "@parameters('$authentication')"
+                }
+              },
+              "Create_Approval_History_Rejected": {
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "host": {
+                    "connectionName": "shared_commondataserviceforapps",
+                    "operationId": "CreateRecord",
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                  },
+                  "parameters": {
+                    "entityName": "cr_approvalhistories",
+                    "item/cr_action": 100000002,
+                    "item/cr_actiondate": "@utcNow()",
+                    "item/cr_comments": "@{outputs('Start_Approval')?['body/responses']?[0]?['comments']}",
+                    "item/cr_order@odata.bind": "cr_supplyorders(@{triggerOutputs()?['body/cr_supplyorderid']})"
+                  },
+                  "authentication": "@parameters('$authentication')"
+                },
+                "runAfter": {
+                  "Update_Order_Rejected": ["Succeeded"]
+                }
+              },
+              "Send_Rejection_Notification": {
+                "type": "OpenApiConnection",
+                "inputs": {
+                  "host": {
+                    "connectionName": "shared_office365",
+                    "operationId": "SendEmailV2",
+                    "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                  },
+                  "parameters": {
+                    "emailMessage/To": "@{outputs('Get_Order_Details')?['body/_ownerid_value@OData.Community.Display.V1.FormattedValue']}",
+                    "emailMessage/Subject": "Your pantry order @{outputs('Get_Order_Details')?['body/cr_name']} was not approved",
+                    "emailMessage/Body": "<p>Your pantry supply order <strong>@{outputs('Get_Order_Details')?['body/cr_name']}</strong> for <strong>$@{outputs('Get_Order_Details')?['body/cr_totalamount']}</strong> has been <span style='color:red;font-weight:bold;'>REJECTED</span>.</p><p><strong>Reason:</strong> @{outputs('Start_Approval')?['body/responses']?[0]?['comments']}</p><p>You can modify and resubmit the order from the Pantry Supply Manager app.</p>",
+                    "emailMessage/Importance": "Normal"
+                  },
+                  "authentication": "@parameters('$authentication')"
+                },
+                "runAfter": {
+                  "Create_Approval_History_Rejected": ["Succeeded"]
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Start_Approval": ["Succeeded"]
+          }
+        }
+      },
+      "outputs": {}
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}

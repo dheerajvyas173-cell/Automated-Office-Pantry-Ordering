@@ -1,0 +1,1209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.2.24.4380" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- ============================================================ -->
+  <!-- GLOBAL OPTION SETS (Choice Columns)                          -->
+  <!-- ============================================================ -->
+  <optionsets>
+
+    <!-- Item Category -->
+    <optionset Name="cr_itemcategory" localizedName="Item Category" xmlns="">
+      <OptionSetType>Picklist</OptionSetType>
+      <IsGlobal>true</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <options>
+        <option value="100000000">
+          <labels><label description="Coffee" languagecode="1033" /></labels>
+        </option>
+        <option value="100000001">
+          <labels><label description="Snacks" languagecode="1033" /></labels>
+        </option>
+        <option value="100000002">
+          <labels><label description="Beverages" languagecode="1033" /></labels>
+        </option>
+        <option value="100000003">
+          <labels><label description="Condiments" languagecode="1033" /></labels>
+        </option>
+        <option value="100000004">
+          <labels><label description="Cleaning Supplies" languagecode="1033" /></labels>
+        </option>
+        <option value="100000005">
+          <labels><label description="Other" languagecode="1033" /></labels>
+        </option>
+      </options>
+    </optionset>
+
+    <!-- Item Unit -->
+    <optionset Name="cr_itemunit" localizedName="Item Unit" xmlns="">
+      <OptionSetType>Picklist</OptionSetType>
+      <IsGlobal>true</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <options>
+        <option value="100000000">
+          <labels><label description="Pods" languagecode="1033" /></labels>
+        </option>
+        <option value="100000001">
+          <labels><label description="Packets" languagecode="1033" /></labels>
+        </option>
+        <option value="100000002">
+          <labels><label description="Boxes" languagecode="1033" /></labels>
+        </option>
+        <option value="100000003">
+          <labels><label description="Bottles" languagecode="1033" /></labels>
+        </option>
+        <option value="100000004">
+          <labels><label description="Units" languagecode="1033" /></labels>
+        </option>
+      </options>
+    </optionset>
+
+    <!-- Order Status -->
+    <optionset Name="cr_orderstatus" localizedName="Order Status" xmlns="">
+      <OptionSetType>Picklist</OptionSetType>
+      <IsGlobal>true</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <options>
+        <option value="100000000">
+          <labels><label description="Draft" languagecode="1033" /></labels>
+        </option>
+        <option value="100000001">
+          <labels><label description="Submitted" languagecode="1033" /></labels>
+        </option>
+        <option value="100000002">
+          <labels><label description="Pending Approval" languagecode="1033" /></labels>
+        </option>
+        <option value="100000003">
+          <labels><label description="Approved" languagecode="1033" /></labels>
+        </option>
+        <option value="100000004">
+          <labels><label description="Rejected" languagecode="1033" /></labels>
+        </option>
+        <option value="100000005">
+          <labels><label description="Sent to Supplier" languagecode="1033" /></labels>
+        </option>
+        <option value="100000006">
+          <labels><label description="Delivered" languagecode="1033" /></labels>
+        </option>
+        <option value="100000007">
+          <labels><label description="Cancelled" languagecode="1033" /></labels>
+        </option>
+      </options>
+    </optionset>
+
+    <!-- Approval Status -->
+    <optionset Name="cr_approvalstatus" localizedName="Approval Status" xmlns="">
+      <OptionSetType>Picklist</OptionSetType>
+      <IsGlobal>true</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <options>
+        <option value="100000000">
+          <labels><label description="Pending" languagecode="1033" /></labels>
+        </option>
+        <option value="100000001">
+          <labels><label description="Approved" languagecode="1033" /></labels>
+        </option>
+        <option value="100000002">
+          <labels><label description="Rejected" languagecode="1033" /></labels>
+        </option>
+      </options>
+    </optionset>
+
+    <!-- Approval Action -->
+    <optionset Name="cr_approvalaction" localizedName="Approval Action" xmlns="">
+      <OptionSetType>Picklist</OptionSetType>
+      <IsGlobal>true</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <options>
+        <option value="100000000">
+          <labels><label description="Submitted" languagecode="1033" /></labels>
+        </option>
+        <option value="100000001">
+          <labels><label description="Approved" languagecode="1033" /></labels>
+        </option>
+        <option value="100000002">
+          <labels><label description="Rejected" languagecode="1033" /></labels>
+        </option>
+        <option value="100000003">
+          <labels><label description="Escalated" languagecode="1033" /></labels>
+        </option>
+      </options>
+    </optionset>
+
+    <!-- Supplier Category (Multi-Select) -->
+    <optionset Name="cr_suppliercategory" localizedName="Supplier Category" xmlns="">
+      <OptionSetType>Picklist</OptionSetType>
+      <IsGlobal>true</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <options>
+        <option value="100000000">
+          <labels><label description="Coffee" languagecode="1033" /></labels>
+        </option>
+        <option value="100000001">
+          <labels><label description="Snacks" languagecode="1033" /></labels>
+        </option>
+        <option value="100000002">
+          <labels><label description="Beverages" languagecode="1033" /></labels>
+        </option>
+        <option value="100000003">
+          <labels><label description="General" languagecode="1033" /></labels>
+        </option>
+      </options>
+    </optionset>
+
+  </optionsets>
+
+  <!-- ============================================================ -->
+  <!-- ENTITY DEFINITIONS                                           -->
+  <!-- ============================================================ -->
+  <Entities>
+
+    <!-- ========================================================== -->
+    <!-- ENTITY: Supplier (cr_supplier)                             -->
+    <!-- ========================================================== -->
+    <Entity Name="cr_supplier" ObjectTypeCode="10001">
+      <EntityInfo>
+        <entity Name="cr_supplier">
+          <LocalizedNames>
+            <LocalizedName description="Supplier" languagecode="1033" />
+          </LocalizedNames>
+          <LocalizedCollectionNames>
+            <LocalizedCollectionName description="Suppliers" languagecode="1033" />
+          </LocalizedCollectionNames>
+          <Descriptions>
+            <Description description="Supplier contact information and details" languagecode="1033" />
+          </Descriptions>
+          <EntitySetName>cr_suppliers</EntitySetName>
+          <IsBPFEntity>0</IsBPFEntity>
+          <IsCustomEntity>1</IsCustomEntity>
+          <IsActivity>0</IsActivity>
+          <ActivityTypeMask xsi:nil="true" />
+          <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
+          <IsAvailableOffline>1</IsAvailableOffline>
+          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
+          <CanCreateAttributes>1</CanCreateAttributes>
+          <CanCreateForms>1</CanCreateForms>
+          <CanCreateViews>1</CanCreateViews>
+          <CanCreateCharts>1</CanCreateCharts>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsConnectionsEnabled>0</IsConnectionsEnabled>
+          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+          <IsDuplicateDetectionEnabled>1</IsDuplicateDetectionEnabled>
+          <IsMailMergeEnabled>0</IsMailMergeEnabled>
+          <IsEnabledForCharts>1</IsEnabledForCharts>
+          <HasNotes>1</HasNotes>
+          <HasActivities>0</HasActivities>
+          <HasFeedback>0</HasFeedback>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
+          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+          <IsManaged>0</IsManaged>
+          <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
+          <IsSLAEnabled>0</IsSLAEnabled>
+          <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
+          <EnforceStateTransitions>0</EnforceStateTransitions>
+          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+          <IconSmallName xsi:nil="true" />
+          <IconMediumName xsi:nil="true" />
+          <IconLargeName xsi:nil="true" />
+          <IconVectorName xsi:nil="true" />
+        </entity>
+      </EntityInfo>
+      <attributes>
+        <attribute PhysicalName="cr_name">
+          <Type>nvarchar</Type>
+          <Name>cr_name</Name>
+          <LogicalName>cr_name</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Supplier Name" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Company name of the supplier" languagecode="1033" />
+          </Descriptions>
+          <MaxLength>200</MaxLength>
+          <ImeMode>auto</ImeMode>
+          <ValidForReadApi>1</ValidForReadApi>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsPrimaryName>1</IsPrimaryName>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_contactperson">
+          <Type>nvarchar</Type>
+          <Name>cr_contactperson</Name>
+          <LogicalName>cr_contactperson</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Contact Person" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Primary contact name" languagecode="1033" />
+          </Descriptions>
+          <MaxLength>100</MaxLength>
+          <ImeMode>auto</ImeMode>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_email">
+          <Type>nvarchar</Type>
+          <Name>cr_email</Name>
+          <LogicalName>cr_email</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Email" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Order submission email address" languagecode="1033" />
+          </Descriptions>
+          <MaxLength>200</MaxLength>
+          <FormatName>Email</FormatName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_phone">
+          <Type>nvarchar</Type>
+          <Name>cr_phone</Name>
+          <LogicalName>cr_phone</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Phone" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>50</MaxLength>
+          <FormatName>Phone</FormatName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_address">
+          <Type>ntext</Type>
+          <Name>cr_address</Name>
+          <LogicalName>cr_address</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Address" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>2000</MaxLength>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_category">
+          <Type>multiselectpicklist</Type>
+          <Name>cr_category</Name>
+          <LogicalName>cr_category</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Category" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Supply categories this supplier covers" languagecode="1033" />
+          </Descriptions>
+          <OptionSetName>cr_suppliercategory</OptionSetName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_leadtimedays">
+          <Type>int</Type>
+          <Name>cr_leadtimedays</Name>
+          <LogicalName>cr_leadtimedays</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Lead Time (Days)" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Typical delivery time in business days" languagecode="1033" />
+          </Descriptions>
+          <MinValue>0</MinValue>
+          <MaxValue>365</MaxValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_isactive">
+          <Type>bit</Type>
+          <Name>cr_isactive</Name>
+          <LogicalName>cr_isactive</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Is Active" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Whether currently doing business with this supplier" languagecode="1033" />
+          </Descriptions>
+          <DefaultValue>1</DefaultValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_contractenddate">
+          <Type>datetime</Type>
+          <Name>cr_contractenddate</Name>
+          <LogicalName>cr_contractenddate</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Contract End Date" languagecode="1033" />
+          </DisplayNames>
+          <Format>DateOnly</Format>
+          <Behavior>UserLocal</Behavior>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_notes">
+          <Type>ntext</Type>
+          <Name>cr_notes</Name>
+          <LogicalName>cr_notes</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Notes" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>4000</MaxLength>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+      </attributes>
+      <forms />
+      <views />
+    </Entity>
+
+    <!-- ========================================================== -->
+    <!-- ENTITY: Pantry Item (cr_pantryitem)                        -->
+    <!-- ========================================================== -->
+    <Entity Name="cr_pantryitem" ObjectTypeCode="10002">
+      <EntityInfo>
+        <entity Name="cr_pantryitem">
+          <LocalizedNames>
+            <LocalizedName description="Pantry Item" languagecode="1033" />
+          </LocalizedNames>
+          <LocalizedCollectionNames>
+            <LocalizedCollectionName description="Pantry Items" languagecode="1033" />
+          </LocalizedCollectionNames>
+          <Descriptions>
+            <Description description="Inventory catalog of all pantry supplies" languagecode="1033" />
+          </Descriptions>
+          <EntitySetName>cr_pantryitems</EntitySetName>
+          <IsBPFEntity>0</IsBPFEntity>
+          <IsCustomEntity>1</IsCustomEntity>
+          <IsActivity>0</IsActivity>
+          <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
+          <IsAvailableOffline>1</IsAvailableOffline>
+          <CanCreateAttributes>1</CanCreateAttributes>
+          <CanCreateForms>1</CanCreateForms>
+          <CanCreateViews>1</CanCreateViews>
+          <CanCreateCharts>1</CanCreateCharts>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsDuplicateDetectionEnabled>1</IsDuplicateDetectionEnabled>
+          <IsEnabledForCharts>1</IsEnabledForCharts>
+          <HasNotes>1</HasNotes>
+          <HasActivities>0</HasActivities>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+          <IsManaged>0</IsManaged>
+          <EnforceStateTransitions>0</EnforceStateTransitions>
+        </entity>
+      </EntityInfo>
+      <attributes>
+        <attribute PhysicalName="cr_name">
+          <Type>nvarchar</Type>
+          <Name>cr_name</Name>
+          <LogicalName>cr_name</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Item Name" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Name of the supply item" languagecode="1033" />
+          </Descriptions>
+          <MaxLength>100</MaxLength>
+          <IsPrimaryName>1</IsPrimaryName>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        </attribute>
+        <attribute PhysicalName="cr_category">
+          <Type>picklist</Type>
+          <Name>cr_category</Name>
+          <LogicalName>cr_category</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Category" languagecode="1033" />
+          </DisplayNames>
+          <OptionSetName>cr_itemcategory</OptionSetName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_currentstock">
+          <Type>int</Type>
+          <Name>cr_currentstock</Name>
+          <LogicalName>cr_currentstock</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Current Stock" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Current quantity in stock" languagecode="1033" />
+          </Descriptions>
+          <MinValue>0</MinValue>
+          <MaxValue>999999</MaxValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_maxstocklevel">
+          <Type>int</Type>
+          <Name>cr_maxstocklevel</Name>
+          <LogicalName>cr_maxstocklevel</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Max Stock Level" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Maximum storage capacity" languagecode="1033" />
+          </Descriptions>
+          <MinValue>1</MinValue>
+          <MaxValue>999999</MaxValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_reorderpoint">
+          <Type>int</Type>
+          <Name>cr_reorderpoint</Name>
+          <LogicalName>cr_reorderpoint</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Reorder Point" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Stock level that triggers a reorder alert" languagecode="1033" />
+          </Descriptions>
+          <MinValue>0</MinValue>
+          <MaxValue>999999</MaxValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_unit">
+          <Type>picklist</Type>
+          <Name>cr_unit</Name>
+          <LogicalName>cr_unit</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Unit" languagecode="1033" />
+          </DisplayNames>
+          <OptionSetName>cr_itemunit</OptionSetName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_unitprice">
+          <Type>money</Type>
+          <Name>cr_unitprice</Name>
+          <LogicalName>cr_unitprice</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Unit Price" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Price per unit from supplier" languagecode="1033" />
+          </Descriptions>
+          <MinValue>0</MinValue>
+          <MaxValue>999999</MaxValue>
+          <Precision>2</Precision>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_preferredsupplier">
+          <Type>lookup</Type>
+          <Name>cr_preferredsupplier</Name>
+          <LogicalName>cr_preferredsupplier</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Preferred Supplier" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Default supplier for this item" languagecode="1033" />
+          </Descriptions>
+          <LookupTypes>
+            <LookupType id="10001">cr_supplier</LookupType>
+          </LookupTypes>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_lastordereddate">
+          <Type>datetime</Type>
+          <Name>cr_lastordereddate</Name>
+          <LogicalName>cr_lastordereddate</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Last Ordered Date" languagecode="1033" />
+          </DisplayNames>
+          <Format>DateOnly</Format>
+          <Behavior>UserLocal</Behavior>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_lastrestockeddate">
+          <Type>datetime</Type>
+          <Name>cr_lastrestockeddate</Name>
+          <LogicalName>cr_lastrestockeddate</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Last Restocked Date" languagecode="1033" />
+          </DisplayNames>
+          <Format>DateOnly</Format>
+          <Behavior>UserLocal</Behavior>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_isactive">
+          <Type>bit</Type>
+          <Name>cr_isactive</Name>
+          <LogicalName>cr_isactive</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Is Active" languagecode="1033" />
+          </DisplayNames>
+          <DefaultValue>1</DefaultValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+      </attributes>
+      <EntityRelationships>
+        <EntityRelationship Name="cr_supplier_pantryitem_preferredsupplier">
+          <EntityRelationshipType>OneToMany</EntityRelationshipType>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsHierarchical>0</IsHierarchical>
+          <ReferencingEntityName>cr_pantryitem</ReferencingEntityName>
+          <ReferencedEntityName>cr_supplier</ReferencedEntityName>
+          <ReferencingAttributeName>cr_preferredsupplier</ReferencingAttributeName>
+          <CascadeAssign>NoCascade</CascadeAssign>
+          <CascadeDelete>RemoveLink</CascadeDelete>
+          <CascadeReparent>NoCascade</CascadeReparent>
+          <CascadeShare>NoCascade</CascadeShare>
+          <CascadeUnshare>NoCascade</CascadeUnshare>
+          <CascadeRollupView>NoCascade</CascadeRollupView>
+        </EntityRelationship>
+      </EntityRelationships>
+      <forms />
+      <views />
+    </Entity>
+
+    <!-- ========================================================== -->
+    <!-- ENTITY: Supply Order (cr_supplyorder)                      -->
+    <!-- ========================================================== -->
+    <Entity Name="cr_supplyorder" ObjectTypeCode="10003">
+      <EntityInfo>
+        <entity Name="cr_supplyorder">
+          <LocalizedNames>
+            <LocalizedName description="Supply Order" languagecode="1033" />
+          </LocalizedNames>
+          <LocalizedCollectionNames>
+            <LocalizedCollectionName description="Supply Orders" languagecode="1033" />
+          </LocalizedCollectionNames>
+          <Descriptions>
+            <Description description="Supply order requests and their approval status" languagecode="1033" />
+          </Descriptions>
+          <EntitySetName>cr_supplyorders</EntitySetName>
+          <IsBPFEntity>0</IsBPFEntity>
+          <IsCustomEntity>1</IsCustomEntity>
+          <IsActivity>0</IsActivity>
+          <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+          <IsAvailableOffline>1</IsAvailableOffline>
+          <CanCreateAttributes>1</CanCreateAttributes>
+          <CanCreateForms>1</CanCreateForms>
+          <CanCreateViews>1</CanCreateViews>
+          <CanCreateCharts>1</CanCreateCharts>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
+          <IsEnabledForCharts>1</IsEnabledForCharts>
+          <HasNotes>1</HasNotes>
+          <HasActivities>0</HasActivities>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+          <IsManaged>0</IsManaged>
+          <AutoCreateAccessTeams>0</AutoCreateAccessTeams>
+        </entity>
+      </EntityInfo>
+      <attributes>
+        <attribute PhysicalName="cr_name">
+          <Type>nvarchar</Type>
+          <Name>cr_name</Name>
+          <LogicalName>cr_name</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Order Number" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>20</MaxLength>
+          <AutoNumberFormat>ORD-{SEQNUM:5}</AutoNumberFormat>
+          <IsPrimaryName>1</IsPrimaryName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_orderdate">
+          <Type>datetime</Type>
+          <Name>cr_orderdate</Name>
+          <LogicalName>cr_orderdate</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Order Date" languagecode="1033" />
+          </DisplayNames>
+          <Format>DateAndTime</Format>
+          <Behavior>UserLocal</Behavior>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_orderstatus">
+          <Type>picklist</Type>
+          <Name>cr_orderstatus</Name>
+          <LogicalName>cr_orderstatus</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Order Status" languagecode="1033" />
+          </DisplayNames>
+          <OptionSetName>cr_orderstatus</OptionSetName>
+          <DefaultValue>100000000</DefaultValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_totalamount">
+          <Type>money</Type>
+          <Name>cr_totalamount</Name>
+          <LogicalName>cr_totalamount</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Total Amount" languagecode="1033" />
+          </DisplayNames>
+          <MinValue>0</MinValue>
+          <MaxValue>9999999</MaxValue>
+          <Precision>2</Precision>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_totalquantity">
+          <Type>int</Type>
+          <Name>cr_totalquantity</Name>
+          <LogicalName>cr_totalquantity</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Total Quantity" languagecode="1033" />
+          </DisplayNames>
+          <MinValue>0</MinValue>
+          <MaxValue>999999</MaxValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_requiresapproval">
+          <Type>bit</Type>
+          <Name>cr_requiresapproval</Name>
+          <LogicalName>cr_requiresapproval</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Requires Approval" languagecode="1033" />
+          </DisplayNames>
+          <DefaultValue>0</DefaultValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_approvalstatus">
+          <Type>picklist</Type>
+          <Name>cr_approvalstatus</Name>
+          <LogicalName>cr_approvalstatus</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Approval Status" languagecode="1033" />
+          </DisplayNames>
+          <OptionSetName>cr_approvalstatus</OptionSetName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_approvaldate">
+          <Type>datetime</Type>
+          <Name>cr_approvaldate</Name>
+          <LogicalName>cr_approvaldate</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Approval Date" languagecode="1033" />
+          </DisplayNames>
+          <Format>DateAndTime</Format>
+          <Behavior>UserLocal</Behavior>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_approvalcomments">
+          <Type>ntext</Type>
+          <Name>cr_approvalcomments</Name>
+          <LogicalName>cr_approvalcomments</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Approval Comments" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>4000</MaxLength>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_supplier">
+          <Type>lookup</Type>
+          <Name>cr_supplier</Name>
+          <LogicalName>cr_supplier</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Supplier" languagecode="1033" />
+          </DisplayNames>
+          <LookupTypes>
+            <LookupType id="10001">cr_supplier</LookupType>
+          </LookupTypes>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_supplieremailsent">
+          <Type>bit</Type>
+          <Name>cr_supplieremailsent</Name>
+          <LogicalName>cr_supplieremailsent</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Supplier Email Sent" languagecode="1033" />
+          </DisplayNames>
+          <DefaultValue>0</DefaultValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_expecteddelivery">
+          <Type>datetime</Type>
+          <Name>cr_expecteddelivery</Name>
+          <LogicalName>cr_expecteddelivery</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Expected Delivery" languagecode="1033" />
+          </DisplayNames>
+          <Format>DateOnly</Format>
+          <Behavior>UserLocal</Behavior>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        </attribute>
+        <attribute PhysicalName="cr_deliverydate">
+          <Type>datetime</Type>
+          <Name>cr_deliverydate</Name>
+          <LogicalName>cr_deliverydate</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Delivery Date" languagecode="1033" />
+          </DisplayNames>
+          <Format>DateOnly</Format>
+          <Behavior>UserLocal</Behavior>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        </attribute>
+        <attribute PhysicalName="cr_notes">
+          <Type>ntext</Type>
+          <Name>cr_notes</Name>
+          <LogicalName>cr_notes</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Notes" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>4000</MaxLength>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        </attribute>
+      </attributes>
+      <EntityRelationships>
+        <EntityRelationship Name="cr_supplier_supplyorder">
+          <EntityRelationshipType>OneToMany</EntityRelationshipType>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <ReferencingEntityName>cr_supplyorder</ReferencingEntityName>
+          <ReferencedEntityName>cr_supplier</ReferencedEntityName>
+          <ReferencingAttributeName>cr_supplier</ReferencingAttributeName>
+          <CascadeAssign>NoCascade</CascadeAssign>
+          <CascadeDelete>RemoveLink</CascadeDelete>
+          <CascadeReparent>NoCascade</CascadeReparent>
+          <CascadeShare>NoCascade</CascadeShare>
+          <CascadeUnshare>NoCascade</CascadeUnshare>
+        </EntityRelationship>
+      </EntityRelationships>
+      <forms />
+      <views />
+    </Entity>
+
+    <!-- ========================================================== -->
+    <!-- ENTITY: Order Line Item (cr_orderlineitem)                 -->
+    <!-- ========================================================== -->
+    <Entity Name="cr_orderlineitem" ObjectTypeCode="10004">
+      <EntityInfo>
+        <entity Name="cr_orderlineitem">
+          <LocalizedNames>
+            <LocalizedName description="Order Line Item" languagecode="1033" />
+          </LocalizedNames>
+          <LocalizedCollectionNames>
+            <LocalizedCollectionName description="Order Line Items" languagecode="1033" />
+          </LocalizedCollectionNames>
+          <Descriptions>
+            <Description description="Individual items within a supply order" languagecode="1033" />
+          </Descriptions>
+          <EntitySetName>cr_orderlineitems</EntitySetName>
+          <IsBPFEntity>0</IsBPFEntity>
+          <IsCustomEntity>1</IsCustomEntity>
+          <IsActivity>0</IsActivity>
+          <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
+          <IsAvailableOffline>1</IsAvailableOffline>
+          <CanCreateAttributes>1</CanCreateAttributes>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsEnabledForCharts>1</IsEnabledForCharts>
+          <HasNotes>0</HasNotes>
+          <HasActivities>0</HasActivities>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsManaged>0</IsManaged>
+          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+        </entity>
+      </EntityInfo>
+      <attributes>
+        <attribute PhysicalName="cr_name">
+          <Type>nvarchar</Type>
+          <Name>cr_name</Name>
+          <LogicalName>cr_name</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Line Item" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>100</MaxLength>
+          <IsPrimaryName>1</IsPrimaryName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        </attribute>
+        <attribute PhysicalName="cr_order">
+          <Type>lookup</Type>
+          <Name>cr_order</Name>
+          <LogicalName>cr_order</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Order" languagecode="1033" />
+          </DisplayNames>
+          <LookupTypes>
+            <LookupType id="10003">cr_supplyorder</LookupType>
+          </LookupTypes>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_pantryitem">
+          <Type>lookup</Type>
+          <Name>cr_pantryitem</Name>
+          <LogicalName>cr_pantryitem</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Pantry Item" languagecode="1033" />
+          </DisplayNames>
+          <LookupTypes>
+            <LookupType id="10002">cr_pantryitem</LookupType>
+          </LookupTypes>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_quantity">
+          <Type>int</Type>
+          <Name>cr_quantity</Name>
+          <LogicalName>cr_quantity</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Quantity" languagecode="1033" />
+          </DisplayNames>
+          <MinValue>1</MinValue>
+          <MaxValue>999999</MaxValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_unitprice">
+          <Type>money</Type>
+          <Name>cr_unitprice</Name>
+          <LogicalName>cr_unitprice</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Unit Price" languagecode="1033" />
+          </DisplayNames>
+          <MinValue>0</MinValue>
+          <MaxValue>999999</MaxValue>
+          <Precision>2</Precision>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_linetotal">
+          <Type>money</Type>
+          <Name>cr_linetotal</Name>
+          <LogicalName>cr_linetotal</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Line Total" languagecode="1033" />
+          </DisplayNames>
+          <MinValue>0</MinValue>
+          <MaxValue>9999999</MaxValue>
+          <Precision>2</Precision>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_currentstockatorder">
+          <Type>int</Type>
+          <Name>cr_currentstockatorder</Name>
+          <LogicalName>cr_currentstockatorder</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Current Stock at Order" languagecode="1033" />
+          </DisplayNames>
+          <Descriptions>
+            <Description description="Snapshot of stock level when this order was placed" languagecode="1033" />
+          </Descriptions>
+          <MinValue>0</MinValue>
+          <MaxValue>999999</MaxValue>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        </attribute>
+      </attributes>
+      <EntityRelationships>
+        <EntityRelationship Name="cr_supplyorder_orderlineitem">
+          <EntityRelationshipType>OneToMany</EntityRelationshipType>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
+          <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
+          <ReferencingAttributeName>cr_order</ReferencingAttributeName>
+          <CascadeAssign>NoCascade</CascadeAssign>
+          <CascadeDelete>Cascade</CascadeDelete>
+          <CascadeReparent>NoCascade</CascadeReparent>
+          <CascadeShare>NoCascade</CascadeShare>
+          <CascadeUnshare>NoCascade</CascadeUnshare>
+        </EntityRelationship>
+        <EntityRelationship Name="cr_pantryitem_orderlineitem">
+          <EntityRelationshipType>OneToMany</EntityRelationshipType>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
+          <ReferencedEntityName>cr_pantryitem</ReferencedEntityName>
+          <ReferencingAttributeName>cr_pantryitem</ReferencingAttributeName>
+          <CascadeAssign>NoCascade</CascadeAssign>
+          <CascadeDelete>RemoveLink</CascadeDelete>
+          <CascadeReparent>NoCascade</CascadeReparent>
+          <CascadeShare>NoCascade</CascadeShare>
+          <CascadeUnshare>NoCascade</CascadeUnshare>
+        </EntityRelationship>
+      </EntityRelationships>
+      <forms />
+      <views />
+    </Entity>
+
+    <!-- ========================================================== -->
+    <!-- ENTITY: Approval History (cr_approvalhistory)              -->
+    <!-- ========================================================== -->
+    <Entity Name="cr_approvalhistory" ObjectTypeCode="10005">
+      <EntityInfo>
+        <entity Name="cr_approvalhistory">
+          <LocalizedNames>
+            <LocalizedName description="Approval History" languagecode="1033" />
+          </LocalizedNames>
+          <LocalizedCollectionNames>
+            <LocalizedCollectionName description="Approval History" languagecode="1033" />
+          </LocalizedCollectionNames>
+          <Descriptions>
+            <Description description="Audit trail for all approval decisions" languagecode="1033" />
+          </Descriptions>
+          <EntitySetName>cr_approvalhistories</EntitySetName>
+          <IsBPFEntity>0</IsBPFEntity>
+          <IsCustomEntity>1</IsCustomEntity>
+          <IsActivity>0</IsActivity>
+          <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
+          <IsAvailableOffline>1</IsAvailableOffline>
+          <CanCreateAttributes>1</CanCreateAttributes>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsEnabledForCharts>1</IsEnabledForCharts>
+          <HasNotes>0</HasNotes>
+          <HasActivities>0</HasActivities>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsManaged>0</IsManaged>
+          <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+        </entity>
+      </EntityInfo>
+      <attributes>
+        <attribute PhysicalName="cr_name">
+          <Type>nvarchar</Type>
+          <Name>cr_name</Name>
+          <LogicalName>cr_name</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Record" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>100</MaxLength>
+          <AutoNumberFormat>APR-{SEQNUM:5}</AutoNumberFormat>
+          <IsPrimaryName>1</IsPrimaryName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        </attribute>
+        <attribute PhysicalName="cr_order">
+          <Type>lookup</Type>
+          <Name>cr_order</Name>
+          <LogicalName>cr_order</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Order" languagecode="1033" />
+          </DisplayNames>
+          <LookupTypes>
+            <LookupType id="10003">cr_supplyorder</LookupType>
+          </LookupTypes>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_action">
+          <Type>picklist</Type>
+          <Name>cr_action</Name>
+          <LogicalName>cr_action</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Action" languagecode="1033" />
+          </DisplayNames>
+          <OptionSetName>cr_approvalaction</OptionSetName>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_actiondate">
+          <Type>datetime</Type>
+          <Name>cr_actiondate</Name>
+          <LogicalName>cr_actiondate</LogicalName>
+          <RequiredLevel>applicationrequired</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Action Date" languagecode="1033" />
+          </DisplayNames>
+          <Format>DateAndTime</Format>
+          <Behavior>UserLocal</Behavior>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+        <attribute PhysicalName="cr_comments">
+          <Type>ntext</Type>
+          <Name>cr_comments</Name>
+          <LogicalName>cr_comments</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayNames>
+            <DisplayName description="Comments" languagecode="1033" />
+          </DisplayNames>
+          <MaxLength>4000</MaxLength>
+          <IsCustomizable>1</IsCustomizable>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsAuditEnabled>1</IsAuditEnabled>
+        </attribute>
+      </attributes>
+      <EntityRelationships>
+        <EntityRelationship Name="cr_supplyorder_approvalhistory">
+          <EntityRelationshipType>OneToMany</EntityRelationshipType>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <ReferencingEntityName>cr_approvalhistory</ReferencingEntityName>
+          <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
+          <ReferencingAttributeName>cr_order</ReferencingAttributeName>
+          <CascadeAssign>NoCascade</CascadeAssign>
+          <CascadeDelete>Cascade</CascadeDelete>
+          <CascadeReparent>NoCascade</CascadeReparent>
+          <CascadeShare>NoCascade</CascadeShare>
+          <CascadeUnshare>NoCascade</CascadeUnshare>
+        </EntityRelationship>
+      </EntityRelationships>
+      <forms />
+      <views />
+    </Entity>
+
+  </Entities>
+
+  <!-- ============================================================ -->
+  <!-- ENVIRONMENT VARIABLE DEFINITIONS                             -->
+  <!-- ============================================================ -->
+  <environmentvariabledefinitions>
+    <environmentvariabledefinition>
+      <schemaname>cr_BudgetApprovalThreshold</schemaname>
+      <displayname>Budget Approval Threshold</displayname>
+      <description>Order total amount above which manager approval is required (in dollars)</description>
+      <type>100000002</type>
+      <defaultvalue>200</defaultvalue>
+      <introducedversion>1.0.0.0</introducedversion>
+      <iscustomizable>1</iscustomizable>
+    </environmentvariabledefinition>
+    <environmentvariabledefinition>
+      <schemaname>cr_QuantityApprovalThreshold</schemaname>
+      <displayname>Quantity Approval Threshold</displayname>
+      <description>Order total quantity above which manager approval is required</description>
+      <type>100000002</type>
+      <defaultvalue>50</defaultvalue>
+      <introducedversion>1.0.0.0</introducedversion>
+      <iscustomizable>1</iscustomizable>
+    </environmentvariabledefinition>
+    <environmentvariabledefinition>
+      <schemaname>cr_ApproverEmail</schemaname>
+      <displayname>Approver Email</displayname>
+      <description>Email address of the office manager who approves orders</description>
+      <type>100000000</type>
+      <defaultvalue>officemanager@company.com</defaultvalue>
+      <introducedversion>1.0.0.0</introducedversion>
+      <iscustomizable>1</iscustomizable>
+    </environmentvariabledefinition>
+    <environmentvariabledefinition>
+      <schemaname>cr_LowStockAlertRecipients</schemaname>
+      <displayname>Low Stock Alert Recipients</displayname>
+      <description>Semicolon-separated email addresses for low stock alert notifications</description>
+      <type>100000000</type>
+      <defaultvalue>cafeteriastaff@company.com;officemanager@company.com</defaultvalue>
+      <introducedversion>1.0.0.0</introducedversion>
+      <iscustomizable>1</iscustomizable>
+    </environmentvariabledefinition>
+  </environmentvariabledefinitions>
+
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+
+</ImportExportXml>

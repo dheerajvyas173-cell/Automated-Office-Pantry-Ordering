@@ -1,0 +1,195 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+        "tier": "NotSpecified"
+      },
+      "shared_office365": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_office365",
+        "tier": "NotSpecified"
+      },
+      "shared_teams": {
+        "connectionName": "",
+        "source": "Invoker",
+        "id": "/providers/Microsoft.PowerApps/apis/shared_teams",
+        "tier": "NotSpecified"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_order_is_approved": {
+          "type": "OpenApiConnectionWebhook",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "SubscribeWebhookTrigger",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "subscriptionRequest/message": 3,
+              "subscriptionRequest/entityname": "cr_supplyorder",
+              "subscriptionRequest/scope": 4,
+              "subscriptionRequest/filterexpression": "cr_orderstatus eq 100000003 and cr_supplieremailsent eq false",
+              "subscriptionRequest/filteringattributes": "cr_orderstatus"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "description": "Triggers when order status changes to Approved and supplier email has not been sent yet"
+        }
+      },
+      "actions": {
+        "Get_Order_With_Supplier": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "GetItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "cr_supplyorders",
+              "recordId": "@triggerOutputs()?['body/cr_supplyorderid']",
+              "$expand": "cr_supplier($select=cr_name,cr_email,cr_contactperson,cr_leadtimedays)"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {}
+        },
+        "List_Line_Items": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "cr_orderlineitems",
+              "$filter": "_cr_order_value eq '@{triggerOutputs()?['body/cr_supplyorderid']}'",
+              "$expand": "cr_pantryitem($select=cr_name,cr_unit,cr_category)"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {
+            "Get_Order_With_Supplier": ["Succeeded"]
+          }
+        },
+        "Build_Items_Table": {
+          "type": "Table",
+          "inputs": {
+            "from": "@body('List_Line_Items')?['value']",
+            "format": "HTML",
+            "columns": [
+              {
+                "header": "Item",
+                "value": "@item()?['cr_pantryitem']?['cr_name']"
+              },
+              {
+                "header": "Quantity",
+                "value": "@item()?['cr_quantity']"
+              },
+              {
+                "header": "Unit Price",
+                "value": "@concat('$', string(item()?['cr_unitprice']))"
+              },
+              {
+                "header": "Line Total",
+                "value": "@concat('$', string(item()?['cr_linetotal']))"
+              }
+            ]
+          },
+          "runAfter": {
+            "List_Line_Items": ["Succeeded"]
+          }
+        },
+        "Compose_Supplier_Email": {
+          "type": "Compose",
+          "inputs": "<!DOCTYPE html><html><body style='font-family:Arial,sans-serif;max-width:700px;margin:0 auto;'><div style='background-color:#2E86AB;color:white;padding:20px;text-align:center;'><h1 style='margin:0;'>Supply Order Request</h1></div><div style='padding:20px;'><table style='width:100%;margin-bottom:20px;'><tr><td><strong>Order Number:</strong></td><td>@{outputs('Get_Order_With_Supplier')?['body/cr_name']}</td><td><strong>Order Date:</strong></td><td>@{formatDateTime(outputs('Get_Order_With_Supplier')?['body/cr_orderdate'],'MMMM dd, yyyy')}</td></tr></table><h3>Items Requested:</h3>@{body('Build_Items_Table')}<table style='width:100%;margin-top:10px;'><tr style='font-size:18px;font-weight:bold;'><td style='text-align:right;'>Total: $@{outputs('Get_Order_With_Supplier')?['body/cr_totalamount']}</td></tr></table><div style='background-color:#f0f0f0;padding:15px;margin-top:20px;border-radius:5px;'><p><strong>Delivery Instructions:</strong></p><ul><li>Please deliver to the office cafeteria loading dock</li><li>Delivery hours: Monday-Friday, 8:00 AM - 5:00 PM</li></ul></div><p style='margin-top:20px;'><strong>Notes:</strong> @{outputs('Get_Order_With_Supplier')?['body/cr_notes']}</p><p>Please confirm receipt of this order and provide an estimated delivery date.</p></div><div style='background-color:#333;color:white;padding:10px;text-align:center;font-size:12px;'><p>Automated order - Ref: @{outputs('Get_Order_With_Supplier')?['body/cr_name']}</p></div></body></html>",
+          "runAfter": {
+            "Build_Items_Table": ["Succeeded"]
+          }
+        },
+        "Send_Supplier_Email": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_office365",
+              "operationId": "SendEmailV2",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+            },
+            "parameters": {
+              "emailMessage/To": "@{outputs('Get_Order_With_Supplier')?['body/cr_supplier']?['cr_email']}",
+              "emailMessage/Subject": "Supply Order @{outputs('Get_Order_With_Supplier')?['body/cr_name']}",
+              "emailMessage/Body": "@{outputs('Compose_Supplier_Email')}",
+              "emailMessage/Importance": "Normal"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {
+            "Compose_Supplier_Email": ["Succeeded"]
+          }
+        },
+        "Update_Order_Sent_To_Supplier": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "UpdateRecord",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "cr_supplyorders",
+              "recordId": "@triggerOutputs()?['body/cr_supplyorderid']",
+              "item/cr_supplieremailsent": true,
+              "item/cr_orderstatus": 100000005,
+              "item/cr_expecteddelivery": "@{addDays(utcNow(), coalesce(outputs('Get_Order_With_Supplier')?['body/cr_supplier']?['cr_leadtimedays'], 5))}"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {
+            "Send_Supplier_Email": ["Succeeded"]
+          }
+        },
+        "Notify_Requester_Via_Teams": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_teams",
+              "operationId": "PostMessageToConversation",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams"
+            },
+            "parameters": {
+              "poster": "Flow bot",
+              "location": "Chat with Flow bot",
+              "body/recipient": "@{outputs('Get_Order_With_Supplier')?['body/_ownerid_value']}",
+              "body/messageBody": "<p>Your pantry order <strong>@{outputs('Get_Order_With_Supplier')?['body/cr_name']}</strong> has been sent to <strong>@{outputs('Get_Order_With_Supplier')?['body/cr_supplier']?['cr_name']}</strong>.</p><p>Expected delivery: @{formatDateTime(outputs('Update_Order_Sent_To_Supplier')?['body/cr_expecteddelivery'], 'MMMM dd, yyyy')}</p><p>Total: $@{outputs('Get_Order_With_Supplier')?['body/cr_totalamount']}</p>"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runAfter": {
+            "Update_Order_Sent_To_Supplier": ["Succeeded"]
+          }
+        }
+      },
+      "outputs": {}
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}

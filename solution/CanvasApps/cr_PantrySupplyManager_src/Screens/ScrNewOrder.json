@@ -1,0 +1,299 @@
+{
+  "Screen": {
+    "Name": "ScrNewOrder",
+    "Fill": "RGBA(245, 245, 245, 1)",
+    "Controls": {
+      "icoBack": {
+        "Type": "Icon",
+        "Properties": {
+          "Icon": "Icon.BackArrow",
+          "OnSelect": "Navigate(ScrHome, ScreenTransition.Fade)",
+          "X": 10,
+          "Y": 10,
+          "Width": 40,
+          "Height": 40,
+          "Color": "RGBA(255, 255, 255, 1)"
+        }
+      },
+      "lblScreenTitle": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"New Supply Order\"",
+          "Font": "Font.'Segoe UI'",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 22,
+          "Color": "RGBA(255, 255, 255, 1)",
+          "Fill": "RGBA(46, 134, 171, 1)",
+          "X": 0,
+          "Y": 0,
+          "Width": "Parent.Width",
+          "Height": 60,
+          "PaddingLeft": 60
+        }
+      },
+      "drpCategory": {
+        "Type": "Dropdown",
+        "Properties": {
+          "Items": "[\"All\", \"Coffee\", \"Snacks\", \"Beverages\", \"Condiments\", \"Cleaning Supplies\", \"Other\"]",
+          "Default": "\"All\"",
+          "X": 40,
+          "Y": 75,
+          "Width": 200,
+          "Height": 40
+        }
+      },
+      "galItems": {
+        "Type": "Gallery",
+        "Properties": {
+          "Items": "Sort(Filter(PantryItems, cr_isactive = true, drpCategory.Selected.Value = \"All\" Or cr_category.Value = drpCategory.Selected.Value), cr_name, SortOrder.Ascending)",
+          "TemplateSize": 80,
+          "X": 40,
+          "Y": 125,
+          "Width": 720,
+          "Height": 520,
+          "Layout": "Vertical",
+          "ShowScrollbar": true,
+          "TemplateFill": "If(ThisItem.IsSelected, RGBA(230, 242, 248, 1), RGBA(255, 255, 255, 1))",
+          "TemplatePadding": 5,
+          "TemplateControls": {
+            "lblPItemName": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.cr_name",
+                "FontWeight": "FontWeight.Semibold",
+                "Size": 14,
+                "X": 10,
+                "Y": 5,
+                "Width": 300,
+                "Height": 25
+              }
+            },
+            "lblPItemPrice": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "Text(ThisItem.cr_unitprice, \"$#,##0.00\")",
+                "FontWeight": "FontWeight.Bold",
+                "X": 310,
+                "Y": 5,
+                "Width": 80,
+                "Height": 25,
+                "Align": "Align.Right"
+              }
+            },
+            "icoStockLevel": {
+              "Type": "Icon",
+              "Properties": {
+                "Icon": "If(ThisItem.cr_currentstock <= ThisItem.cr_reorderpoint, Icon.Warning, If(ThisItem.cr_currentstock <= ThisItem.cr_maxstocklevel * 0.5, Icon.Information, Icon.CheckBadge))",
+                "Color": "If(ThisItem.cr_currentstock <= ThisItem.cr_reorderpoint, RGBA(211, 47, 47, 1), If(ThisItem.cr_currentstock <= ThisItem.cr_maxstocklevel * 0.5, RGBA(255, 152, 0, 1), RGBA(76, 175, 80, 1)))",
+                "X": 400,
+                "Y": 8,
+                "Width": 20,
+                "Height": 20
+              }
+            },
+            "lblStockDetail": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "\"In Stock: \" & ThisItem.cr_currentstock & \"  |  Unit: \" & ThisItem.cr_unit.Value",
+                "Color": "RGBA(117, 117, 117, 1)",
+                "Size": 12,
+                "X": 10,
+                "Y": 35,
+                "Width": 400,
+                "Height": 20
+              }
+            },
+            "txtQty": {
+              "Type": "TextInput",
+              "Properties": {
+                "Default": "\"\"",
+                "HintText": "\"Qty\"",
+                "Format": "TextFormat.Number",
+                "X": 460,
+                "Y": 15,
+                "Width": 80,
+                "Height": 40,
+                "BorderColor": "RGBA(200, 200, 200, 1)",
+                "BorderThickness": 1,
+                "RadiusTopLeft": 5,
+                "RadiusTopRight": 5,
+                "RadiusBottomLeft": 5,
+                "RadiusBottomRight": 5,
+                "OnChange": "If(Value(Self.Text) > ThisItem.cr_maxstocklevel - ThisItem.cr_currentstock, Notify(\"Quantity exceeds available storage capacity\", NotificationType.Warning))"
+              }
+            },
+            "btnAddItem": {
+              "Type": "Button",
+              "Properties": {
+                "Text": "\"+ Add\"",
+                "OnSelect": "If(Value(txtQty.Text) > 0, If(CountRows(Filter(colOrderItems, ItemID = ThisItem.cr_pantryitemid)) > 0, UpdateIf(colOrderItems, ItemID = ThisItem.cr_pantryitemid, {Quantity: Quantity + Value(txtQty.Text), LineTotal: UnitPrice * (Quantity + Value(txtQty.Text))}), Collect(colOrderItems, {ItemID: ThisItem.cr_pantryitemid, ItemName: ThisItem.cr_name, Category: ThisItem.cr_category, UnitPrice: ThisItem.cr_unitprice, Quantity: Value(txtQty.Text), Unit: ThisItem.cr_unit, LineTotal: ThisItem.cr_unitprice * Value(txtQty.Text), CurrentStock: ThisItem.cr_currentstock, PreferredSupplier: ThisItem.cr_preferredsupplier})); Reset(txtQty); Notify(\"Added to order\", NotificationType.Success))",
+                "Fill": "RGBA(46, 134, 171, 1)",
+                "Color": "RGBA(255, 255, 255, 1)",
+                "X": 560,
+                "Y": 15,
+                "Width": 90,
+                "Height": 40,
+                "BorderRadius": 5,
+                "Size": 13
+              }
+            }
+          }
+        }
+      },
+      "rectOrderSummary": {
+        "Type": "Rectangle",
+        "Properties": {
+          "Fill": "RGBA(255, 255, 255, 1)",
+          "X": 790,
+          "Y": 75,
+          "Width": 540,
+          "Height": 570,
+          "BorderRadius": 10,
+          "BorderColor": "RGBA(200, 200, 200, 1)",
+          "BorderThickness": 1
+        }
+      },
+      "lblSummaryTitle": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Order Summary\"",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 18,
+          "X": 810,
+          "Y": 85,
+          "Width": 200,
+          "Height": 30
+        }
+      },
+      "galOrderSummary": {
+        "Type": "Gallery",
+        "Properties": {
+          "Items": "colOrderItems",
+          "TemplateSize": 45,
+          "X": 810,
+          "Y": 120,
+          "Width": 500,
+          "Height": 300,
+          "Layout": "Vertical",
+          "TemplateControls": {
+            "lblSumItemName": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "ThisItem.ItemName",
+                "X": 5,
+                "Width": 250
+              }
+            },
+            "lblSumQty": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "\"x\" & ThisItem.Quantity",
+                "X": 260,
+                "Width": 60
+              }
+            },
+            "lblSumTotal": {
+              "Type": "Label",
+              "Properties": {
+                "Text": "Text(ThisItem.LineTotal, \"$#,##0.00\")",
+                "FontWeight": "FontWeight.Semibold",
+                "X": 330,
+                "Width": 80,
+                "Align": "Align.Right"
+              }
+            },
+            "icoRemove": {
+              "Type": "Icon",
+              "Properties": {
+                "Icon": "Icon.Cancel",
+                "OnSelect": "Remove(colOrderItems, ThisItem)",
+                "Color": "RGBA(211, 47, 47, 1)",
+                "X": 430,
+                "Width": 30,
+                "Height": 30
+              }
+            }
+          }
+        }
+      },
+      "lblTotalQty": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Items: \" & CountRows(colOrderItems) & \"    Total Qty: \" & Sum(colOrderItems, Quantity)",
+          "X": 810,
+          "Y": 435,
+          "Width": 500,
+          "Height": 25
+        }
+      },
+      "lblTotalAmount": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "\"Subtotal: \" & Text(Sum(colOrderItems, LineTotal), \"$#,##0.00\")",
+          "FontWeight": "FontWeight.Bold",
+          "Size": 18,
+          "X": 810,
+          "Y": 465,
+          "Width": 500,
+          "Height": 30
+        }
+      },
+      "lblApprovalNote": {
+        "Type": "Label",
+        "Properties": {
+          "Text": "If(Sum(colOrderItems, LineTotal) > varBudgetThreshold Or Sum(colOrderItems, Quantity) > varQuantityThreshold, \"This order exceeds thresholds and will require manager approval.\", \"This order will be auto-approved.\")",
+          "Color": "If(Sum(colOrderItems, LineTotal) > varBudgetThreshold Or Sum(colOrderItems, Quantity) > varQuantityThreshold, RGBA(255, 152, 0, 1), RGBA(76, 175, 80, 1))",
+          "Size": 12,
+          "Italic": true,
+          "X": 810,
+          "Y": 500,
+          "Width": 500,
+          "Height": 25
+        }
+      },
+      "txtOrderNotes": {
+        "Type": "TextInput",
+        "Properties": {
+          "Default": "\"\"",
+          "HintText": "\"Add notes (optional)\"",
+          "Mode": "TextMode.MultiLine",
+          "X": 810,
+          "Y": 530,
+          "Width": 500,
+          "Height": 50
+        }
+      },
+      "btnCancel": {
+        "Type": "Button",
+        "Properties": {
+          "Text": "\"Cancel\"",
+          "OnSelect": "Clear(colOrderItems); Navigate(ScrHome, ScreenTransition.Fade)",
+          "Fill": "RGBA(200, 200, 200, 1)",
+          "Color": "RGBA(51, 51, 51, 1)",
+          "X": 810,
+          "Y": 595,
+          "Width": 150,
+          "Height": 40,
+          "BorderRadius": 5
+        }
+      },
+      "btnSubmitOrder": {
+        "Type": "Button",
+        "Properties": {
+          "Text": "\"Submit Order\"",
+          "OnSelect": "If(CountRows(colOrderItems) = 0, Notify(\"Please add items to your order\", NotificationType.Error), Set(varNeedsApproval, Sum(colOrderItems, LineTotal) > varBudgetThreshold Or Sum(colOrderItems, Quantity) > varQuantityThreshold); Set(varNewOrder, Patch(SupplyOrders, Defaults(SupplyOrders), {cr_orderdate: Now(), cr_orderstatus: If(varNeedsApproval, {Value: 100000002}, {Value: 100000003}), cr_totalamount: Sum(colOrderItems, LineTotal), cr_totalquantity: Sum(colOrderItems, Quantity), cr_requiresapproval: varNeedsApproval, cr_approvalstatus: If(varNeedsApproval, {Value: 100000000}, {Value: 100000001}), cr_supplieremailsent: false, cr_notes: txtOrderNotes.Text})); ForAll(colOrderItems, Patch(OrderLineItems, Defaults(OrderLineItems), {cr_order: LookUp(SupplyOrders, cr_supplyorderid = varNewOrder.cr_supplyorderid), cr_pantryitem: LookUp(PantryItems, cr_pantryitemid = ThisRecord.ItemID), cr_quantity: ThisRecord.Quantity, cr_unitprice: ThisRecord.UnitPrice, cr_linetotal: ThisRecord.LineTotal, cr_currentstockatorder: ThisRecord.CurrentStock})); Clear(colOrderItems); Notify(If(varNeedsApproval, \"Order submitted for approval!\", \"Order approved and sent to supplier!\"), NotificationType.Success); Navigate(ScrHome))",
+          "Fill": "RGBA(76, 175, 80, 1)",
+          "Color": "RGBA(255, 255, 255, 1)",
+          "X": 1080,
+          "Y": 595,
+          "Width": 230,
+          "Height": 40,
+          "BorderRadius": 5,
+          "FontWeight": "FontWeight.Bold",
+          "Size": 15,
+          "DisplayMode": "If(CountRows(colOrderItems) > 0, DisplayMode.Edit, DisplayMode.Disabled)"
+        }
+      }
+    }
+  }
+}

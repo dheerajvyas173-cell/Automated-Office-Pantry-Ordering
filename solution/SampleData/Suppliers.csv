@@ -1,0 +1,4 @@
+cr_name,cr_contactperson,cr_email,cr_phone,cr_address,cr_category,cr_leadtimedays,cr_isactive,cr_contractenddate,cr_notes
+"Office Coffee Co.","Sarah Johnson","orders@officecoffee.com","555-0101","123 Bean Street, Suite 100, Seattle, WA 98101","100000000;100000002",3,true,"2027-12-31","Premium coffee supplier - next day delivery available for urgent orders"
+"SnackBox Distributors","Mike Chen","sales@snackbox.com","555-0202","456 Snack Ave, Portland, OR 97201","100000001;100000003",5,true,"2027-06-30","Wide variety of healthy and traditional snack options"
+"CleanPro Supplies","Lisa Park","orders@cleanpro.com","555-0303","789 Clean Blvd, San Francisco, CA 94102","100000003",2,true,"2027-09-30","Eco-friendly cleaning products available"
