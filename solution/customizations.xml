@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImportExportXml version="9.2.24.4380" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <!-- ============================================================ -->
-  <!-- GLOBAL OPTION SETS (Choice Columns)                          -->
-  <!-- ============================================================ -->
   <optionsets>
 
-    <!-- Item Category -->
-    <optionset Name="cr_itemcategory" localizedName="Item Category" xmlns="">
+    <optionset Name="cr_itemcategory" localizedName="Item Category">
       <OptionSetType>Picklist</OptionSetType>
       <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -34,8 +30,7 @@
       </options>
     </optionset>
 
-    <!-- Item Unit -->
-    <optionset Name="cr_itemunit" localizedName="Item Unit" xmlns="">
+    <optionset Name="cr_itemunit" localizedName="Item Unit">
       <OptionSetType>Picklist</OptionSetType>
       <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -59,8 +54,7 @@
       </options>
     </optionset>
 
-    <!-- Order Status -->
-    <optionset Name="cr_orderstatus" localizedName="Order Status" xmlns="">
+    <optionset Name="cr_orderstatus" localizedName="Order Status">
       <OptionSetType>Picklist</OptionSetType>
       <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -93,8 +87,7 @@
       </options>
     </optionset>
 
-    <!-- Approval Status -->
-    <optionset Name="cr_approvalstatus" localizedName="Approval Status" xmlns="">
+    <optionset Name="cr_approvalstatus" localizedName="Approval Status">
       <OptionSetType>Picklist</OptionSetType>
       <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -112,8 +105,7 @@
       </options>
     </optionset>
 
-    <!-- Approval Action -->
-    <optionset Name="cr_approvalaction" localizedName="Approval Action" xmlns="">
+    <optionset Name="cr_approvalaction" localizedName="Approval Action">
       <OptionSetType>Picklist</OptionSetType>
       <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -134,8 +126,7 @@
       </options>
     </optionset>
 
-    <!-- Supplier Category (Multi-Select) -->
-    <optionset Name="cr_suppliercategory" localizedName="Supplier Category" xmlns="">
+    <optionset Name="cr_suppliercategory" localizedName="Supplier Category">
       <OptionSetType>Picklist</OptionSetType>
       <IsGlobal>true</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -158,14 +149,8 @@
 
   </optionsets>
 
-  <!-- ============================================================ -->
-  <!-- ENTITY DEFINITIONS                                           -->
-  <!-- ============================================================ -->
   <Entities>
 
-    <!-- ========================================================== -->
-    <!-- ENTITY: Supplier (cr_supplier)                             -->
-    <!-- ========================================================== -->
     <Entity Name="cr_supplier" ObjectTypeCode="10001">
       <EntityInfo>
         <entity Name="cr_supplier">
@@ -250,9 +235,6 @@
           <DisplayNames>
             <DisplayName description="Contact Person" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Primary contact name" languagecode="1033" />
-          </Descriptions>
           <MaxLength>100</MaxLength>
           <ImeMode>auto</ImeMode>
           <IsCustomizable>1</IsCustomizable>
@@ -267,9 +249,6 @@
           <DisplayNames>
             <DisplayName description="Email" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Order submission email address" languagecode="1033" />
-          </Descriptions>
           <MaxLength>200</MaxLength>
           <FormatName>Email</FormatName>
           <IsCustomizable>1</IsCustomizable>
@@ -311,9 +290,6 @@
           <DisplayNames>
             <DisplayName description="Category" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Supply categories this supplier covers" languagecode="1033" />
-          </Descriptions>
           <OptionSetName>cr_suppliercategory</OptionSetName>
           <IsCustomizable>1</IsCustomizable>
           <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -327,9 +303,6 @@
           <DisplayNames>
             <DisplayName description="Lead Time (Days)" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Typical delivery time in business days" languagecode="1033" />
-          </Descriptions>
           <MinValue>0</MinValue>
           <MaxValue>365</MaxValue>
           <IsCustomizable>1</IsCustomizable>
@@ -344,9 +317,6 @@
           <DisplayNames>
             <DisplayName description="Is Active" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Whether currently doing business with this supplier" languagecode="1033" />
-          </Descriptions>
           <DefaultValue>1</DefaultValue>
           <IsCustomizable>1</IsCustomizable>
           <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -380,13 +350,8 @@
           <IsAuditEnabled>1</IsAuditEnabled>
         </attribute>
       </attributes>
-      <forms />
-      <views />
     </Entity>
 
-    <!-- ========================================================== -->
-    <!-- ENTITY: Pantry Item (cr_pantryitem)                        -->
-    <!-- ========================================================== -->
     <Entity Name="cr_pantryitem" ObjectTypeCode="10002">
       <EntityInfo>
         <entity Name="cr_pantryitem">
@@ -403,24 +368,39 @@
           <IsBPFEntity>0</IsBPFEntity>
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
+          <ActivityTypeMask xsi:nil="true" />
           <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
+          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
           <CanCreateAttributes>1</CanCreateAttributes>
           <CanCreateForms>1</CanCreateForms>
           <CanCreateViews>1</CanCreateViews>
           <CanCreateCharts>1</CanCreateCharts>
           <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
           <IsAuditEnabled>1</IsAuditEnabled>
+          <IsConnectionsEnabled>0</IsConnectionsEnabled>
+          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
           <IsDuplicateDetectionEnabled>1</IsDuplicateDetectionEnabled>
+          <IsMailMergeEnabled>0</IsMailMergeEnabled>
           <IsEnabledForCharts>1</IsEnabledForCharts>
           <HasNotes>1</HasNotes>
           <HasActivities>0</HasActivities>
+          <HasFeedback>0</HasFeedback>
           <IntroducedVersion>1.0.0.0</IntroducedVersion>
           <IsCustomizable>1</IsCustomizable>
           <IsRenameable>1</IsRenameable>
           <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
           <IsManaged>0</IsManaged>
           <EnforceStateTransitions>0</EnforceStateTransitions>
+          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+          <IconSmallName xsi:nil="true" />
+          <IconMediumName xsi:nil="true" />
+          <IconLargeName xsi:nil="true" />
+          <IconVectorName xsi:nil="true" />
         </entity>
       </EntityInfo>
       <attributes>
@@ -432,9 +412,6 @@
           <DisplayNames>
             <DisplayName description="Item Name" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Name of the supply item" languagecode="1033" />
-          </Descriptions>
           <MaxLength>100</MaxLength>
           <IsPrimaryName>1</IsPrimaryName>
           <IsAuditEnabled>1</IsAuditEnabled>
@@ -462,9 +439,6 @@
           <DisplayNames>
             <DisplayName description="Current Stock" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Current quantity in stock" languagecode="1033" />
-          </Descriptions>
           <MinValue>0</MinValue>
           <MaxValue>999999</MaxValue>
           <IsCustomizable>1</IsCustomizable>
@@ -479,9 +453,6 @@
           <DisplayNames>
             <DisplayName description="Max Stock Level" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Maximum storage capacity" languagecode="1033" />
-          </Descriptions>
           <MinValue>1</MinValue>
           <MaxValue>999999</MaxValue>
           <IsCustomizable>1</IsCustomizable>
@@ -496,9 +467,6 @@
           <DisplayNames>
             <DisplayName description="Reorder Point" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Stock level that triggers a reorder alert" languagecode="1033" />
-          </Descriptions>
           <MinValue>0</MinValue>
           <MaxValue>999999</MaxValue>
           <IsCustomizable>1</IsCustomizable>
@@ -526,9 +494,6 @@
           <DisplayNames>
             <DisplayName description="Unit Price" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Price per unit from supplier" languagecode="1033" />
-          </Descriptions>
           <MinValue>0</MinValue>
           <MaxValue>999999</MaxValue>
           <Precision>2</Precision>
@@ -544,9 +509,6 @@
           <DisplayNames>
             <DisplayName description="Preferred Supplier" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Default supplier for this item" languagecode="1033" />
-          </Descriptions>
           <LookupTypes>
             <LookupType id="10001">cr_supplier</LookupType>
           </LookupTypes>
@@ -613,13 +575,8 @@
           <CascadeRollupView>NoCascade</CascadeRollupView>
         </EntityRelationship>
       </EntityRelationships>
-      <forms />
-      <views />
     </Entity>
 
-    <!-- ========================================================== -->
-    <!-- ENTITY: Supply Order (cr_supplyorder)                      -->
-    <!-- ========================================================== -->
     <Entity Name="cr_supplyorder" ObjectTypeCode="10003">
       <EntityInfo>
         <entity Name="cr_supplyorder">
@@ -636,23 +593,40 @@
           <IsBPFEntity>0</IsBPFEntity>
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
+          <ActivityTypeMask xsi:nil="true" />
           <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
+          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
           <CanCreateAttributes>1</CanCreateAttributes>
           <CanCreateForms>1</CanCreateForms>
           <CanCreateViews>1</CanCreateViews>
           <CanCreateCharts>1</CanCreateCharts>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
           <IsAuditEnabled>1</IsAuditEnabled>
+          <IsConnectionsEnabled>0</IsConnectionsEnabled>
+          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
           <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
+          <IsMailMergeEnabled>0</IsMailMergeEnabled>
           <IsEnabledForCharts>1</IsEnabledForCharts>
           <HasNotes>1</HasNotes>
           <HasActivities>0</HasActivities>
+          <HasFeedback>0</HasFeedback>
           <IntroducedVersion>1.0.0.0</IntroducedVersion>
           <IsCustomizable>1</IsCustomizable>
           <IsRenameable>1</IsRenameable>
           <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
           <IsManaged>0</IsManaged>
           <AutoCreateAccessTeams>0</AutoCreateAccessTeams>
+          <EnforceStateTransitions>0</EnforceStateTransitions>
+          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+          <IconSmallName xsi:nil="true" />
+          <IconMediumName xsi:nil="true" />
+          <IconLargeName xsi:nil="true" />
+          <IconVectorName xsi:nil="true" />
         </entity>
       </EntityInfo>
       <attributes>
@@ -863,13 +837,8 @@
           <CascadeUnshare>NoCascade</CascadeUnshare>
         </EntityRelationship>
       </EntityRelationships>
-      <forms />
-      <views />
     </Entity>
 
-    <!-- ========================================================== -->
-    <!-- ENTITY: Order Line Item (cr_orderlineitem)                 -->
-    <!-- ========================================================== -->
     <Entity Name="cr_orderlineitem" ObjectTypeCode="10004">
       <EntityInfo>
         <entity Name="cr_orderlineitem">
@@ -886,17 +855,39 @@
           <IsBPFEntity>0</IsBPFEntity>
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
+          <ActivityTypeMask xsi:nil="true" />
           <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
+          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
           <CanCreateAttributes>1</CanCreateAttributes>
+          <CanCreateForms>1</CanCreateForms>
+          <CanCreateViews>1</CanCreateViews>
+          <CanCreateCharts>1</CanCreateCharts>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
           <IsAuditEnabled>1</IsAuditEnabled>
+          <IsConnectionsEnabled>0</IsConnectionsEnabled>
+          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+          <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
+          <IsMailMergeEnabled>0</IsMailMergeEnabled>
           <IsEnabledForCharts>1</IsEnabledForCharts>
           <HasNotes>0</HasNotes>
           <HasActivities>0</HasActivities>
+          <HasFeedback>0</HasFeedback>
           <IntroducedVersion>1.0.0.0</IntroducedVersion>
           <IsCustomizable>1</IsCustomizable>
-          <IsManaged>0</IsManaged>
+          <IsRenameable>1</IsRenameable>
           <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+          <IsManaged>0</IsManaged>
+          <EnforceStateTransitions>0</EnforceStateTransitions>
+          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+          <IconSmallName xsi:nil="true" />
+          <IconMediumName xsi:nil="true" />
+          <IconLargeName xsi:nil="true" />
+          <IconVectorName xsi:nil="true" />
         </entity>
       </EntityInfo>
       <attributes>
@@ -995,9 +986,6 @@
           <DisplayNames>
             <DisplayName description="Current Stock at Order" languagecode="1033" />
           </DisplayNames>
-          <Descriptions>
-            <Description description="Snapshot of stock level when this order was placed" languagecode="1033" />
-          </Descriptions>
           <MinValue>0</MinValue>
           <MaxValue>999999</MaxValue>
           <IsCustomizable>1</IsCustomizable>
@@ -1032,13 +1020,8 @@
           <CascadeUnshare>NoCascade</CascadeUnshare>
         </EntityRelationship>
       </EntityRelationships>
-      <forms />
-      <views />
     </Entity>
 
-    <!-- ========================================================== -->
-    <!-- ENTITY: Approval History (cr_approvalhistory)              -->
-    <!-- ========================================================== -->
     <Entity Name="cr_approvalhistory" ObjectTypeCode="10005">
       <EntityInfo>
         <entity Name="cr_approvalhistory">
@@ -1055,17 +1038,39 @@
           <IsBPFEntity>0</IsBPFEntity>
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
+          <ActivityTypeMask xsi:nil="true" />
           <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
+          <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+          <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+          <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+          <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
           <CanCreateAttributes>1</CanCreateAttributes>
+          <CanCreateForms>1</CanCreateForms>
+          <CanCreateViews>1</CanCreateViews>
+          <CanCreateCharts>1</CanCreateCharts>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
           <IsAuditEnabled>1</IsAuditEnabled>
+          <IsConnectionsEnabled>0</IsConnectionsEnabled>
+          <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+          <IsDuplicateDetectionEnabled>0</IsDuplicateDetectionEnabled>
+          <IsMailMergeEnabled>0</IsMailMergeEnabled>
           <IsEnabledForCharts>1</IsEnabledForCharts>
           <HasNotes>0</HasNotes>
           <HasActivities>0</HasActivities>
+          <HasFeedback>0</HasFeedback>
           <IntroducedVersion>1.0.0.0</IntroducedVersion>
           <IsCustomizable>1</IsCustomizable>
-          <IsManaged>0</IsManaged>
+          <IsRenameable>1</IsRenameable>
           <ChangeTrackingEnabled>1</ChangeTrackingEnabled>
+          <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+          <IsManaged>0</IsManaged>
+          <EnforceStateTransitions>0</EnforceStateTransitions>
+          <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+          <IconSmallName xsi:nil="true" />
+          <IconMediumName xsi:nil="true" />
+          <IconLargeName xsi:nil="true" />
+          <IconVectorName xsi:nil="true" />
         </entity>
       </EntityInfo>
       <attributes>
@@ -1154,53 +1159,9 @@
           <CascadeUnshare>NoCascade</CascadeUnshare>
         </EntityRelationship>
       </EntityRelationships>
-      <forms />
-      <views />
     </Entity>
 
   </Entities>
-
-  <!-- ============================================================ -->
-  <!-- ENVIRONMENT VARIABLE DEFINITIONS                             -->
-  <!-- ============================================================ -->
-  <environmentvariabledefinitions>
-    <environmentvariabledefinition>
-      <schemaname>cr_BudgetApprovalThreshold</schemaname>
-      <displayname>Budget Approval Threshold</displayname>
-      <description>Order total amount above which manager approval is required (in dollars)</description>
-      <type>100000002</type>
-      <defaultvalue>200</defaultvalue>
-      <introducedversion>1.0.0.0</introducedversion>
-      <iscustomizable>1</iscustomizable>
-    </environmentvariabledefinition>
-    <environmentvariabledefinition>
-      <schemaname>cr_QuantityApprovalThreshold</schemaname>
-      <displayname>Quantity Approval Threshold</displayname>
-      <description>Order total quantity above which manager approval is required</description>
-      <type>100000002</type>
-      <defaultvalue>50</defaultvalue>
-      <introducedversion>1.0.0.0</introducedversion>
-      <iscustomizable>1</iscustomizable>
-    </environmentvariabledefinition>
-    <environmentvariabledefinition>
-      <schemaname>cr_ApproverEmail</schemaname>
-      <displayname>Approver Email</displayname>
-      <description>Email address of the office manager who approves orders</description>
-      <type>100000000</type>
-      <defaultvalue>officemanager@company.com</defaultvalue>
-      <introducedversion>1.0.0.0</introducedversion>
-      <iscustomizable>1</iscustomizable>
-    </environmentvariabledefinition>
-    <environmentvariabledefinition>
-      <schemaname>cr_LowStockAlertRecipients</schemaname>
-      <displayname>Low Stock Alert Recipients</displayname>
-      <description>Semicolon-separated email addresses for low stock alert notifications</description>
-      <type>100000000</type>
-      <defaultvalue>cafeteriastaff@company.com;officemanager@company.com</defaultvalue>
-      <introducedversion>1.0.0.0</introducedversion>
-      <iscustomizable>1</iscustomizable>
-    </environmentvariabledefinition>
-  </environmentvariabledefinitions>
 
   <Languages>
     <Language>1033</Language>
