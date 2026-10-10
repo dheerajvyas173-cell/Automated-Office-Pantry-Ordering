@@ -23,7 +23,7 @@
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
           <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
+          <OwnershipTypeMask>1</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
           <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
           <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
@@ -454,7 +454,7 @@
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
           <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
+          <OwnershipTypeMask>1</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
           <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
           <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
@@ -912,7 +912,7 @@
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
           <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+          <OwnershipTypeMask>8</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
           <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
           <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
@@ -1451,7 +1451,7 @@
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
           <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
+          <OwnershipTypeMask>1</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
           <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
           <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
@@ -1818,7 +1818,7 @@
           <IsCustomEntity>1</IsCustomEntity>
           <IsActivity>0</IsActivity>
           <IsActivityParty>0</IsActivityParty>
-          <OwnershipTypeMask>OrganizationOwned</OwnershipTypeMask>
+          <OwnershipTypeMask>1</OwnershipTypeMask>
           <IsAvailableOffline>1</IsAvailableOffline>
           <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
           <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
