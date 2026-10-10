@@ -1275,7 +1275,7 @@
         </option>
         <option value="100000002">
           <labels>
-            <label description="Coffee & Tea" languagecode="1033"/>
+            <label description="Coffee &amp; Tea" languagecode="1033"/>
           </labels>
         </option>
         <option value="100000003">
@@ -1515,7 +1515,7 @@
       <options>
         <option value="100000000">
           <labels>
-            <label description="Food & Beverage" languagecode="1033"/>
+            <label description="Food &amp; Beverage" languagecode="1033"/>
           </labels>
         </option>
         <option value="100000001">
