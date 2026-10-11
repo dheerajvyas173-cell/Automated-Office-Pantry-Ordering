@@ -30,16 +30,30 @@ def icon_png(size=64, rgb=(0, 120, 212)):
             + chunk(b"IEND", b""))
 
 
-def build():
-    """Returns (CanvasApps xml, root components xml, {zip path: content})."""
-    with open(MSAPP, "rb") as f:
+def build(apps=None):
+    """Returns (CanvasApps xml, root components xml, {zip path: content}).
+
+    apps: list of (schema name, display name, msapp path, tables); defaults to the Pantry app.
+    """
+    apps = apps or [(APP_NAME, DISPLAY_NAME, MSAPP, TABLES)]
+    xml, roots, files = "  <CanvasApps>\n", "", {}
+    for app in apps:
+        app_xml, root, app_files = _app(*app)
+        xml += app_xml
+        roots += root
+        files.update(app_files)
+    return xml + "  </CanvasApps>\n", roots, files
+
+
+def _app(app_name, display_name, msapp_path, tables):
+    with open(msapp_path, "rb") as f:
         msapp = f.read()
-    document = f"CanvasApps/{APP_NAME}_DocumentUri.msapp"
-    background = f"CanvasApps/{APP_NAME}_BackgroundImageUri"
+    document = f"CanvasApps/{app_name}_DocumentUri.msapp"
+    background = f"CanvasApps/{app_name}_BackgroundImageUri"
     database_refs = json.dumps({"default.cds": {
         "state": "Configured", "instanceUrl": "", "webApiVersion": "v9.0", "environmentVariableName": "",
-        "dataSources": {name: {"entitySetName": es, "logicalName": ln} for name, (es, ln) in TABLES.items()},
-    }})
+        "dataSources": {name: {"entitySetName": es, "logicalName": ln} for name, (es, ln) in tables.items()},
+    }} if tables else {})
     tags = json.dumps({
         "primaryDeviceWidth": "1366", "primaryDeviceHeight": "768", "supportsPortrait": "false",
         "supportsLandscape": "true", "primaryFormFactor": "Tablet", "showStatusBar": "false",
@@ -47,10 +61,9 @@ def build():
         "hasComponent": "false", "hasUnlockedComponent": "false", "isUnifiedRootApp": "false",
     })
     cds_deps = json.dumps({"cdsdependencies": [
-        {"logicalname": ln, "componenttype": "entity"} for _, ln in TABLES.values()]})
-    xml = f"""  <CanvasApps>
-    <CanvasApp>
-      <Name>{APP_NAME}</Name>
+        {"logicalname": ln, "componenttype": "entity"} for _, ln in tables.values()]})
+    xml = f"""    <CanvasApp>
+      <Name>{app_name}</Name>
       <AppVersion>2026-10-11T00:00:00Z</AppVersion>
       <Status>Ready</Status>
       <CreatedByClientVersion>{CLIENT_VERSION}</CreatedByClientVersion>
@@ -59,7 +72,7 @@ def build():
       <IsCdsUpgraded>0</IsCdsUpgraded>
       <GalleryItemId xsi:nil="true"></GalleryItemId>
       <BackgroundColor>RGBA(0,120,212,1)</BackgroundColor>
-      <DisplayName>{DISPLAY_NAME}</DisplayName>
+      <DisplayName>{display_name}</DisplayName>
       <Description>Request, approve and track office pantry supply orders.</Description>
       <CommitMessage xsi:nil="true"></CommitMessage>
       <Publisher xsi:nil="true"></Publisher>
@@ -79,7 +92,6 @@ def build():
       <BackgroundImageUri>/{background}</BackgroundImageUri>
       <DocumentUri>/{document}</DocumentUri>
     </CanvasApp>
-  </CanvasApps>
 """
-    root = f'      <RootComponent type="300" schemaName="{APP_NAME}" behavior="0" />\n'
+    root = f'      <RootComponent type="300" schemaName="{app_name}" behavior="0" />\n'
     return xml, root, {document: msapp, background: icon_png()}

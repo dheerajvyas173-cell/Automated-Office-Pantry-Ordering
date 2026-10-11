@@ -14,11 +14,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUTPUT = os.path.join(HERE, "PantrySupplyOrdering.msapp")
 
 
-def main():
+def pack(src_dir=os.path.join(HERE, "Src"), output=OUTPUT, properties=None):
+    """Packs src_dir (*.pa.yaml) with the shell; `properties` overrides keys in shell/Properties.json."""
     pac = os.environ.get("PAC", "pac")
     with tempfile.TemporaryDirectory() as work:
         sources = os.path.join(work, "app")
-        shutil.copytree(os.path.join(HERE, "Src"), os.path.join(sources, "Src"))
+        shutil.copytree(src_dir, os.path.join(sources, "Src"))
         with zipfile.ZipFile(os.path.join(sources, "PantrySupplyOrdering.msapr"), "w", zipfile.ZIP_DEFLATED) as zf:
             zf.writestr("msapr-header.json", json.dumps({
                 "MsaprStructureVersion": "0.1",
@@ -28,15 +29,22 @@ def main():
             for folder, _, files in os.walk(shell):
                 for name in files:
                     path = os.path.join(folder, name)
-                    zf.write(path, "msapp/" + os.path.relpath(path, shell).replace(os.sep, "/"))
+                    arcname = "msapp/" + os.path.relpath(path, shell).replace(os.sep, "/")
+                    if arcname == "msapp/Properties.json" and properties:
+                        with open(path) as f:
+                            props = json.load(f)
+                        props.update(properties)
+                        zf.writestr(arcname, json.dumps(props, indent=2))
+                    else:
+                        zf.write(path, arcname)
         result = subprocess.run(
-            [pac, "canvas", "pack", "--sources", sources, "--msapp", OUTPUT, "--layout", "SourceCode", "--overwrite"],
+            [pac, "canvas", "pack", "--sources", sources, "--msapp", output, "--layout", "SourceCode", "--overwrite"],
             capture_output=True, text=True)
         print(result.stdout, result.stderr)
         if result.returncode != 0 or "Packing succeeded" not in result.stdout:
             sys.exit(1)
-    print(f"Wrote {OUTPUT}")
+    print(f"Wrote {output}")
 
 
 if __name__ == "__main__":
-    main()
+    pack()
