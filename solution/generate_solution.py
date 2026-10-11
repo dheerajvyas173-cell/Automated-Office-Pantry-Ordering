@@ -459,6 +459,25 @@ def build_zip(path, files):
     print(f"Wrote {path}")
 
 
+def keep_attrs(entities, predicate):
+    return [(*e[:4], [a for a in e[4] if predicate(a)]) for e in entities]
+
+
+def is_core(attr):
+    return "<Type>primarykey</Type>" in attr or "PrimaryName|" in attr
+
+
+def is_not_lookup(attr):
+    return "<Type>lookup</Type>" not in attr
+
+
+def write_zip(filename, version, entities, relationships, optionsets):
+    build_zip(os.path.join(ROOT, filename), {
+        "[Content_Types].xml": CONTENT_TYPES,
+        "customizations.xml": customizations_xml(entities, relationships, optionsets),
+        "solution.xml": solution_xml(version, entities, optionsets)})
+
+
 def main():
     full_cust = customizations_xml(FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS)
     full_sol = solution_xml("1.0.0.0", FULL_ENTITIES, OPTION_SETS)
@@ -466,12 +485,14 @@ def main():
                           ("[Content_Types].xml", CONTENT_TYPES)]:
         with open(os.path.join(SOLUTION_DIR, name), "w", encoding="utf-8") as f:
             f.write(content)
-    build_zip(os.path.join(ROOT, "PantrySupplyOrdering_1_0_0_0.zip"), {
-        "[Content_Types].xml": CONTENT_TYPES, "customizations.xml": full_cust, "solution.xml": full_sol})
-    build_zip(os.path.join(ROOT, "PantrySupplyOrdering_TEST.zip"), {
-        "[Content_Types].xml": CONTENT_TYPES,
-        "customizations.xml": customizations_xml(TEST_ENTITIES, [], {}),
-        "solution.xml": solution_xml("0.0.0.1", TEST_ENTITIES, {})})
+    write_zip("PantrySupplyOrdering_TEST.zip", "0.0.0.1", TEST_ENTITIES, [], {})
+    # Staged builds: each one upgrades the previous, adding one layer.
+    write_zip("Step1_Tables_and_Choices.zip", "0.0.1.0",
+              keep_attrs(FULL_ENTITIES, is_core), [], OPTION_SETS)
+    write_zip("Step2_All_Columns.zip", "0.0.2.0",
+              keep_attrs(FULL_ENTITIES, is_not_lookup), [], OPTION_SETS)
+    write_zip("PantrySupplyOrdering_1_0_0_0.zip", "1.0.0.0",
+              FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS)
 
 
 if __name__ == "__main__":
