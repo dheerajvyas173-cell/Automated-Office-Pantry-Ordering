@@ -1,0 +1,39 @@
+mcs.metadata:
+  componentName: Get recent order line items
+  description: Returns the 300 most recent order line items with the item, quantity, unit price, total cost, supplier and the order number they belong to. Use it for questions about what was ordered, when an item was last ordered, and quantities.
+kind: TaskDialog
+modelDisplayName: Get recent order line items
+modelDescription: Returns the 300 most recent order line items with the item, quantity, unit price, total cost, supplier and the order number they belong to. Use it for questions about what was ordered, when an item was last ordered, and quantities.
+inputs:
+  - kind: ManualTaskInput
+    propertyName: entityName
+    value: 'cr_orderlineitems'
+
+  - kind: ManualTaskInput
+    propertyName: $select
+    value: 'cr_name,cr_quantity,cr_unitprice,cr_totalcost,createdon'
+
+  - kind: ManualTaskInput
+    propertyName: $expand
+    value: 'cr_supplyorder($select=cr_name,cr_orderstatus,cr_orderdate),cr_pantryitem($select=cr_name),cr_supplier($select=cr_name)'
+
+  - kind: ManualTaskInput
+    propertyName: $orderby
+    value: 'createdon desc'
+
+  - kind: ManualTaskInput
+    propertyName: $top
+    value: 300
+
+outputs:
+  - propertyName: value
+
+action:
+  kind: InvokeConnectorTaskAction
+  connectionReference: cr_pantry_dataverse
+  connectionProperties:
+    mode: Invoker
+
+  operationId: ListRecords
+
+outputMode: All

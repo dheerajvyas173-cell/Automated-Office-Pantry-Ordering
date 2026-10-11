@@ -1,0 +1,35 @@
+mcs.metadata:
+  componentName: How ordering works
+  description: Explains how to request pantry supplies and what happens after a request is submitted.
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    displayName: How ordering works
+    triggerQueries:
+      - How do I order supplies
+      - How can I request pantry items
+      - How does the approval process work
+      - What happens after I submit a request
+      - How do I place a pantry order
+      - Who approves pantry orders
+
+  actions:
+    - kind: SendActivity
+      id: sendMessage_ordering
+      activity:
+        text:
+          - |-
+            Here's how pantry ordering works:
+
+            1. Open the **Pantry Supply Ordering** app and choose **New supply request**.
+            2. Add the items and quantities you need. The app warns you if an item is already well stocked.
+            3. Pick a required-by date, add a short justification and select **Submit for approval**.
+            4. Your approver gets an approval request. You're emailed as soon as they approve or reject it.
+            5. Approved orders are emailed to each item's preferred supplier automatically, and the order status changes to **Ordered**.
+
+            You can follow your requests, their approval history and approver comments under **My orders** in the app.
+
+    - kind: EndDialog
+      id: endDialog_ordering

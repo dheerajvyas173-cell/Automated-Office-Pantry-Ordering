@@ -1,0 +1,39 @@
+mcs.metadata:
+  componentName: Get pantry stock
+  description: Returns every pantry item with its current stock, minimum stock level, reorder quantity, unit price, category, unit, storage location and preferred supplier. Use it for questions about stock levels, low or out-of-stock items, item prices and where items are kept.
+kind: TaskDialog
+modelDisplayName: Get pantry stock
+modelDescription: Returns every pantry item with its current stock, minimum stock level, reorder quantity, unit price, category, unit, storage location and preferred supplier. Use it for questions about stock levels, low or out-of-stock items, item prices and where items are kept.
+inputs:
+  - kind: ManualTaskInput
+    propertyName: entityName
+    value: 'cr_pantryitems'
+
+  - kind: ManualTaskInput
+    propertyName: $select
+    value: 'cr_name,cr_sku,cr_category,cr_unit,cr_currentstock,cr_minimumstock,cr_reorderquantity,cr_unitprice,cr_location,statecode'
+
+  - kind: ManualTaskInput
+    propertyName: $expand
+    value: 'cr_preferredsupplier($select=cr_name)'
+
+  - kind: ManualTaskInput
+    propertyName: $orderby
+    value: 'cr_name asc'
+
+  - kind: ManualTaskInput
+    propertyName: $top
+    value: 500
+
+outputs:
+  - propertyName: value
+
+action:
+  kind: InvokeConnectorTaskAction
+  connectionReference: cr_pantry_dataverse
+  connectionProperties:
+    mode: Invoker
+
+  operationId: ListRecords
+
+outputMode: All

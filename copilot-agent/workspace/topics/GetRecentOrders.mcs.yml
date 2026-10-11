@@ -1,0 +1,35 @@
+mcs.metadata:
+  componentName: Get recent supply orders
+  description: Returns the 100 most recent supply orders with order number, order status, approval status, order date, required-by date, approval date, total amount, requester, approver and approver comments. Use it for questions about orders, their status, approvals, last orders and spending.
+kind: TaskDialog
+modelDisplayName: Get recent supply orders
+modelDescription: Returns the 100 most recent supply orders with order number, order status, approval status, order date, required-by date, approval date, total amount, requester, approver and approver comments. Use it for questions about orders, their status, approvals, last orders and spending.
+inputs:
+  - kind: ManualTaskInput
+    propertyName: entityName
+    value: 'cr_supplyorders'
+
+  - kind: ManualTaskInput
+    propertyName: $select
+    value: 'cr_name,cr_orderstatus,cr_approvalstatus,cr_orderdate,cr_requiredbydate,cr_approvaldate,cr_totalamount,cr_requestedby,cr_approvedby,cr_approvercomments,createdon'
+
+  - kind: ManualTaskInput
+    propertyName: $orderby
+    value: 'createdon desc'
+
+  - kind: ManualTaskInput
+    propertyName: $top
+    value: 100
+
+outputs:
+  - propertyName: value
+
+action:
+  kind: InvokeConnectorTaskAction
+  connectionReference: cr_pantry_dataverse
+  connectionProperties:
+    mode: Invoker
+
+  operationId: ListRecords
+
+outputMode: All

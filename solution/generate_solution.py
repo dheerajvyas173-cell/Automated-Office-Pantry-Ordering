@@ -9,6 +9,7 @@ import zipfile
 from xml.sax.saxutils import quoteattr
 
 import canvas_app
+import copilot_agent
 import flows as flows_mod
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -518,7 +519,8 @@ def build_zip(path, files):
     print(f"Wrote {path}")
 
 
-def write_zip(filename, version, entities, relationships, optionsets, roles=False, flows=False, canvas=False):
+def write_zip(filename, version, entities, relationships, optionsets, roles=False, flows=False, canvas=False,
+              agent=False):
     role_xml, role_roots = roles_xml() if roles else ("", "")
     wf_xml, wf_roots, conn_xml, wf_files = flows_mod.build() if flows else ("", "", "", {})
     app_xml, app_roots, app_files = canvas_app.build() if canvas else ("", "", {})
@@ -528,6 +530,7 @@ def write_zip(filename, version, entities, relationships, optionsets, roles=Fals
         "solution.xml": solution_xml(version, entities, optionsets, role_roots + wf_roots + app_roots),
         **wf_files,
         **app_files,
+        **(copilot_agent.build() if agent else {}),
     }
     files = {"[Content_Types].xml": content_types(files), **files}
     build_zip(os.path.join(ROOT, filename), files)
@@ -542,8 +545,11 @@ def main():
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True)
     write_zip("Step4_Cloud_Flows.zip", "1.0.2.1",
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True)
-    latest = write_zip("Step5_Canvas_App.zip", "1.0.3.1",
-                       FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True)
+    write_zip("Step5_Canvas_App.zip", "1.0.3.1",
+              FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True)
+    latest = write_zip("Step6_Copilot_Agent.zip", "1.0.4.0",
+                       FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True,
+                       agent=True)
     for name in ("customizations.xml", "solution.xml", "[Content_Types].xml"):
         with open(os.path.join(SOLUTION_DIR, name), "w", encoding="utf-8") as f:
             f.write(latest[name])
