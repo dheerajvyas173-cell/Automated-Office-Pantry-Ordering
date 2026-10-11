@@ -545,9 +545,9 @@ def main():
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True)
     write_zip("Step4_Cloud_Flows.zip", "1.0.2.1",
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True)
-    write_zip("Step5_Canvas_App.zip", "1.0.15.0",
+    write_zip("Step5_Canvas_App.zip", "1.0.17.0",
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True)
-    latest = write_zip("Step6_Copilot_Agent.zip", "1.0.16.0",
+    latest = write_zip("Step6_Copilot_Agent.zip", "1.0.18.0",
                        FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True,
                        agent=True)
     for name in ("customizations.xml", "solution.xml", "[Content_Types].xml"):

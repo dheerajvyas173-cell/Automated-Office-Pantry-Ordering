@@ -467,15 +467,19 @@ def new_order_screen():
             'Requested By': gUserEmail,
             'Total Amount': {total}
         }}));
-        Collect('Order Line Items', ForAll(colCart As L, {{
-            'Line Item Name': L.Item.'Item Name',
-            'Supply Order': gNewOrder,
-            'Pantry Item': L.Item,
-            Supplier: L.Item.'Preferred Supplier',
-            Quantity: L.Qty,
-            'Unit Price': L.Item.'Unit Price',
-            'Total Cost': L.Qty * Coalesce(L.Item.'Unit Price', 0)
-        }}));
+        ForAll(colCart As L,
+            With({{item: LookUp('Pantry Items', 'Pantry Item' = L.Item.'Pantry Item')}},
+                Patch('Order Line Items', Defaults('Order Line Items'), {{
+                    'Line Item Name': item.'Item Name',
+                    'Supply Order': gNewOrder,
+                    'Pantry Item': item,
+                    Supplier: item.'Preferred Supplier',
+                    Quantity: L.Qty,
+                    'Unit Price': item.'Unit Price',
+                    'Total Cost': L.Qty * Coalesce(item.'Unit Price', 0)
+                }})
+            )
+        );
         Patch('Supply Orders', gNewOrder, {{'Order Status': {OS}.Submitted}});
         Notify("Request " & gNewOrder.'Order Number' & " submitted for approval.", NotificationType.Success);
         Clear(colCart);
