@@ -92,7 +92,7 @@ def a_text(logical, display, max_len=100, required="none", fmt="text"):
 
 
 def a_memo(logical, display, max_len=4000):
-    body = common_attr("memo", logical, "none", GRID_MASK)
+    body = common_attr("ntext", logical, "none", GRID_MASK)
     body += f"""            <Format>text</Format>
             <MaxLength>{max_len}</MaxLength>
 """
@@ -500,7 +500,7 @@ def main():
     write_zip("Step1A_Tables_Only.zip", "0.0.1.0",
               keep_attrs(FULL_ENTITIES, is_core), [], {})
     write_zip("Step1B_Choices_Only.zip", "0.0.1.2", TEST_ENTITIES, [], OPTION_SETS)
-    write_zip("Step2_All_Columns.zip", "0.0.2.0",
+    write_zip("Step2_All_Columns.zip", "0.0.2.1",
               keep_attrs(FULL_ENTITIES, is_not_lookup), [], OPTION_SETS)
     write_zip("PantrySupplyOrdering_1_0_0_0.zip", "1.0.0.0",
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS)

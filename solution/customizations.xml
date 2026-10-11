@@ -332,7 +332,7 @@
             </Descriptions>
           </attribute>
           <attribute PhysicalName="cr_notes">
-            <Type>memo</Type>
+            <Type>ntext</Type>
             <Name>cr_notes</Name>
             <LogicalName>cr_notes</LogicalName>
             <RequiredLevel>none</RequiredLevel>
@@ -901,7 +901,7 @@
             </Descriptions>
           </attribute>
           <attribute PhysicalName="cr_description">
-            <Type>memo</Type>
+            <Type>ntext</Type>
             <Name>cr_description</Name>
             <LogicalName>cr_description</LogicalName>
             <RequiredLevel>none</RequiredLevel>
@@ -1431,7 +1431,7 @@
             </Descriptions>
           </attribute>
           <attribute PhysicalName="cr_justification">
-            <Type>memo</Type>
+            <Type>ntext</Type>
             <Name>cr_justification</Name>
             <LogicalName>cr_justification</LogicalName>
             <RequiredLevel>none</RequiredLevel>
@@ -1470,7 +1470,7 @@
             </Descriptions>
           </attribute>
           <attribute PhysicalName="cr_approvercomments">
-            <Type>memo</Type>
+            <Type>ntext</Type>
             <Name>cr_approvercomments</Name>
             <LogicalName>cr_approvercomments</LogicalName>
             <RequiredLevel>none</RequiredLevel>
@@ -1959,7 +1959,7 @@
             </Descriptions>
           </attribute>
           <attribute PhysicalName="cr_notes">
-            <Type>memo</Type>
+            <Type>ntext</Type>
             <Name>cr_notes</Name>
             <LogicalName>cr_notes</LogicalName>
             <RequiredLevel>none</RequiredLevel>
@@ -2329,7 +2329,7 @@
             </Descriptions>
           </attribute>
           <attribute PhysicalName="cr_comments">
-            <Type>memo</Type>
+            <Type>ntext</Type>
             <Name>cr_comments</Name>
             <LogicalName>cr_comments</LogicalName>
             <RequiredLevel>none</RequiredLevel>
