@@ -760,7 +760,7 @@ Screens:
                                         Properties:
                                           Fill: =Color.Transparent
                                           FillPortions: =1
-                                          Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = gApprOrder.'Supply Order')
+                                          Items: =Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = gApprOrder.'Supply Order')
                                           LayoutMinHeight: =100
                                           TemplateSize: =56
                                         Children:

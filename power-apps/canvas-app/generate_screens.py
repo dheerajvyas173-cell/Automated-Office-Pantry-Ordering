@@ -349,7 +349,7 @@ def order_row(prefix, selected_expr, subtitle):
 
 
 def lines_gallery(prefix, order):
-    return gallery(f"{prefix}Lines", f"Filter('Order Line Items', 'Supply Order'.'Supply Order' = {order}.'Supply Order')", 56, [
+    return gallery(f"{prefix}Lines", f"Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = {order}.'Supply Order')", 56, [
         text(f"{prefix}LnName", "ThisItem.'Line Item Name'", 13, "Semibold", X=4, Y=6, Width="Parent.TemplateWidth - 130"),
         text(f"{prefix}LnSupplier", 'Coalesce(ThisItem.Supplier.\'Supplier Name\', "No supplier set")', 12,
              color="clrTextSecondary", X=4, Y=30, Width="Parent.TemplateWidth - 130"),
@@ -584,7 +584,7 @@ def my_orders_screen():
         empty_state(f"{p}OrdersEmpty", "DocumentSearch", "No requests found.", f"IsEmpty({p}Orders.AllItems)"),
     ], gap=10, Width="If(App.Width < 1200, 360, 420)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
 
-    history = f"Sort(Filter('Approval History Records', 'Supply Order'.'Supply Order' = {o}.'Supply Order'), 'Action Date', SortOrder.Descending)"
+    history = f"Sort(Filter('Approval History Records', ThisRecord.'Supply Order'.'Supply Order' = {o}.'Supply Order'), 'Action Date', SortOrder.Descending)"
     detail_body = box(f"{p}DetailBody", "Vertical", [
         box(f"{p}DetailHead", "Horizontal", [
             text(f"{p}DetailNumber", f"{o}.'Order Number'", 20, "Semibold", Height=32, FillPortions=1),
@@ -812,7 +812,7 @@ def approvals_screen():
 
 def receiving_screen():
     p, sel = "Rv", "gRecvOrder"
-    receive = busy(f'''ForAll(Filter('Order Line Items', 'Supply Order'.'Supply Order' = {sel}.'Supply Order') As L,
+    receive = busy(f'''ForAll(Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = {sel}.'Supply Order') As L,
         With({{item: LookUp('Pantry Items', 'Pantry Item' = L.'Pantry Item'.'Pantry Item')}},
             If(!IsBlank(item), Patch('Pantry Items', item, {{'Current Stock': Coalesce(item.'Current Stock', 0) + L.Quantity}}))
         )

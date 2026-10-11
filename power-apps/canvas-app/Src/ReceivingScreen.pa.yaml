@@ -760,7 +760,7 @@ Screens:
                                         Properties:
                                           Fill: =Color.Transparent
                                           FillPortions: =1
-                                          Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order')
+                                          Items: =Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order')
                                           LayoutMinHeight: =100
                                           TemplateSize: =56
                                         Children:
@@ -849,7 +849,7 @@ Screens:
                                                 OnSelect: |-
                                                   =UpdateContext({locBusy: true});
                                                   IfError(
-                                                      ForAll(Filter('Order Line Items', 'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order') As L,
+                                                      ForAll(Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order') As L,
                                                           With({item: LookUp('Pantry Items', 'Pantry Item' = L.'Pantry Item'.'Pantry Item')},
                                                               If(!IsBlank(item), Patch('Pantry Items', item, {'Current Stock': Coalesce(item.'Current Stock', 0) + L.Quantity}))
                                                           )

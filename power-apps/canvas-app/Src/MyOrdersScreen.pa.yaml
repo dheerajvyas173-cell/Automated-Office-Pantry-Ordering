@@ -822,7 +822,7 @@ Screens:
                                                     Properties:
                                                       Fill: =Color.Transparent
                                                       FillPortions: =1
-                                                      Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = gSelOrder.'Supply Order')
+                                                      Items: =Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = gSelOrder.'Supply Order')
                                                       LayoutMinHeight: =100
                                                       TemplateSize: =56
                                                     Children:
@@ -928,7 +928,7 @@ Screens:
                                                     Properties:
                                                       Fill: =Color.Transparent
                                                       FillPortions: =1
-                                                      Items: =Sort(Filter('Approval History Records', 'Supply Order'.'Supply Order' = gSelOrder.'Supply Order'), 'Action Date', SortOrder.Descending)
+                                                      Items: =Sort(Filter('Approval History Records', ThisRecord.'Supply Order'.'Supply Order' = gSelOrder.'Supply Order'), 'Action Date', SortOrder.Descending)
                                                       LayoutMinHeight: =100
                                                       TemplateSize: =64
                                                     Children:
