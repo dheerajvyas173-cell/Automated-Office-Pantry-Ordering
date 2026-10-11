@@ -90,8 +90,13 @@ def visible(node, env):
 def literal_width(node):
     """Rough width of a literal label (Segoe UI averages ~0.55em per character)."""
     p = node["props"]
-    m = re.fullmatch(r'"([^"]*)"', p.get("Text", p.get("Content", "")))
-    return len(m.group(1)) * float(p.get("Size", 14)) * 0.55 if m else None
+    value = p.get("Text", p.get("Content", ""))
+    m = re.fullmatch(r'"([^"]*)"', value)
+    if m:
+        return len(m.group(1)) * float(p.get("Size", 14)) * 0.55
+    # A formula choosing between messages (If/Switch): its longest message must fit too.
+    choices = [c for c in re.findall(r'"([^"]*)"', value) if len(c) > 20]
+    return max(len(c) for c in choices) * float(p.get("Size", 14)) * 0.55 if choices else None
 
 
 def check_content(n, w, h, where):

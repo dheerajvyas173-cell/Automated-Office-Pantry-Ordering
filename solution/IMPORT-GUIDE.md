@@ -1,167 +1,57 @@
-# Power Platform Solution Import Guide
+# Import guide
 
-## Pantry Supply Ordering System - v1.0.0.0
+`Step6_Copilot_Agent.zip` contains the whole solution (version 1.1.1.0): tables, choices, three security roles, three cloud flows, the canvas app and the Copilot agent. It upgrades any earlier import of `PantrySupplyOrdering`.
 
-### Prerequisites
-- Power Platform environment with Dataverse database provisioned
-- System Administrator or System Customizer security role
-- Power Automate premium license (for Dataverse triggers)
-- Microsoft 365 license (for Outlook and Teams connectors)
+The other ZIPs (`PantrySupplyOrdering_1_0_0_0.zip` and `Step3`–`Step5`) are the earlier step-by-step layers. They aren't needed if you import Step 6.
 
----
+## 1. Import
+1. make.powerapps.com → pick your environment → **Solutions** → **Import solution**.
+2. Browse to `Step6_Copilot_Agent.zip` → **Next**.
+3. **Connections:** pick, or create, a connection for each:
+   - **Pantry - Dataverse** (Microsoft Dataverse)
+   - **Pantry - Approvals** (Approvals)
+   - **Pantry - Office 365 Outlook** (Office 365 Outlook)
+4. **Import**. The flows are switched on as part of the import.
 
-### Step 1: Prepare the Solution ZIP
+## 2. Settings
+Open each flow → **Edit** → its first step, **Settings**:
 
-The `solution/` directory contains the unmanaged solution components. To create an importable ZIP:
+| Flow | What to set |
+|---|---|
+| Pantry Order Approval | `approverEmail` (office manager), `budgetLimit` (5000), `quantityLimit` (50) |
+| Pantry Supplier Order Email | `pantryAdminEmail`, `senderName` |
+| Pantry Daily Low Stock Alert | `pantryAdminEmail` (runs at 08:00 India Standard Time) |
 
-1. Select all files and folders inside the `solution/` directory:
-   - `[Content_Types].xml`
-   - `solution.xml`
-   - `customizations.xml`
-   - `Workflows/` (folder with 3 flow JSON files)
-   - `CanvasApps/` (folder with app source)
-2. Compress them into a single ZIP file named `PantrySupplyOrdering_1_0_0_0.zip`
+If you change the limits, also change `cfgBudgetLimit` / `cfgQuantityLimit` in the app (**App** → **Formulas**) so the cart preview matches.
 
-**Important:** The ZIP must contain the files at the root level, NOT inside a subfolder.
+## 3. Sample data
+Import `dataverse/sample-data/1_Suppliers.csv` first, then `2_PantryItems.csv`. Steps are in [../dataverse/sample-data.md](../dataverse/sample-data.md).
 
----
+## 4. Security roles
+In the Power Platform admin center → **Users** → **Manage security roles**, give:
+- **Pantry Requester** to staff;
+- **Pantry Approver** to the office manager;
+- **Pantry Admin** to cafeteria and pantry staff.
 
-### Step 2: Import the Solution
+Share the app with the same people.
 
-1. Go to [Power Apps Maker Portal](https://make.powerapps.com)
-2. Select your target environment
-3. Navigate to **Solutions** in the left menu
-4. Click **Import solution**
-5. Click **Browse** and select `PantrySupplyOrdering_1_0_0_0.zip`
-6. Click **Next**
-7. Review the solution components
-8. Click **Import**
-9. Wait for the import to complete (may take 2-5 minutes)
+## 5. Canvas app
+The app ships with its five tables already connected, so it works straight after import. Open it from **Apps** → **Pantry Supply Ordering** → **Play**.
 
----
+The tables are connected using the names Studio gave them in the original environment (`Order Line Items_1` for the line items). If you import into a different environment and Studio reports a data source error, remove and re-add that table under **Data**.
 
-### Step 3: Configure Connection References
+## 6. Copilot agent
+Open Copilot Studio → **Pantry Supply Assistant**.
+1. Sign in to the Dataverse connection if prompted.
+2. **Publish**.
+3. Optionally, add it to Teams under **Channels**.
 
-After import, you need to set up connection references for the flows:
+Test it with "How many coffee pods are left?" or "When was the last order placed?".
 
-1. In the imported solution, find the **Cloud Flows**
-2. Edit each flow and configure these connections:
-   - **Microsoft Dataverse** - Sign in with your org account
-   - **Approvals** - Sign in (auto-configured with your account)
-   - **Office 365 Outlook** - Sign in for email sending
-   - **Microsoft Teams** - Sign in for Teams notifications
-
----
-
-### Step 4: Configure Environment Variables
-
-1. In the solution, go to **Environment Variables**
-2. Update these values for your organization:
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| Budget Approval Threshold | 200 | Orders above this $ amount require approval |
-| Quantity Approval Threshold | 50 | Orders above this quantity require approval |
-| Approver Email | officemanager@company.com | **Change to your approver's email** |
-| Low Stock Alert Recipients | (empty) | **Set to comma-separated email addresses** |
-
----
-
-### Step 5: Load Sample Data
-
-1. Go to **Dataverse** > **Tables** in the maker portal
-2. For each table, use **Import data from Excel** or manually enter records:
-   - Import `SampleData/Suppliers.csv` into the **Suppliers** table first
-   - Import `SampleData/PantryItems.csv` into the **Pantry Items** table second
-     (set the Preferred Supplier lookup column manually after import)
-
-**Tip:** You can also use the Power Apps data import wizard or Power Automate to bulk-load the CSV files.
-
----
-
-### Step 6: Set Up Security Roles
-
-Create three security roles in your environment:
-
-#### 1. Pantry User
-- **Pantry Items**: Read (Organization)
-- **Supply Orders**: Create, Read own, Write own
-- **Order Line Items**: Create, Read own, Write own
-- **Suppliers**: Read (Organization)
-- **Approval History**: Read own
-
-#### 2. Pantry Manager
-- All Pantry User permissions, plus:
-- **Supply Orders**: Read all, Write all
-- **Order Line Items**: Read all
-- **Approval History**: Create, Read all, Write all
-- **Pantry Items**: Write (Organization)
-
-#### 3. Pantry Admin
-- Full access to all pantry tables
-
----
-
-### Step 7: Turn On Cloud Flows
-
-1. In the solution, navigate to **Cloud Flows**
-2. Turn on each flow:
-   - **Pantry Order Approval** - Triggers when order status = Pending Approval
-   - **Supplier Order Email** - Triggers when order status = Approved
-   - **Daily Low Stock Alert** - Runs daily at 8:00 AM UTC
-
----
-
-### Step 8: Build the Canvas App
-
-The `CanvasApps/` directory contains the app source definition with all screen layouts, formulas, and data connections. To recreate:
-
-1. Go to **Power Apps** > **Apps** > **+ New app** > **Canvas**
-2. Choose **Tablet** layout (1366x768)
-3. Add Dataverse data sources: PantryItems, SupplyOrders, OrderLineItems, Suppliers, ApprovalHistory
-4. Create 4 screens following the JSON definitions in `CanvasApps/cr_PantrySupplyManager_src/Screens/`:
-   - **ScrHome** - Dashboard with navigation, low stock alerts, recent orders
-   - **ScrNewOrder** - Item catalog with cart, order submission
-   - **ScrOrderHistory** - Filterable order list with status tracking
-   - **ScrDashboard** - Inventory KPIs, stock level bars, quick reorder
-5. Copy Power Fx formulas from the JSON files for each control's properties
-6. Set the App.OnStart formula from `App.json`
-
----
-
-### Step 9: Set Up Copilot Agent (Optional)
-
-1. Go to [Copilot Studio](https://copilotstudio.microsoft.com)
-2. Create a new agent named **Pantry Supply Assistant**
-3. Add Dataverse knowledge sources: PantryItems, SupplyOrders, Suppliers
-4. Configure topics from `copilot-agent/topics.md`
-5. Deploy to Microsoft Teams
-
----
-
-### Post-Import Checklist
-
-- [ ] Solution imported successfully
-- [ ] All 5 Dataverse tables created (Suppliers, Pantry Items, Supply Orders, Order Line Items, Approval History)
-- [ ] 6 global option sets created
-- [ ] 4 environment variables configured with real values
-- [ ] Connection references configured for all 3 flows
-- [ ] All 3 cloud flows turned on
-- [ ] Sample data loaded
-- [ ] Security roles created and assigned
-- [ ] Canvas app created and published
-- [ ] Test order submitted and approval flow triggered
-- [ ] Supplier email sent for approved order
-- [ ] Low stock alert flow tested
-
----
-
-### Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| Import fails with "publisher not found" | The publisher `PantryDev` with prefix `cr` is included in the solution and will be created automatically |
-| Flows fail to turn on | Ensure all connection references are configured first |
-| Approval flow not triggering | Verify the order status is set to "Pending Approval" (100000002) |
-| Supplier email not sending | Check that `cr_supplieremailsent` is `false` on the order record |
-| Canvas app data not loading | Ensure the Dataverse connection is authenticated in the app |
+## Troubleshooting
+| Symptom | Fix |
+|---|---|
+| "Connection not found" during import | Create the connection first (Power Automate → **Connections** → **New connection**), then import again |
+| A flow is Off after import | Open it, fix any connection marked red, then **Turn on** |
+| Approval email never arrives | Check `approverEmail` in the approval flow's Settings step, and the flow's run history |
+| Small orders aren't auto-approved | The flow uses the order's **Total Amount** and the sum of line quantities. Check that both are under the limits |

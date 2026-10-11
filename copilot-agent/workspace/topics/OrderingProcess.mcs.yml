@@ -23,13 +23,14 @@ beginDialog:
           - |-
             Here's how pantry ordering works:
 
-            1. Open the **Pantry Supply Ordering** app and choose **New supply request**.
-            2. Add the items and quantities you need. The app warns you if an item is already well stocked.
-            3. Pick a required-by date, add a short justification and select **Submit for approval**.
-            4. Your approver gets an approval request. You're emailed as soon as they approve or reject it.
-            5. Approved orders are emailed to each item's preferred supplier automatically, and the order status changes to **Ordered**.
+            1. Open the **Pantry Supply Ordering** app and choose **New request**.
+            2. **Inventory check:** you can request items at or below their minimum stock level. Well-stocked items are disabled (pantry admins can override).
+            3. Add quantities, pick a required-by date and select **Submit request**. The app shows whether the order needs approval before you submit.
+            4. **Approval limits:** orders over 5,000 INR or 50 units go to the office manager, who approves in Outlook, Teams or the app. Smaller orders are approved automatically.
+            5. You're emailed when your order is approved or rejected. Approved orders are emailed to each item's preferred supplier automatically and marked **Ordered**.
+            6. When the delivery arrives, the pantry admin marks it **Received** and stock levels go up.
 
-            You can follow your requests, their approval history and approver comments under **My orders** in the app.
+            The pantry admin also gets a low-stock email every morning at 8 AM. Follow your requests under **My requests** in the app.
 
     - kind: EndDialog
       id: endDialog_ordering

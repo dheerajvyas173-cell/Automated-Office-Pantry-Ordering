@@ -47,6 +47,7 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: ManualLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Center
                               Fill: =clrBrand
                               FillPortions: =0
                               Height: =40
@@ -59,6 +60,7 @@ Screens:
                               - IvBrandIcon:
                                   Control: ModernIcon@1.1.1
                                   Properties:
+                                    AccessibleLabel: ="food pizza icon"
                                     Height: =22
                                     Icon: ="FoodPizza"
                                     IconColor: =Color.White
@@ -70,10 +72,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =40
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
@@ -84,31 +87,37 @@ Screens:
                               - IvBrandName:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =22
                                     Size: =15
                                     Text: ="Office Pantry"
+                                    Wrap: =false
                               - IvBrandSub:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
                                     Text: ="Supply ordering"
+                                    Wrap: =false
                   - IvNavGap:
                       Control: Rectangle@2.3.0
                       Properties:
                         Fill: =Color.Transparent
                         FillPortions: =0
                         Height: =8
+                        TabIndex: =-1
                   - IvNavHome:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Dashboard"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -118,10 +127,12 @@ Screens:
                         OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
                         Text: ="Dashboard"
                         Tooltip: ="Dashboard"
+                        Width: =If(App.Width < 900, 48, 216)
                   - IvNavNewOrder:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="New request"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -131,10 +142,12 @@ Screens:
                         OnSelect: =Navigate(NewOrderScreen, ScreenTransition.None)
                         Text: ="New request" & If(CountRows(colCart) > 0, " (" & CountRows(colCart) & ")", "")
                         Tooltip: ="New request"
+                        Width: =If(App.Width < 900, 48, 216)
                   - IvNavMyOrders:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="My requests"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -144,10 +157,12 @@ Screens:
                         OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.None)
                         Text: ="My requests"
                         Tooltip: ="My requests"
+                        Width: =If(App.Width < 900, 48, 216)
                   - IvNavInventory:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Inventory"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Secondary
                         FillPortions: =0
                         Height: =40
@@ -157,10 +172,12 @@ Screens:
                         OnSelect: =Navigate(InventoryScreen, ScreenTransition.None)
                         Text: ="Inventory"
                         Tooltip: ="Inventory"
+                        Width: =If(App.Width < 900, 48, 216)
                   - IvNavApprovals:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Approvals"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -171,10 +188,12 @@ Screens:
                         Text: ="Approvals"
                         Tooltip: ="Approvals"
                         Visible: =gRole = "Approver" || gRole = "Pantry Admin"
+                        Width: =If(App.Width < 900, 48, 216)
                   - IvNavReceiving:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Receiving"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -185,6 +204,7 @@ Screens:
                         Text: ="Receiving"
                         Tooltip: ="Receiving"
                         Visible: =gRole = "Pantry Admin"
+                        Width: =If(App.Width < 900, 48, 216)
                   - IvNavSpacer:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
@@ -220,6 +240,7 @@ Screens:
                         - IvRoleCaption:
                             Control: ModernText@1.0.0
                             Properties:
+                              AutoHeight: =true
                               Color: =clrTextSecondary
                               FillPortions: =0
                               FontWeight: =FontWeight.Semibold
@@ -253,6 +274,7 @@ Screens:
                         - IvUserAvatar:
                             Control: ModernAvatar@1.1.0
                             Properties:
+                              AccessibleLabel: =User().FullName
                               FillPortions: =0
                               Height: =32
                               Tooltip: =User().FullName
@@ -261,10 +283,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =36
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
@@ -275,21 +298,25 @@ Screens:
                               - IvUserName:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
                                     Size: =13
                                     Text: =User().FullName
+                                    Wrap: =false
                               - IvUserRoleText:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
                                     Text: =gRole
+                                    Wrap: =false
             - IvMain:
                 Control: GroupContainer@1.5.0
                 Variant: AutoLayout
@@ -322,10 +349,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =62
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =2
@@ -335,21 +363,25 @@ Screens:
                               - IvTitle:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =38
                                     Size: =26
                                     Text: ="Inventory"
+                                    Wrap: =false
                               - IvSubtitle:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =22
                                     Size: =14
                                     Text: =If(gRole = "Pantry Admin", "Update stock counts and request anything that is running low.", "Current stock for every pantry item. Request anything that is running low.")
+                                    Wrap: =false
                         - IvActions:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -367,6 +399,7 @@ Screens:
                               - IvRefresh:
                                   Control: ModernButton@1.0.0
                                   Properties:
+                                    AccessibleLabel: ="Refresh"
                                     Appearance: =ButtonAppearance.Subtle
                                     FillPortions: =0
                                     Height: =36
@@ -429,6 +462,47 @@ Screens:
                               Items: =Choices('Item Category')
                               SelectMultiple: =false
                               Width: =220
+                  - IvNote:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =clrBrandTint
+                        FillPortions: =0
+                        Height: =44
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                      Children:
+                        - IvNoteIcon:
+                            Control: ModernIcon@1.1.1
+                            Properties:
+                              AccessibleLabel: ="Note"
+                              FillPortions: =0
+                              Height: =20
+                              Icon: ="Alert"
+                              IconColor: =clrBrand
+                              IconStyle: =IconStyle.Filled
+                              Width: =20
+                        - IvNoteText:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              AutoHeight: =true
+                              Color: =clrTextPrimary
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Normal
+                              Height: =28
+                              LayoutMinWidth: =0
+                              Size: =13
+                              Text: |-
+                                ="Low stock alert: every morning at 8 AM the pantry admin is emailed a list of items at or below their minimum level."
+                              VerticalAlign: =VerticalAlign.Middle
                   - IvTable:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
@@ -467,6 +541,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Left
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
@@ -479,6 +554,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Left
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
@@ -491,6 +567,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Right
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
@@ -503,6 +580,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Right
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
@@ -515,6 +593,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Right
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
@@ -527,6 +606,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Left
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
@@ -538,6 +618,7 @@ Screens:
                               - IvHStatus:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
@@ -550,40 +631,47 @@ Screens:
                             Control: Gallery@2.15.0
                             Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                             Properties:
+                              AccessibleLabel: ="Rows list"
                               Fill: =Color.Transparent
                               FillPortions: =1
                               Items: =Sort(Filter(colItems, (IsBlank(IvSearch.Text) || StartsWith('Item Name', IvSearch.Text) || StartsWith(SKU, IvSearch.Text)) && (IsBlank(IvCategory.Selected) || Category = IvCategory.Selected.Value) && Switch(IvTabs.Selected.Value, "Low stock", 'Current Stock' <= 'Minimum Stock Level', "Out of stock", 'Current Stock' <= 0, true)), 'Item Name')
                               LayoutMinHeight: =100
+                              ShowScrollbar: =false
                               TemplateSize: =56
                             Children:
                               - IvCItem:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Left
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FontWeight: =FontWeight.Semibold
                                     Height: =24
                                     Size: =13
                                     Text: =ThisItem.'Item Name'
                                     Width: =(Parent.TemplateWidth - 256) * 0.3 - 8
+                                    Wrap: =false
                                     X: =(Parent.TemplateWidth - 256) * 0.0 + 12
                                     Y: =16
                               - IvCCat:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Left
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FontWeight: =FontWeight.Normal
                                     Height: =24
                                     Size: =13
                                     Text: =Text(ThisItem.Category)
                                     Width: =(Parent.TemplateWidth - 256) * 0.18 - 8
+                                    Wrap: =false
                                     X: =(Parent.TemplateWidth - 256) * 0.3 + 12
                                     Y: =16
                               - IvCStock:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Right
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FontWeight: =FontWeight.Normal
                                     Height: =24
@@ -591,42 +679,49 @@ Screens:
                                     Text: =Coalesce(ThisItem.'Current Stock', 0)
                                     Visible: =!(gRole = "Pantry Admin")
                                     Width: =(Parent.TemplateWidth - 256) * 0.11 - 8
+                                    Wrap: =false
                                     X: =(Parent.TemplateWidth - 256) * 0.48 + 12
                                     Y: =16
                               - IvCMin:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Right
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FontWeight: =FontWeight.Normal
                                     Height: =24
                                     Size: =13
                                     Text: =Coalesce(ThisItem.'Minimum Stock Level', 0)
                                     Width: =(Parent.TemplateWidth - 256) * 0.11 - 8
+                                    Wrap: =false
                                     X: =(Parent.TemplateWidth - 256) * 0.59 + 12
                                     Y: =16
                               - IvCPrice:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Right
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FontWeight: =FontWeight.Normal
                                     Height: =24
                                     Size: =13
                                     Text: =Text(Coalesce(ThisItem.'Unit Price', 0), "#,##0.00")
                                     Width: =(Parent.TemplateWidth - 256) * 0.13 - 8
+                                    Wrap: =false
                                     X: =(Parent.TemplateWidth - 256) * 0.7 + 12
                                     Y: =16
                               - IvCLoc:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Left
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FontWeight: =FontWeight.Normal
                                     Height: =24
                                     Size: =13
                                     Text: =Coalesce(ThisItem.'Storage Location', "-")
                                     Width: =(Parent.TemplateWidth - 256) * 0.17 - 8
+                                    Wrap: =false
                                     X: =(Parent.TemplateWidth - 256) * 0.83 + 12
                                     Y: =16
                               - IvCStockEdit:
@@ -653,7 +748,8 @@ Screens:
                               - IvCStatus:
                                   Control: ModernBadge@1.0.0
                                   Properties:
-                                    Content: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "In stock")
+                                    AccessibleLabel: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "Well stocked")
+                                    Content: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "Well stocked")
                                     Height: =24
                                     Intent: =If(ThisItem.'Current Stock' <= 0, BadgeIntent.Critical, ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', BadgeIntent.Caution, BadgeIntent.Positive)
                                     Shape: =BadgeShape.Rounded
@@ -663,7 +759,9 @@ Screens:
                               - IvCAdd:
                                   Control: ModernButton@1.0.0
                                   Properties:
+                                    AccessibleLabel: ="Request"
                                     Appearance: =ButtonAppearance.Subtle
+                                    DisplayMode: =If((gRole = "Pantry Admin" || ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level'), DisplayMode.Edit, DisplayMode.Disabled)
                                     Height: =36
                                     Icon: ="Add"
                                     OnSelect: |-
@@ -674,11 +772,12 @@ Screens:
                                           )
                                       );
                                       If(ThisItem.'Current Stock' > ThisItem.'Minimum Stock Level',
-                                          Notify(ThisItem.'Item Name' & " added. Note: the pantry still has " & ThisItem.'Current Stock' & " in stock.", NotificationType.Warning),
+                                          Notify(ThisItem.'Item Name' & " added as a pantry admin override. " & ThisItem.'Current Stock' & " are still in stock.", NotificationType.Warning),
                                           Notify(ThisItem.'Item Name' & " added to your request.", NotificationType.Success)
                                       )
                                     Text: ="Request"
-                                    Tooltip: ="Add the reorder quantity to your request"
+                                    Tooltip: |-
+                                      =If((gRole = "Pantry Admin" || ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level'), "Add the reorder quantity to your request", "Well stocked: no reorder needed yet")
                                     Width: =112
                                     X: =Parent.TemplateWidth - 124
                                     Y: =10
@@ -687,6 +786,7 @@ Screens:
                                   Properties:
                                     Fill: =clrStroke
                                     Height: =1
+                                    TabIndex: =-1
                                     Width: =Parent.TemplateWidth
                                     Y: =Parent.TemplateHeight - 1
                         - IvRowsEmpty:
@@ -706,6 +806,7 @@ Screens:
                               - IvRowsEmptyIcon:
                                   Control: ModernIcon@1.1.1
                                   Properties:
+                                    AccessibleLabel: ="search info icon"
                                     FillPortions: =0
                                     Height: =28
                                     Icon: ="SearchInfo"
@@ -715,6 +816,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Align: =Align.Center
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
@@ -724,6 +826,7 @@ Screens:
                         - IvCount:
                             Control: ModernText@1.0.0
                             Properties:
+                              AutoHeight: =true
                               Color: =clrTextSecondary
                               FillPortions: =0
                               FontWeight: =FontWeight.Normal

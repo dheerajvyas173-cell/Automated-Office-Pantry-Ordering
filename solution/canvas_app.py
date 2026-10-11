@@ -1,4 +1,5 @@
 """Packages power-apps/canvas-app/PantrySupplyOrdering.msapp as a solution canvas app component."""
+import datetime
 import json
 import os
 import struct
@@ -9,7 +10,16 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MSAPP = os.path.join(ROOT, "power-apps", "canvas-app", "PantrySupplyOrdering.msapp")
 APP_NAME = "cr_pantrysupplyordering_7a1c3"
 DISPLAY_NAME = "Pantry Supply Ordering"
-CLIENT_VERSION = "3.26021.0"
+CLIENT_VERSION = "3.26094.9"
+# Data sources as Studio named them when the tables were added in the maker's environment
+# (power-apps/canvas-app/shell/References/DataSources.json holds the matching table metadata).
+PANTRY_TABLES = {
+    "Pantry Items": ("cr_pantryitems", "cr_pantryitem"),
+    "Suppliers": ("cr_suppliers", "cr_supplier"),
+    "Order Line Items_1": ("cr_orderlineitems", "cr_orderlineitem"),
+    "Approval History Records": ("cr_approvalhistories", "cr_approvalhistory"),
+    "Supply Orders": ("cr_supplyorders", "cr_supplyorder"),
+}
 
 
 
@@ -27,10 +37,10 @@ def build(apps=None):
     """Returns (CanvasApps xml, root components xml, {zip path: content}).
 
     apps: list of (schema name, display name, msapp path, {data source name: (entity set, logical name)}).
-    The Pantry app declares no tables: Studio fails to open apps whose Dataverse tables lack the
-    metadata it caches when a table is added in Studio, so the tables are added there once instead.
+    The Pantry app ships with its five tables connected: its shell carries the table metadata Studio
+    cached when the tables were added, so nothing has to be added after import.
     """
-    apps = apps or [(APP_NAME, DISPLAY_NAME, MSAPP, {})]
+    apps = apps or [(APP_NAME, DISPLAY_NAME, MSAPP, PANTRY_TABLES)]
     xml, roots, files = "  <CanvasApps>\n", "", {}
     for app in apps:
         app_xml, root, app_files = _app(*app)
@@ -59,7 +69,7 @@ def _app(app_name, display_name, msapp_path, tables):
         {"logicalname": ln, "componenttype": "entity"} for _, ln in tables.values()]})
     xml = f"""    <CanvasApp>
       <Name>{app_name}</Name>
-      <AppVersion>2026-10-11T00:00:00Z</AppVersion>
+      <AppVersion>{datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}</AppVersion>
       <Status>Ready</Status>
       <CreatedByClientVersion>{CLIENT_VERSION}</CreatedByClientVersion>
       <MinClientVersion>{CLIENT_VERSION}</MinClientVersion>

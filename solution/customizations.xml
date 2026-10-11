@@ -3307,11 +3307,11 @@
   <CanvasApps>
     <CanvasApp>
       <Name>cr_pantrysupplyordering_7a1c3</Name>
-      <AppVersion>2026-10-11T00:00:00Z</AppVersion>
+      <AppVersion>2026-10-11T17:33:48Z</AppVersion>
       <Status>Ready</Status>
-      <CreatedByClientVersion>3.26021.0</CreatedByClientVersion>
-      <MinClientVersion>3.26021.0</MinClientVersion>
-      <Tags>{"primaryDeviceWidth": "1366", "primaryDeviceHeight": "768", "supportsPortrait": "false", "supportsLandscape": "true", "primaryFormFactor": "Tablet", "showStatusBar": "false", "publisherVersion": "3.26021.0", "minimumRequiredApiVersion": "2.2.0", "hasComponent": "false", "hasUnlockedComponent": "false", "isUnifiedRootApp": "false"}</Tags>
+      <CreatedByClientVersion>3.26094.9</CreatedByClientVersion>
+      <MinClientVersion>3.26094.9</MinClientVersion>
+      <Tags>{"primaryDeviceWidth": "1366", "primaryDeviceHeight": "768", "supportsPortrait": "false", "supportsLandscape": "true", "primaryFormFactor": "Tablet", "showStatusBar": "false", "publisherVersion": "3.26094.9", "minimumRequiredApiVersion": "2.2.0", "hasComponent": "false", "hasUnlockedComponent": "false", "isUnifiedRootApp": "false"}</Tags>
       <IsCdsUpgraded>0</IsCdsUpgraded>
       <GalleryItemId xsi:nil="true"></GalleryItemId>
       <BackgroundColor>RGBA(0,120,212,1)</BackgroundColor>
@@ -3321,7 +3321,7 @@
       <Publisher xsi:nil="true"></Publisher>
       <AuthorizationReferences>[]</AuthorizationReferences>
       <ConnectionReferences>{}</ConnectionReferences>
-      <DatabaseReferences>{}</DatabaseReferences>
+      <DatabaseReferences>{"default.cds": {"state": "Configured", "instanceUrl": "", "webApiVersion": "v9.0", "environmentVariableName": "", "dataSources": {"Pantry Items": {"entitySetName": "cr_pantryitems", "logicalName": "cr_pantryitem"}, "Suppliers": {"entitySetName": "cr_suppliers", "logicalName": "cr_supplier"}, "Order Line Items_1": {"entitySetName": "cr_orderlineitems", "logicalName": "cr_orderlineitem"}, "Approval History Records": {"entitySetName": "cr_approvalhistories", "logicalName": "cr_approvalhistory"}, "Supply Orders": {"entitySetName": "cr_supplyorders", "logicalName": "cr_supplyorder"}}}}</DatabaseReferences>
       <AppComponents>[]</AppComponents>
       <AppComponentDependencies>[]</AppComponentDependencies>
       <CanConsumeAppPass>1</CanConsumeAppPass>
@@ -3330,7 +3330,7 @@
       <AdminControlBypassConsent>0</AdminControlBypassConsent>
       <EmbeddedApp xsi:nil="true"></EmbeddedApp>
       <IntroducedVersion>1.0</IntroducedVersion>
-      <CdsDependencies>{"cdsdependencies": []}</CdsDependencies>
+      <CdsDependencies>{"cdsdependencies": [{"logicalname": "cr_pantryitem", "componenttype": "entity"}, {"logicalname": "cr_supplier", "componenttype": "entity"}, {"logicalname": "cr_orderlineitem", "componenttype": "entity"}, {"logicalname": "cr_approvalhistory", "componenttype": "entity"}, {"logicalname": "cr_supplyorder", "componenttype": "entity"}]}</CdsDependencies>
       <IsCustomizable>1</IsCustomizable>
       <BackgroundImageUri>/CanvasApps/cr_pantrysupplyordering_7a1c3_BackgroundImageUri</BackgroundImageUri>
       <DocumentUri>/CanvasApps/cr_pantrysupplyordering_7a1c3_DocumentUri.msapp</DocumentUri>

@@ -2,6 +2,7 @@ Screens:
   ReceivingScreen:
     Properties:
       Fill: =clrCanvas
+      OnVisible: =If(!IsBlank(gRecvOrder), Set(gRecvOrder, LookUp('Supply Orders', 'Supply Order' = gRecvOrder.'Supply Order')))
     Children:
       - RvRoot:
           Control: GroupContainer@1.5.0
@@ -47,6 +48,7 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: ManualLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Center
                               Fill: =clrBrand
                               FillPortions: =0
                               Height: =40
@@ -59,6 +61,7 @@ Screens:
                               - RvBrandIcon:
                                   Control: ModernIcon@1.1.1
                                   Properties:
+                                    AccessibleLabel: ="food pizza icon"
                                     Height: =22
                                     Icon: ="FoodPizza"
                                     IconColor: =Color.White
@@ -70,10 +73,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =40
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
@@ -84,31 +88,37 @@ Screens:
                               - RvBrandName:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =22
                                     Size: =15
                                     Text: ="Office Pantry"
+                                    Wrap: =false
                               - RvBrandSub:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
                                     Text: ="Supply ordering"
+                                    Wrap: =false
                   - RvNavGap:
                       Control: Rectangle@2.3.0
                       Properties:
                         Fill: =Color.Transparent
                         FillPortions: =0
                         Height: =8
+                        TabIndex: =-1
                   - RvNavHome:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Dashboard"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -118,10 +128,12 @@ Screens:
                         OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
                         Text: ="Dashboard"
                         Tooltip: ="Dashboard"
+                        Width: =If(App.Width < 900, 48, 216)
                   - RvNavNewOrder:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="New request"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -131,10 +143,12 @@ Screens:
                         OnSelect: =Navigate(NewOrderScreen, ScreenTransition.None)
                         Text: ="New request" & If(CountRows(colCart) > 0, " (" & CountRows(colCart) & ")", "")
                         Tooltip: ="New request"
+                        Width: =If(App.Width < 900, 48, 216)
                   - RvNavMyOrders:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="My requests"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -144,10 +158,12 @@ Screens:
                         OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.None)
                         Text: ="My requests"
                         Tooltip: ="My requests"
+                        Width: =If(App.Width < 900, 48, 216)
                   - RvNavInventory:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Inventory"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -157,10 +173,12 @@ Screens:
                         OnSelect: =Navigate(InventoryScreen, ScreenTransition.None)
                         Text: ="Inventory"
                         Tooltip: ="Inventory"
+                        Width: =If(App.Width < 900, 48, 216)
                   - RvNavApprovals:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Approvals"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -171,10 +189,12 @@ Screens:
                         Text: ="Approvals"
                         Tooltip: ="Approvals"
                         Visible: =gRole = "Approver" || gRole = "Pantry Admin"
+                        Width: =If(App.Width < 900, 48, 216)
                   - RvNavReceiving:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Receiving"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Secondary
                         FillPortions: =0
                         Height: =40
@@ -185,6 +205,7 @@ Screens:
                         Text: ="Receiving"
                         Tooltip: ="Receiving"
                         Visible: =gRole = "Pantry Admin"
+                        Width: =If(App.Width < 900, 48, 216)
                   - RvNavSpacer:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
@@ -220,6 +241,7 @@ Screens:
                         - RvRoleCaption:
                             Control: ModernText@1.0.0
                             Properties:
+                              AutoHeight: =true
                               Color: =clrTextSecondary
                               FillPortions: =0
                               FontWeight: =FontWeight.Semibold
@@ -253,6 +275,7 @@ Screens:
                         - RvUserAvatar:
                             Control: ModernAvatar@1.1.0
                             Properties:
+                              AccessibleLabel: =User().FullName
                               FillPortions: =0
                               Height: =32
                               Tooltip: =User().FullName
@@ -261,10 +284,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =36
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
@@ -275,21 +299,25 @@ Screens:
                               - RvUserName:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
                                     Size: =13
                                     Text: =User().FullName
+                                    Wrap: =false
                               - RvUserRoleText:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
                                     Text: =gRole
+                                    Wrap: =false
             - RvMain:
                 Control: GroupContainer@1.5.0
                 Variant: AutoLayout
@@ -322,10 +350,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =62
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =2
@@ -335,21 +364,25 @@ Screens:
                               - RvTitle:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =38
                                     Size: =26
                                     Text: ="Receiving"
+                                    Wrap: =false
                               - RvSubtitle:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =22
                                     Size: =14
                                     Text: ="Record deliveries from suppliers. Received quantities are added to stock."
+                                    Wrap: =false
                         - RvActions:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -367,6 +400,7 @@ Screens:
                               - RvRefresh:
                                   Control: ModernButton@1.0.0
                                   Properties:
+                                    AccessibleLabel: ="Refresh"
                                     Appearance: =ButtonAppearance.Subtle
                                     FillPortions: =0
                                     Height: =36
@@ -421,6 +455,7 @@ Screens:
                                   Control: Gallery@2.15.0
                                   Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                   Properties:
+                                    AccessibleLabel: ="Orders list"
                                     Fill: =Color.Transparent
                                     FillPortions: =1
                                     Items: |-
@@ -437,34 +472,40 @@ Screens:
                                         Properties:
                                           Fill: =clrBrand
                                           Height: =Parent.TemplateHeight - 20
+                                          TabIndex: =-1
                                           Visible: =!IsBlank(gRecvOrder) && ThisItem.'Supply Order' = gRecvOrder.'Supply Order'
                                           Width: =3
                                           Y: =10
                                     - RvOrNumber:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FontWeight: =FontWeight.Semibold
                                           Height: =22
                                           Size: =14
                                           Text: =ThisItem.'Order Number'
                                           Width: =Parent.TemplateWidth - 170
+                                          Wrap: =false
                                           X: =14
                                           Y: =12
                                     - RvOrMeta:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FontWeight: =FontWeight.Normal
                                           Height: =20
                                           Size: =12
                                           Text: =ThisItem.'Requested By' & "  ·  " & Text(Coalesce(ThisItem.'Total Amount', 0), "#,##0.00")
                                           Width: =Parent.TemplateWidth - 170
+                                          Wrap: =false
                                           X: =14
                                           Y: =38
                                     - RvOrBadge:
                                         Control: ModernBadge@1.0.0
                                         Properties:
+                                          AccessibleLabel: =Text(ThisItem.'Order Status')
                                           Content: =Text(ThisItem.'Order Status')
                                           Height: =24
                                           Intent: =Switch(Text(ThisItem.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
@@ -477,6 +518,7 @@ Screens:
                                         Properties:
                                           Fill: =clrStroke
                                           Height: =1
+                                          TabIndex: =-1
                                           Width: =Parent.TemplateWidth
                                           Y: =Parent.TemplateHeight - 1
                               - RvOrdersEmpty:
@@ -496,6 +538,7 @@ Screens:
                                     - RvOrdersEmptyIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="checkmark circle icon"
                                           FillPortions: =0
                                           Height: =28
                                           Icon: ="CheckmarkCircle"
@@ -505,6 +548,7 @@ Screens:
                                         Control: ModernText@1.0.0
                                         Properties:
                                           Align: =Align.Center
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
@@ -562,6 +606,7 @@ Screens:
                                           - RvDetailNumber:
                                               Control: ModernText@1.0.0
                                               Properties:
+                                                AutoHeight: =true
                                                 Color: =clrTextPrimary
                                                 FillPortions: =1
                                                 FontWeight: =FontWeight.Semibold
@@ -571,6 +616,7 @@ Screens:
                                           - RvDetailBadge:
                                               Control: ModernBadge@1.0.0
                                               Properties:
+                                                AccessibleLabel: =Text(gRecvOrder.'Order Status')
                                                 Content: =Text(gRecvOrder.'Order Status')
                                                 FillPortions: =0
                                                 Height: =28
@@ -584,7 +630,8 @@ Screens:
                                           DropShadow: =DropShadow.None
                                           Fill: =Color.Transparent
                                           FillPortions: =0
-                                          Height: =48
+                                          Height: =60
+                                          LayoutAlignItems: =LayoutAlignItems.Stretch
                                           LayoutDirection: =LayoutDirection.Horizontal
                                           LayoutGap: =16
                                         Children:
@@ -592,7 +639,6 @@ Screens:
                                               Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
-                                                AlignInContainer: =AlignInContainer.Stretch
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
                                                 FillPortions: =1
@@ -604,6 +650,7 @@ Screens:
                                                 - RvFByCaption:
                                                     Control: ModernText@1.0.0
                                                     Properties:
+                                                      AutoHeight: =true
                                                       Color: =clrTextSecondary
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Normal
@@ -613,17 +660,18 @@ Screens:
                                                 - RvFByValue:
                                                     Control: ModernText@1.0.0
                                                     Properties:
+                                                      AutoHeight: =true
                                                       Color: =clrTextPrimary
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
                                                       Text: =gRecvOrder.'Requested By'
+                                                      Wrap: =false
                                           - RvFRequired:
                                               Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
-                                                AlignInContainer: =AlignInContainer.Stretch
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
                                                 FillPortions: =1
@@ -635,6 +683,7 @@ Screens:
                                                 - RvFRequiredCaption:
                                                     Control: ModernText@1.0.0
                                                     Properties:
+                                                      AutoHeight: =true
                                                       Color: =clrTextSecondary
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Normal
@@ -644,17 +693,18 @@ Screens:
                                                 - RvFRequiredValue:
                                                     Control: ModernText@1.0.0
                                                     Properties:
+                                                      AutoHeight: =true
                                                       Color: =clrTextPrimary
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
                                                       Text: =Text(gRecvOrder.'Required By Date', "dd mmm yyyy")
+                                                      Wrap: =false
                                           - RvFTotal:
                                               Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
-                                                AlignInContainer: =AlignInContainer.Stretch
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
                                                 FillPortions: =1
@@ -666,6 +716,7 @@ Screens:
                                                 - RvFTotalCaption:
                                                     Control: ModernText@1.0.0
                                                     Properties:
+                                                      AutoHeight: =true
                                                       Color: =clrTextSecondary
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Normal
@@ -675,17 +726,18 @@ Screens:
                                                 - RvFTotalValue:
                                                     Control: ModernText@1.0.0
                                                     Properties:
+                                                      AutoHeight: =true
                                                       Color: =clrTextPrimary
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
                                                       Text: =Text(Coalesce(gRecvOrder.'Total Amount', 0), "#,##0.00")
+                                                      Wrap: =false
                                           - RvFWhere:
                                               Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
-                                                AlignInContainer: =AlignInContainer.Stretch
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
                                                 FillPortions: =1
@@ -697,6 +749,7 @@ Screens:
                                                 - RvFWhereCaption:
                                                     Control: ModernText@1.0.0
                                                     Properties:
+                                                      AutoHeight: =true
                                                       Color: =clrTextSecondary
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Normal
@@ -706,15 +759,18 @@ Screens:
                                                 - RvFWhereValue:
                                                     Control: ModernText@1.0.0
                                                     Properties:
+                                                      AutoHeight: =true
                                                       Color: =clrTextPrimary
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
                                                       Text: =Coalesce(gRecvOrder.'Delivery Address', "-")
+                                                      Wrap: =false
                                     - RvWhy:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
@@ -738,6 +794,7 @@ Screens:
                                           - RvLnHeadIcon:
                                               Control: ModernIcon@1.1.1
                                               Properties:
+                                                AccessibleLabel: ="box multiple icon"
                                                 FillPortions: =0
                                                 Height: =20
                                                 Icon: ="BoxMultiple"
@@ -747,6 +804,7 @@ Screens:
                                           - RvLnHeadTitle:
                                               Control: ModernText@1.0.0
                                               Properties:
+                                                AutoHeight: =true
                                                 Color: =clrTextPrimary
                                                 FillPortions: =1
                                                 FontWeight: =FontWeight.Semibold
@@ -758,56 +816,65 @@ Screens:
                                         Control: Gallery@2.15.0
                                         Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                         Properties:
+                                          AccessibleLabel: ="Lines list"
                                           Fill: =Color.Transparent
                                           FillPortions: =1
-                                          Items: =Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order')
+                                          Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order')
                                           LayoutMinHeight: =100
                                           TemplateSize: =56
                                         Children:
                                           - RvLnName:
                                               Control: ModernText@1.0.0
                                               Properties:
+                                                AutoHeight: =true
                                                 Color: =clrTextPrimary
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =20
                                                 Size: =13
                                                 Text: =ThisItem.'Line Item Name'
                                                 Width: =Parent.TemplateWidth - 130
+                                                Wrap: =false
                                                 X: =4
                                                 Y: =6
                                           - RvLnSupplier:
                                               Control: ModernText@1.0.0
                                               Properties:
+                                                AutoHeight: =true
                                                 Color: =clrTextSecondary
                                                 FontWeight: =FontWeight.Normal
                                                 Height: =20
                                                 Size: =12
                                                 Text: =Coalesce(ThisItem.Supplier.'Supplier Name', "No supplier set")
                                                 Width: =Parent.TemplateWidth - 130
+                                                Wrap: =false
                                                 X: =4
                                                 Y: =30
                                           - RvLnQty:
                                               Control: ModernText@1.0.0
                                               Properties:
                                                 Align: =Align.Right
+                                                AutoHeight: =true
                                                 Color: =clrTextPrimary
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =22
                                                 Size: =14
                                                 Text: ="× " & ThisItem.Quantity
                                                 Width: =112
+                                                Wrap: =false
                                                 X: =Parent.TemplateWidth - 120
                                                 Y: =6
                                           - RvLnCost:
                                               Control: ModernText@1.0.0
                                               Properties:
                                                 Align: =Align.Right
+                                                AutoHeight: =true
                                                 Color: =clrTextSecondary
                                                 FontWeight: =FontWeight.Normal
                                                 Height: =20
                                                 Size: =12
                                                 Text: =Text(Coalesce(ThisItem.'Total Cost', 0), "#,##0.00")
                                                 Width: =112
+                                                Wrap: =false
                                                 X: =Parent.TemplateWidth - 120
                                                 Y: =30
                                           - RvLnDivider:
@@ -815,6 +882,7 @@ Screens:
                                               Properties:
                                                 Fill: =clrStroke
                                                 Height: =1
+                                                TabIndex: =-1
                                                 Width: =Parent.TemplateWidth
                                                 Y: =Parent.TemplateHeight - 1
                                     - RvDecide:
@@ -832,6 +900,7 @@ Screens:
                                           - RvHint:
                                               Control: ModernText@1.0.0
                                               Properties:
+                                                AutoHeight: =true
                                                 Color: =clrTextSecondary
                                                 FillPortions: =1
                                                 FontWeight: =FontWeight.Normal
@@ -842,6 +911,7 @@ Screens:
                                           - RvReceive:
                                               Control: ModernButton@1.0.0
                                               Properties:
+                                                AccessibleLabel: ="Mark as received"
                                                 Appearance: =ButtonAppearance.Primary
                                                 FillPortions: =0
                                                 Height: =36
@@ -849,7 +919,7 @@ Screens:
                                                 OnSelect: |-
                                                   =UpdateContext({locBusy: true});
                                                   IfError(
-                                                      ForAll(Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order') As L,
+                                                      ForAll(Filter('Order Line Items', 'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order') As L,
                                                           With({item: LookUp('Pantry Items', 'Pantry Item' = L.'Pantry Item'.'Pantry Item')},
                                                               If(!IsBlank(item), Patch('Pantry Items', item, {'Current Stock': Coalesce(item.'Current Stock', 0) + L.Quantity}))
                                                           )
@@ -880,6 +950,7 @@ Screens:
                                     - RvDetailEmptyIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="document bullet list icon"
                                           FillPortions: =0
                                           Height: =28
                                           Icon: ="DocumentBulletList"
@@ -889,6 +960,7 @@ Screens:
                                         Control: ModernText@1.0.0
                                         Properties:
                                           Align: =Align.Center
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal

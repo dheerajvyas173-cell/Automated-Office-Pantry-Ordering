@@ -7,6 +7,10 @@ from xml.sax.saxutils import quoteattr
 APPROVER_EMAIL = "dheerajvyas@dheerajvyas173gmail.onmicrosoft.com"
 PANTRY_ADMIN_EMAIL = "dheerajvyas@dheerajvyas173gmail.onmicrosoft.com"
 TIME_ZONE = "India Standard Time"
+# Orders above either limit go to the office manager; smaller orders are approved automatically.
+# Keep these in step with cfgBudgetLimit / cfgQuantityLimit in the canvas app (App.Formulas).
+BUDGET_LIMIT = 5000      # total amount, INR
+QUANTITY_LIMIT = 50      # total units across all lines
 
 # Choice values (see OPTION_SETS in generate_solution.py).
 ORDER_SUBMITTED, ORDER_APPROVED, ORDER_REJECTED, ORDER_ORDERED = 100000001, 100000002, 100000003, 100000004
@@ -121,8 +125,19 @@ def condition(expression, if_true, if_false=()):
     }
 
 
-def foreach(items, steps):
-    return {"type": "Foreach", "foreach": items, "actions": chain(steps)}
+def foreach(items, steps, sequential=False):
+    loop = {"type": "Foreach", "foreach": items, "actions": chain(steps)}
+    if sequential:
+        loop["runtimeConfiguration"] = {"concurrency": {"repetitions": 1}}
+    return loop
+
+
+def init_variable(name, type_, value):
+    return {"type": "InitializeVariable", "inputs": {"variables": [{"name": name, "type": type_, "value": value}]}}
+
+
+def increment_variable(name, value):
+    return {"type": "IncrementVariable", "inputs": {"name": name, "value": value}}
 
 
 # --- Flow 1: approval -------------------------------------------------------
@@ -133,24 +148,36 @@ def approval_flow():
     comments = f"@{{{response}?['comments']}}"
     requester_email = "@{outputs('Get_requester')?['body/internalemailaddress']}"
 
-    def decided(status_label, approval_value, order_value, action_value, subject):
+    def decided(status_label, approval_value, order_value, action_value, subject, by=approver, notes=comments):
         return [
             (f"Set_order_{status_label}", update_order(
                 cr_approvalstatus=approval_value, cr_orderstatus=order_value,
-                cr_approvaldate="@{utcNow()}", cr_approvedby=approver, cr_approvercomments=comments)),
+                cr_approvaldate="@{utcNow()}", cr_approvedby=by, cr_approvercomments=notes)),
             (f"Log_{status_label}", log_history(
-                f"{status_label.capitalize()} - {ORDER_NAME}", action_value, approver, comments,
+                f"{status_label.replace('_', ' ').capitalize()} - {ORDER_NAME}", action_value, by, notes,
                 APPROVAL_PENDING, approval_value)),
             (f"Email_requester_{status_label}", send_email(
                 requester_email, subject,
                 f"<p>Hi @{{outputs('Get_requester')?['body/firstname']}},</p>"
-                f"<p>Your pantry order <b>{ORDER_NAME}</b> was <b>{status_label}</b> by {approver}.</p>"
-                f"<p><b>Comments:</b> {comments}</p>")),
+                f"<p>Your pantry order <b>{ORDER_NAME}</b> was <b>{status_label.replace('_', ' ')}</b> by {by}.</p>"
+                f"<p><b>Comments:</b> {notes}</p>"
+                + ("<p>It has been sent to the supplier.</p>" if approval_value == APPROVAL_APPROVED else ""))),
         ]
+
+    total_amount = "float(coalesce(triggerOutputs()?['body/cr_totalamount'], 0))"
+    needs_approval = {"or": [
+        {"greater": [f"@{total_amount}", "@outputs('Settings')?['budgetLimit']"]},
+        {"greater": ["@variables('TotalQuantity')", "@outputs('Settings')?['quantityLimit']"]},
+    ]}
+    threshold_note = ("Under the approval limits (total @{triggerOutputs()?['body/cr_totalamount']} of "
+                      "@{outputs('Settings')?['budgetLimit']}, @{variables('TotalQuantity')} of "
+                      "@{outputs('Settings')?['quantityLimit']} units)")
 
     triggers = {"When_an_order_is_submitted": dataverse_trigger(4, f"cr_orderstatus eq {ORDER_SUBMITTED}")}
     actions = chain([
-        ("Settings", compose({"approverEmail": APPROVER_EMAIL})),
+        ("Settings", compose({"approverEmail": APPROVER_EMAIL, "budgetLimit": BUDGET_LIMIT,
+                              "quantityLimit": QUANTITY_LIMIT})),
+        ("Initialize_total_quantity", init_variable("TotalQuantity", "Integer", 0)),
         ("Get_requester", get_row("systemusers", "@triggerOutputs()?['body/_createdby_value']")),
         ("Mark_pending", update_order(cr_approvalstatus=APPROVAL_PENDING)),
         ("Log_submission", log_history(
@@ -160,29 +187,36 @@ def approval_flow():
             "cr_orderlineitems",
             filter=f"_cr_supplyorder_value eq {ORDER_ID}",
             expand="cr_pantryitem($select=cr_name)")),
+        ("Add_up_quantities", foreach("@outputs('List_line_items')?['body/value']", [
+            ("Add_line_quantity", increment_variable("TotalQuantity", "@int(coalesce(item()?['cr_quantity'], 0))")),
+        ], sequential=True)),
         ("Item_lines", select(
             "@outputs('List_line_items')?['body/value']",
             "@concat('- ', coalesce(item()?['cr_pantryitem']?['cr_name'], item()?['cr_name']), "
             "' x ', string(coalesce(item()?['cr_quantity'], 0)))")),
-        ("Request_approval", _op(APPROVALS, "StartAndWaitForAnApproval", {
-            "approvalType": "Basic",
-            "WebhookApprovalCreationInput/title": f"Pantry order {ORDER_NAME} needs approval",
-            "WebhookApprovalCreationInput/assignedTo": "@{outputs('Settings')?['approverEmail']}",
-            "WebhookApprovalCreationInput/details":
-                "**Requested by:** @{outputs('Get_requester')?['body/fullname']}\n\n"
-                "**Required by:** @{triggerOutputs()?['body/cr_requiredbydate']}\n\n"
-                "**Total amount:** @{triggerOutputs()?['body/cr_totalamount']}\n\n"
-                "**Justification:** @{triggerOutputs()?['body/cr_justification']}\n\n"
-                "**Items:**\n\n@{join(body('Item_lines'), decodeUriComponent('%0A'))}",
-            "WebhookApprovalCreationInput/enableNotifications": True,
-            "WebhookApprovalCreationInput/enableReassignment": True,
-        }, webhook=True)),
-        ("If_approved", condition(
-            {"and": [{"equals": ["@body('Request_approval')?['outcome']", "Approve"]}]},
-            decided("approved", APPROVAL_APPROVED, ORDER_APPROVED, ACTION_APPROVED,
-                    f"Your pantry order {ORDER_NAME} was approved"),
-            decided("rejected", APPROVAL_REJECTED, ORDER_REJECTED, ACTION_REJECTED,
-                    f"Your pantry order {ORDER_NAME} was not approved"))),
+        ("If_over_approval_limits", condition(needs_approval, [
+            ("Request_approval", _op(APPROVALS, "StartAndWaitForAnApproval", {
+                "approvalType": "Basic",
+                "WebhookApprovalCreationInput/title": f"Pantry order {ORDER_NAME} needs approval",
+                "WebhookApprovalCreationInput/assignedTo": "@{outputs('Settings')?['approverEmail']}",
+                "WebhookApprovalCreationInput/details":
+                    "**Requested by:** @{outputs('Get_requester')?['body/fullname']}\n\n"
+                    "**Required by:** @{triggerOutputs()?['body/cr_requiredbydate']}\n\n"
+                    "**Total amount:** @{triggerOutputs()?['body/cr_totalamount']}\n\n"
+                    "**Justification:** @{triggerOutputs()?['body/cr_justification']}\n\n"
+                    "**Items:**\n\n@{join(body('Item_lines'), decodeUriComponent('%0A'))}",
+                "WebhookApprovalCreationInput/enableNotifications": True,
+                "WebhookApprovalCreationInput/enableReassignment": True,
+            }, webhook=True)),
+            ("If_approved", condition(
+                {"and": [{"equals": ["@body('Request_approval')?['outcome']", "Approve"]}]},
+                decided("approved", APPROVAL_APPROVED, ORDER_APPROVED, ACTION_APPROVED,
+                        f"Your pantry order {ORDER_NAME} was approved"),
+                decided("rejected", APPROVAL_REJECTED, ORDER_REJECTED, ACTION_REJECTED,
+                        f"Your pantry order {ORDER_NAME} was not approved"))),
+        ], decided("auto_approved", APPROVAL_APPROVED, ORDER_APPROVED, ACTION_APPROVED,
+                   f"Your pantry order {ORDER_NAME} was approved automatically",
+                   by="Auto-approved (under limits)", notes=threshold_note))),
     ])
     return triggers, actions
 

@@ -4,6 +4,7 @@ Run: python3 power-apps/canvas-app/generate_screens.py, then validate_app.py to 
 Control versions match what Power Apps Studio uses for this app (2026 modern controls).
 """
 import os
+import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "Src")
@@ -19,6 +20,9 @@ OPEN_STATUSES = ["Draft", "Submitted", "Approved", "Ordered", "'Partially Receiv
 DONE_STATUSES = ["Received", "Rejected", "Cancelled"]
 MONEY = '"#,##0.00"'
 ROLES = ["Requester", "Approver", "Pantry Admin"]
+# Approval limits: orders above either one need the office manager. Keep in step with
+# BUDGET_LIMIT / QUANTITY_LIMIT in solution/flows.py, which enforces them.
+BUDGET_LIMIT, QUANTITY_LIMIT = 5000, 50
 
 
 # --- YAML emitter -------------------------------------------------------------
@@ -79,8 +83,12 @@ def ctl(name, type_, variant=None, children=None, **props):
 
 # --- Design system components ---------------------------------------------------
 
-def text(name, value, size=14, weight="Normal", color="clrTextPrimary", **p):
+def text(name, value, size=14, weight="Normal", color="clrTextPrimary", single_line=False, **p):
+    """Label that grows with its content (AutoHeight). single_line keeps table and list cells one line high."""
     p.setdefault("Height", max(20, int(size * 1.6)))
+    p.setdefault("AutoHeight", "true")
+    if single_line:
+        p.setdefault("Wrap", "false")
     return ctl(name, TEXT, Text=value, Size=size, FontWeight=f"FontWeight.{weight}", Color=color, **p)
 
 
@@ -88,17 +96,20 @@ def button(name, label, on_select, appearance="Primary", icon=None, **p):
     if icon:
         p.setdefault("Icon", f'"{icon}"')
     p.setdefault("Height", 36)
+    p.setdefault("AccessibleLabel", label)
     return ctl(name, BUTTON, Text=label, OnSelect=on_select, Appearance=f"ButtonAppearance.{appearance}", **p)
 
 
 def badge(name, content, intent, **p):
     p.setdefault("Height", 24)
+    p.setdefault("AccessibleLabel", content)
     return ctl(name, BADGE, Content=content, Intent=intent, Shape="BadgeShape.Rounded", **p)
 
 
 def icon(name, glyph, color="clrTextSecondary", **p):
     p.setdefault("Width", 20)
     p.setdefault("Height", 20)
+    p.setdefault("AccessibleLabel", '"' + re.sub(r"(?<=[a-z])(?=[A-Z])", " ", glyph).lower() + ' icon"')
     return ctl(name, ICON, Icon=f'"{glyph}"', IconColor=color, **p)
 
 
@@ -135,17 +146,23 @@ def chip(name, glyph, accent, size=36):
     return ctl(name, CONTAINER, "ManualLayout", [
         icon(f"{name}Icon", glyph, accent, IconStyle="IconStyle.Filled", Width=20, Height=20,
              X=(size - 20) // 2, Y=(size - 20) // 2),
-    ], Fill=f"ColorFade({accent}, 0.86)", Width=size, Height=size, FillPortions=0, **radius(10))
+    ], Fill=f"ColorFade({accent}, 0.86)", Width=size, Height=size, FillPortions=0,
+        AlignInContainer="AlignInContainer.Center", **radius(10))
 
 
 def gallery(name, items, template_size, children, **p):
     p.setdefault("LayoutMinHeight", 100)
+    p.setdefault("AccessibleLabel", '"' + re.sub(r"^[A-Z][a-z]", "", name) + ' list"')
+    for child in children:  # rows have a fixed height, so their labels stay on one line
+        if child["type"] == TEXT:
+            child["props"].setdefault("Wrap", "false")
     return ctl(name, GALLERY, GALLERY_VARIANT, children, Items=items, TemplateSize=template_size,
                Fill="Color.Transparent", **p)
 
 
 def row_divider(name):
-    return ctl(name, RECT, Fill="clrStroke", Height=1, Width="Parent.TemplateWidth", Y="Parent.TemplateHeight - 1")
+    return ctl(name, RECT, Fill="clrStroke", Height=1, Width="Parent.TemplateWidth", Y="Parent.TemplateHeight - 1",
+               TabIndex=-1)
 
 
 def empty_state(name, glyph, message, visible):
@@ -163,10 +180,20 @@ def section_head(prefix, title, glyph, extra=()):
     ], gap=8, Height=36, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center")
 
 
+def note(name, message, glyph="Info", tone="clrBrand", fill="clrBrandTint", height=44, **p):
+    """Inline explanation of a business rule, shown where the rule applies."""
+    return box(name, "Horizontal", [
+        icon(f"{name}Icon", glyph, tone, IconStyle="IconStyle.Filled", AccessibleLabel='"Note"'),
+        text(f"{name}Text", message, 13, color="clrTextPrimary", Height=height - 16, FillPortions=1,
+             LayoutMinWidth=0, VerticalAlign="VerticalAlign.Middle"),
+    ], gap=10, Height=height, FillPortions=0, Fill=fill, PaddingLeft=12, PaddingRight=12,
+        LayoutAlignItems="LayoutAlignItems.Center", **radius(8), **p)
+
+
 def field(name, caption, value):
     return box(name, "Vertical", [
         text(f"{name}Caption", f'"{caption}"', 12, color="clrTextSecondary", Height=18),
-        text(f"{name}Value", value, 14, "Semibold", Height=22),
+        text(f"{name}Value", value, 14, "Semibold", Height=22, single_line=True),
     ], gap=2, LayoutMinWidth=110)
 
 
@@ -178,6 +205,35 @@ def status_intent(expr):
             f'"Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)')
 
 
+STAGES = ["Submitted", "Approved", "Ordered", "Received"]
+
+
+def stage_index(expr):
+    return (f'Switch(Text({expr}), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, '
+            f'"Received", 4, 0)')
+
+
+def status_tracker(prefix, order):
+    """Submitted → Approved → Ordered → Received, with the steps reached so far highlighted."""
+    stage = stage_index(f"{order}.'Order Status'")
+    children = []
+    for i, label in enumerate(STAGES, start=1):
+        reached = f"{stage} >= {i}"
+        if i > 1:
+            children.append(ctl(f"{prefix}Link{i}", RECT, Fill=f"If({reached}, clrBrand, clrStroke)", Height=2,
+                                FillPortions=1, LayoutMinWidth=12, TabIndex=-1))
+        children.append(box(f"{prefix}Step{i}", "Horizontal", [
+            icon(f"{prefix}Step{i}Icon", "CheckmarkCircle", f"If({reached}, clrBrand, clrTextTertiary)",
+                 IconStyle=f"If({reached}, IconStyle.Filled, IconStyle.Outline)", AccessibleLabel=f'"{label}"'),
+            text(f"{prefix}Step{i}Text", f'"{label}"', 13, "Semibold",
+                 color=f"If({reached}, clrTextPrimary, clrTextSecondary)", Height=20, Width=len(label) * 8 + 8,
+                 single_line=True),
+        ], gap=6, Height=28, Width=len(label) * 8 + 34, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"))
+    return box(f"{prefix}Tracker", "Horizontal", children, gap=8, Height=28, FillPortions=0,
+               LayoutAlignItems="LayoutAlignItems.Center",
+               Visible=f"!(Text({order}.'Order Status') in [\"Rejected\", \"Cancelled\", \"Draft\"])")
+
+
 def status_badge(name, expr, **p):
     p.setdefault("Width", 128)
     return badge(name, f"Text({expr})", status_intent(expr), **p)
@@ -185,7 +241,16 @@ def status_badge(name, expr, **p):
 
 def stock_label(item):
     return (f'If({item}.\'Current Stock\' <= 0, "Out of stock", '
-            f'{item}.\'Current Stock\' <= {item}.\'Minimum Stock Level\', "Low stock", "In stock")')
+            f'{item}.\'Current Stock\' <= {item}.\'Minimum Stock Level\', "Low stock", "Well stocked")')
+
+
+def can_request(item):
+    """Inventory check: only items at or below their minimum stock can be requested (pantry admins may override)."""
+    return f"(gRole = \"Pantry Admin\" || {item}.'Current Stock' <= {item}.'Minimum Stock Level')"
+
+
+def request_mode(item):
+    return f"If({can_request(item)}, DisplayMode.Edit, DisplayMode.Disabled)"
 
 
 def stock_intent(item):
@@ -201,7 +266,7 @@ def add_to_cart(item, qty):
     )
 );
 If({item}.'Current Stock' > {item}.'Minimum Stock Level',
-    Notify({item}.'Item Name' & " added. Note: the pantry still has " & {item}.'Current Stock' & " in stock.", NotificationType.Warning),
+    Notify({item}.'Item Name' & " added as a pantry admin override. " & {item}.'Current Stock' & " are still in stock.", NotificationType.Warning),
     Notify({item}.'Item Name' & " added to your request.", NotificationType.Success)
 )"""
 
@@ -252,7 +317,8 @@ def nav_rail(prefix, current):
             caption = f'"{label}" & If(CountRows(colCart) > 0, " (" & CountRows(colCart) & ")", "")'
         props = dict(IconStyle="IconStyle.Filled" if selected else "IconStyle.Outline",
                      Layout="If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)",
-                     Tooltip=f'"{label}"', AccessibleLabel=f'"{label}"', Height=40)
+                     Tooltip=f'"{label}"', AccessibleLabel=f'"{label}"', Height=40,
+                     Width="If(App.Width < 900, 48, 216)", AlignInContainer="AlignInContainer.Start")
         if role_visible(roles):
             props["Visible"] = role_visible(roles)
         items.append(button(f"{prefix}Nav{key}", caption, f"Navigate({screen}, ScreenTransition.None)",
@@ -266,13 +332,15 @@ def nav_rail(prefix, current):
             ctl(f"{prefix}BrandTile", CONTAINER, "ManualLayout", [
                 icon(f"{prefix}BrandIcon", "FoodPizza", "Color.White", IconStyle="IconStyle.Filled",
                      Width=22, Height=22, X=9, Y=9),
-            ], Fill="clrBrand", Width=40, Height=40, FillPortions=0, **radius(10)),
+            ], Fill="clrBrand", Width=40, Height=40, FillPortions=0, AlignInContainer="AlignInContainer.Center",
+                **radius(10)),
             box(f"{prefix}BrandText", "Vertical", [
-                text(f"{prefix}BrandName", '"Office Pantry"', 15, "Semibold", Height=22),
-                text(f"{prefix}BrandSub", '"Supply ordering"', 11, color="clrTextSecondary", Height=16),
-            ], gap=0, Visible="App.Width >= 900", LayoutJustifyContent="LayoutJustifyContent.Center"),
+                text(f"{prefix}BrandName", '"Office Pantry"', 15, "Semibold", Height=22, single_line=True),
+                text(f"{prefix}BrandSub", '"Supply ordering"', 11, color="clrTextSecondary", Height=16, single_line=True),
+            ], gap=0, Height=40, Visible="App.Width >= 900", AlignInContainer="AlignInContainer.Center",
+                LayoutJustifyContent="LayoutJustifyContent.Center"),
         ], gap=10, Height=56, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
-        ctl(f"{prefix}NavGap", RECT, Fill="Color.Transparent", Height=8, FillPortions=0),
+        ctl(f"{prefix}NavGap", RECT, Fill="Color.Transparent", Height=8, FillPortions=0, TabIndex=-1),
         *items,
         spacer(f"{prefix}NavSpacer"),
         box(f"{prefix}RoleBox", "Vertical", [
@@ -284,11 +352,13 @@ def nav_rail(prefix, current):
         ], gap=4, Height=72, FillPortions=0, Visible="App.Width >= 900", Fill="clrCanvas",
             PaddingTop=8, PaddingBottom=8, PaddingLeft=8, PaddingRight=8, **radius(10)),
         box(f"{prefix}UserRow", "Horizontal", [
-            ctl(f"{prefix}UserAvatar", AVATAR, Tooltip="User().FullName", Width=32, Height=32),
+            ctl(f"{prefix}UserAvatar", AVATAR, Tooltip="User().FullName", AccessibleLabel="User().FullName",
+                Width=32, Height=32),
             box(f"{prefix}UserText", "Vertical", [
-                text(f"{prefix}UserName", "User().FullName", 13, "Semibold", Height=20),
-                text(f"{prefix}UserRoleText", "gRole", 11, color="clrTextSecondary", Height=16),
-            ], gap=0, Visible="App.Width >= 900", LayoutJustifyContent="LayoutJustifyContent.Center"),
+                text(f"{prefix}UserName", "User().FullName", 13, "Semibold", Height=20, single_line=True),
+                text(f"{prefix}UserRoleText", "gRole", 11, color="clrTextSecondary", Height=16, single_line=True),
+            ], gap=0, Height=36, Visible="App.Width >= 900", AlignInContainer="AlignInContainer.Center",
+                LayoutJustifyContent="LayoutJustifyContent.Center"),
         ], gap=10, Height=52, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
     ], gap=4, pad=12, Width="If(App.Width < 900, 72, 240)", FillPortions=0, Fill="clrSurface",
         LayoutAlignItems="LayoutAlignItems.Stretch")
@@ -297,9 +367,9 @@ def nav_rail(prefix, current):
 def page(name, prefix, current, title, subtitle, actions, body, overlays=(), screen_props=None):
     header = box(f"{prefix}Header", "Horizontal", [
         box(f"{prefix}TitleBlock", "Vertical", [
-            text(f"{prefix}Title", f'"{title}"', 26, "Semibold", Height=38),
-            text(f"{prefix}Subtitle", subtitle, 14, color="clrTextSecondary", Height=22),
-        ], gap=2, LayoutJustifyContent="LayoutJustifyContent.Center"),
+            text(f"{prefix}Title", f'"{title}"', 26, "Semibold", Height=38, single_line=True),
+            text(f"{prefix}Subtitle", subtitle, 14, color="clrTextSecondary", Height=22, single_line=True),
+        ], gap=2, Height=62, AlignInContainer="AlignInContainer.Center", LayoutJustifyContent="LayoutJustifyContent.Center"),
         box(f"{prefix}Actions", "Horizontal", actions, gap=8, FillPortions=0, Width=sum(int(a["props"]["Width"]) for a in actions) + 8 * max(0, len(actions) - 1),
             LayoutJustifyContent="LayoutJustifyContent.End", LayoutAlignItems="LayoutAlignItems.Center"),
     ], Height=64, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center")
@@ -340,7 +410,7 @@ def order_row(prefix, selected_expr, subtitle):
     """Gallery template for a supply order: number, subtitle, status badge, selection marker."""
     return [
         ctl(f"{prefix}SelBar", RECT, Fill="clrBrand", Width=3, Height="Parent.TemplateHeight - 20", Y=10,
-            Visible=selected_expr),
+            Visible=selected_expr, TabIndex=-1),
         text(f"{prefix}Number", "ThisItem.'Order Number'", 14, "Semibold", X=14, Y=12, Width="Parent.TemplateWidth - 170"),
         text(f"{prefix}Meta", subtitle, 12, color="clrTextSecondary", X=14, Y=38, Width="Parent.TemplateWidth - 170"),
         status_badge(f"{prefix}Badge", "ThisItem.'Order Status'", X="Parent.TemplateWidth - 142", Y=24),
@@ -349,7 +419,7 @@ def order_row(prefix, selected_expr, subtitle):
 
 
 def lines_gallery(prefix, order):
-    return gallery(f"{prefix}Lines", f"Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = {order}.'Supply Order')", 56, [
+    return gallery(f"{prefix}Lines", f"Filter('Order Line Items', 'Supply Order'.'Supply Order' = {order}.'Supply Order')", 56, [
         text(f"{prefix}LnName", "ThisItem.'Line Item Name'", 13, "Semibold", X=4, Y=6, Width="Parent.TemplateWidth - 130"),
         text(f"{prefix}LnSupplier", 'Coalesce(ThisItem.Supplier.\'Supplier Name\', "No supplier set")', 12,
              color="clrTextSecondary", X=4, Y=30, Width="Parent.TemplateWidth - 130"),
@@ -367,10 +437,12 @@ def kpi(prefix, key, caption, value, hint, glyph, accent="clrBrand"):
     return card(f"{prefix}Kpi{key}", "Horizontal", [
         chip(f"{prefix}Kpi{key}Chip", glyph, accent, 40),
         box(f"{prefix}Kpi{key}Text", "Vertical", [
-            text(f"{prefix}Kpi{key}Caption", f'"{caption}"', 13, "Semibold", color="clrTextSecondary", Height=20),
-            text(f"{prefix}Kpi{key}Value", value, 28, "Semibold", Height=40),
-            text(f"{prefix}Kpi{key}Hint", hint, 12, color="clrTextSecondary", Height=18),
-        ], gap=0, LayoutJustifyContent="LayoutJustifyContent.Center"),
+            text(f"{prefix}Kpi{key}Caption", f'"{caption}"', 13, "Semibold", color="clrTextSecondary", Height=20,
+                 single_line=True),
+            text(f"{prefix}Kpi{key}Value", value, 28, "Semibold", Height=40, single_line=True),
+            text(f"{prefix}Kpi{key}Hint", hint, 12, color="clrTextSecondary", Height=18, single_line=True),
+        ], gap=0, Height=78, AlignInContainer="AlignInContainer.Center",
+            LayoutJustifyContent="LayoutJustifyContent.Center"),
     ], gap=12, pad=14, LayoutMinWidth=200, LayoutAlignItems="LayoutAlignItems.Center")
 
 
@@ -441,8 +513,24 @@ def home_screen():
         empty_state(f"{p}RecentEmpty", "DocumentAdd", "You have no requests yet.", f"IsEmpty({p}RecentList.AllItems)"),
     ], LayoutMinWidth=340, LayoutAlignItems="LayoutAlignItems.Stretch")
 
-    body = [hero, kpis, box(f"{p}Panels", "Horizontal", [restock, recent], gap=16,
-                            LayoutAlignItems="LayoutAlignItems.Stretch")]
+    steps = [("Request", "DocumentAdd", "Pick items running low"),
+             ("Approve", "PersonAvailable", "Big orders go to manager"),
+             ("Order", "Mail", "Supplier emailed for you"),
+             ("Receive", "VehicleTruckProfile", "Stock updates on delivery")]
+    how = card(f"{p}How", "Horizontal", [
+        box(f"{p}How{i}", "Horizontal", [
+            chip(f"{p}How{i}Chip", glyph, "clrBrand", 32),
+            box(f"{p}How{i}Text", "Vertical", [
+                text(f"{p}How{i}Title", f'"{i}. {title}"', 13, "Semibold", Height=20, single_line=True),
+                text(f"{p}How{i}Hint", f'"{hint}"', 11, color="clrTextSecondary", Height=16, single_line=True),
+            ], gap=0, Height=36, AlignInContainer="AlignInContainer.Center"),
+        ], gap=10, LayoutMinWidth=0, LayoutAlignItems="LayoutAlignItems.Center")
+        for i, (title, glyph, hint) in enumerate(steps, start=1)
+    ], gap=12, pad=12, Height=60, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch",
+        Visible="App.Height >= 760")
+
+    body = [hero, kpis, how, box(f"{p}Panels", "Horizontal", [restock, recent], gap=16,
+                                 LayoutAlignItems="LayoutAlignItems.Stretch")]
     actions = [button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))",
                       "Subtle", "ArrowClockwise", Width=120)]
     return page("HomeScreen", p, "Home", "Dashboard", 'Text(Today(), "dddd, dd mmmm yyyy")',
@@ -452,10 +540,21 @@ def home_screen():
 def new_order_screen():
     p = "No"
     catalog_items = (f"Sort(Filter(colItems, (IsBlank({p}Search.Text) || StartsWith('Item Name', {p}Search.Text)) && "
-                     f"(IsBlank({p}Category.Selected) || Category = {p}Category.Selected.Value)), 'Item Name')")
+                     f"(IsBlank({p}Category.Selected) || Category = {p}Category.Selected.Value) && "
+                     f"({p}View.Selected.Value = \"All items\" || 'Current Stock' <= 'Minimum Stock Level')), 'Item Name')")
     total = "Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0))"
-    submit = f"""If(IsBlank({p}RequiredBy.SelectedDate),
+    units = "Sum(colCart, Qty)"
+    needs_approval = f"({total} > cfgBudgetLimit || {units} > cfgQuantityLimit)"
+    # Inventory check at submit time against live Dataverse stock (it may have changed since the app loaded).
+    recheck = f"""UpdateContext({{locWellStocked: If(gRole = "Pantry Admin", "",
+    Concat(Filter(colCart As L, With({{live: LookUp('Pantry Items', 'Pantry Item' = L.Item.'Pantry Item')}},
+        live.'Current Stock' > live.'Minimum Stock Level')), Item.'Item Name', ", "))}});"""
+    submit = f"""{recheck}
+If(IsBlank({p}RequiredBy.SelectedDate),
     Notify("Choose a required-by date.", NotificationType.Error),
+    !IsBlank(locWellStocked),
+    Notify("These items are now well stocked, so they can't be requested: " & locWellStocked & ". Remove them to continue.", NotificationType.Error),
+    UpdateContext({{locNeedsApproval: {needs_approval}}});
     UpdateContext({{locBusy: true}});
     IfError(
         Set(gNewOrder, Patch('Supply Orders', Defaults('Supply Orders'), {{
@@ -481,7 +580,10 @@ def new_order_screen():
             )
         );
         Patch('Supply Orders', gNewOrder, {{'Order Status': {OS}.Submitted}});
-        Notify("Request " & gNewOrder.'Order Number' & " submitted for approval.", NotificationType.Success);
+        Notify("Request " & gNewOrder.'Order Number' & If(locNeedsApproval,
+            " submitted. It is over the approval limits, so the office manager has been asked to approve it.",
+            " submitted. It is under the approval limits, so it will be approved and sent to the supplier automatically."),
+            NotificationType.Success);
         Clear(colCart);
         Reset({p}Justification);
         Reset({p}Location);
@@ -493,7 +595,12 @@ def new_order_screen():
     )
 )"""
     catalog = card(f"{p}Catalog", "Vertical", [
-        section_head(f"{p}Cat", "1. Choose items", "Box"),
+        section_head(f"{p}Cat", "1. Choose items", "Box", [
+            ctl(f"{p}View", TABS, Items='["Needs restock", "All items"]', Appearance="TabListAppearance.SubtleCircular",
+                Alignment="TabListAlignment.Start", AccessibleLabel='"Show items that need restocking or all items"',
+                Width=260, Height=36)]),
+        note(f"{p}StockNote", 'If(gRole = "Pantry Admin", "Inventory check: well-stocked items are blocked for staff. As pantry admin you can still add them.", "Inventory check: only items at or below their minimum stock level can be requested.")',
+             height=52),
         box(f"{p}Toolbar", "Horizontal", [
             ctl(f"{p}Search", INPUT, Placeholder='"Search items"', Type="TextInputType.Search",
                 TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search items"', Height=36, FillPortions=1,
@@ -508,14 +615,17 @@ def new_order_screen():
                  12, color="clrTextSecondary", X=4, Y=40, Width="Parent.TemplateWidth - 390"),
             badge(f"{p}ItStock", f"{stock_label('ThisItem')} & \" · \" & Coalesce(ThisItem.'Current Stock', 0)",
                   stock_intent("ThisItem"), X="Parent.TemplateWidth - 376", Y=26, Width=136),
-            ctl(f"{p}ItQty", NUMBER, Default=1, Min=1, Max=999, Step=1, Precision="DecimalPrecision.'0'",
+            ctl(f"{p}ItQty", NUMBER, Default="Coalesce(ThisItem.'Reorder Quantity', 1)", Min=1, Max=999, Step=1,
+                Precision="DecimalPrecision.'0'", DisplayMode=request_mode("ThisItem"),
                 AccessibleLabel='"Quantity of " & ThisItem.\'Item Name\'', X="Parent.TemplateWidth - 228", Y=20,
                 Width=96, Height=36),
             button(f"{p}ItAdd", '"Add"', add_to_cart("ThisItem", f"{p}ItQty.Value"), "Outline", "Add",
-                   X="Parent.TemplateWidth - 120", Y=20, Width=112),
+                   X="Parent.TemplateWidth - 120", Y=20, Width=112, DisplayMode=request_mode("ThisItem"),
+                   Tooltip=f'If({can_request("ThisItem")}, "Add to your request", "Well stocked: no reorder needed yet")'),
             row_divider(f"{p}ItDivider"),
         ]),
-        empty_state(f"{p}ItemsEmpty", "SearchInfo", "No items match your search.", f"IsEmpty({p}Items.AllItems)"),
+        empty_state(f"{p}ItemsEmpty", "SearchInfo", "Nothing to show. Try \"All items\" or another search.",
+                    f"IsEmpty({p}Items.AllItems)"),
     ], LayoutMinWidth=440, LayoutAlignItems="LayoutAlignItems.Stretch")
 
     label = lambda name, value: text(name, value, 13, "Semibold", Height=20)
@@ -538,11 +648,18 @@ def new_order_screen():
             row_divider(f"{p}CtDivider"),
         ], LayoutMinHeight=120, Visible="!IsEmpty(colCart)"),
         box(f"{p}TotalRow", "Horizontal", [
-            text(f"{p}TotalLabel", '"Estimated total"', 14, "Semibold", FillPortions=1),
+            text(f"{p}TotalLabel", f'"Estimated total · " & {units} & " units"', 14, "Semibold", FillPortions=1,
+                 LayoutMinWidth=0, single_line=True),
             text(f"{p}TotalValue", f"Text({total}, {MONEY})", 18, "Semibold", "clrBrand", Align="Align.Right",
                  Width=150, FillPortions=0),
         ], Height=32, FillPortions=0, Fill="clrBrandTint", PaddingLeft=12, PaddingRight=12,
             LayoutAlignItems="LayoutAlignItems.Center", **radius(8)),
+        note(f"{p}ApprovalNote",
+             f'If({needs_approval}, "Needs office manager approval: over ₹{BUDGET_LIMIT:,} or {QUANTITY_LIMIT} units.", '
+             f'"Auto-approved: under ₹{BUDGET_LIMIT:,} and {QUANTITY_LIMIT} units. Sent straight to the supplier.")',
+             tone=f"If({needs_approval}, clrWarning, clrSuccess)",
+             fill=f"If({needs_approval}, ColorFade(clrWarning, 0.9), ColorFade(clrSuccess, 0.9))", height=52,
+             Visible="!IsEmpty(colCart)"),
         label(f"{p}RequiredByLabel", '"Required by"'),
         ctl(f"{p}RequiredBy", DATE, DefaultDate="DateAdd(Today(), 3, TimeUnit.Days)", StartDate="Today()",
             AccessibleLabel='"Required by date"', Height=36),
@@ -551,7 +668,7 @@ def new_order_screen():
         label(f"{p}JustificationLabel", '"Justification (optional)"'),
         ctl(f"{p}Justification", INPUT, Placeholder='"Why is this needed?"', Type="TextInputType.Multiline",
             TriggerOutput="TriggerOutput.FocusOut", MaxLength=1000, AccessibleLabel='"Justification"', Height=72),
-        button(f"{p}Submit", '"Submit for approval"', submit, "Primary", "Send", Height=42,
+        button(f"{p}Submit", '"Submit request"', submit, "Primary", "Send", Height=42,
                DisplayMode="If(IsEmpty(colCart) || locBusy, DisplayMode.Disabled, DisplayMode.Edit)"),
     ], gap=10, Width="If(App.Width < 1200, 350, 410)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch",
         LayoutOverflowY="LayoutOverflow.Scroll")
@@ -560,7 +677,7 @@ def new_order_screen():
     actions = [button(f"{p}Clear", '"Clear request"', "Clear(colCart)", "Subtle", "Dismiss", Width=164,
                       DisplayMode="If(IsEmpty(colCart), DisplayMode.Disabled, DisplayMode.Edit)")]
     return page("NewOrderScreen", p, "NewOrder", "New request",
-                '"Pick the supplies you need. Your approver is notified when you submit."', actions, body)
+                '"Pick the supplies that are running low. Small orders are approved automatically."', actions, body)
 
 
 def my_orders_screen():
@@ -588,7 +705,7 @@ def my_orders_screen():
         empty_state(f"{p}OrdersEmpty", "DocumentSearch", "No requests found.", f"IsEmpty({p}Orders.AllItems)"),
     ], gap=10, Width="If(App.Width < 1200, 360, 420)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
 
-    history = f"Sort(Filter('Approval History Records', ThisRecord.'Supply Order'.'Supply Order' = {o}.'Supply Order'), 'Action Date', SortOrder.Descending)"
+    history = f"Sort(Filter('Approval History Records', 'Supply Order'.'Supply Order' = {o}.'Supply Order'), 'Action Date', SortOrder.Descending)"
     detail_body = box(f"{p}DetailBody", "Vertical", [
         box(f"{p}DetailHead", "Horizontal", [
             text(f"{p}DetailNumber", f"{o}.'Order Number'", 20, "Semibold", Height=32, FillPortions=1),
@@ -596,12 +713,13 @@ def my_orders_screen():
             button(f"{p}CancelBtn", '"Cancel request"', "UpdateContext({locConfirmCancel: true})", "Outline", "Dismiss",
                    Width=176, Visible=f"Text({o}.'Order Status') in [\"Draft\", \"Submitted\"]"),
         ], gap=12, Height=40, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
+        status_tracker(p, o),
         box(f"{p}Fields", "Horizontal", [
             field(f"{p}FCreated", "Created", f'Text({o}.\'Created On\', "dd mmm yyyy")'),
             field(f"{p}FRequired", "Required by", f'Text({o}.\'Required By Date\', "dd mmm yyyy")'),
             field(f"{p}FTotal", "Estimated total", f"Text(Coalesce({o}.'Total Amount', 0), {MONEY})"),
             field(f"{p}FApproval", "Approval", f'Coalesce(Text({o}.\'Approval Status\'), "Not started")'),
-        ], gap=16, Height=48, FillPortions=0),
+        ], gap=16, Height=60, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch"),
         text(f"{p}Comments", f'"Approver comments: " & {o}.\'Approver Comments\'', 13, color="clrTextSecondary",
              Visible=f"!IsBlank({o}.'Approver Comments')", Height=40, VerticalAlign="VerticalAlign.Top"),
         box(f"{p}DetailCols", "Horizontal", [
@@ -620,7 +738,7 @@ def my_orders_screen():
                 ]),
                 empty_state(f"{p}HistoryEmpty", "History", "No approval activity yet.", f"IsEmpty({p}History.AllItems)"),
             ], gap=8, LayoutAlignItems="LayoutAlignItems.Stretch"),
-        ], gap=24, LayoutAlignItems="LayoutAlignItems.Stretch"),
+        ], gap=24, LayoutMinHeight=240, LayoutAlignItems="LayoutAlignItems.Stretch"),
     ], gap=16, Visible=f"!IsBlank({o})", LayoutAlignItems="LayoutAlignItems.Stretch",
         LayoutOverflowY="LayoutOverflow.Scroll")
     detail = card(f"{p}Detail", "Vertical", [
@@ -643,7 +761,8 @@ def my_orders_screen():
         button(f"{p}New", '"New request"', "Navigate(NewOrderScreen, ScreenTransition.None)", "Primary", "Add", Width=150),
     ]
     on_visible = f"If(!IsBlank({o}), Set({o}, LookUp('Supply Orders', 'Supply Order' = {o}.'Supply Order')))"
-    return page("MyOrdersScreen", p, "MyOrders", "My requests", '"Track your supply requests and their approvals."',
+    return page("MyOrdersScreen", p, "MyOrders", "My requests",
+                '"Track your requests. You get an email when one is approved or rejected."',
                 actions, body, overlays=[dialog], screen_props={"OnVisible": on_visible})
 
 
@@ -694,8 +813,8 @@ def inventory_screen():
         badge(f"{p}CStatus", stock_label("ThisItem"), stock_intent("ThisItem"),
               X="Parent.TemplateWidth - 244", Y=16, Width=110),
         button(f"{p}CAdd", '"Request"', add_to_cart("ThisItem", "Coalesce(ThisItem.'Reorder Quantity', 1)"), "Subtle", "Add",
-               X="Parent.TemplateWidth - 124", Y=10, Width=112, Height=36,
-               Tooltip='"Add the reorder quantity to your request"'),
+               X="Parent.TemplateWidth - 124", Y=10, Width=112, Height=36, DisplayMode=request_mode("ThisItem"),
+               Tooltip=f'If({can_request("ThisItem")}, "Add the reorder quantity to your request", "Well stocked: no reorder needed yet")'),
         row_divider(f"{p}CDivider"),
     ]
     toolbar = box(f"{p}Toolbar", "Horizontal", [
@@ -711,19 +830,22 @@ def inventory_screen():
     table = card(f"{p}Table", "Vertical", [
         ctl(f"{p}HeaderRow", CONTAINER, "ManualLayout", header_cells, Height=40, FillPortions=0,
             Fill="clrCanvas", **radius(8)),
-        gallery(f"{p}Rows", items, 56, row_cells),
+        gallery(f"{p}Rows", items, 56, row_cells, ShowScrollbar="false"),
         empty_state(f"{p}RowsEmpty", "SearchInfo", "No items match these filters.", f"IsEmpty({p}Rows.AllItems)"),
         text(f"{p}Count", f'CountRows({p}Rows.AllItems) & " of " & CountRows(colItems) & " items" & If({admin}, "  ·  Edit a stock number and click away to save it.", "")',
              12, color="clrTextSecondary", Height=18),
     ], gap=8, LayoutAlignItems="LayoutAlignItems.Stretch")
     actions = [button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))",
                       "Subtle", "ArrowClockwise", Width=120)]
+    stock_note = note(f"{p}Note", '"Low stock alert: every morning at 8 AM the pantry admin is emailed a list of items at or below their minimum level."',
+                      glyph="Alert")
     return page("InventoryScreen", p, "Inventory", "Inventory",
                 'If(gRole = "Pantry Admin", "Update stock counts and request anything that is running low.", "Current stock for every pantry item. Request anything that is running low.")',
-                actions, [toolbar, table])
+                actions, [toolbar, stock_note, table])
 
 
-def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel, detail_extra, actions_row):
+def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel, detail_extra, actions_row,
+                    top_note=None):
     """Shared master-detail layout for the Approvals and Receiving screens."""
     selected = f"!IsBlank({sel}) && ThisItem.'Supply Order' = {sel}.'Supply Order'"
     switch = ",\n        ".join(f'"{t}", {f}' for t, f in list(items_by_tab.items())[1:])
@@ -739,6 +861,7 @@ def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel
             OnSelect=f"Set({sel}, ThisItem)", TemplateFill=f"If({selected}, clrBrandTint, Color.Transparent)"),
         empty_state(f"{p}OrdersEmpty", "CheckmarkCircle", "Nothing here right now.", f"IsEmpty({p}Orders.AllItems)"),
     ], gap=10, Width="If(App.Width < 1200, 380, 440)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
+    refresh_selected = f"If(!IsBlank({sel}), Set({sel}, LookUp('Supply Orders', 'Supply Order' = {sel}.'Supply Order')))"
     detail_body = box(f"{p}DetailBody", "Vertical", [
         box(f"{p}DetailHead", "Horizontal", [
             text(f"{p}DetailNumber", f"{sel}.'Order Number'", 20, "Semibold", Height=32, FillPortions=1),
@@ -749,7 +872,7 @@ def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel
             field(f"{p}FRequired", "Required by", f'Text({sel}.\'Required By Date\', "dd mmm yyyy")'),
             field(f"{p}FTotal", "Estimated total", f"Text(Coalesce({sel}.'Total Amount', 0), {MONEY})"),
             field(f"{p}FWhere", "Deliver to", f'Coalesce({sel}.\'Delivery Address\', "-")'),
-        ], gap=16, Height=48, FillPortions=0),
+        ], gap=16, Height=60, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch"),
         text(f"{p}Why", f'"Justification: " & Coalesce({sel}.Justification, "none given")', 13, color="clrTextSecondary",
              Height=40, VerticalAlign="VerticalAlign.Top"),
         section_head(f"{p}Ln", "Items", "BoxMultiple"),
@@ -763,9 +886,11 @@ def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel
         empty_state(f"{p}DetailEmpty", "DocumentBulletList", "Select a request to review it.", f"IsBlank({sel})"),
     ], gap=16, pad=24, LayoutMinWidth=440, LayoutAlignItems="LayoutAlignItems.Stretch")
     body = [box(f"{p}Body", "Horizontal", [order_list, detail], gap=16, LayoutAlignItems="LayoutAlignItems.Stretch")]
+    if top_note:
+        body.insert(0, top_note)
     actions = [button(f"{p}Refresh", '"Refresh"', f"Refresh('Supply Orders'); Set({sel}, Blank())",
                       "Subtle", "ArrowClockwise", Width=120)]
-    return page(screen, p, nav_key, title, subtitle, actions, body)
+    return page(screen, p, nav_key, title, subtitle, actions, body, screen_props={"OnVisible": refresh_selected})
 
 
 def approvals_screen():
@@ -794,6 +919,13 @@ def approvals_screen():
     Set({sel}, Blank());
     Reset({p}Comment)''')
 
+    why = box(f"{p}Reasons", "Horizontal", [
+        text(f"{p}WhyLabel", '"Why it needs approval:"', 13, "Semibold", Height=20, Width=170, single_line=True),
+        badge(f"{p}OverBudget", f'"Over ₹{BUDGET_LIMIT:,}"', "BadgeIntent.Caution", Width=120,
+              Visible=f"Coalesce({sel}.'Total Amount', 0) > cfgBudgetLimit"),
+        badge(f"{p}OverQty", f'"Over {QUANTITY_LIMIT} units"', "BadgeIntent.Caution", Width=120,
+              Visible=f"Sum(Filter('Order Line Items', 'Supply Order'.'Supply Order' = {sel}.'Supply Order'), Quantity) > cfgQuantityLimit"),
+    ], gap=8, Height=28, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center", Visible=f"Text({sel}.'Order Status') = \"Submitted\"")
     reject = f'If(IsBlank({p}Comment.Text), Notify("Add a comment explaining why you are rejecting it.", NotificationType.Error), {decide("Rejected", "Rejected", "Rejected")})'
     pending = f"Text({sel}.'Order Status') = \"Submitted\""
     comment = ctl(f"{p}Comment", INPUT, Placeholder='"Comment for the requester (required to reject)"',
@@ -811,12 +943,13 @@ def approvals_screen():
         ["Pending", "Decided"],
         {"Pending": f"Sort(Filter('Supply Orders', 'Order Status' = {OS}.Submitted), 'Created On', SortOrder.Ascending)",
          "Decided": f"Sort(Filter('Supply Orders', {decided}), 'Modified On', SortOrder.Descending)"},
-        sel, [comment], actions_row)
+        sel, [why, comment], actions_row,
+        top_note=note(f"{p}Note", f'"Only requests over ₹{BUDGET_LIMIT:,} or {QUANTITY_LIMIT} units come here. Smaller ones are approved automatically. You can also decide from the Outlook or Teams approval request."', height=52))
 
 
 def receiving_screen():
     p, sel = "Rv", "gRecvOrder"
-    receive = busy(f'''ForAll(Filter('Order Line Items', ThisRecord.'Supply Order'.'Supply Order' = {sel}.'Supply Order') As L,
+    receive = busy(f'''ForAll(Filter('Order Line Items', 'Supply Order'.'Supply Order' = {sel}.'Supply Order') As L,
         With({{item: LookUp('Pantry Items', 'Pantry Item' = L.'Pantry Item'.'Pantry Item')}},
             If(!IsBlank(item), Patch('Pantry Items', item, {{'Current Stock': Coalesce(item.'Current Stock', 0) + L.Quantity}}))
         )
@@ -861,6 +994,8 @@ APP = f"""App:
       clrWarning = ColorValue("#BC4B09");
       clrDanger = ColorValue("#C50F1F");
       gUserEmail = Lower(User().Email);
+      cfgBudgetLimit = {BUDGET_LIMIT};
+      cfgQuantityLimit = {QUANTITY_LIMIT};
       imgHero = "data:image/svg+xml;utf8," & EncodeUrl("{HERO_SVG}");
     OnStart: |-
       =Set(gRole, "Requester");

@@ -29,7 +29,7 @@ Prices are in INR.
 |----------|-------|
 | Out of stock (stock 0) | Masala Chai Premix 1kg, Roasted Makhana 100g |
 | Low stock (at or below minimum) | Coffee Beans Arabica 1kg, Green Tea Bags, Sparkling Water 500ml, Milk Toned 1L, Greek Yogurt Cups, Apples (Shimla), Granola Bars, Hand Wash Refill 1L, Paper Cups 200ml, Sugar Sachets |
-| Well stocked (app warns when requested) | Mineral Water 1L, Digestive Biscuits 250g, Mixed Nuts 500g, Tissue Box and others |
+| Well stocked (staff can't request them; pantry admins can) | Mineral Water 1L, Digestive Biscuits 250g, Mixed Nuts 500g, Tissue Box and others |
 | Every item category and supplier | All 9 categories and all 5 suppliers have at least one item |
 
 The **Pantry Daily Low Stock Alert** flow should report the 12 out-of-stock and low-stock items.

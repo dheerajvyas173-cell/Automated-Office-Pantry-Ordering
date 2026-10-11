@@ -1,125 +1,74 @@
-# Solution Architecture
+# Solution architecture
 
-## High-Level Architecture
-
-The Automated Office Pantry Supply Ordering System is built entirely on the Microsoft Power Platform, leveraging Dataverse as the central data store, Power Apps for the user interface, Power Automate for workflow automation, and Copilot Studio for AI-powered assistance.
-
-### Component Interaction Diagram
+One Power Platform solution (`PantrySupplyOrdering`, publisher prefix `cr`). Import `Step6_Copilot_Agent.zip`, which contains every component below.
 
 ```
-                    ┌─────────────────┐
-                    │    Employees     │
-                    │  (Power Apps)    │
-                    └────────┬────────┘
-                             │
-                    ┌────────▼────────┐
-                    │   Power Apps     │
-                    │   Canvas App     │
-                    │                  │
-                    │ ┌──────────────┐ │
-                    │ │ Request Form │ │
-                    │ │  + Inventory │ │
-                    │ │   Dashboard  │ │
-                    │ └──────┬───────┘ │
-                    └────────┼────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              │              │              │
-     ┌────────▼──────┐ ┌────▼─────┐ ┌──────▼───────┐
-     │   Dataverse    │ │  Power   │ │   Copilot    │
-     │   Tables       │ │ Automate │ │   Studio     │
-     │                │ │  Flows   │ │   Agent      │
-     │ - PantryItems  │ │          │ │              │
-     │ - SupplyOrders │ │ ┌──────┐ │ │ - NL Queries │
-     │ - OrderLines   │ │ │Apprvl│ │ │ - Stock Info │
-     │ - Suppliers    │ │ │ Flow │ │ │ - Order Hist │
-     │ - ApprovalHist │ │ └──┬───┘ │ └──────────────┘
-     └────────────────┘ │   │      │
-                        │ ┌─▼────┐ │
-                        │ │Email │ │
-                        │ │ Flow │ │
-                        │ └──┬───┘ │
-                        │   │      │
-                        │ ┌─▼────┐ │
-                        │ │Alert │ │
-                        │ │ Flow │ │
-                        │ └──────┘ │
-                        └──────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              │              │              │
-     ┌────────▼──────┐ ┌────▼─────┐ ┌──────▼───────┐
-     │   Office       │ │ Supplier │ │   Microsoft  │
-     │   Manager      │ │  Email   │ │   Teams      │
-     │  (Approvals)   │ │          │ │ (Notifications│
-     └────────────────┘ └──────────┘ └──────────────┘
+ Staff / approver / pantry admin
+            │
+            ▼
+ ┌──────────────────────────┐        ┌───────────────────────────┐
+ │ Canvas app               │        │ Copilot Studio agent      │
+ │ Pantry Supply Ordering   │        │ Pantry Supply Assistant   │
+ │ Dashboard · New request  │        │ stock · orders · lines ·  │
+ │ My requests · Inventory  │        │ suppliers (read-only)     │
+ │ Approvals · Receiving    │        └─────────────┬─────────────┘
+ └────────────┬─────────────┘                      │
+              │ Patch / Filter (delegated)          │ Dataverse List rows
+              ▼                                     ▼
+ ┌──────────────────────────────────────────────────────────────────┐
+ │ Dataverse: Pantry Items · Suppliers · Supply Orders ·            │
+ │            Order Line Items · Approval History                   │
+ └───────┬──────────────────────────┬──────────────────────┬────────┘
+         │ Order Status = Submitted │ Order Status =       │ every day 08:00 IST
+         ▼                          ▼ Approved             ▼
+ ┌──────────────────────┐  ┌──────────────────────┐  ┌───────────────────────┐
+ │ Flow: Pantry Order   │  │ Flow: Pantry Supplier│  │ Flow: Pantry Daily    │
+ │ Approval             │  │ Order Email          │  │ Low Stock Alert       │
+ │ over ₹5,000 or 50 u. │  │ PO email per supplier│  │ email table of items  │
+ │ → Approvals request  │  │ → mark Ordered       │  │ at/below minimum      │
+ │ else → auto-approve  │  └──────────┬───────────┘  └──────────┬────────────┘
+ └──────────┬───────────┘             │                         │
+            ▼                         ▼                         ▼
+   Office manager (Outlook/Teams)   Suppliers (Outlook)    Pantry admin (Outlook)
+   Requester (Outlook)
 ```
 
-## Data Flow
+## Order lifecycle
+| Status | Set by | What happens |
+|---|---|---|
+| Draft | App | Order header created, line items written |
+| Submitted | App | Triggers the approval flow |
+| Approved | Approval flow (auto or manager) or the app's Approvals screen | Triggers the supplier flow. The requester is emailed |
+| Rejected | Approval flow or the app's Approvals screen | The requester is emailed with the reason |
+| Ordered | Supplier flow | Suppliers emailed, Order Date set |
+| Received | App's Receiving screen | Line quantities added to Current Stock |
+| Cancelled | App's My requests (Draft or Submitted only) | Nothing is sent |
 
-### 1. Order Submission Flow
+## Tables
+| Table | Key columns |
+|---|---|
+| Pantry Items | Item Name, SKU, Category, Unit of Measure, Current Stock, Minimum Stock Level, Reorder Quantity, Unit Price, Preferred Supplier (lookup), Storage Location |
+| Suppliers | Supplier Name, Contact Person, Email, Phone, Address, Website, Category |
+| Supply Orders | Order Number, Order Status, Approval Status, Order Date, Required By Date, Approval Date, Total Amount, Requested By, Approved By, Justification, Approver Comments, Delivery Address |
+| Order Line Items | Line Item Name, Supply Order, Pantry Item, Supplier (lookups), Quantity, Unit Price, Total Cost |
+| Approval History | Approval Record, Supply Order (lookup), Action, Approver, Action Date, Comments, Previous Status, New Status |
 
-```
-Employee opens app
-    → Selects items from PantryItems catalog
-    → System checks current stock levels
-    → If stock available: order submitted to SupplyOrders table
-    → If below threshold: triggers approval flow
-    → If within threshold: auto-approved, triggers supplier email
-```
+The choices (Item Category, Unit, Order Status, Approval Status, Approval Action, Supplier Category) are global option sets.
 
-### 2. Approval Flow
+## Business rules
+- **Inventory check:** staff can request only items whose Current Stock ≤ Minimum Stock Level.
+  - The UI disables well-stocked items.
+  - The submit step re-reads live stock.
+  - Pantry admins can override.
+- **Approval limits:** Total Amount > ₹5,000 **or** total units > 50 → office manager approval. Otherwise the order is approved automatically. The approval flow enforces this, and the app previews it.
 
-```
-Order exceeds threshold ($200 or 50 units)
-    → Power Automate creates approval request
-    → Office Manager receives Teams/Email notification
-    → Manager approves or rejects
-    → ApprovalHistory record created
-    → If approved: supplier email sent
-    → If rejected: requester notified with reason
-```
-
-### 3. Low Stock Alert Flow
-
-```
-Scheduled flow runs daily at 8:00 AM
-    → Queries PantryItems where CurrentStock < ReorderPoint
-    → For each low-stock item:
-        → Sends Teams notification to cafeteria staff
-        → Optionally auto-creates a supply order
-```
-
-## Security Architecture
-
-### Dataverse Security Roles
-
-| Role | Tables Access | Actions |
-|------|-------------|---------|
-| Employee | PantryItems (Read), SupplyOrders (Create, Read own) | Submit orders, view inventory |
-| Cafeteria Staff | PantryItems (Read/Update), SupplyOrders (Full), Suppliers (Read) | Manage inventory, create orders |
-| Office Manager | All tables (Full) | Approve orders, manage suppliers, configure thresholds |
-
-### Data Security
-
-- **Row-Level Security**: Employees see only their own orders
-- **Column-Level Security**: Supplier pricing visible only to managers
-- **Environment Security**: Solution deployed in a dedicated Dataverse environment
-- **Audit Logging**: All changes tracked via Dataverse auditing
-
-## Integration Points
-
-| Integration | Method | Purpose |
-|-------------|--------|---------|
-| Outlook | Power Automate connector | Supplier order emails |
-| Teams | Power Automate connector | Approval requests and notifications |
-| Dataverse | Native Power Apps connector | Data storage and retrieval |
-| Copilot Studio | Dataverse plugin | AI-powered queries |
-
-## Scalability Considerations
-
-1. **Multi-Office Support**: Add an `Office` table and filter all queries by office location
-2. **Multiple Suppliers**: Supplier table supports multiple vendors per item category
-3. **Budget Tracking**: Add monthly/quarterly budget tables for department-level tracking
-4. **Barcode Scanning**: Power Apps camera control can scan barcodes for quick inventory updates
-5. **Power BI Integration**: Connect Dataverse tables to Power BI for advanced analytics dashboards
+## Source layout
+| Path | What |
+|---|---|
+| `solution/generate_solution.py` | Builds every solution ZIP (tables, choices, roles, flows, app, agent) |
+| `solution/flows.py` | Flow definitions, including the approval limits and recipients |
+| `power-apps/canvas-app/generate_screens.py` | Generates the app's `Src/*.pa.yaml` (design system plus screens) |
+| `power-apps/canvas-app/validate_app.py` | Property, enum and layout checks before packing |
+| `power-apps/canvas-app/shell/` | Studio-saved app shell, including the Dataverse table metadata |
+| `copilot-agent/workspace/` | Copilot Studio agent source (instructions and topics) |
+| `dataverse/sample-data/` | Supplier and pantry item CSVs for import |

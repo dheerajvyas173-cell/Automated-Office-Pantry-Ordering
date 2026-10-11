@@ -47,6 +47,7 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: ManualLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Center
                               Fill: =clrBrand
                               FillPortions: =0
                               Height: =40
@@ -59,6 +60,7 @@ Screens:
                               - NoBrandIcon:
                                   Control: ModernIcon@1.1.1
                                   Properties:
+                                    AccessibleLabel: ="food pizza icon"
                                     Height: =22
                                     Icon: ="FoodPizza"
                                     IconColor: =Color.White
@@ -70,10 +72,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =40
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
@@ -84,31 +87,37 @@ Screens:
                               - NoBrandName:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =22
                                     Size: =15
                                     Text: ="Office Pantry"
+                                    Wrap: =false
                               - NoBrandSub:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
                                     Text: ="Supply ordering"
+                                    Wrap: =false
                   - NoNavGap:
                       Control: Rectangle@2.3.0
                       Properties:
                         Fill: =Color.Transparent
                         FillPortions: =0
                         Height: =8
+                        TabIndex: =-1
                   - NoNavHome:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Dashboard"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -118,10 +127,12 @@ Screens:
                         OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
                         Text: ="Dashboard"
                         Tooltip: ="Dashboard"
+                        Width: =If(App.Width < 900, 48, 216)
                   - NoNavNewOrder:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="New request"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Secondary
                         FillPortions: =0
                         Height: =40
@@ -131,10 +142,12 @@ Screens:
                         OnSelect: =Navigate(NewOrderScreen, ScreenTransition.None)
                         Text: ="New request" & If(CountRows(colCart) > 0, " (" & CountRows(colCart) & ")", "")
                         Tooltip: ="New request"
+                        Width: =If(App.Width < 900, 48, 216)
                   - NoNavMyOrders:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="My requests"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -144,10 +157,12 @@ Screens:
                         OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.None)
                         Text: ="My requests"
                         Tooltip: ="My requests"
+                        Width: =If(App.Width < 900, 48, 216)
                   - NoNavInventory:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Inventory"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -157,10 +172,12 @@ Screens:
                         OnSelect: =Navigate(InventoryScreen, ScreenTransition.None)
                         Text: ="Inventory"
                         Tooltip: ="Inventory"
+                        Width: =If(App.Width < 900, 48, 216)
                   - NoNavApprovals:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Approvals"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -171,10 +188,12 @@ Screens:
                         Text: ="Approvals"
                         Tooltip: ="Approvals"
                         Visible: =gRole = "Approver" || gRole = "Pantry Admin"
+                        Width: =If(App.Width < 900, 48, 216)
                   - NoNavReceiving:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Receiving"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -185,6 +204,7 @@ Screens:
                         Text: ="Receiving"
                         Tooltip: ="Receiving"
                         Visible: =gRole = "Pantry Admin"
+                        Width: =If(App.Width < 900, 48, 216)
                   - NoNavSpacer:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
@@ -220,6 +240,7 @@ Screens:
                         - NoRoleCaption:
                             Control: ModernText@1.0.0
                             Properties:
+                              AutoHeight: =true
                               Color: =clrTextSecondary
                               FillPortions: =0
                               FontWeight: =FontWeight.Semibold
@@ -253,6 +274,7 @@ Screens:
                         - NoUserAvatar:
                             Control: ModernAvatar@1.1.0
                             Properties:
+                              AccessibleLabel: =User().FullName
                               FillPortions: =0
                               Height: =32
                               Tooltip: =User().FullName
@@ -261,10 +283,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =36
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
@@ -275,21 +298,25 @@ Screens:
                               - NoUserName:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
                                     Size: =13
                                     Text: =User().FullName
+                                    Wrap: =false
                               - NoUserRoleText:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
                                     Text: =gRole
+                                    Wrap: =false
             - NoMain:
                 Control: GroupContainer@1.5.0
                 Variant: AutoLayout
@@ -322,10 +349,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =62
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =2
@@ -335,21 +363,25 @@ Screens:
                               - NoTitle:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =38
                                     Size: =26
                                     Text: ="New request"
+                                    Wrap: =false
                               - NoSubtitle:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =22
                                     Size: =14
-                                    Text: ="Pick the supplies you need. Your approver is notified when you submit."
+                                    Text: ="Pick the supplies that are running low. Small orders are approved automatically."
+                                    Wrap: =false
                         - NoActions:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -367,6 +399,7 @@ Screens:
                               - NoClear:
                                   Control: ModernButton@1.0.0
                                   Properties:
+                                    AccessibleLabel: ="Clear request"
                                     Appearance: =ButtonAppearance.Subtle
                                     DisplayMode: =If(IsEmpty(colCart), DisplayMode.Disabled, DisplayMode.Edit)
                                     FillPortions: =0
@@ -424,6 +457,7 @@ Screens:
                                     - NoCatHeadIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="box icon"
                                           FillPortions: =0
                                           Height: =20
                                           Icon: ="Box"
@@ -433,6 +467,7 @@ Screens:
                                     - NoCatHeadTitle:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =1
                                           FontWeight: =FontWeight.Semibold
@@ -440,6 +475,57 @@ Screens:
                                           LayoutMinWidth: =0
                                           Size: =16
                                           Text: ="1. Choose items"
+                                    - NoView:
+                                        Control: ModernTabList@1.0.2
+                                        Properties:
+                                          AccessibleLabel: ="Show items that need restocking or all items"
+                                          Alignment: =TabListAlignment.Start
+                                          Appearance: =TabListAppearance.SubtleCircular
+                                          FillPortions: =0
+                                          Height: =36
+                                          Items: =["Needs restock", "All items"]
+                                          Width: =260
+                              - NoStockNote:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =clrBrandTint
+                                    FillPortions: =0
+                                    Height: =52
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    PaddingLeft: =12
+                                    PaddingRight: =12
+                                    RadiusBottomLeft: =8
+                                    RadiusBottomRight: =8
+                                    RadiusTopLeft: =8
+                                    RadiusTopRight: =8
+                                  Children:
+                                    - NoStockNoteIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          AccessibleLabel: ="Note"
+                                          FillPortions: =0
+                                          Height: =20
+                                          Icon: ="Info"
+                                          IconColor: =clrBrand
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                    - NoStockNoteText:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextPrimary
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =36
+                                          LayoutMinWidth: =0
+                                          Size: =13
+                                          Text: |-
+                                            =If(gRole = "Pantry Admin", "Inventory check: well-stocked items are blocked for staff. As pantry admin you can still add them.", "Inventory check: only items at or below their minimum stock level can be requested.")
+                                          VerticalAlign: =VerticalAlign.Middle
                               - NoToolbar:
                                   Control: GroupContainer@1.5.0
                                   Variant: AutoLayout
@@ -476,38 +562,44 @@ Screens:
                                   Control: Gallery@2.15.0
                                   Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                   Properties:
+                                    AccessibleLabel: ="Items list"
                                     Fill: =Color.Transparent
                                     FillPortions: =1
-                                    Items: =Sort(Filter(colItems, (IsBlank(NoSearch.Text) || StartsWith('Item Name', NoSearch.Text)) && (IsBlank(NoCategory.Selected) || Category = NoCategory.Selected.Value)), 'Item Name')
+                                    Items: =Sort(Filter(colItems, (IsBlank(NoSearch.Text) || StartsWith('Item Name', NoSearch.Text)) && (IsBlank(NoCategory.Selected) || Category = NoCategory.Selected.Value) && (NoView.Selected.Value = "All items" || 'Current Stock' <= 'Minimum Stock Level')), 'Item Name')
                                     LayoutMinHeight: =100
                                     TemplateSize: =76
                                   Children:
                                     - NoItName:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FontWeight: =FontWeight.Semibold
                                           Height: =22
                                           Size: =14
                                           Text: =ThisItem.'Item Name'
                                           Width: =Parent.TemplateWidth - 390
+                                          Wrap: =false
                                           X: =4
                                           Y: =12
                                     - NoItMeta:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FontWeight: =FontWeight.Normal
                                           Height: =20
                                           Size: =12
                                           Text: =Text(ThisItem.Category) & "  ·  " & Text(ThisItem.'Unit of Measure') & "  ·  " & Text(Coalesce(ThisItem.'Unit Price', 0), "#,##0.00")
                                           Width: =Parent.TemplateWidth - 390
+                                          Wrap: =false
                                           X: =4
                                           Y: =40
                                     - NoItStock:
                                         Control: ModernBadge@1.0.0
                                         Properties:
-                                          Content: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "In stock") & " · " & Coalesce(ThisItem.'Current Stock', 0)
+                                          AccessibleLabel: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "Well stocked") & " · " & Coalesce(ThisItem.'Current Stock', 0)
+                                          Content: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "Well stocked") & " · " & Coalesce(ThisItem.'Current Stock', 0)
                                           Height: =24
                                           Intent: =If(ThisItem.'Current Stock' <= 0, BadgeIntent.Critical, ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', BadgeIntent.Caution, BadgeIntent.Positive)
                                           Shape: =BadgeShape.Rounded
@@ -518,7 +610,8 @@ Screens:
                                         Control: ModernNumberInput@1.1.2
                                         Properties:
                                           AccessibleLabel: ="Quantity of " & ThisItem.'Item Name'
-                                          Default: =1
+                                          Default: =Coalesce(ThisItem.'Reorder Quantity', 1)
+                                          DisplayMode: =If((gRole = "Pantry Admin" || ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level'), DisplayMode.Edit, DisplayMode.Disabled)
                                           Height: =36
                                           Max: =999
                                           Min: =1
@@ -530,7 +623,9 @@ Screens:
                                     - NoItAdd:
                                         Control: ModernButton@1.0.0
                                         Properties:
+                                          AccessibleLabel: ="Add"
                                           Appearance: =ButtonAppearance.Outline
+                                          DisplayMode: =If((gRole = "Pantry Admin" || ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level'), DisplayMode.Edit, DisplayMode.Disabled)
                                           Height: =36
                                           Icon: ="Add"
                                           OnSelect: |-
@@ -541,10 +636,12 @@ Screens:
                                                 )
                                             );
                                             If(ThisItem.'Current Stock' > ThisItem.'Minimum Stock Level',
-                                                Notify(ThisItem.'Item Name' & " added. Note: the pantry still has " & ThisItem.'Current Stock' & " in stock.", NotificationType.Warning),
+                                                Notify(ThisItem.'Item Name' & " added as a pantry admin override. " & ThisItem.'Current Stock' & " are still in stock.", NotificationType.Warning),
                                                 Notify(ThisItem.'Item Name' & " added to your request.", NotificationType.Success)
                                             )
                                           Text: ="Add"
+                                          Tooltip: |-
+                                            =If((gRole = "Pantry Admin" || ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level'), "Add to your request", "Well stocked: no reorder needed yet")
                                           Width: =112
                                           X: =Parent.TemplateWidth - 120
                                           Y: =20
@@ -553,6 +650,7 @@ Screens:
                                         Properties:
                                           Fill: =clrStroke
                                           Height: =1
+                                          TabIndex: =-1
                                           Width: =Parent.TemplateWidth
                                           Y: =Parent.TemplateHeight - 1
                               - NoItemsEmpty:
@@ -572,6 +670,7 @@ Screens:
                                     - NoItemsEmptyIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="search info icon"
                                           FillPortions: =0
                                           Height: =28
                                           Icon: ="SearchInfo"
@@ -581,12 +680,13 @@ Screens:
                                         Control: ModernText@1.0.0
                                         Properties:
                                           Align: =Align.Center
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
                                           Height: =40
                                           Size: =13
-                                          Text: ="No items match your search."
+                                          Text: ="Nothing to show. Try "All items" or another search."
                         - NoCart:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -625,6 +725,7 @@ Screens:
                                     - NoCtHeadIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="cart icon"
                                           FillPortions: =0
                                           Height: =20
                                           Icon: ="Cart"
@@ -634,6 +735,7 @@ Screens:
                                     - NoCtHeadTitle:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =1
                                           FontWeight: =FontWeight.Semibold
@@ -644,6 +746,7 @@ Screens:
                                     - NoCartCount:
                                         Control: ModernBadge@1.0.0
                                         Properties:
+                                          AccessibleLabel: =CountRows(colCart) & If(CountRows(colCart) = 1, " item", " items")
                                           Content: =CountRows(colCart) & If(CountRows(colCart) = 1, " item", " items")
                                           FillPortions: =0
                                           Height: =24
@@ -667,6 +770,7 @@ Screens:
                                     - NoCartEmptyIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="cart icon"
                                           FillPortions: =0
                                           Height: =28
                                           Icon: ="Cart"
@@ -676,6 +780,7 @@ Screens:
                                         Control: ModernText@1.0.0
                                         Properties:
                                           Align: =Align.Center
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
@@ -686,6 +791,7 @@ Screens:
                                   Control: Gallery@2.15.0
                                   Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                   Properties:
+                                    AccessibleLabel: ="CartList list"
                                     Fill: =Color.Transparent
                                     FillPortions: =1
                                     Items: =colCart
@@ -696,23 +802,27 @@ Screens:
                                     - NoCtName:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FontWeight: =FontWeight.Semibold
                                           Height: =20
                                           Size: =13
                                           Text: =ThisItem.Item.'Item Name'
                                           Width: =Parent.TemplateWidth - 150
+                                          Wrap: =false
                                           X: =4
                                           Y: =8
                                     - NoCtLine:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FontWeight: =FontWeight.Normal
                                           Height: =20
                                           Size: =12
                                           Text: =Text(ThisItem.Qty * Coalesce(ThisItem.Item.'Unit Price', 0), "#,##0.00")
                                           Width: =Parent.TemplateWidth - 150
+                                          Wrap: =false
                                           X: =4
                                           Y: =32
                                     - NoCtQty:
@@ -747,6 +857,7 @@ Screens:
                                         Properties:
                                           Fill: =clrStroke
                                           Height: =1
+                                          TabIndex: =-1
                                           Width: =Parent.TemplateWidth
                                           Y: =Parent.TemplateHeight - 1
                               - NoTotalRow:
@@ -770,16 +881,20 @@ Screens:
                                     - NoTotalLabel:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =1
                                           FontWeight: =FontWeight.Semibold
                                           Height: =22
+                                          LayoutMinWidth: =0
                                           Size: =14
-                                          Text: ="Estimated total"
+                                          Text: ="Estimated total · " & Sum(colCart, Qty) & " units"
+                                          Wrap: =false
                                     - NoTotalValue:
                                         Control: ModernText@1.0.0
                                         Properties:
                                           Align: =Align.Right
+                                          AutoHeight: =true
                                           Color: =clrBrand
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
@@ -787,9 +902,52 @@ Screens:
                                           Size: =18
                                           Text: =Text(Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0)), "#,##0.00")
                                           Width: =150
+                              - NoApprovalNote:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =If((Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0)) > cfgBudgetLimit || Sum(colCart, Qty) > cfgQuantityLimit), ColorFade(clrWarning, 0.9), ColorFade(clrSuccess, 0.9))
+                                    FillPortions: =0
+                                    Height: =52
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =10
+                                    PaddingLeft: =12
+                                    PaddingRight: =12
+                                    RadiusBottomLeft: =8
+                                    RadiusBottomRight: =8
+                                    RadiusTopLeft: =8
+                                    RadiusTopRight: =8
+                                    Visible: =!IsEmpty(colCart)
+                                  Children:
+                                    - NoApprovalNoteIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          AccessibleLabel: ="Note"
+                                          FillPortions: =0
+                                          Height: =20
+                                          Icon: ="Info"
+                                          IconColor: =If((Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0)) > cfgBudgetLimit || Sum(colCart, Qty) > cfgQuantityLimit), clrWarning, clrSuccess)
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                    - NoApprovalNoteText:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextPrimary
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =36
+                                          LayoutMinWidth: =0
+                                          Size: =13
+                                          Text: |-
+                                            =If((Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0)) > cfgBudgetLimit || Sum(colCart, Qty) > cfgQuantityLimit), "Needs office manager approval: over ₹5,000 or 50 units.", "Auto-approved: under ₹5,000 and 50 units. Sent straight to the supplier.")
+                                          VerticalAlign: =VerticalAlign.Middle
                               - NoRequiredByLabel:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
@@ -807,6 +965,7 @@ Screens:
                               - NoLocationLabel:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
@@ -824,6 +983,7 @@ Screens:
                               - NoJustificationLabel:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
@@ -843,14 +1003,21 @@ Screens:
                               - NoSubmit:
                                   Control: ModernButton@1.0.0
                                   Properties:
+                                    AccessibleLabel: ="Submit request"
                                     Appearance: =ButtonAppearance.Primary
                                     DisplayMode: =If(IsEmpty(colCart) || locBusy, DisplayMode.Disabled, DisplayMode.Edit)
                                     FillPortions: =0
                                     Height: =42
                                     Icon: ="Send"
                                     OnSelect: |-
-                                      =If(IsBlank(NoRequiredBy.SelectedDate),
+                                      =UpdateContext({locWellStocked: If(gRole = "Pantry Admin", "",
+                                          Concat(Filter(colCart As L, With({live: LookUp('Pantry Items', 'Pantry Item' = L.Item.'Pantry Item')},
+                                              live.'Current Stock' > live.'Minimum Stock Level')), Item.'Item Name', ", "))});
+                                      If(IsBlank(NoRequiredBy.SelectedDate),
                                           Notify("Choose a required-by date.", NotificationType.Error),
+                                          !IsBlank(locWellStocked),
+                                          Notify("These items are now well stocked, so they can't be requested: " & locWellStocked & ". Remove them to continue.", NotificationType.Error),
+                                          UpdateContext({locNeedsApproval: (Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0)) > cfgBudgetLimit || Sum(colCart, Qty) > cfgQuantityLimit)});
                                           UpdateContext({locBusy: true});
                                           IfError(
                                               Set(gNewOrder, Patch('Supply Orders', Defaults('Supply Orders'), {
@@ -876,7 +1043,10 @@ Screens:
                                                   )
                                               );
                                               Patch('Supply Orders', gNewOrder, {'Order Status': [@'Order Status'].Submitted});
-                                              Notify("Request " & gNewOrder.'Order Number' & " submitted for approval.", NotificationType.Success);
+                                              Notify("Request " & gNewOrder.'Order Number' & If(locNeedsApproval,
+                                                  " submitted. It is over the approval limits, so the office manager has been asked to approve it.",
+                                                  " submitted. It is under the approval limits, so it will be approved and sent to the supplier automatically."),
+                                                  NotificationType.Success);
                                               Clear(colCart);
                                               Reset(NoJustification);
                                               Reset(NoLocation);
@@ -887,7 +1057,7 @@ Screens:
                                               Notify("Your request couldn't be submitted: " & FirstError.Message, NotificationType.Error)
                                           )
                                       )
-                                    Text: ="Submit for approval"
+                                    Text: ="Submit request"
       - NoBusy:
           Control: GroupContainer@1.5.0
           Variant: ManualLayout

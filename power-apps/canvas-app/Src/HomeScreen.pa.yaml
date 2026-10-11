@@ -55,6 +55,7 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: ManualLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Center
                               Fill: =clrBrand
                               FillPortions: =0
                               Height: =40
@@ -67,6 +68,7 @@ Screens:
                               - HmBrandIcon:
                                   Control: ModernIcon@1.1.1
                                   Properties:
+                                    AccessibleLabel: ="food pizza icon"
                                     Height: =22
                                     Icon: ="FoodPizza"
                                     IconColor: =Color.White
@@ -78,10 +80,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =40
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
@@ -92,31 +95,37 @@ Screens:
                               - HmBrandName:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =22
                                     Size: =15
                                     Text: ="Office Pantry"
+                                    Wrap: =false
                               - HmBrandSub:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
                                     Text: ="Supply ordering"
+                                    Wrap: =false
                   - HmNavGap:
                       Control: Rectangle@2.3.0
                       Properties:
                         Fill: =Color.Transparent
                         FillPortions: =0
                         Height: =8
+                        TabIndex: =-1
                   - HmNavHome:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Dashboard"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Secondary
                         FillPortions: =0
                         Height: =40
@@ -126,10 +135,12 @@ Screens:
                         OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
                         Text: ="Dashboard"
                         Tooltip: ="Dashboard"
+                        Width: =If(App.Width < 900, 48, 216)
                   - HmNavNewOrder:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="New request"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -139,10 +150,12 @@ Screens:
                         OnSelect: =Navigate(NewOrderScreen, ScreenTransition.None)
                         Text: ="New request" & If(CountRows(colCart) > 0, " (" & CountRows(colCart) & ")", "")
                         Tooltip: ="New request"
+                        Width: =If(App.Width < 900, 48, 216)
                   - HmNavMyOrders:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="My requests"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -152,10 +165,12 @@ Screens:
                         OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.None)
                         Text: ="My requests"
                         Tooltip: ="My requests"
+                        Width: =If(App.Width < 900, 48, 216)
                   - HmNavInventory:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Inventory"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -165,10 +180,12 @@ Screens:
                         OnSelect: =Navigate(InventoryScreen, ScreenTransition.None)
                         Text: ="Inventory"
                         Tooltip: ="Inventory"
+                        Width: =If(App.Width < 900, 48, 216)
                   - HmNavApprovals:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Approvals"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -179,10 +196,12 @@ Screens:
                         Text: ="Approvals"
                         Tooltip: ="Approvals"
                         Visible: =gRole = "Approver" || gRole = "Pantry Admin"
+                        Width: =If(App.Width < 900, 48, 216)
                   - HmNavReceiving:
                       Control: ModernButton@1.0.0
                       Properties:
                         AccessibleLabel: ="Receiving"
+                        AlignInContainer: =AlignInContainer.Start
                         Appearance: =ButtonAppearance.Subtle
                         FillPortions: =0
                         Height: =40
@@ -193,6 +212,7 @@ Screens:
                         Text: ="Receiving"
                         Tooltip: ="Receiving"
                         Visible: =gRole = "Pantry Admin"
+                        Width: =If(App.Width < 900, 48, 216)
                   - HmNavSpacer:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
@@ -228,6 +248,7 @@ Screens:
                         - HmRoleCaption:
                             Control: ModernText@1.0.0
                             Properties:
+                              AutoHeight: =true
                               Color: =clrTextSecondary
                               FillPortions: =0
                               FontWeight: =FontWeight.Semibold
@@ -261,6 +282,7 @@ Screens:
                         - HmUserAvatar:
                             Control: ModernAvatar@1.1.0
                             Properties:
+                              AccessibleLabel: =User().FullName
                               FillPortions: =0
                               Height: =32
                               Tooltip: =User().FullName
@@ -269,10 +291,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =36
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
@@ -283,21 +306,25 @@ Screens:
                               - HmUserName:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
                                     Size: =13
                                     Text: =User().FullName
+                                    Wrap: =false
                               - HmUserRoleText:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
                                     Text: =gRole
+                                    Wrap: =false
             - HmMain:
                 Control: GroupContainer@1.5.0
                 Variant: AutoLayout
@@ -330,10 +357,11 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
-                              AlignInContainer: =AlignInContainer.Stretch
+                              AlignInContainer: =AlignInContainer.Center
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =1
+                              Height: =62
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =2
@@ -343,21 +371,25 @@ Screens:
                               - HmTitle:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextPrimary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =38
                                     Size: =26
                                     Text: ="Dashboard"
+                                    Wrap: =false
                               - HmSubtitle:
                                   Control: ModernText@1.0.0
                                   Properties:
+                                    AutoHeight: =true
                                     Color: =clrTextSecondary
                                     FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =22
                                     Size: =14
                                     Text: =Text(Today(), "dddd, dd mmmm yyyy")
+                                    Wrap: =false
                         - HmActions:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -375,6 +407,7 @@ Screens:
                               - HmRefresh:
                                   Control: ModernButton@1.0.0
                                   Properties:
+                                    AccessibleLabel: ="Refresh"
                                     Appearance: =ButtonAppearance.Subtle
                                     FillPortions: =0
                                     Height: =36
@@ -407,6 +440,7 @@ Screens:
                         - HmHeroTitle:
                             Control: ModernText@1.0.0
                             Properties:
+                              AutoHeight: =true
                               Color: =Color.White
                               FontWeight: =FontWeight.Semibold
                               Height: =36
@@ -418,6 +452,7 @@ Screens:
                         - HmHeroSubtitle:
                             Control: ModernText@1.0.0
                             Properties:
+                              AutoHeight: =true
                               Color: =RGBA(255, 255, 255, 0.88)
                               FontWeight: =FontWeight.Normal
                               Height: =40
@@ -434,6 +469,7 @@ Screens:
                         - HmHeroAction:
                             Control: ModernButton@1.0.0
                             Properties:
+                              AccessibleLabel: =Switch(gRole, "Approver", "Review approvals", "Pantry Admin", "Receive orders", "New request")
                               Appearance: =ButtonAppearance.Secondary
                               Height: =40
                               Icon: =Switch(gRole, "Approver", "TaskListSquareLtr", "Pantry Admin", "VehicleTruckProfile", "Add")
@@ -484,6 +520,7 @@ Screens:
                                   Control: GroupContainer@1.5.0
                                   Variant: ManualLayout
                                   Properties:
+                                    AlignInContainer: =AlignInContainer.Center
                                     Fill: =ColorFade(If(CountRows(Filter(colItems, 'Current Stock' <= 'Minimum Stock Level')) > 0, clrDanger, clrSuccess), 0.86)
                                     FillPortions: =0
                                     Height: =40
@@ -496,6 +533,7 @@ Screens:
                                     - HmKpiLowChipIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="warning icon"
                                           Height: =20
                                           Icon: ="Warning"
                                           IconColor: =If(CountRows(Filter(colItems, 'Current Stock' <= 'Minimum Stock Level')) > 0, clrDanger, clrSuccess)
@@ -507,10 +545,11 @@ Screens:
                                   Control: GroupContainer@1.5.0
                                   Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AlignInContainer: =AlignInContainer.Center
                                     DropShadow: =DropShadow.None
                                     Fill: =Color.Transparent
                                     FillPortions: =1
+                                    Height: =78
                                     LayoutAlignItems: =LayoutAlignItems.Stretch
                                     LayoutDirection: =LayoutDirection.Vertical
                                     LayoutGap: =0
@@ -520,30 +559,36 @@ Screens:
                                     - HmKpiLowCaption:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
                                           Height: =20
                                           Size: =13
                                           Text: ="Low stock items"
+                                          Wrap: =false
                                     - HmKpiLowValue:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
                                           Height: =40
                                           Size: =28
                                           Text: =CountRows(Filter(colItems, 'Current Stock' <= 'Minimum Stock Level'))
+                                          Wrap: =false
                                     - HmKpiLowHint:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
                                           Height: =18
                                           Size: =12
                                           Text: ="At or below minimum"
+                                          Wrap: =false
                         - HmKpiOpen:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -570,6 +615,7 @@ Screens:
                                   Control: GroupContainer@1.5.0
                                   Variant: ManualLayout
                                   Properties:
+                                    AlignInContainer: =AlignInContainer.Center
                                     Fill: =ColorFade(clrBrand, 0.86)
                                     FillPortions: =0
                                     Height: =40
@@ -582,6 +628,7 @@ Screens:
                                     - HmKpiOpenChipIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="document bullet list icon"
                                           Height: =20
                                           Icon: ="DocumentBulletList"
                                           IconColor: =clrBrand
@@ -593,10 +640,11 @@ Screens:
                                   Control: GroupContainer@1.5.0
                                   Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AlignInContainer: =AlignInContainer.Center
                                     DropShadow: =DropShadow.None
                                     Fill: =Color.Transparent
                                     FillPortions: =1
+                                    Height: =78
                                     LayoutAlignItems: =LayoutAlignItems.Stretch
                                     LayoutDirection: =LayoutDirection.Vertical
                                     LayoutGap: =0
@@ -606,30 +654,36 @@ Screens:
                                     - HmKpiOpenCaption:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
                                           Height: =20
                                           Size: =13
                                           Text: ="My open requests"
+                                          Wrap: =false
                                     - HmKpiOpenValue:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
                                           Height: =40
                                           Size: =28
                                           Text: =locMyOpen
+                                          Wrap: =false
                                     - HmKpiOpenHint:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
                                           Height: =18
                                           Size: =12
                                           Text: ="Waiting or in progress"
+                                          Wrap: =false
                         - HmKpiAwaiting:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -656,6 +710,7 @@ Screens:
                                   Control: GroupContainer@1.5.0
                                   Variant: ManualLayout
                                   Properties:
+                                    AlignInContainer: =AlignInContainer.Center
                                     Fill: =ColorFade(clrWarning, 0.86)
                                     FillPortions: =0
                                     Height: =40
@@ -668,6 +723,7 @@ Screens:
                                     - HmKpiAwaitingChipIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="clock icon"
                                           Height: =20
                                           Icon: ="Clock"
                                           IconColor: =clrWarning
@@ -679,10 +735,11 @@ Screens:
                                   Control: GroupContainer@1.5.0
                                   Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AlignInContainer: =AlignInContainer.Center
                                     DropShadow: =DropShadow.None
                                     Fill: =Color.Transparent
                                     FillPortions: =1
+                                    Height: =78
                                     LayoutAlignItems: =LayoutAlignItems.Stretch
                                     LayoutDirection: =LayoutDirection.Vertical
                                     LayoutGap: =0
@@ -692,30 +749,36 @@ Screens:
                                     - HmKpiAwaitingCaption:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
                                           Height: =20
                                           Size: =13
                                           Text: ="Approvals pending"
+                                          Wrap: =false
                                     - HmKpiAwaitingValue:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
                                           Height: =40
                                           Size: =28
                                           Text: =If(gRole = "Requester", locAwaiting, locPendingAll)
+                                          Wrap: =false
                                     - HmKpiAwaitingHint:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
                                           Height: =18
                                           Size: =12
                                           Text: =If(gRole = "Requester", "Waiting for a decision", "Across the office")
+                                          Wrap: =false
                         - HmKpiCatalog:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
@@ -742,6 +805,7 @@ Screens:
                                   Control: GroupContainer@1.5.0
                                   Variant: ManualLayout
                                   Properties:
+                                    AlignInContainer: =AlignInContainer.Center
                                     Fill: =ColorFade(clrSuccess, 0.86)
                                     FillPortions: =0
                                     Height: =40
@@ -754,6 +818,7 @@ Screens:
                                     - HmKpiCatalogChipIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="box icon"
                                           Height: =20
                                           Icon: ="Box"
                                           IconColor: =clrSuccess
@@ -765,10 +830,11 @@ Screens:
                                   Control: GroupContainer@1.5.0
                                   Variant: AutoLayout
                                   Properties:
-                                    AlignInContainer: =AlignInContainer.Stretch
+                                    AlignInContainer: =AlignInContainer.Center
                                     DropShadow: =DropShadow.None
                                     Fill: =Color.Transparent
                                     FillPortions: =1
+                                    Height: =78
                                     LayoutAlignItems: =LayoutAlignItems.Stretch
                                     LayoutDirection: =LayoutDirection.Vertical
                                     LayoutGap: =0
@@ -778,30 +844,351 @@ Screens:
                                     - HmKpiCatalogCaption:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
                                           Height: =20
                                           Size: =13
                                           Text: ="Items in catalog"
+                                          Wrap: =false
                                     - HmKpiCatalogValue:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Semibold
                                           Height: =40
                                           Size: =28
                                           Text: =CountRows(colItems)
+                                          Wrap: =false
                                     - HmKpiCatalogHint:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
                                           Height: =18
                                           Size: =12
                                           Text: ="Ready to request"
+                                          Wrap: =false
+                  - HmHow:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        BorderColor: =clrStroke
+                        BorderThickness: =1
+                        DropShadow: =DropShadow.None
+                        Fill: =clrSurface
+                        FillPortions: =0
+                        Height: =60
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =12
+                        PaddingBottom: =12
+                        PaddingLeft: =12
+                        PaddingRight: =12
+                        PaddingTop: =12
+                        RadiusBottomLeft: =12
+                        RadiusBottomRight: =12
+                        RadiusTopLeft: =12
+                        RadiusTopRight: =12
+                        Visible: =App.Height >= 760
+                      Children:
+                        - HmHow1:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              FillPortions: =1
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutMinWidth: =0
+                            Children:
+                              - HmHow1Chip:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Fill: =ColorFade(clrBrand, 0.86)
+                                    FillPortions: =0
+                                    Height: =32
+                                    RadiusBottomLeft: =10
+                                    RadiusBottomRight: =10
+                                    RadiusTopLeft: =10
+                                    RadiusTopRight: =10
+                                    Width: =32
+                                  Children:
+                                    - HmHow1ChipIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          AccessibleLabel: ="document add icon"
+                                          Height: =20
+                                          Icon: ="DocumentAdd"
+                                          IconColor: =clrBrand
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                          X: =6
+                                          Y: =6
+                              - HmHow1Text:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =1
+                                    Height: =36
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =0
+                                    LayoutMinWidth: =0
+                                  Children:
+                                    - HmHow1Title:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextPrimary
+                                          FillPortions: =0
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =20
+                                          Size: =13
+                                          Text: ="1. Request"
+                                          Wrap: =false
+                                    - HmHow1Hint:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextSecondary
+                                          FillPortions: =0
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =16
+                                          Size: =11
+                                          Text: ="Pick items running low"
+                                          Wrap: =false
+                        - HmHow2:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              FillPortions: =1
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutMinWidth: =0
+                            Children:
+                              - HmHow2Chip:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Fill: =ColorFade(clrBrand, 0.86)
+                                    FillPortions: =0
+                                    Height: =32
+                                    RadiusBottomLeft: =10
+                                    RadiusBottomRight: =10
+                                    RadiusTopLeft: =10
+                                    RadiusTopRight: =10
+                                    Width: =32
+                                  Children:
+                                    - HmHow2ChipIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          AccessibleLabel: ="person available icon"
+                                          Height: =20
+                                          Icon: ="PersonAvailable"
+                                          IconColor: =clrBrand
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                          X: =6
+                                          Y: =6
+                              - HmHow2Text:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =1
+                                    Height: =36
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =0
+                                    LayoutMinWidth: =0
+                                  Children:
+                                    - HmHow2Title:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextPrimary
+                                          FillPortions: =0
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =20
+                                          Size: =13
+                                          Text: ="2. Approve"
+                                          Wrap: =false
+                                    - HmHow2Hint:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextSecondary
+                                          FillPortions: =0
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =16
+                                          Size: =11
+                                          Text: ="Big orders go to manager"
+                                          Wrap: =false
+                        - HmHow3:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              FillPortions: =1
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutMinWidth: =0
+                            Children:
+                              - HmHow3Chip:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Fill: =ColorFade(clrBrand, 0.86)
+                                    FillPortions: =0
+                                    Height: =32
+                                    RadiusBottomLeft: =10
+                                    RadiusBottomRight: =10
+                                    RadiusTopLeft: =10
+                                    RadiusTopRight: =10
+                                    Width: =32
+                                  Children:
+                                    - HmHow3ChipIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          AccessibleLabel: ="mail icon"
+                                          Height: =20
+                                          Icon: ="Mail"
+                                          IconColor: =clrBrand
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                          X: =6
+                                          Y: =6
+                              - HmHow3Text:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =1
+                                    Height: =36
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =0
+                                    LayoutMinWidth: =0
+                                  Children:
+                                    - HmHow3Title:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextPrimary
+                                          FillPortions: =0
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =20
+                                          Size: =13
+                                          Text: ="3. Order"
+                                          Wrap: =false
+                                    - HmHow3Hint:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextSecondary
+                                          FillPortions: =0
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =16
+                                          Size: =11
+                                          Text: ="Supplier emailed for you"
+                                          Wrap: =false
+                        - HmHow4:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              FillPortions: =1
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =10
+                              LayoutMinWidth: =0
+                            Children:
+                              - HmHow4Chip:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: ManualLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    Fill: =ColorFade(clrBrand, 0.86)
+                                    FillPortions: =0
+                                    Height: =32
+                                    RadiusBottomLeft: =10
+                                    RadiusBottomRight: =10
+                                    RadiusTopLeft: =10
+                                    RadiusTopRight: =10
+                                    Width: =32
+                                  Children:
+                                    - HmHow4ChipIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          AccessibleLabel: ="vehicle truck profile icon"
+                                          Height: =20
+                                          Icon: ="VehicleTruckProfile"
+                                          IconColor: =clrBrand
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                          X: =6
+                                          Y: =6
+                              - HmHow4Text:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =1
+                                    Height: =36
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =0
+                                    LayoutMinWidth: =0
+                                  Children:
+                                    - HmHow4Title:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextPrimary
+                                          FillPortions: =0
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =20
+                                          Size: =13
+                                          Text: ="4. Receive"
+                                          Wrap: =false
+                                    - HmHow4Hint:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          AutoHeight: =true
+                                          Color: =clrTextSecondary
+                                          FillPortions: =0
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =16
+                                          Size: =11
+                                          Text: ="Stock updates on delivery"
+                                          Wrap: =false
                   - HmPanels:
                       Control: GroupContainer@1.5.0
                       Variant: AutoLayout
@@ -851,6 +1238,7 @@ Screens:
                                     - HmRsHeadIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="warning icon"
                                           FillPortions: =0
                                           Height: =20
                                           Icon: ="Warning"
@@ -860,6 +1248,7 @@ Screens:
                                     - HmRsHeadTitle:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =1
                                           FontWeight: =FontWeight.Semibold
@@ -870,6 +1259,7 @@ Screens:
                                     - HmRestockAll:
                                         Control: ModernButton@1.0.0
                                         Properties:
+                                          AccessibleLabel: ="View inventory"
                                           Appearance: =ButtonAppearance.Subtle
                                           FillPortions: =0
                                           Height: =36
@@ -882,6 +1272,7 @@ Screens:
                                   Control: Gallery@2.15.0
                                   Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                   Properties:
+                                    AccessibleLabel: ="RestockList list"
                                     Fill: =Color.Transparent
                                     FillPortions: =1
                                     Items: =Sort(Filter(colItems, 'Current Stock' <= 'Minimum Stock Level'), 'Current Stock')
@@ -891,29 +1282,34 @@ Screens:
                                     - HmRsName:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FontWeight: =FontWeight.Semibold
                                           Height: =22
                                           Size: =14
                                           Text: =ThisItem.'Item Name'
                                           Width: =Parent.TemplateWidth - 260
+                                          Wrap: =false
                                           X: =4
                                           Y: =10
                                     - HmRsMeta:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FontWeight: =FontWeight.Normal
                                           Height: =20
                                           Size: =12
                                           Text: ="In stock " & Coalesce(ThisItem.'Current Stock', 0) & "  ·  Minimum " & Coalesce(ThisItem.'Minimum Stock Level', 0)
                                           Width: =Parent.TemplateWidth - 260
+                                          Wrap: =false
                                           X: =4
                                           Y: =36
                                     - HmRsBadge:
                                         Control: ModernBadge@1.0.0
                                         Properties:
-                                          Content: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "In stock")
+                                          AccessibleLabel: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "Well stocked")
+                                          Content: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "Well stocked")
                                           Height: =24
                                           Intent: =If(ThisItem.'Current Stock' <= 0, BadgeIntent.Critical, ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', BadgeIntent.Caution, BadgeIntent.Positive)
                                           Shape: =BadgeShape.Rounded
@@ -923,6 +1319,7 @@ Screens:
                                     - HmRsAdd:
                                         Control: ModernButton@1.0.0
                                         Properties:
+                                          AccessibleLabel: ="Request"
                                           Appearance: =ButtonAppearance.Outline
                                           Height: =34
                                           Icon: ="Add"
@@ -934,7 +1331,7 @@ Screens:
                                                 )
                                             );
                                             If(ThisItem.'Current Stock' > ThisItem.'Minimum Stock Level',
-                                                Notify(ThisItem.'Item Name' & " added. Note: the pantry still has " & ThisItem.'Current Stock' & " in stock.", NotificationType.Warning),
+                                                Notify(ThisItem.'Item Name' & " added as a pantry admin override. " & ThisItem.'Current Stock' & " are still in stock.", NotificationType.Warning),
                                                 Notify(ThisItem.'Item Name' & " added to your request.", NotificationType.Success)
                                             )
                                           Text: ="Request"
@@ -947,6 +1344,7 @@ Screens:
                                         Properties:
                                           Fill: =clrStroke
                                           Height: =1
+                                          TabIndex: =-1
                                           Width: =Parent.TemplateWidth
                                           Y: =Parent.TemplateHeight - 1
                               - HmRestockEmpty:
@@ -966,6 +1364,7 @@ Screens:
                                     - HmRestockEmptyIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="checkmark circle icon"
                                           FillPortions: =0
                                           Height: =28
                                           Icon: ="CheckmarkCircle"
@@ -975,6 +1374,7 @@ Screens:
                                         Control: ModernText@1.0.0
                                         Properties:
                                           Align: =Align.Center
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal
@@ -1018,6 +1418,7 @@ Screens:
                                     - HmRcHeadIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="history icon"
                                           FillPortions: =0
                                           Height: =20
                                           Icon: ="History"
@@ -1027,6 +1428,7 @@ Screens:
                                     - HmRcHeadTitle:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FillPortions: =1
                                           FontWeight: =FontWeight.Semibold
@@ -1037,6 +1439,7 @@ Screens:
                                     - HmRecentAll:
                                         Control: ModernButton@1.0.0
                                         Properties:
+                                          AccessibleLabel: ="All requests"
                                           Appearance: =ButtonAppearance.Subtle
                                           FillPortions: =0
                                           Height: =36
@@ -1049,6 +1452,7 @@ Screens:
                                   Control: Gallery@2.15.0
                                   Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                   Properties:
+                                    AccessibleLabel: ="RecentList list"
                                     Fill: =Color.Transparent
                                     FillPortions: =1
                                     Items: =locRecent
@@ -1061,34 +1465,40 @@ Screens:
                                         Properties:
                                           Fill: =clrBrand
                                           Height: =Parent.TemplateHeight - 20
+                                          TabIndex: =-1
                                           Visible: =false
                                           Width: =3
                                           Y: =10
                                     - HmRcNumber:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextPrimary
                                           FontWeight: =FontWeight.Semibold
                                           Height: =22
                                           Size: =14
                                           Text: =ThisItem.'Order Number'
                                           Width: =Parent.TemplateWidth - 170
+                                          Wrap: =false
                                           X: =14
                                           Y: =12
                                     - HmRcMeta:
                                         Control: ModernText@1.0.0
                                         Properties:
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FontWeight: =FontWeight.Normal
                                           Height: =20
                                           Size: =12
                                           Text: =Text(ThisItem.'Created On', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.'Total Amount', 0), "#,##0.00")
                                           Width: =Parent.TemplateWidth - 170
+                                          Wrap: =false
                                           X: =14
                                           Y: =38
                                     - HmRcBadge:
                                         Control: ModernBadge@1.0.0
                                         Properties:
+                                          AccessibleLabel: =Text(ThisItem.'Order Status')
                                           Content: =Text(ThisItem.'Order Status')
                                           Height: =24
                                           Intent: =Switch(Text(ThisItem.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
@@ -1101,6 +1511,7 @@ Screens:
                                         Properties:
                                           Fill: =clrStroke
                                           Height: =1
+                                          TabIndex: =-1
                                           Width: =Parent.TemplateWidth
                                           Y: =Parent.TemplateHeight - 1
                               - HmRecentEmpty:
@@ -1120,6 +1531,7 @@ Screens:
                                     - HmRecentEmptyIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          AccessibleLabel: ="document add icon"
                                           FillPortions: =0
                                           Height: =28
                                           Icon: ="DocumentAdd"
@@ -1129,6 +1541,7 @@ Screens:
                                         Control: ModernText@1.0.0
                                         Properties:
                                           Align: =Align.Center
+                                          AutoHeight: =true
                                           Color: =clrTextSecondary
                                           FillPortions: =0
                                           FontWeight: =FontWeight.Normal

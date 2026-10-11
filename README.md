@@ -1,103 +1,41 @@
-# Automated Office Pantry Supply Ordering System
+# Automated Office Pantry Supply Ordering
 
-A Microsoft Power Platform solution for streamlining office cafeteria supply ordering, inventory tracking, approval workflows, and AI-powered supply insights.
+A Power Platform solution that automates ordering coffee, snacks and supplies for the office cafeteria:
+- a request app with an inventory check;
+- approval only when an order is over the limits;
+- automatic supplier emails;
+- notifications;
+- a Copilot agent for stock questions.
 
-## Architecture Overview
+## Import (one file)
+1. make.powerapps.com → **Solutions** → **Import solution** → `Step6_Copilot_Agent.zip`.
+2. Choose your **Dataverse**, **Approvals** and **Office 365 Outlook** connections, then click **Import**.
+3. Load the sample data from `dataverse/sample-data/` (see [sample-data.md](dataverse/sample-data.md)).
+4. Open **Pantry Supply Ordering**. The five tables are already connected.
+5. In each flow's **Settings** step, set the approver and pantry-admin email addresses.
 
+## What it does
+| Requirement | Solution |
+|---|---|
+| Request form plus inventory check | Canvas app: only items at or below their minimum stock level can be requested, and live stock is re-checked at submit |
+| Approval above a threshold | Orders over ₹5,000 or 50 units go to the office manager (Approvals). Smaller ones are approved automatically |
+| Supplier order automation | Approved orders are emailed to each supplier as a purchase order, then marked Ordered |
+| Copilot agent | Stock levels, reorder guidance, last orders, supplier details |
+| Notifications | Approval request, approved / rejected / auto-approved emails, daily 8 AM low-stock email |
+
+The full notes are in [docs/requirements-checklist.md](docs/requirements-checklist.md). Note that inventory is stored in **Dataverse, not SharePoint**; the reasons are in Note 1 there.
+
+## Docs
+- [Requirements checklist and demo script](docs/requirements-checklist.md)
+- [Architecture](docs/architecture.md)
+- [Security](docs/security-considerations.md)
+- [Presentation guide](docs/presentation-guide.md)
+
+## Rebuilding from source
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        Power Platform Solution                       │
-│                                                                      │
-│  ┌──────────────┐    ┌──────────────────┐    ┌───────────────────┐  │
-│  │  Power Apps   │───▶│  Power Automate   │───▶│  Outlook / Teams  │  │
-│  │  Canvas App   │    │  Cloud Flows      │    │  Notifications    │  │
-│  │              │    │                    │    │                   │  │
-│  │  - Request    │    │  - Approval Flow   │    │  - Approval Req   │  │
-│  │    Form       │    │  - Supplier Email  │    │  - Status Updates │  │
-│  │  - Inventory  │    │  - Low Stock Alert │    │  - Low Stock Alert│  │
-│  │    Dashboard  │    │  - Scheduled Check │    │                   │  │
-│  │  - Order      │    │                    │    │                   │  │
-│  │    History    │    │                    │    │                   │  │
-│  └──────┬───────┘    └────────┬───────────┘    └───────────────────┘  │
-│         │                     │                                       │
-│         ▼                     ▼                                       │
-│  ┌──────────────────────────────────────────┐                        │
-│  │            Dataverse Tables               │                        │
-│  │                                           │                        │
-│  │  - PantryItems (Inventory)                │                        │
-│  │  - SupplyOrders (Orders)                  │                        │
-│  │  - OrderLineItems (Order Details)         │                        │
-│  │  - Suppliers (Supplier Info)              │                        │
-│  │  - ApprovalHistory (Audit Trail)          │                        │
-│  └──────────────────────────────────────────┘                        │
-│                                                                      │
-│  ┌──────────────────────────────────────────┐                        │
-│  │         Copilot Studio Agent              │                        │
-│  │                                           │                        │
-│  │  - Stock level queries                    │                        │
-│  │  - Reorder date lookups                   │                        │
-│  │  - Supplier detail retrieval              │                        │
-│  │  - Natural language inventory search      │                        │
-│  └──────────────────────────────────────────┘                        │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+python3 power-apps/canvas-app/generate_screens.py     # app source (Src/*.pa.yaml)
+python3 power-apps/canvas-app/validate_app.py         # property, enum and layout checks
+PAC=/path/to/pac python3 power-apps/canvas-app/build_msapp.py
+PAC=/path/to/pac python3 copilot-agent/build_agent.py
+python3 solution/generate_solution.py                 # writes the Step ZIPs
 ```
-
-## Solution Components
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| Supply Request App | Power Apps (Canvas) | Employee-facing form for ordering supplies |
-| Inventory Dashboard | Power Apps (Canvas) | Real-time inventory levels and analytics |
-| Approval Workflow | Power Automate (Cloud Flow) | Route high-value orders for manager approval |
-| Supplier Ordering | Power Automate (Cloud Flow) | Auto-generate supplier emails on approval |
-| Low Stock Alerts | Power Automate (Scheduled Flow) | Daily inventory checks with notifications |
-| Supply Assistant | Copilot Studio Agent | AI-powered stock insights and queries |
-| Data Layer | Dataverse | Centralized data storage with security |
-
-## Quick Start
-
-See the [Implementation Guide](docs/implementation-guide.md) for step-by-step setup instructions.
-
-## Project Structure
-
-```
-├── README.md                          # This file
-├── docs/
-│   ├── implementation-guide.md        # Step-by-step setup instructions
-│   ├── architecture.md                # Detailed architecture documentation
-│   ├── security-considerations.md     # Security and compliance details
-│   └── presentation-guide.md         # Interview presentation outline
-├── dataverse/
-│   ├── tables.md                      # Table schemas and relationships
-│   └── sample-data.md                 # Sample data for testing
-├── power-apps/
-│   ├── app-design.md                  # Screen layouts and navigation
-│   └── formulas.md                    # Power Fx formulas reference
-├── power-automate/
-│   ├── approval-flow.md               # Approval workflow definition
-│   ├── supplier-order-flow.md         # Supplier email automation
-│   └── low-stock-alert-flow.md        # Scheduled inventory check flow
-└── copilot-agent/
-    ├── agent-config.md                # Copilot Studio agent setup
-    └── topics.md                      # Conversation topics and triggers
-```
-
-## Key Features
-
-- **Inventory-Aware Ordering**: Real-time stock checks prevent over-ordering
-- **Configurable Thresholds**: Budget and quantity limits trigger approvals
-- **Automated Supplier Communication**: Approved orders generate formatted supplier emails
-- **AI Assistant**: Natural language queries for stock levels, order history, and supplier info
-- **Low Stock Alerts**: Proactive notifications when items reach reorder points
-- **Full Audit Trail**: Complete order history with approval records
-- **Role-Based Access**: Dataverse security roles for employees, managers, and admins
-
-## Thresholds (Configurable)
-
-| Parameter | Default Value |
-|-----------|--------------|
-| Budget approval threshold | $200 |
-| Quantity approval threshold | 50 units |
-| Low stock alert threshold | 20% of max stock |
-| Order check frequency | Daily at 8:00 AM |

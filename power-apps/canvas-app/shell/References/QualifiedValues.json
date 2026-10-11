@@ -1,6 +1,31 @@
 {
   "QualifiedValues": [
     {
+      "Namespace": "Pantry Items (Forms)",
+      "Kind": "default.cds_cr_pantryitem_forms",
+      "Values": {}
+    },
+    {
+      "Namespace": "Suppliers (Forms)",
+      "Kind": "default.cds_cr_supplier_forms",
+      "Values": {}
+    },
+    {
+      "Namespace": "Order Line Items_1 (Forms)",
+      "Kind": "default.cds_cr_orderlineitem_forms",
+      "Values": {}
+    },
+    {
+      "Namespace": "Approval History Records (Forms)",
+      "Kind": "default.cds_cr_approvalhistory_forms",
+      "Values": {}
+    },
+    {
+      "Namespace": "Supply Orders (Forms)",
+      "Kind": "default.cds_cr_supplyorder_forms",
+      "Values": {}
+    },
+    {
       "Namespace": "Contacts (Forms)",
       "Kind": "default.cds_contact_forms",
       "Values": {
