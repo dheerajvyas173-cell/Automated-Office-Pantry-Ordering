@@ -1,107 +1,3010 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.24081.10375" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SolutionManifest>
-    <UniqueName>PantrySupplyOrdering</UniqueName>
-    <LocalizedNames>
-      <LocalizedName description="Pantry Supply Ordering" languagecode="1033"/>
-    </LocalizedNames>
-    <Descriptions>
-      <Description description="Automated Office Pantry Supply Ordering System" languagecode="1033"/>
-    </Descriptions>
-    <Version>1.0.0.0</Version>
-    <Managed>0</Managed>
-    <Publisher>
-      <UniqueName>PantryDev</UniqueName>
-      <LocalizedNames>
-        <LocalizedName description="Pantry Dev" languagecode="1033"/>
-      </LocalizedNames>
-      <Descriptions>
-        <Description description="Publisher for Pantry Supply Ordering solution" languagecode="1033"/>
-      </Descriptions>
-      <CustomizationPrefix>cr</CustomizationPrefix>
-      <CustomizationOptionValuePrefix>10000</CustomizationOptionValuePrefix>
-    </Publisher>
-    <RootComponents>
-      <RootComponent type="1" schemaName="cr_supplier" behavior="0"/>
-    </RootComponents>
-    <MissingDependencies />
-  </SolutionManifest>
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.24094.198" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.24094.00198">
   <Entities>
-    <Entity>
-      <Name LocalizedName="Supplier" OriginalName="cr_supplier">cr_supplier</Name>
-      <EntityInfo>
-        <entity Name="cr_supplier">
-          <LocalizedNames>
-            <LocalizedName description="Supplier" languagecode="1033"/>
-          </LocalizedNames>
-          <LocalizedCollectionNames>
-            <LocalizedCollectionName description="Suppliers" languagecode="1033"/>
-          </LocalizedCollectionNames>
-          <Descriptions>
-            <Description description="Supplier contact information" languagecode="1033"/>
-          </Descriptions>
-          <PrimaryIdAttribute>cr_supplierid</PrimaryIdAttribute>
-          <PrimaryNameAttribute>cr_name</PrimaryNameAttribute>
-          <OwnershipType>UserOwned</OwnershipType>
-          <IsActivity>false</IsActivity>
-          <IsAvailableOffline>true</IsAvailableOffline>
-          <IsBusinessProcessEnabled>false</IsBusinessProcessEnabled>
-          <IsMailMergeEnabled>false</IsMailMergeEnabled>
-          <IsValidForQueue>false</IsValidForQueue>
-          <IsConnectionsEnabled>false</IsConnectionsEnabled>
-          <HasNotes>false</HasNotes>
-          <HasActivities>false</HasActivities>
-          <IsQuickCreateEnabled>false</IsQuickCreateEnabled>
-          <IsDuplicateDetectionEnabled>false</IsDuplicateDetectionEnabled>
-          <IsAuditEnabled>false</IsAuditEnabled>
-          <IsRenameable>true</IsRenameable>
-          <IsMappable>true</IsMappable>
-          <ChangeTrackingEnabled>false</ChangeTrackingEnabled>
-        </entity>
+  <Entity>
+    <Name LocalizedName="Supplier" OriginalName="Supplier">cr_supplier</Name>
+    <EntityInfo>
+      <entity Name="cr_supplier">
+        <LocalizedNames>
+          <LocalizedName description="Supplier" languagecode="1033" />
+        </LocalizedNames>
+        <LocalizedCollectionNames>
+          <LocalizedCollectionName description="Suppliers" languagecode="1033" />
+        </LocalizedCollectionNames>
+        <Descriptions>
+          <Description description="Supplier contact information and details" languagecode="1033" />
+        </Descriptions>
         <attributes>
-          <attribute PhysicalName="cr_supplierid" Type="uniqueidentifier">
-            <Type>uniqueidentifier</Type>
+          <attribute PhysicalName="cr_supplierid">
+            <Type>primarykey</Type>
             <Name>cr_supplierid</Name>
             <LogicalName>cr_supplierid</LogicalName>
-            <RequiredLevel>SystemRequired</RequiredLevel>
-            <DisplayMask>ValidForAdvancedFind</DisplayMask>
-            <IsPrimaryId>true</IsPrimaryId>
-            <IsLogical>false</IsLogical>
-            <IsSecured>false</IsSecured>
-            <IsCustom>false</IsCustom>
+            <RequiredLevel>systemrequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|RequiredForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>0</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>0</IsCustomField>
+            <IsAuditEnabled>0</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>0</IsCustomizable>
+            <IsRenameable>0</IsRenameable>
+            <CanModifySearchSettings>0</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>0</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
             <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>0</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>0</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <displaynames>
+              <displayname description="Supplier" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="Unique identifier for entity instances" languagecode="1033" />
+            </Descriptions>
           </attribute>
-          <attribute PhysicalName="cr_name" Type="nvarchar">
+          <attribute PhysicalName="cr_name">
             <Type>nvarchar</Type>
             <Name>cr_name</Name>
             <LogicalName>cr_name</LogicalName>
-            <RequiredLevel>ApplicationRequired</RequiredLevel>
-            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
-            <IsPrimaryName>true</IsPrimaryName>
-            <Length>100</Length>
-            <IsLogical>false</IsLogical>
-            <IsSecured>false</IsSecured>
-            <IsCustom>true</IsCustom>
+            <RequiredLevel>required</RequiredLevel>
+            <DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid|RequiredForForm</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
             <SourceType>0</SourceType>
-            <LocalizedNames>
-              <LocalizedName description="Supplier Name" languagecode="1033"/>
-            </LocalizedNames>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Supplier Name" languagecode="1033" />
+            </displaynames>
             <Descriptions>
-              <Description description="The name of the supplier" languagecode="1033"/>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_contactperson">
+            <Type>nvarchar</Type>
+            <Name>cr_contactperson</Name>
+            <LogicalName>cr_contactperson</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>100</MaxLength>
+            <Length>200</Length>
+            <displaynames>
+              <displayname description="Contact Person" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_email">
+            <Type>nvarchar</Type>
+            <Name>cr_email</Name>
+            <LogicalName>cr_email</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>email</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Email" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_phone">
+            <Type>nvarchar</Type>
+            <Name>cr_phone</Name>
+            <LogicalName>cr_phone</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>phone</Format>
+            <MaxLength>50</MaxLength>
+            <Length>100</Length>
+            <displaynames>
+              <displayname description="Phone" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_address">
+            <Type>nvarchar</Type>
+            <Name>cr_address</Name>
+            <LogicalName>cr_address</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>500</MaxLength>
+            <Length>1000</Length>
+            <displaynames>
+              <displayname description="Address" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_website">
+            <Type>nvarchar</Type>
+            <Name>cr_website</Name>
+            <LogicalName>cr_website</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>url</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Website" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_category">
+            <Type>picklist</Type>
+            <Name>cr_category</Name>
+            <LogicalName>cr_category</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <AppDefaultValue>-1</AppDefaultValue>
+            <OptionSetName>cr_suppliercategory</OptionSetName>
+            <displaynames>
+              <displayname description="Category" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_notes">
+            <Type>memo</Type>
+            <Name>cr_notes</Name>
+            <LogicalName>cr_notes</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>4000</MaxLength>
+            <displaynames>
+              <displayname description="Notes" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
             </Descriptions>
           </attribute>
         </attributes>
-      </EntityInfo>
-    </Entity>
+        <EntitySetName>cr_suppliers</EntitySetName>
+        <IsDuplicateCheckSupported>0</IsDuplicateCheckSupported>
+        <IsBusinessProcessEnabled>0</IsBusinessProcessEnabled>
+        <IsRequiredOffline>0</IsRequiredOffline>
+        <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+        <IsCollaboration>0</IsCollaboration>
+        <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
+        <IsConnectionsEnabled>0</IsConnectionsEnabled>
+        <EntityColor></EntityColor>
+        <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+        <AutoCreateAccessTeams>0</AutoCreateAccessTeams>
+        <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+        <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
+        <IsSLAEnabled>0</IsSLAEnabled>
+        <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+        <IsBPFEntity>0</IsBPFEntity>
+        <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+        <IsAuditEnabled>0</IsAuditEnabled>
+        <IsRetrieveAuditEnabled>0</IsRetrieveAuditEnabled>
+        <IsRetrieveMultipleAuditEnabled>0</IsRetrieveMultipleAuditEnabled>
+        <IsActivity>0</IsActivity>
+        <ActivityTypeMask></ActivityTypeMask>
+        <IsActivityParty>0</IsActivityParty>
+        <IsReplicated>0</IsReplicated>
+        <IsReplicationUserFiltered>0</IsReplicationUserFiltered>
+        <IsMailMergeEnabled>0</IsMailMergeEnabled>
+        <IsVisibleInMobile>0</IsVisibleInMobile>
+        <IsVisibleInMobileClient>1</IsVisibleInMobileClient>
+        <IsReadOnlyInMobileClient>0</IsReadOnlyInMobileClient>
+        <IsOfflineInMobileClient>0</IsOfflineInMobileClient>
+        <DaysSinceRecordLastModified>0</DaysSinceRecordLastModified>
+        <MobileOfflineFilters></MobileOfflineFilters>
+        <IsMapiGridEnabled>1</IsMapiGridEnabled>
+        <IsReadingPaneEnabled>1</IsReadingPaneEnabled>
+        <IsQuickCreateEnabled>1</IsQuickCreateEnabled>
+        <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+        <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        <IsCustomizable>1</IsCustomizable>
+        <IsRenameable>1</IsRenameable>
+        <IsMappable>1</IsMappable>
+        <CanModifyAuditSettings>1</CanModifyAuditSettings>
+        <CanModifyMobileVisibility>1</CanModifyMobileVisibility>
+        <CanModifyMobileClientVisibility>1</CanModifyMobileClientVisibility>
+        <CanModifyMobileClientReadOnly>1</CanModifyMobileClientReadOnly>
+        <CanModifyMobileClientOffline>1</CanModifyMobileClientOffline>
+        <CanModifyConnectionSettings>1</CanModifyConnectionSettings>
+        <CanModifyDuplicateDetectionSettings>1</CanModifyDuplicateDetectionSettings>
+        <CanModifyMailMergeSettings>1</CanModifyMailMergeSettings>
+        <CanModifyQueueSettings>1</CanModifyQueueSettings>
+        <CanCreateAttributes>1</CanCreateAttributes>
+        <CanCreateForms>1</CanCreateForms>
+        <CanCreateCharts>1</CanCreateCharts>
+        <CanCreateViews>1</CanCreateViews>
+        <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+        <CanEnableSyncToExternalSearchIndex>1</CanEnableSyncToExternalSearchIndex>
+        <EnforceStateTransitions>0</EnforceStateTransitions>
+        <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
+        <EntityHelpUrlEnabled>0</EntityHelpUrlEnabled>
+        <ChangeTrackingEnabled>0</ChangeTrackingEnabled>
+        <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+        <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
+        <IsMSTeamsIntegrationEnabled>0</IsMSTeamsIntegrationEnabled>
+        <IsSolutionAware>0</IsSolutionAware>
+        <HasRelatedNotes>False</HasRelatedNotes>
+        <HasRelatedActivities>False</HasRelatedActivities>
+      </entity>
+    </EntityInfo>
+    <RibbonDiffXml>
+      <CustomActions />
+      <Templates>
+        <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+      </Templates>
+      <CommandDefinitions />
+      <RuleDefinitions>
+        <TabDisplayRules />
+        <DisplayRules />
+        <EnableRules />
+      </RuleDefinitions>
+      <LocLabels />
+    </RibbonDiffXml>
+  </Entity>
+  <Entity>
+    <Name LocalizedName="Pantry Item" OriginalName="Pantry Item">cr_pantryitem</Name>
+    <EntityInfo>
+      <entity Name="cr_pantryitem">
+        <LocalizedNames>
+          <LocalizedName description="Pantry Item" languagecode="1033" />
+        </LocalizedNames>
+        <LocalizedCollectionNames>
+          <LocalizedCollectionName description="Pantry Items" languagecode="1033" />
+        </LocalizedCollectionNames>
+        <Descriptions>
+          <Description description="Inventory catalog of all pantry supplies" languagecode="1033" />
+        </Descriptions>
+        <attributes>
+          <attribute PhysicalName="cr_pantryitemid">
+            <Type>primarykey</Type>
+            <Name>cr_pantryitemid</Name>
+            <LogicalName>cr_pantryitemid</LogicalName>
+            <RequiredLevel>systemrequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|RequiredForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>0</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>0</IsCustomField>
+            <IsAuditEnabled>0</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>0</IsCustomizable>
+            <IsRenameable>0</IsRenameable>
+            <CanModifySearchSettings>0</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>0</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>0</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>0</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <displaynames>
+              <displayname description="Pantry Item" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="Unique identifier for entity instances" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_name">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>required</RequiredLevel>
+            <DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid|RequiredForForm</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Item Name" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_sku">
+            <Type>nvarchar</Type>
+            <Name>cr_sku</Name>
+            <LogicalName>cr_sku</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>50</MaxLength>
+            <Length>100</Length>
+            <displaynames>
+              <displayname description="SKU" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_category">
+            <Type>picklist</Type>
+            <Name>cr_category</Name>
+            <LogicalName>cr_category</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <AppDefaultValue>-1</AppDefaultValue>
+            <OptionSetName>cr_itemcategory</OptionSetName>
+            <displaynames>
+              <displayname description="Category" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_unit">
+            <Type>picklist</Type>
+            <Name>cr_unit</Name>
+            <LogicalName>cr_unit</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <AppDefaultValue>-1</AppDefaultValue>
+            <OptionSetName>cr_itemunit</OptionSetName>
+            <displaynames>
+              <displayname description="Unit of Measure" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_currentstock">
+            <Type>int</Type>
+            <Name>cr_currentstock</Name>
+            <LogicalName>cr_currentstock</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format></Format>
+            <MinValue>0</MinValue>
+            <MaxValue>1000000</MaxValue>
+            <displaynames>
+              <displayname description="Current Stock" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_minimumstock">
+            <Type>int</Type>
+            <Name>cr_minimumstock</Name>
+            <LogicalName>cr_minimumstock</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format></Format>
+            <MinValue>0</MinValue>
+            <MaxValue>1000000</MaxValue>
+            <displaynames>
+              <displayname description="Minimum Stock Level" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_reorderquantity">
+            <Type>int</Type>
+            <Name>cr_reorderquantity</Name>
+            <LogicalName>cr_reorderquantity</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format></Format>
+            <MinValue>0</MinValue>
+            <MaxValue>1000000</MaxValue>
+            <displaynames>
+              <displayname description="Reorder Quantity" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_unitprice">
+            <Type>decimal</Type>
+            <Name>cr_unitprice</Name>
+            <LogicalName>cr_unitprice</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <MinValue>0</MinValue>
+            <MaxValue>100000000</MaxValue>
+            <Accuracy>2</Accuracy>
+            <displaynames>
+              <displayname description="Unit Price" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_preferredsupplier">
+            <Type>lookup</Type>
+            <Name>cr_preferredsupplier</Name>
+            <LogicalName>cr_preferredsupplier</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <LookupStyle>single</LookupStyle>
+            <LookupTypes />
+            <displaynames>
+              <displayname description="Preferred Supplier" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_location">
+            <Type>nvarchar</Type>
+            <Name>cr_location</Name>
+            <LogicalName>cr_location</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Storage Location" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_description">
+            <Type>memo</Type>
+            <Name>cr_description</Name>
+            <LogicalName>cr_description</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>4000</MaxLength>
+            <displaynames>
+              <displayname description="Description" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+        </attributes>
+        <EntitySetName>cr_pantryitems</EntitySetName>
+        <IsDuplicateCheckSupported>0</IsDuplicateCheckSupported>
+        <IsBusinessProcessEnabled>0</IsBusinessProcessEnabled>
+        <IsRequiredOffline>0</IsRequiredOffline>
+        <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+        <IsCollaboration>0</IsCollaboration>
+        <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
+        <IsConnectionsEnabled>0</IsConnectionsEnabled>
+        <EntityColor></EntityColor>
+        <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+        <AutoCreateAccessTeams>0</AutoCreateAccessTeams>
+        <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+        <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
+        <IsSLAEnabled>0</IsSLAEnabled>
+        <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+        <IsBPFEntity>0</IsBPFEntity>
+        <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+        <IsAuditEnabled>0</IsAuditEnabled>
+        <IsRetrieveAuditEnabled>0</IsRetrieveAuditEnabled>
+        <IsRetrieveMultipleAuditEnabled>0</IsRetrieveMultipleAuditEnabled>
+        <IsActivity>0</IsActivity>
+        <ActivityTypeMask></ActivityTypeMask>
+        <IsActivityParty>0</IsActivityParty>
+        <IsReplicated>0</IsReplicated>
+        <IsReplicationUserFiltered>0</IsReplicationUserFiltered>
+        <IsMailMergeEnabled>0</IsMailMergeEnabled>
+        <IsVisibleInMobile>0</IsVisibleInMobile>
+        <IsVisibleInMobileClient>1</IsVisibleInMobileClient>
+        <IsReadOnlyInMobileClient>0</IsReadOnlyInMobileClient>
+        <IsOfflineInMobileClient>0</IsOfflineInMobileClient>
+        <DaysSinceRecordLastModified>0</DaysSinceRecordLastModified>
+        <MobileOfflineFilters></MobileOfflineFilters>
+        <IsMapiGridEnabled>1</IsMapiGridEnabled>
+        <IsReadingPaneEnabled>1</IsReadingPaneEnabled>
+        <IsQuickCreateEnabled>1</IsQuickCreateEnabled>
+        <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+        <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        <IsCustomizable>1</IsCustomizable>
+        <IsRenameable>1</IsRenameable>
+        <IsMappable>1</IsMappable>
+        <CanModifyAuditSettings>1</CanModifyAuditSettings>
+        <CanModifyMobileVisibility>1</CanModifyMobileVisibility>
+        <CanModifyMobileClientVisibility>1</CanModifyMobileClientVisibility>
+        <CanModifyMobileClientReadOnly>1</CanModifyMobileClientReadOnly>
+        <CanModifyMobileClientOffline>1</CanModifyMobileClientOffline>
+        <CanModifyConnectionSettings>1</CanModifyConnectionSettings>
+        <CanModifyDuplicateDetectionSettings>1</CanModifyDuplicateDetectionSettings>
+        <CanModifyMailMergeSettings>1</CanModifyMailMergeSettings>
+        <CanModifyQueueSettings>1</CanModifyQueueSettings>
+        <CanCreateAttributes>1</CanCreateAttributes>
+        <CanCreateForms>1</CanCreateForms>
+        <CanCreateCharts>1</CanCreateCharts>
+        <CanCreateViews>1</CanCreateViews>
+        <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+        <CanEnableSyncToExternalSearchIndex>1</CanEnableSyncToExternalSearchIndex>
+        <EnforceStateTransitions>0</EnforceStateTransitions>
+        <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
+        <EntityHelpUrlEnabled>0</EntityHelpUrlEnabled>
+        <ChangeTrackingEnabled>0</ChangeTrackingEnabled>
+        <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+        <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
+        <IsMSTeamsIntegrationEnabled>0</IsMSTeamsIntegrationEnabled>
+        <IsSolutionAware>0</IsSolutionAware>
+        <HasRelatedNotes>False</HasRelatedNotes>
+        <HasRelatedActivities>False</HasRelatedActivities>
+      </entity>
+    </EntityInfo>
+    <RibbonDiffXml>
+      <CustomActions />
+      <Templates>
+        <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+      </Templates>
+      <CommandDefinitions />
+      <RuleDefinitions>
+        <TabDisplayRules />
+        <DisplayRules />
+        <EnableRules />
+      </RuleDefinitions>
+      <LocLabels />
+    </RibbonDiffXml>
+  </Entity>
+  <Entity>
+    <Name LocalizedName="Supply Order" OriginalName="Supply Order">cr_supplyorder</Name>
+    <EntityInfo>
+      <entity Name="cr_supplyorder">
+        <LocalizedNames>
+          <LocalizedName description="Supply Order" languagecode="1033" />
+        </LocalizedNames>
+        <LocalizedCollectionNames>
+          <LocalizedCollectionName description="Supply Orders" languagecode="1033" />
+        </LocalizedCollectionNames>
+        <Descriptions>
+          <Description description="Supply order requests and their approval status" languagecode="1033" />
+        </Descriptions>
+        <attributes>
+          <attribute PhysicalName="cr_supplyorderid">
+            <Type>primarykey</Type>
+            <Name>cr_supplyorderid</Name>
+            <LogicalName>cr_supplyorderid</LogicalName>
+            <RequiredLevel>systemrequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|RequiredForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>0</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>0</IsCustomField>
+            <IsAuditEnabled>0</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>0</IsCustomizable>
+            <IsRenameable>0</IsRenameable>
+            <CanModifySearchSettings>0</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>0</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>0</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>0</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <displaynames>
+              <displayname description="Supply Order" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="Unique identifier for entity instances" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_name">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>required</RequiredLevel>
+            <DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid|RequiredForForm</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Order Number" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_orderstatus">
+            <Type>picklist</Type>
+            <Name>cr_orderstatus</Name>
+            <LogicalName>cr_orderstatus</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <AppDefaultValue>-1</AppDefaultValue>
+            <OptionSetName>cr_orderstatus</OptionSetName>
+            <displaynames>
+              <displayname description="Order Status" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approvalstatus">
+            <Type>picklist</Type>
+            <Name>cr_approvalstatus</Name>
+            <LogicalName>cr_approvalstatus</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <AppDefaultValue>-1</AppDefaultValue>
+            <OptionSetName>cr_approvalstatus</OptionSetName>
+            <displaynames>
+              <displayname description="Approval Status" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_orderdate">
+            <Type>datetime</Type>
+            <Name>cr_orderdate</Name>
+            <LogicalName>cr_orderdate</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>inactive</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>date</Format>
+            <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
+            <Behavior>1</Behavior>
+            <displaynames>
+              <displayname description="Order Date" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_requiredbydate">
+            <Type>datetime</Type>
+            <Name>cr_requiredbydate</Name>
+            <LogicalName>cr_requiredbydate</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>inactive</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>date</Format>
+            <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
+            <Behavior>1</Behavior>
+            <displaynames>
+              <displayname description="Required By Date" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approvaldate">
+            <Type>datetime</Type>
+            <Name>cr_approvaldate</Name>
+            <LogicalName>cr_approvaldate</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>inactive</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>datetime</Format>
+            <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
+            <Behavior>1</Behavior>
+            <displaynames>
+              <displayname description="Approval Date" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_totalamount">
+            <Type>decimal</Type>
+            <Name>cr_totalamount</Name>
+            <LogicalName>cr_totalamount</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <MinValue>0</MinValue>
+            <MaxValue>100000000</MaxValue>
+            <Accuracy>2</Accuracy>
+            <displaynames>
+              <displayname description="Total Amount" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_requestedby">
+            <Type>nvarchar</Type>
+            <Name>cr_requestedby</Name>
+            <LogicalName>cr_requestedby</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Requested By" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approvedby">
+            <Type>nvarchar</Type>
+            <Name>cr_approvedby</Name>
+            <LogicalName>cr_approvedby</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Approved By" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_justification">
+            <Type>memo</Type>
+            <Name>cr_justification</Name>
+            <LogicalName>cr_justification</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>4000</MaxLength>
+            <displaynames>
+              <displayname description="Justification" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approvercomments">
+            <Type>memo</Type>
+            <Name>cr_approvercomments</Name>
+            <LogicalName>cr_approvercomments</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>4000</MaxLength>
+            <displaynames>
+              <displayname description="Approver Comments" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_deliveryaddress">
+            <Type>nvarchar</Type>
+            <Name>cr_deliveryaddress</Name>
+            <LogicalName>cr_deliveryaddress</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>500</MaxLength>
+            <Length>1000</Length>
+            <displaynames>
+              <displayname description="Delivery Address" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+        </attributes>
+        <EntitySetName>cr_supplyorders</EntitySetName>
+        <IsDuplicateCheckSupported>0</IsDuplicateCheckSupported>
+        <IsBusinessProcessEnabled>0</IsBusinessProcessEnabled>
+        <IsRequiredOffline>0</IsRequiredOffline>
+        <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+        <IsCollaboration>0</IsCollaboration>
+        <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
+        <IsConnectionsEnabled>0</IsConnectionsEnabled>
+        <EntityColor></EntityColor>
+        <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+        <AutoCreateAccessTeams>0</AutoCreateAccessTeams>
+        <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+        <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
+        <IsSLAEnabled>0</IsSLAEnabled>
+        <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+        <IsBPFEntity>0</IsBPFEntity>
+        <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+        <IsAuditEnabled>0</IsAuditEnabled>
+        <IsRetrieveAuditEnabled>0</IsRetrieveAuditEnabled>
+        <IsRetrieveMultipleAuditEnabled>0</IsRetrieveMultipleAuditEnabled>
+        <IsActivity>0</IsActivity>
+        <ActivityTypeMask></ActivityTypeMask>
+        <IsActivityParty>0</IsActivityParty>
+        <IsReplicated>0</IsReplicated>
+        <IsReplicationUserFiltered>0</IsReplicationUserFiltered>
+        <IsMailMergeEnabled>0</IsMailMergeEnabled>
+        <IsVisibleInMobile>0</IsVisibleInMobile>
+        <IsVisibleInMobileClient>1</IsVisibleInMobileClient>
+        <IsReadOnlyInMobileClient>0</IsReadOnlyInMobileClient>
+        <IsOfflineInMobileClient>0</IsOfflineInMobileClient>
+        <DaysSinceRecordLastModified>0</DaysSinceRecordLastModified>
+        <MobileOfflineFilters></MobileOfflineFilters>
+        <IsMapiGridEnabled>1</IsMapiGridEnabled>
+        <IsReadingPaneEnabled>1</IsReadingPaneEnabled>
+        <IsQuickCreateEnabled>1</IsQuickCreateEnabled>
+        <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+        <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        <IsCustomizable>1</IsCustomizable>
+        <IsRenameable>1</IsRenameable>
+        <IsMappable>1</IsMappable>
+        <CanModifyAuditSettings>1</CanModifyAuditSettings>
+        <CanModifyMobileVisibility>1</CanModifyMobileVisibility>
+        <CanModifyMobileClientVisibility>1</CanModifyMobileClientVisibility>
+        <CanModifyMobileClientReadOnly>1</CanModifyMobileClientReadOnly>
+        <CanModifyMobileClientOffline>1</CanModifyMobileClientOffline>
+        <CanModifyConnectionSettings>1</CanModifyConnectionSettings>
+        <CanModifyDuplicateDetectionSettings>1</CanModifyDuplicateDetectionSettings>
+        <CanModifyMailMergeSettings>1</CanModifyMailMergeSettings>
+        <CanModifyQueueSettings>1</CanModifyQueueSettings>
+        <CanCreateAttributes>1</CanCreateAttributes>
+        <CanCreateForms>1</CanCreateForms>
+        <CanCreateCharts>1</CanCreateCharts>
+        <CanCreateViews>1</CanCreateViews>
+        <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+        <CanEnableSyncToExternalSearchIndex>1</CanEnableSyncToExternalSearchIndex>
+        <EnforceStateTransitions>0</EnforceStateTransitions>
+        <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
+        <EntityHelpUrlEnabled>0</EntityHelpUrlEnabled>
+        <ChangeTrackingEnabled>0</ChangeTrackingEnabled>
+        <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+        <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
+        <IsMSTeamsIntegrationEnabled>0</IsMSTeamsIntegrationEnabled>
+        <IsSolutionAware>0</IsSolutionAware>
+        <HasRelatedNotes>False</HasRelatedNotes>
+        <HasRelatedActivities>False</HasRelatedActivities>
+      </entity>
+    </EntityInfo>
+    <RibbonDiffXml>
+      <CustomActions />
+      <Templates>
+        <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+      </Templates>
+      <CommandDefinitions />
+      <RuleDefinitions>
+        <TabDisplayRules />
+        <DisplayRules />
+        <EnableRules />
+      </RuleDefinitions>
+      <LocLabels />
+    </RibbonDiffXml>
+  </Entity>
+  <Entity>
+    <Name LocalizedName="Order Line Item" OriginalName="Order Line Item">cr_orderlineitem</Name>
+    <EntityInfo>
+      <entity Name="cr_orderlineitem">
+        <LocalizedNames>
+          <LocalizedName description="Order Line Item" languagecode="1033" />
+        </LocalizedNames>
+        <LocalizedCollectionNames>
+          <LocalizedCollectionName description="Order Line Items" languagecode="1033" />
+        </LocalizedCollectionNames>
+        <Descriptions>
+          <Description description="Individual items within a supply order" languagecode="1033" />
+        </Descriptions>
+        <attributes>
+          <attribute PhysicalName="cr_orderlineitemid">
+            <Type>primarykey</Type>
+            <Name>cr_orderlineitemid</Name>
+            <LogicalName>cr_orderlineitemid</LogicalName>
+            <RequiredLevel>systemrequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|RequiredForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>0</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>0</IsCustomField>
+            <IsAuditEnabled>0</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>0</IsCustomizable>
+            <IsRenameable>0</IsRenameable>
+            <CanModifySearchSettings>0</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>0</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>0</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>0</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <displaynames>
+              <displayname description="Order Line Item" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="Unique identifier for entity instances" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_name">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>required</RequiredLevel>
+            <DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid|RequiredForForm</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Line Item Name" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_supplyorder">
+            <Type>lookup</Type>
+            <Name>cr_supplyorder</Name>
+            <LogicalName>cr_supplyorder</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <LookupStyle>single</LookupStyle>
+            <LookupTypes />
+            <displaynames>
+              <displayname description="Supply Order" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_pantryitem">
+            <Type>lookup</Type>
+            <Name>cr_pantryitem</Name>
+            <LogicalName>cr_pantryitem</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <LookupStyle>single</LookupStyle>
+            <LookupTypes />
+            <displaynames>
+              <displayname description="Pantry Item" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_supplier">
+            <Type>lookup</Type>
+            <Name>cr_supplier</Name>
+            <LogicalName>cr_supplier</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <LookupStyle>single</LookupStyle>
+            <LookupTypes />
+            <displaynames>
+              <displayname description="Supplier" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_quantity">
+            <Type>int</Type>
+            <Name>cr_quantity</Name>
+            <LogicalName>cr_quantity</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format></Format>
+            <MinValue>0</MinValue>
+            <MaxValue>1000000</MaxValue>
+            <displaynames>
+              <displayname description="Quantity" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_unitprice">
+            <Type>decimal</Type>
+            <Name>cr_unitprice</Name>
+            <LogicalName>cr_unitprice</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <MinValue>0</MinValue>
+            <MaxValue>100000000</MaxValue>
+            <Accuracy>2</Accuracy>
+            <displaynames>
+              <displayname description="Unit Price" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_totalcost">
+            <Type>decimal</Type>
+            <Name>cr_totalcost</Name>
+            <LogicalName>cr_totalcost</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <MinValue>0</MinValue>
+            <MaxValue>100000000</MaxValue>
+            <Accuracy>2</Accuracy>
+            <displaynames>
+              <displayname description="Total Cost" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_notes">
+            <Type>memo</Type>
+            <Name>cr_notes</Name>
+            <LogicalName>cr_notes</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>4000</MaxLength>
+            <displaynames>
+              <displayname description="Notes" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+        </attributes>
+        <EntitySetName>cr_orderlineitems</EntitySetName>
+        <IsDuplicateCheckSupported>0</IsDuplicateCheckSupported>
+        <IsBusinessProcessEnabled>0</IsBusinessProcessEnabled>
+        <IsRequiredOffline>0</IsRequiredOffline>
+        <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+        <IsCollaboration>0</IsCollaboration>
+        <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
+        <IsConnectionsEnabled>0</IsConnectionsEnabled>
+        <EntityColor></EntityColor>
+        <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+        <AutoCreateAccessTeams>0</AutoCreateAccessTeams>
+        <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+        <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
+        <IsSLAEnabled>0</IsSLAEnabled>
+        <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+        <IsBPFEntity>0</IsBPFEntity>
+        <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+        <IsAuditEnabled>0</IsAuditEnabled>
+        <IsRetrieveAuditEnabled>0</IsRetrieveAuditEnabled>
+        <IsRetrieveMultipleAuditEnabled>0</IsRetrieveMultipleAuditEnabled>
+        <IsActivity>0</IsActivity>
+        <ActivityTypeMask></ActivityTypeMask>
+        <IsActivityParty>0</IsActivityParty>
+        <IsReplicated>0</IsReplicated>
+        <IsReplicationUserFiltered>0</IsReplicationUserFiltered>
+        <IsMailMergeEnabled>0</IsMailMergeEnabled>
+        <IsVisibleInMobile>0</IsVisibleInMobile>
+        <IsVisibleInMobileClient>1</IsVisibleInMobileClient>
+        <IsReadOnlyInMobileClient>0</IsReadOnlyInMobileClient>
+        <IsOfflineInMobileClient>0</IsOfflineInMobileClient>
+        <DaysSinceRecordLastModified>0</DaysSinceRecordLastModified>
+        <MobileOfflineFilters></MobileOfflineFilters>
+        <IsMapiGridEnabled>1</IsMapiGridEnabled>
+        <IsReadingPaneEnabled>1</IsReadingPaneEnabled>
+        <IsQuickCreateEnabled>1</IsQuickCreateEnabled>
+        <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+        <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        <IsCustomizable>1</IsCustomizable>
+        <IsRenameable>1</IsRenameable>
+        <IsMappable>1</IsMappable>
+        <CanModifyAuditSettings>1</CanModifyAuditSettings>
+        <CanModifyMobileVisibility>1</CanModifyMobileVisibility>
+        <CanModifyMobileClientVisibility>1</CanModifyMobileClientVisibility>
+        <CanModifyMobileClientReadOnly>1</CanModifyMobileClientReadOnly>
+        <CanModifyMobileClientOffline>1</CanModifyMobileClientOffline>
+        <CanModifyConnectionSettings>1</CanModifyConnectionSettings>
+        <CanModifyDuplicateDetectionSettings>1</CanModifyDuplicateDetectionSettings>
+        <CanModifyMailMergeSettings>1</CanModifyMailMergeSettings>
+        <CanModifyQueueSettings>1</CanModifyQueueSettings>
+        <CanCreateAttributes>1</CanCreateAttributes>
+        <CanCreateForms>1</CanCreateForms>
+        <CanCreateCharts>1</CanCreateCharts>
+        <CanCreateViews>1</CanCreateViews>
+        <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+        <CanEnableSyncToExternalSearchIndex>1</CanEnableSyncToExternalSearchIndex>
+        <EnforceStateTransitions>0</EnforceStateTransitions>
+        <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
+        <EntityHelpUrlEnabled>0</EntityHelpUrlEnabled>
+        <ChangeTrackingEnabled>0</ChangeTrackingEnabled>
+        <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+        <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
+        <IsMSTeamsIntegrationEnabled>0</IsMSTeamsIntegrationEnabled>
+        <IsSolutionAware>0</IsSolutionAware>
+        <HasRelatedNotes>False</HasRelatedNotes>
+        <HasRelatedActivities>False</HasRelatedActivities>
+      </entity>
+    </EntityInfo>
+    <RibbonDiffXml>
+      <CustomActions />
+      <Templates>
+        <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+      </Templates>
+      <CommandDefinitions />
+      <RuleDefinitions>
+        <TabDisplayRules />
+        <DisplayRules />
+        <EnableRules />
+      </RuleDefinitions>
+      <LocLabels />
+    </RibbonDiffXml>
+  </Entity>
+  <Entity>
+    <Name LocalizedName="Approval History" OriginalName="Approval History">cr_approvalhistory</Name>
+    <EntityInfo>
+      <entity Name="cr_approvalhistory">
+        <LocalizedNames>
+          <LocalizedName description="Approval History" languagecode="1033" />
+        </LocalizedNames>
+        <LocalizedCollectionNames>
+          <LocalizedCollectionName description="Approval History Records" languagecode="1033" />
+        </LocalizedCollectionNames>
+        <Descriptions>
+          <Description description="Audit trail for all approval decisions" languagecode="1033" />
+        </Descriptions>
+        <attributes>
+          <attribute PhysicalName="cr_approvalhistoryid">
+            <Type>primarykey</Type>
+            <Name>cr_approvalhistoryid</Name>
+            <LogicalName>cr_approvalhistoryid</LogicalName>
+            <RequiredLevel>systemrequired</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|RequiredForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>0</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>0</IsCustomField>
+            <IsAuditEnabled>0</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>0</IsCustomizable>
+            <IsRenameable>0</IsRenameable>
+            <CanModifySearchSettings>0</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>0</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>0</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>0</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <displaynames>
+              <displayname description="Approval History" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="Unique identifier for entity instances" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_name">
+            <Type>nvarchar</Type>
+            <Name>cr_name</Name>
+            <LogicalName>cr_name</LogicalName>
+            <RequiredLevel>required</RequiredLevel>
+            <DisplayMask>PrimaryName|ValidForAdvancedFind|ValidForForm|ValidForGrid|RequiredForForm</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Approval Record" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_supplyorder">
+            <Type>lookup</Type>
+            <Name>cr_supplyorder</Name>
+            <LogicalName>cr_supplyorder</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <LookupStyle>single</LookupStyle>
+            <LookupTypes />
+            <displaynames>
+              <displayname description="Supply Order" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_action">
+            <Type>picklist</Type>
+            <Name>cr_action</Name>
+            <LogicalName>cr_action</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <AppDefaultValue>-1</AppDefaultValue>
+            <OptionSetName>cr_approvalaction</OptionSetName>
+            <displaynames>
+              <displayname description="Action" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_approver">
+            <Type>nvarchar</Type>
+            <Name>cr_approver</Name>
+            <LogicalName>cr_approver</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>200</MaxLength>
+            <Length>400</Length>
+            <displaynames>
+              <displayname description="Approver" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_actiondate">
+            <Type>datetime</Type>
+            <Name>cr_actiondate</Name>
+            <LogicalName>cr_actiondate</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>inactive</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>datetime</Format>
+            <CanChangeDateTimeBehavior>1</CanChangeDateTimeBehavior>
+            <Behavior>1</Behavior>
+            <displaynames>
+              <displayname description="Action Date" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_comments">
+            <Type>memo</Type>
+            <Name>cr_comments</Name>
+            <LogicalName>cr_comments</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <Format>text</Format>
+            <MaxLength>4000</MaxLength>
+            <displaynames>
+              <displayname description="Comments" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_previousstatus">
+            <Type>picklist</Type>
+            <Name>cr_previousstatus</Name>
+            <LogicalName>cr_previousstatus</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <AppDefaultValue>-1</AppDefaultValue>
+            <OptionSetName>cr_approvalstatus</OptionSetName>
+            <displaynames>
+              <displayname description="Previous Status" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+          <attribute PhysicalName="cr_newstatus">
+            <Type>picklist</Type>
+            <Name>cr_newstatus</Name>
+            <LogicalName>cr_newstatus</LogicalName>
+            <RequiredLevel>none</RequiredLevel>
+            <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+            <ImeMode>auto</ImeMode>
+            <ValidForUpdateApi>1</ValidForUpdateApi>
+            <ValidForReadApi>1</ValidForReadApi>
+            <ValidForCreateApi>1</ValidForCreateApi>
+            <IsCustomField>1</IsCustomField>
+            <IsAuditEnabled>1</IsAuditEnabled>
+            <IsSecured>0</IsSecured>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <IsRenameable>1</IsRenameable>
+            <CanModifySearchSettings>1</CanModifySearchSettings>
+            <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+            <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+            <SourceType>0</SourceType>
+            <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+            <IsSortableEnabled>0</IsSortableEnabled>
+            <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+            <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+            <IsDataSourceSecret>0</IsDataSourceSecret>
+            <AutoNumberFormat></AutoNumberFormat>
+            <IsSearchable>1</IsSearchable>
+            <IsFilterable>0</IsFilterable>
+            <IsRetrievable>1</IsRetrievable>
+            <IsLocalizable>0</IsLocalizable>
+            <AppDefaultValue>-1</AppDefaultValue>
+            <OptionSetName>cr_approvalstatus</OptionSetName>
+            <displaynames>
+              <displayname description="New Status" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="" languagecode="1033" />
+            </Descriptions>
+          </attribute>
+        </attributes>
+        <EntitySetName>cr_approvalhistories</EntitySetName>
+        <IsDuplicateCheckSupported>0</IsDuplicateCheckSupported>
+        <IsBusinessProcessEnabled>0</IsBusinessProcessEnabled>
+        <IsRequiredOffline>0</IsRequiredOffline>
+        <IsInteractionCentricEnabled>0</IsInteractionCentricEnabled>
+        <IsCollaboration>0</IsCollaboration>
+        <AutoRouteToOwnerQueue>0</AutoRouteToOwnerQueue>
+        <IsConnectionsEnabled>0</IsConnectionsEnabled>
+        <EntityColor></EntityColor>
+        <IsDocumentManagementEnabled>0</IsDocumentManagementEnabled>
+        <AutoCreateAccessTeams>0</AutoCreateAccessTeams>
+        <IsOneNoteIntegrationEnabled>0</IsOneNoteIntegrationEnabled>
+        <IsKnowledgeManagementEnabled>0</IsKnowledgeManagementEnabled>
+        <IsSLAEnabled>0</IsSLAEnabled>
+        <IsDocumentRecommendationsEnabled>0</IsDocumentRecommendationsEnabled>
+        <IsBPFEntity>0</IsBPFEntity>
+        <OwnershipTypeMask>UserOwned</OwnershipTypeMask>
+        <IsAuditEnabled>0</IsAuditEnabled>
+        <IsRetrieveAuditEnabled>0</IsRetrieveAuditEnabled>
+        <IsRetrieveMultipleAuditEnabled>0</IsRetrieveMultipleAuditEnabled>
+        <IsActivity>0</IsActivity>
+        <ActivityTypeMask></ActivityTypeMask>
+        <IsActivityParty>0</IsActivityParty>
+        <IsReplicated>0</IsReplicated>
+        <IsReplicationUserFiltered>0</IsReplicationUserFiltered>
+        <IsMailMergeEnabled>0</IsMailMergeEnabled>
+        <IsVisibleInMobile>0</IsVisibleInMobile>
+        <IsVisibleInMobileClient>1</IsVisibleInMobileClient>
+        <IsReadOnlyInMobileClient>0</IsReadOnlyInMobileClient>
+        <IsOfflineInMobileClient>0</IsOfflineInMobileClient>
+        <DaysSinceRecordLastModified>0</DaysSinceRecordLastModified>
+        <MobileOfflineFilters></MobileOfflineFilters>
+        <IsMapiGridEnabled>1</IsMapiGridEnabled>
+        <IsReadingPaneEnabled>1</IsReadingPaneEnabled>
+        <IsQuickCreateEnabled>1</IsQuickCreateEnabled>
+        <SyncToExternalSearchIndex>0</SyncToExternalSearchIndex>
+        <IntroducedVersion>1.0.0.0</IntroducedVersion>
+        <IsCustomizable>1</IsCustomizable>
+        <IsRenameable>1</IsRenameable>
+        <IsMappable>1</IsMappable>
+        <CanModifyAuditSettings>1</CanModifyAuditSettings>
+        <CanModifyMobileVisibility>1</CanModifyMobileVisibility>
+        <CanModifyMobileClientVisibility>1</CanModifyMobileClientVisibility>
+        <CanModifyMobileClientReadOnly>1</CanModifyMobileClientReadOnly>
+        <CanModifyMobileClientOffline>1</CanModifyMobileClientOffline>
+        <CanModifyConnectionSettings>1</CanModifyConnectionSettings>
+        <CanModifyDuplicateDetectionSettings>1</CanModifyDuplicateDetectionSettings>
+        <CanModifyMailMergeSettings>1</CanModifyMailMergeSettings>
+        <CanModifyQueueSettings>1</CanModifyQueueSettings>
+        <CanCreateAttributes>1</CanCreateAttributes>
+        <CanCreateForms>1</CanCreateForms>
+        <CanCreateCharts>1</CanCreateCharts>
+        <CanCreateViews>1</CanCreateViews>
+        <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+        <CanEnableSyncToExternalSearchIndex>1</CanEnableSyncToExternalSearchIndex>
+        <EnforceStateTransitions>0</EnforceStateTransitions>
+        <CanChangeHierarchicalRelationship>1</CanChangeHierarchicalRelationship>
+        <EntityHelpUrlEnabled>0</EntityHelpUrlEnabled>
+        <ChangeTrackingEnabled>0</ChangeTrackingEnabled>
+        <CanChangeTrackingBeEnabled>1</CanChangeTrackingBeEnabled>
+        <IsEnabledForExternalChannels>0</IsEnabledForExternalChannels>
+        <IsMSTeamsIntegrationEnabled>0</IsMSTeamsIntegrationEnabled>
+        <IsSolutionAware>0</IsSolutionAware>
+        <HasRelatedNotes>False</HasRelatedNotes>
+        <HasRelatedActivities>False</HasRelatedActivities>
+      </entity>
+    </EntityInfo>
+    <RibbonDiffXml>
+      <CustomActions />
+      <Templates>
+        <RibbonTemplates Id="Mscrm.Templates"></RibbonTemplates>
+      </Templates>
+      <CommandDefinitions />
+      <RuleDefinitions>
+        <TabDisplayRules />
+        <DisplayRules />
+        <EnableRules />
+      </RuleDefinitions>
+      <LocLabels />
+    </RibbonDiffXml>
+  </Entity>
   </Entities>
-  <Roles />
-  <Workflows />
-  <FieldSecurityProfiles />
+  <Roles></Roles>
+  <Workflows></Workflows>
+  <FieldSecurityProfiles></FieldSecurityProfiles>
   <Templates />
   <EntityMaps />
-  <EntityRelationships />
+  <EntityRelationships>
+    <EntityRelationship Name="cr_pantryitem_preferredsupplier_supplier">
+      <EntityRelationshipType>OneToMany</EntityRelationshipType>
+      <IsCustomizable>1</IsCustomizable>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsHierarchical>0</IsHierarchical>
+      <ReferencingEntityName>cr_pantryitem</ReferencingEntityName>
+      <ReferencedEntityName>cr_supplier</ReferencedEntityName>
+      <CascadeAssign>NoCascade</CascadeAssign>
+      <CascadeDelete>RemoveLink</CascadeDelete>
+      <CascadeReparent>NoCascade</CascadeReparent>
+      <CascadeShare>NoCascade</CascadeShare>
+      <CascadeUnshare>NoCascade</CascadeUnshare>
+      <CascadeRollupView>NoCascade</CascadeRollupView>
+      <IsValidForAdvancedFind>1</IsValidForAdvancedFind>
+      <ReferencingAttributeName>cr_preferredsupplier</ReferencingAttributeName>
+      <RelationshipDescription>
+        <Descriptions>
+          <Description description="" languagecode="1033" />
+        </Descriptions>
+      </RelationshipDescription>
+      <EntityRelationshipRoles>
+        <EntityRelationshipRole>
+          <NavPaneDisplayOption>UseCollectionName</NavPaneDisplayOption>
+          <NavPaneArea>Details</NavPaneArea>
+          <NavPaneOrder>10000</NavPaneOrder>
+          <NavigationPropertyName>cr_preferredsupplier</NavigationPropertyName>
+          <RelationshipRoleType>1</RelationshipRoleType>
+        </EntityRelationshipRole>
+        <EntityRelationshipRole>
+          <NavigationPropertyName>cr_pantryitem_preferredsupplier_supplier</NavigationPropertyName>
+          <RelationshipRoleType>0</RelationshipRoleType>
+        </EntityRelationshipRole>
+      </EntityRelationshipRoles>
+    </EntityRelationship>
+    <EntityRelationship Name="cr_orderlineitem_supplyorder_supplyorder">
+      <EntityRelationshipType>OneToMany</EntityRelationshipType>
+      <IsCustomizable>1</IsCustomizable>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsHierarchical>0</IsHierarchical>
+      <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
+      <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
+      <CascadeAssign>NoCascade</CascadeAssign>
+      <CascadeDelete>RemoveLink</CascadeDelete>
+      <CascadeReparent>NoCascade</CascadeReparent>
+      <CascadeShare>NoCascade</CascadeShare>
+      <CascadeUnshare>NoCascade</CascadeUnshare>
+      <CascadeRollupView>NoCascade</CascadeRollupView>
+      <IsValidForAdvancedFind>1</IsValidForAdvancedFind>
+      <ReferencingAttributeName>cr_supplyorder</ReferencingAttributeName>
+      <RelationshipDescription>
+        <Descriptions>
+          <Description description="" languagecode="1033" />
+        </Descriptions>
+      </RelationshipDescription>
+      <EntityRelationshipRoles>
+        <EntityRelationshipRole>
+          <NavPaneDisplayOption>UseCollectionName</NavPaneDisplayOption>
+          <NavPaneArea>Details</NavPaneArea>
+          <NavPaneOrder>10000</NavPaneOrder>
+          <NavigationPropertyName>cr_supplyorder</NavigationPropertyName>
+          <RelationshipRoleType>1</RelationshipRoleType>
+        </EntityRelationshipRole>
+        <EntityRelationshipRole>
+          <NavigationPropertyName>cr_orderlineitem_supplyorder_supplyorder</NavigationPropertyName>
+          <RelationshipRoleType>0</RelationshipRoleType>
+        </EntityRelationshipRole>
+      </EntityRelationshipRoles>
+    </EntityRelationship>
+    <EntityRelationship Name="cr_orderlineitem_pantryitem_pantryitem">
+      <EntityRelationshipType>OneToMany</EntityRelationshipType>
+      <IsCustomizable>1</IsCustomizable>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsHierarchical>0</IsHierarchical>
+      <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
+      <ReferencedEntityName>cr_pantryitem</ReferencedEntityName>
+      <CascadeAssign>NoCascade</CascadeAssign>
+      <CascadeDelete>RemoveLink</CascadeDelete>
+      <CascadeReparent>NoCascade</CascadeReparent>
+      <CascadeShare>NoCascade</CascadeShare>
+      <CascadeUnshare>NoCascade</CascadeUnshare>
+      <CascadeRollupView>NoCascade</CascadeRollupView>
+      <IsValidForAdvancedFind>1</IsValidForAdvancedFind>
+      <ReferencingAttributeName>cr_pantryitem</ReferencingAttributeName>
+      <RelationshipDescription>
+        <Descriptions>
+          <Description description="" languagecode="1033" />
+        </Descriptions>
+      </RelationshipDescription>
+      <EntityRelationshipRoles>
+        <EntityRelationshipRole>
+          <NavPaneDisplayOption>UseCollectionName</NavPaneDisplayOption>
+          <NavPaneArea>Details</NavPaneArea>
+          <NavPaneOrder>10000</NavPaneOrder>
+          <NavigationPropertyName>cr_pantryitem</NavigationPropertyName>
+          <RelationshipRoleType>1</RelationshipRoleType>
+        </EntityRelationshipRole>
+        <EntityRelationshipRole>
+          <NavigationPropertyName>cr_orderlineitem_pantryitem_pantryitem</NavigationPropertyName>
+          <RelationshipRoleType>0</RelationshipRoleType>
+        </EntityRelationshipRole>
+      </EntityRelationshipRoles>
+    </EntityRelationship>
+    <EntityRelationship Name="cr_orderlineitem_supplier_supplier">
+      <EntityRelationshipType>OneToMany</EntityRelationshipType>
+      <IsCustomizable>1</IsCustomizable>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsHierarchical>0</IsHierarchical>
+      <ReferencingEntityName>cr_orderlineitem</ReferencingEntityName>
+      <ReferencedEntityName>cr_supplier</ReferencedEntityName>
+      <CascadeAssign>NoCascade</CascadeAssign>
+      <CascadeDelete>RemoveLink</CascadeDelete>
+      <CascadeReparent>NoCascade</CascadeReparent>
+      <CascadeShare>NoCascade</CascadeShare>
+      <CascadeUnshare>NoCascade</CascadeUnshare>
+      <CascadeRollupView>NoCascade</CascadeRollupView>
+      <IsValidForAdvancedFind>1</IsValidForAdvancedFind>
+      <ReferencingAttributeName>cr_supplier</ReferencingAttributeName>
+      <RelationshipDescription>
+        <Descriptions>
+          <Description description="" languagecode="1033" />
+        </Descriptions>
+      </RelationshipDescription>
+      <EntityRelationshipRoles>
+        <EntityRelationshipRole>
+          <NavPaneDisplayOption>UseCollectionName</NavPaneDisplayOption>
+          <NavPaneArea>Details</NavPaneArea>
+          <NavPaneOrder>10000</NavPaneOrder>
+          <NavigationPropertyName>cr_supplier</NavigationPropertyName>
+          <RelationshipRoleType>1</RelationshipRoleType>
+        </EntityRelationshipRole>
+        <EntityRelationshipRole>
+          <NavigationPropertyName>cr_orderlineitem_supplier_supplier</NavigationPropertyName>
+          <RelationshipRoleType>0</RelationshipRoleType>
+        </EntityRelationshipRole>
+      </EntityRelationshipRoles>
+    </EntityRelationship>
+    <EntityRelationship Name="cr_approvalhistory_supplyorder_supplyorder">
+      <EntityRelationshipType>OneToMany</EntityRelationshipType>
+      <IsCustomizable>1</IsCustomizable>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsHierarchical>0</IsHierarchical>
+      <ReferencingEntityName>cr_approvalhistory</ReferencingEntityName>
+      <ReferencedEntityName>cr_supplyorder</ReferencedEntityName>
+      <CascadeAssign>NoCascade</CascadeAssign>
+      <CascadeDelete>RemoveLink</CascadeDelete>
+      <CascadeReparent>NoCascade</CascadeReparent>
+      <CascadeShare>NoCascade</CascadeShare>
+      <CascadeUnshare>NoCascade</CascadeUnshare>
+      <CascadeRollupView>NoCascade</CascadeRollupView>
+      <IsValidForAdvancedFind>1</IsValidForAdvancedFind>
+      <ReferencingAttributeName>cr_supplyorder</ReferencingAttributeName>
+      <RelationshipDescription>
+        <Descriptions>
+          <Description description="" languagecode="1033" />
+        </Descriptions>
+      </RelationshipDescription>
+      <EntityRelationshipRoles>
+        <EntityRelationshipRole>
+          <NavPaneDisplayOption>UseCollectionName</NavPaneDisplayOption>
+          <NavPaneArea>Details</NavPaneArea>
+          <NavPaneOrder>10000</NavPaneOrder>
+          <NavigationPropertyName>cr_supplyorder</NavigationPropertyName>
+          <RelationshipRoleType>1</RelationshipRoleType>
+        </EntityRelationshipRole>
+        <EntityRelationshipRole>
+          <NavigationPropertyName>cr_approvalhistory_supplyorder_supplyorder</NavigationPropertyName>
+          <RelationshipRoleType>0</RelationshipRoleType>
+        </EntityRelationshipRole>
+      </EntityRelationshipRoles>
+    </EntityRelationship>
+  </EntityRelationships>
   <OrganizationSettings />
-  <optionsets />
+  <optionsets>
+    <optionset Name="cr_itemcategory">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <displaynames>
+        <displayname description="Item Category" languagecode="1033" />
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033" />
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Beverages" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Snacks" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Coffee &amp; Tea" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Dairy" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Fruits" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="Cleaning Supplies" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000006">
+          <labels>
+            <label description="Paper Products" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000007">
+          <labels>
+            <label description="Kitchen Supplies" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000008">
+          <labels>
+            <label description="Other" languagecode="1033" />
+          </labels>
+        </option>
+      </options>
+    </optionset>
+    <optionset Name="cr_itemunit">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <displaynames>
+        <displayname description="Item Unit" languagecode="1033" />
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033" />
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Each" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Pack" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Box" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Case" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Bag" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="Bottle" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000006">
+          <labels>
+            <label description="Carton" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000007">
+          <labels>
+            <label description="Roll" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000008">
+          <labels>
+            <label description="Kg" languagecode="1033" />
+          </labels>
+        </option>
+      </options>
+    </optionset>
+    <optionset Name="cr_orderstatus">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <displaynames>
+        <displayname description="Order Status" languagecode="1033" />
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033" />
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Draft" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Submitted" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Approved" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Rejected" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Ordered" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="Partially Received" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000006">
+          <labels>
+            <label description="Received" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000007">
+          <labels>
+            <label description="Cancelled" languagecode="1033" />
+          </labels>
+        </option>
+      </options>
+    </optionset>
+    <optionset Name="cr_approvalstatus">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <displaynames>
+        <displayname description="Approval Status" languagecode="1033" />
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033" />
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Pending" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Approved" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Rejected" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Returned for Revision" languagecode="1033" />
+          </labels>
+        </option>
+      </options>
+    </optionset>
+    <optionset Name="cr_approvalaction">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <displaynames>
+        <displayname description="Approval Action" languagecode="1033" />
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033" />
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Submitted" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Approved" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Rejected" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Returned" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Cancelled" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="Resubmitted" languagecode="1033" />
+          </labels>
+        </option>
+      </options>
+    </optionset>
+    <optionset Name="cr_suppliercategory">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <displaynames>
+        <displayname description="Supplier Category" languagecode="1033" />
+      </displaynames>
+      <Descriptions>
+        <Description description="" languagecode="1033" />
+      </Descriptions>
+      <options>
+        <option value="100000000">
+          <labels>
+            <label description="Food &amp; Beverage" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000001">
+          <labels>
+            <label description="Office Supplies" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000002">
+          <labels>
+            <label description="Cleaning Products" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000003">
+          <labels>
+            <label description="Kitchen Equipment" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000004">
+          <labels>
+            <label description="Paper Products" languagecode="1033" />
+          </labels>
+        </option>
+        <option value="100000005">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+        </option>
+      </options>
+    </optionset>
+  </optionsets>
   <CustomControls />
   <EntityDataProviders />
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
 </ImportExportXml>
