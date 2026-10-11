@@ -1,0 +1,89 @@
+Screens:
+  HomeScreen:
+    Properties:
+      Fill: =gblBackground
+    Children:
+      - HomeHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            Fill: =gblPrimary
+            Height: =80
+            Width: =Parent.Width
+      - HomeTitle:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =80
+            Size: =22
+            Text: ="Office Pantry Supply Ordering"
+            Width: =Parent.Width - 40
+            X: =24
+      - HomeGreeting:
+          Control: Label@2.5.1
+          Properties:
+            Height: =50
+            Size: =18
+            Text: |-
+              ="Hello, " & User().FullName & "!"
+            Width: =Parent.Width - 48
+            X: =24
+            Y: =100
+      - HomeLowStock:
+          Control: Label@2.5.1
+          Properties:
+            Color: =If(Self.Text = "All pantry items are above their minimum stock level.", RGBA(16, 124, 16, 1), RGBA(168, 0, 0, 1))
+            Height: =40
+            Size: =14
+            Text: |-
+              =With({low: CountRows(Filter('Pantry Items', 'Current Stock' <= 'Minimum Stock Level'))},
+                If(low = 0, "All pantry items are above their minimum stock level.",
+                  low & " pantry item(s) are at or below minimum stock."))
+            Width: =Parent.Width - 48
+            X: =24
+            Y: =150
+      - BtnNewRequest:
+          Control: Classic/Button@2.2.0
+          Properties:
+            Fill: =gblPrimary
+            Height: =70
+            OnSelect: =Navigate(NewOrderScreen, ScreenTransition.Fade)
+            Size: =16
+            Text: ="New supply request"
+            Width: =300
+            X: =24
+            Y: =220
+      - BtnMyOrders:
+          Control: Classic/Button@2.2.0
+          Properties:
+            Fill: =gblPrimary
+            Height: =70
+            OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.Fade)
+            Size: =16
+            Text: ="My orders"
+            Width: =300
+            X: =344
+            Y: =220
+      - BtnInventory:
+          Control: Classic/Button@2.2.0
+          Properties:
+            Fill: =gblPrimary
+            Height: =70
+            OnSelect: =Navigate(InventoryScreen, ScreenTransition.Fade)
+            Size: =16
+            Text: ="Pantry inventory"
+            Width: =300
+            X: =664
+            Y: =220
+      - HomeHelp:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(96, 94, 92, 1)
+            Height: =120
+            Size: =12
+            Text: |-
+              ="Submitted requests go to your approver automatically. Once approved, each supplier is emailed their part of the order and you are notified by email."
+            VerticalAlign: =VerticalAlign.Top
+            Width: =940
+            X: =24
+            Y: =320

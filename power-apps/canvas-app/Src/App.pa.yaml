@@ -1,0 +1,5 @@
+App:
+  Properties:
+    OnStart: |-
+      =Set(gblPrimary, RGBA(0, 120, 212, 1));
+      Set(gblBackground, RGBA(243, 242, 241, 1))

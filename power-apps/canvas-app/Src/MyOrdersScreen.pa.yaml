@@ -1,0 +1,104 @@
+Screens:
+  MyOrdersScreen:
+    Properties:
+      Fill: =gblBackground
+    Children:
+      - OrdersHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            Fill: =gblPrimary
+            Height: =80
+            Width: =Parent.Width
+      - OrdersBack:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =48
+            Icon: =Icon.ChevronLeft
+            OnSelect: =Navigate(HomeScreen, ScreenTransition.Fade)
+            Width: =48
+            X: =12
+            Y: =16
+      - OrdersTitle:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =80
+            Size: =20
+            Text: ="My orders"
+            Width: =600
+            X: =72
+      - OrdersRefresh:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =40
+            Icon: =Icon.Reload
+            OnSelect: =Refresh('Supply Orders')
+            Width: =40
+            X: =Parent.Width - 64
+            Y: =20
+      - OrdersGallery:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+          Properties:
+            Height: =Parent.Height - 104
+            Items: =Sort(Filter('Supply Orders', 'Created By'.'Primary Email' = User().Email), 'Created On', SortOrder.Descending)
+            TemplateSize: =76
+            Width: =Parent.Width - 48
+            X: =24
+            Y: =96
+          Children:
+            - OrderNumber:
+                Control: Label@2.5.1
+                Properties:
+                  FontWeight: =FontWeight.Semibold
+                  Height: =32
+                  OnSelect: |-
+                    =Set(varSelectedOrder, ThisItem); Navigate(OrderDetailScreen, ScreenTransition.Fade)
+                  Size: =14
+                  Text: =ThisItem.'Order Number'
+                  Width: =500
+                  X: =12
+                  Y: =6
+            - OrderMeta:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(96, 94, 92, 1)
+                  Height: =28
+                  Size: =11
+                  Text: |-
+                    ="Created " & Text(ThisItem.'Created On', "dd mmm yyyy") & "   |   Required by " & Text(ThisItem.'Required By Date', "dd mmm yyyy") & "   |   Total " & Text(Coalesce(ThisItem.'Total Amount', 0), "0.00")
+                  Width: =800
+                  X: =12
+                  Y: =40
+            - OrderStatus:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Right
+                  Color: =Switch(Text(ThisItem.'Order Status'), "Rejected", RGBA(168, 0, 0, 1), "Cancelled", RGBA(168, 0, 0, 1), "Received", RGBA(16, 124, 16, 1), "Ordered", RGBA(16, 124, 16, 1), "Approved", RGBA(16, 124, 16, 1), gblPrimary)
+                  FontWeight: =FontWeight.Semibold
+                  Height: =32
+                  Size: =14
+                  Text: =Text(ThisItem.'Order Status')
+                  Width: =260
+                  X: =Parent.TemplateWidth - Self.Width - 56
+                  Y: =6
+            - OrderOpen:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  Height: =40
+                  Icon: =Icon.ChevronRight
+                  OnSelect: |-
+                    =Set(varSelectedOrder, ThisItem); Navigate(OrderDetailScreen, ScreenTransition.Fade)
+                  Width: =40
+                  X: =Parent.TemplateWidth - 48
+                  Y: =18
+            - OrderSeparator:
+                Control: Rectangle@2.3.0
+                Properties:
+                  Fill: =RGBA(225, 223, 221, 1)
+                  Height: =1
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - 1

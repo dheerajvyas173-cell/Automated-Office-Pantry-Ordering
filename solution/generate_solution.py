@@ -8,6 +8,7 @@ import uuid
 import zipfile
 from xml.sax.saxutils import quoteattr
 
+import canvas_app
 import flows as flows_mod
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -420,7 +421,7 @@ def roles_xml():
     return xml + "  ", roots
 
 
-def customizations_xml(entities, relationships, optionsets, roles="", workflows="", connrefs=""):
+def customizations_xml(entities, relationships, optionsets, roles="", workflows="", connrefs="", canvas=""):
     ents = "".join(entity(*e) for e in entities)
     rels = "".join(relationship(*r) for r in relationships)
     opts = "".join(optionset(n, d, o) for n, (d, o) in optionsets.items())
@@ -438,7 +439,7 @@ def customizations_xml(entities, relationships, optionsets, roles="", workflows=
 {rel_block}  <OrganizationSettings />
 {opt_block}  <CustomControls />
   <EntityDataProviders />
-{connrefs}  <Languages>
+{canvas}{connrefs}  <Languages>
     <Language>1033</Language>
   </Languages>
 </ImportExportXml>
@@ -501,7 +502,13 @@ def solution_xml(version, entities, optionsets, extra_roots=""):
 """
 
 
-CONTENT_TYPES = """<?xml version="1.0" encoding="utf-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="xml" ContentType="application/octet-stream" /><Default Extension="json" ContentType="application/octet-stream" /><Default Extension="msapp" ContentType="application/octet-stream" /><Default Extension="png" ContentType="application/octet-stream" /></Types>"""
+def content_types(names):
+    defaults = "".join(f'<Default Extension="{ext}" ContentType="application/octet-stream" />'
+                       for ext in ("xml", "json", "msapp"))
+    overrides = "".join(f'<Override PartName="/{n}" ContentType="application/octet-stream" />'
+                        for n in names if "." not in n.rsplit("/", 1)[-1])
+    return ('<?xml version="1.0" encoding="utf-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+            f"{defaults}{overrides}</Types>")
 
 
 def build_zip(path, files):
@@ -511,16 +518,18 @@ def build_zip(path, files):
     print(f"Wrote {path}")
 
 
-def write_zip(filename, version, entities, relationships, optionsets, roles=False, flows=False):
+def write_zip(filename, version, entities, relationships, optionsets, roles=False, flows=False, canvas=False):
     role_xml, role_roots = roles_xml() if roles else ("", "")
     wf_xml, wf_roots, conn_xml, wf_files = flows_mod.build() if flows else ("", "", "", {})
+    app_xml, app_roots, app_files = canvas_app.build() if canvas else ("", "", {})
     files = {
-        "[Content_Types].xml": CONTENT_TYPES,
         "customizations.xml": customizations_xml(entities, relationships, optionsets,
-                                                 role_xml, wf_xml, conn_xml),
-        "solution.xml": solution_xml(version, entities, optionsets, role_roots + wf_roots),
+                                                 role_xml, wf_xml, conn_xml, app_xml),
+        "solution.xml": solution_xml(version, entities, optionsets, role_roots + wf_roots + app_roots),
+        **wf_files,
+        **app_files,
     }
-    files.update(wf_files)
+    files = {"[Content_Types].xml": content_types(files), **files}
     build_zip(os.path.join(ROOT, filename), files)
     return files
 
@@ -531,8 +540,10 @@ def main():
     # Each step upgrades the solution already in the environment, adding one layer.
     write_zip("Step3_Security_Roles.zip", "1.0.1.0",
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True)
-    latest = write_zip("Step4_Cloud_Flows.zip", "1.0.2.0",
-                       FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True)
+    write_zip("Step4_Cloud_Flows.zip", "1.0.2.0",
+              FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True)
+    latest = write_zip("Step5_Canvas_App.zip", "1.0.3.0",
+                       FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True)
     for name in ("customizations.xml", "solution.xml", "[Content_Types].xml"):
         with open(os.path.join(SOLUTION_DIR, name), "w", encoding="utf-8") as f:
             f.write(latest[name])

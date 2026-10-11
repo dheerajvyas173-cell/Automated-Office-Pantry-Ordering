@@ -1,0 +1,237 @@
+Screens:
+  NewOrderScreen:
+    Properties:
+      Fill: =gblBackground
+    Children:
+      - NewHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            Fill: =gblPrimary
+            Height: =80
+            Width: =Parent.Width
+      - NewBack:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =48
+            Icon: =Icon.ChevronLeft
+            OnSelect: =Back()
+            Width: =48
+            X: =12
+            Y: =16
+      - NewTitle:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =80
+            Size: =20
+            Text: ="New supply request"
+            Width: =600
+            X: =72
+      - NewPickLabel:
+          Control: Label@2.5.1
+          Properties:
+            FontWeight: =FontWeight.Semibold
+            Height: =36
+            Size: =14
+            Text: ="1. Choose items"
+            Width: =300
+            X: =24
+            Y: =92
+      - NewSearch:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            Default: =""
+            HintText: ="Search items"
+            Height: =40
+            Width: =600
+            X: =24
+            Y: =130
+      - NewItemsGallery:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+          Properties:
+            Height: =Parent.Height - 190
+            Items: =Sort(Filter('Pantry Items', StartsWith('Item Name', NewSearch.Text)), 'Item Name')
+            TemplateSize: =64
+            Width: =600
+            X: =24
+            Y: =180
+          Children:
+            - NewItemName:
+                Control: Label@2.5.1
+                Properties:
+                  FontWeight: =FontWeight.Semibold
+                  Height: =30
+                  Size: =13
+                  Text: =ThisItem.'Item Name'
+                  Width: =330
+                  X: =8
+                  Y: =4
+            - NewItemStock:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =If(ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', RGBA(168, 0, 0, 1), RGBA(96, 94, 92, 1))
+                  Height: =26
+                  Size: =11
+                  Text: |-
+                    ="In stock: " & Coalesce(ThisItem.'Current Stock', 0) & "   |   Price: " & Text(Coalesce(ThisItem.'Unit Price', 0), "0.00")
+                  Width: =330
+                  X: =8
+                  Y: =32
+            - NewQty:
+                Control: Classic/TextInput@2.3.2
+                Properties:
+                  Default: ="1"
+                  Format: =TextFormat.Number
+                  Height: =40
+                  Width: =80
+                  X: =360
+                  Y: =12
+            - NewAdd:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  Fill: =gblPrimary
+                  Height: =40
+                  OnSelect: |-
+                    =If(Value(NewQty.Text) <= 0,
+                      Notify("Enter a quantity greater than zero.", NotificationType.Error),
+                      If(ThisItem.'Current Stock' > ThisItem.'Minimum Stock Level',
+                        Notify(ThisItem.'Item Name' & " is currently well stocked (" & ThisItem.'Current Stock' & " in the pantry). Added anyway - remove it if not needed.", NotificationType.Warning),
+                        Notify(ThisItem.'Item Name' & " added.", NotificationType.Success));
+                      Collect(colLines, {
+                        Item: ThisItem,
+                        ItemName: ThisItem.'Item Name',
+                        Qty: Value(NewQty.Text),
+                        UnitPrice: Coalesce(ThisItem.'Unit Price', 0),
+                        Supplier: ThisItem.'Preferred Supplier'
+                      }))
+                  Text: ="Add"
+                  Width: =120
+                  X: =456
+                  Y: =12
+      - NewCartLabel:
+          Control: Label@2.5.1
+          Properties:
+            FontWeight: =FontWeight.Semibold
+            Height: =36
+            Size: =14
+            Text: ="2. Your request"
+            Width: =300
+            X: =660
+            Y: =92
+      - NewCartGallery:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+          Properties:
+            Height: =200
+            Items: =colLines
+            TemplateSize: =44
+            Width: =680
+            X: =660
+            Y: =130
+          Children:
+            - CartLine:
+                Control: Label@2.5.1
+                Properties:
+                  Height: =40
+                  Size: =12
+                  Text: |-
+                    =ThisItem.ItemName & "  x " & ThisItem.Qty & "  =  " & Text(ThisItem.Qty * ThisItem.UnitPrice, "0.00")
+                  Width: =600
+                  X: =8
+            - CartRemove:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  Color: =RGBA(168, 0, 0, 1)
+                  Height: =32
+                  Icon: =Icon.Cancel
+                  OnSelect: =Remove(colLines, ThisItem)
+                  Width: =32
+                  X: =632
+                  Y: =4
+      - NewTotal:
+          Control: Label@2.5.1
+          Properties:
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Size: =13
+            Text: |-
+              ="Estimated total: " & Text(Sum(colLines, Qty * UnitPrice), "0.00")
+            Width: =680
+            X: =660
+            Y: =336
+      - NewRequiredByLabel:
+          Control: Label@2.5.1
+          Properties:
+            Height: =28
+            Size: =12
+            Text: ="Required by"
+            Width: =200
+            X: =660
+            Y: =376
+      - NewRequiredBy:
+          Control: Classic/DatePicker@2.4.0
+          Properties:
+            DefaultDate: =DateAdd(Today(), 3, TimeUnit.Days)
+            Height: =40
+            Width: =320
+            X: =660
+            Y: =404
+      - NewJustification:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            Default: =""
+            HintText: ="Why is this needed? (optional)"
+            Height: =70
+            Mode: =TextMode.MultiLine
+            Width: =680
+            X: =660
+            Y: =452
+      - NewAddress:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            Default: =""
+            HintText: ="Delivery address / pantry location"
+            Height: =40
+            Width: =680
+            X: =660
+            Y: =530
+      - NewSubmit:
+          Control: Classic/Button@2.2.0
+          Properties:
+            DisplayMode: =If(IsEmpty(colLines), DisplayMode.Disabled, DisplayMode.Edit)
+            Fill: =gblPrimary
+            Height: =52
+            OnSelect: |-
+              =Set(varNewOrder, Patch('Supply Orders', Defaults('Supply Orders'), {
+                  'Order Number': "PO-" & Text(Now(), "yyyymmdd-hhmmss"),
+                  'Order Status': 'Order Status'.Draft,
+                  'Required By Date': NewRequiredBy.SelectedDate,
+                  Justification: NewJustification.Text,
+                  'Delivery Address': NewAddress.Text,
+                  'Requested By': User().FullName,
+                  'Total Amount': Sum(colLines, Qty * UnitPrice)
+              }));
+              ForAll(colLines As L,
+                Patch('Order Line Items', Defaults('Order Line Items'), {
+                  'Line Item Name': L.ItemName,
+                  'Supply Order': varNewOrder,
+                  'Pantry Item': L.Item,
+                  Supplier: L.Supplier,
+                  Quantity: L.Qty,
+                  'Unit Price': L.UnitPrice,
+                  'Total Cost': L.Qty * L.UnitPrice
+                }));
+              Patch('Supply Orders', varNewOrder, {'Order Status': 'Order Status'.Submitted});
+              Notify("Order " & varNewOrder.'Order Number' & " submitted for approval.", NotificationType.Success);
+              Clear(colLines);
+              Reset(NewJustification);
+              Reset(NewAddress);
+              Navigate(MyOrdersScreen, ScreenTransition.Fade)
+            Size: =15
+            Text: ="Submit for approval"
+            Width: =320
+            X: =660
+            Y: =586

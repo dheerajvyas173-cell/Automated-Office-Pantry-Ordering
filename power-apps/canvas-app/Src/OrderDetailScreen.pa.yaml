@@ -1,0 +1,132 @@
+Screens:
+  OrderDetailScreen:
+    Properties:
+      Fill: =gblBackground
+    Children:
+      - DetailHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            Fill: =gblPrimary
+            Height: =80
+            Width: =Parent.Width
+      - DetailBack:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =48
+            Icon: =Icon.ChevronLeft
+            OnSelect: =Back()
+            Width: =48
+            X: =12
+            Y: =16
+      - DetailTitle:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =80
+            Size: =20
+            Text: |-
+              ="Order " & varSelectedOrder.'Order Number'
+            Width: =800
+            X: =72
+      - DetailSummary:
+          Control: Label@2.5.1
+          Properties:
+            Height: =110
+            Size: =12
+            Text: |-
+              ="Status: " & Text(varSelectedOrder.'Order Status') &
+              Char(10) & "Approval: " & Coalesce(Text(varSelectedOrder.'Approval Status'), "-") &
+              Char(10) & "Required by: " & Text(varSelectedOrder.'Required By Date', "dd mmm yyyy") &
+              Char(10) & "Approver comments: " & Coalesce(varSelectedOrder.'Approver Comments', "-")
+            VerticalAlign: =VerticalAlign.Top
+            Width: =640
+            X: =24
+            Y: =96
+      - DetailCancel:
+          Control: Classic/Button@2.2.0
+          Properties:
+            Fill: =RGBA(168, 0, 0, 1)
+            Height: =44
+            OnSelect: |-
+              =Patch('Supply Orders', varSelectedOrder, {'Order Status': 'Order Status'.Cancelled});
+              Notify("Order cancelled.", NotificationType.Success);
+              Navigate(MyOrdersScreen, ScreenTransition.Fade)
+            Text: ="Cancel order"
+            Visible: =Text(varSelectedOrder.'Order Status') in ["Draft", "Submitted"]
+            Width: =200
+            X: =Parent.Width - 224
+            Y: =100
+      - DetailItemsLabel:
+          Control: Label@2.5.1
+          Properties:
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Size: =14
+            Text: ="Items"
+            Width: =300
+            X: =24
+            Y: =212
+      - DetailItems:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+          Properties:
+            Height: =Parent.Height - 260
+            Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = varSelectedOrder.'Supply Order')
+            TemplateSize: =44
+            Width: =640
+            X: =24
+            Y: =248
+          Children:
+            - DetailItemLine:
+                Control: Label@2.5.1
+                Properties:
+                  Height: =40
+                  Size: =12
+                  Text: |-
+                    =ThisItem.'Line Item Name' & "  x " & ThisItem.Quantity & "   (" & Coalesce(ThisItem.Supplier.'Supplier Name', "no supplier") & ")"
+                  Width: =620
+                  X: =8
+      - DetailHistoryLabel:
+          Control: Label@2.5.1
+          Properties:
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            Size: =14
+            Text: ="Approval history"
+            Width: =300
+            X: =700
+            Y: =212
+      - DetailHistory:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+          Properties:
+            Height: =Parent.Height - 260
+            Items: =Sort(Filter('Approval History Records', 'Supply Order'.'Supply Order' = varSelectedOrder.'Supply Order'), 'Action Date', SortOrder.Descending)
+            TemplateSize: =64
+            Width: =Parent.Width - 724
+            X: =700
+            Y: =248
+          Children:
+            - HistoryAction:
+                Control: Label@2.5.1
+                Properties:
+                  FontWeight: =FontWeight.Semibold
+                  Height: =28
+                  Size: =12
+                  Text: |-
+                    =Text(ThisItem.Action) & " by " & Coalesce(ThisItem.Approver, "-") & " on " & Text(ThisItem.'Action Date', "dd mmm yyyy hh:mm")
+                  Width: =Parent.TemplateWidth - 16
+                  X: =8
+                  Y: =4
+            - HistoryComments:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(96, 94, 92, 1)
+                  Height: =28
+                  Size: =11
+                  Text: =Coalesce(ThisItem.Comments, "")
+                  Width: =Parent.TemplateWidth - 16
+                  X: =8
+                  Y: =32

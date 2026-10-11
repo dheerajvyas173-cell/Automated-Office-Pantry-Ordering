@@ -1,0 +1,103 @@
+Screens:
+  InventoryScreen:
+    Properties:
+      Fill: =gblBackground
+    Children:
+      - InvHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            Fill: =gblPrimary
+            Height: =80
+            Width: =Parent.Width
+      - InvBack:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =48
+            Icon: =Icon.ChevronLeft
+            OnSelect: =Back()
+            Width: =48
+            X: =12
+            Y: =16
+      - InvTitle:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =80
+            Size: =20
+            Text: ="Pantry inventory"
+            Width: =600
+            X: =72
+      - InvSearch:
+          Control: Classic/TextInput@2.3.2
+          Properties:
+            Default: =""
+            HintText: ="Search items by name"
+            Height: =44
+            Width: =400
+            X: =24
+            Y: =96
+      - InvGallery:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+          Properties:
+            Height: =Parent.Height - 160
+            Items: =Sort(Filter('Pantry Items', StartsWith('Item Name', InvSearch.Text)), 'Item Name')
+            TemplateSize: =72
+            Width: =Parent.Width - 48
+            X: =24
+            Y: =152
+          Children:
+            - InvItemName:
+                Control: Label@2.5.1
+                Properties:
+                  FontWeight: =FontWeight.Semibold
+                  Height: =32
+                  Size: =14
+                  Text: =ThisItem.'Item Name'
+                  Width: =420
+                  X: =12
+                  Y: =6
+            - InvItemDetails:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(96, 94, 92, 1)
+                  Height: =28
+                  Size: =11
+                  Text: |-
+                    ="SKU: " & Coalesce(ThisItem.SKU, "-") & "   |   Location: " & Coalesce(ThisItem.'Storage Location', "-")
+                  Width: =600
+                  X: =12
+                  Y: =38
+            - InvStock:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Right
+                  Color: =If(ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', RGBA(168, 0, 0, 1), RGBA(16, 124, 16, 1))
+                  FontWeight: =FontWeight.Semibold
+                  Height: =32
+                  Size: =14
+                  Text: |-
+                    ="In stock: " & Coalesce(ThisItem.'Current Stock', 0) & "  (min " & Coalesce(ThisItem.'Minimum Stock Level', 0) & ")"
+                  Width: =320
+                  X: =Parent.TemplateWidth - Self.Width - 16
+                  Y: =6
+            - InvStockStatus:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Right
+                  Color: =If(ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', RGBA(168, 0, 0, 1), RGBA(96, 94, 92, 1))
+                  Height: =28
+                  Size: =11
+                  Text: =If(ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock - reorder needed", "OK")
+                  Width: =320
+                  X: =Parent.TemplateWidth - Self.Width - 16
+                  Y: =38
+            - InvSeparator:
+                Control: Rectangle@2.3.0
+                Properties:
+                  Fill: =RGBA(225, 223, 221, 1)
+                  Height: =1
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - 1
