@@ -283,15 +283,6 @@ def optionset(name, display, options):
 """
 
 
-def a_local_choice(logical, display, entity_name, options):
-    body = common_attr("picklist", logical, "none", GRID_MASK)
-    body += f"""            <AppDefaultValue>-1</AppDefaultValue>
-            <optionset Name="{entity_name}_{logical}">
-              <OptionSetType>picklist</OptionSetType>
-{optionset_body(display, options, "              ")}            </optionset>
-"""
-    return wrap_attr(logical, body, display)
-
 
 OPTION_SETS = {
     "cr_itemcategory": ("Item Category", ["Beverages", "Snacks", "Coffee & Tea", "Dairy", "Fruits",
@@ -387,14 +378,6 @@ TEST_ENTITIES = [
     ]),
 ]
 
-
-LOCAL_CHOICE_TEST_ENTITIES = [
-    ("cr_supplier", "Supplier", "Suppliers", "Supplier contact information and details", [
-        a_primarykey("cr_supplierid", "Supplier"),
-        a_primaryname("cr_name", "Supplier Name"),
-        a_local_choice("cr_category", "Category", "cr_supplier", OPTION_SETS["cr_suppliercategory"][1]),
-    ]),
-]
 
 def customizations_xml(entities, relationships, optionsets):
     ents = "".join(entity(*e) for e in entities)
@@ -517,7 +500,6 @@ def main():
     write_zip("Step1A_Tables_Only.zip", "0.0.1.0",
               keep_attrs(FULL_ENTITIES, is_core), [], {})
     write_zip("Step1B_Choices_Only.zip", "0.0.1.2", TEST_ENTITIES, [], OPTION_SETS)
-    write_zip("Step1C_Local_Choice_Fallback.zip", "0.0.1.3", LOCAL_CHOICE_TEST_ENTITIES, [], {})
     write_zip("Step2_All_Columns.zip", "0.0.2.0",
               keep_attrs(FULL_ENTITIES, is_not_lookup), [], OPTION_SETS)
     write_zip("PantrySupplyOrdering_1_0_0_0.zip", "1.0.0.0",
