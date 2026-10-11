@@ -540,9 +540,9 @@ def main():
     # Each step upgrades the solution already in the environment, adding one layer.
     write_zip("Step3_Security_Roles.zip", "1.0.1.0",
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True)
-    write_zip("Step4_Cloud_Flows.zip", "1.0.2.0",
+    write_zip("Step4_Cloud_Flows.zip", "1.0.2.1",
               FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True)
-    latest = write_zip("Step5_Canvas_App.zip", "1.0.3.0",
+    latest = write_zip("Step5_Canvas_App.zip", "1.0.3.1",
                        FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True)
     for name in ("customizations.xml", "solution.xml", "[Content_Types].xml"):
         with open(os.path.join(SOLUTION_DIR, name), "w", encoding="utf-8") as f:

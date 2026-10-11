@@ -13,11 +13,11 @@ ORDER_SUBMITTED, ORDER_APPROVED, ORDER_REJECTED, ORDER_ORDERED = 100000001, 1000
 APPROVAL_PENDING, APPROVAL_APPROVED, APPROVAL_REJECTED = 100000000, 100000001, 100000002
 ACTION_SUBMITTED, ACTION_APPROVED, ACTION_REJECTED = 100000000, 100000001, 100000002
 
-DV, APPROVALS, OUTLOOK = "shared_commondataserviceforapps", "shared_approvals", "shared_office365"
+DV, APPROVALS, MAIL = "shared_commondataserviceforapps", "shared_approvals", "shared_sendmail"
 CONNECTORS = {
     DV: ("cr_pantry_dataverse", "Pantry - Dataverse"),
     APPROVALS: ("cr_pantry_approvals", "Pantry - Approvals"),
-    OUTLOOK: ("cr_pantry_outlook", "Pantry - Office 365 Outlook"),
+    MAIL: ("cr_pantry_mail", "Pantry - Mail"),
 }
 
 ORDER_ID = "@{triggerOutputs()?['body/cr_supplyorderid']}"
@@ -80,9 +80,9 @@ def log_history(name, action, approver, comments="", previous=None, new=None):
 
 
 def send_email(to, subject, body):
-    return _op(OUTLOOK, "SendEmailV2", {
-        "emailMessage/To": to, "emailMessage/Subject": subject,
-        "emailMessage/Body": body, "emailMessage/Importance": "Normal",
+    # Mail connector: sends from Microsoft's no-reply address, so no Exchange mailbox is needed.
+    return _op(MAIL, "SendEmailV3", {
+        "request/to": to, "request/subject": subject, "request/text": body, "request/ishtml": True,
     })
 
 
@@ -279,11 +279,11 @@ def supplier_flow():
 
 FLOWS = [
     ("Pantry Order Approval", "Sends submitted supply orders for approval and records the decision.",
-     approval_flow, [DV, APPROVALS, OUTLOOK]),
+     approval_flow, [DV, APPROVALS, MAIL]),
     ("Pantry Daily Low Stock Alert", "Emails the pantry admin every morning about items at or below minimum stock.",
-     low_stock_flow, [DV, OUTLOOK]),
+     low_stock_flow, [DV, MAIL]),
     ("Pantry Supplier Order Email", "Emails each supplier their part of an approved order and marks it Ordered.",
-     supplier_flow, [DV, OUTLOOK]),
+     supplier_flow, [DV, MAIL]),
 ]
 
 
