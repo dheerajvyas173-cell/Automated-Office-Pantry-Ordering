@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImportExportXml version="9.2.24081.10375" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>PantrySupplyOrdering</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="Pantry Supply Ordering" languagecode="1033"/>
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Automated Office Pantry Supply Ordering System" languagecode="1033"/>
+    </Descriptions>
+    <Version>1.0.0.0</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>PantryDev</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Pantry Dev" languagecode="1033"/>
+      </LocalizedNames>
+      <Descriptions>
+        <Description description="Publisher for Pantry Supply Ordering solution" languagecode="1033"/>
+      </Descriptions>
+      <CustomizationPrefix>cr</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>10000</CustomizationOptionValuePrefix>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="cr_supplier" behavior="0"/>
+    </RootComponents>
+    <MissingDependencies />
+  </SolutionManifest>
   <Entities>
     <Entity>
       <Name LocalizedName="Supplier" OriginalName="cr_supplier">cr_supplier</Name>
@@ -33,15 +59,19 @@
           <ChangeTrackingEnabled>false</ChangeTrackingEnabled>
         </entity>
         <attributes>
-          <attribute PhysicalName="cr_supplierid">
+          <attribute PhysicalName="cr_supplierid" Type="uniqueidentifier">
             <Type>uniqueidentifier</Type>
             <Name>cr_supplierid</Name>
             <LogicalName>cr_supplierid</LogicalName>
             <RequiredLevel>SystemRequired</RequiredLevel>
             <DisplayMask>ValidForAdvancedFind</DisplayMask>
             <IsPrimaryId>true</IsPrimaryId>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>false</IsCustom>
+            <SourceType>0</SourceType>
           </attribute>
-          <attribute PhysicalName="cr_name">
+          <attribute PhysicalName="cr_name" Type="nvarchar">
             <Type>nvarchar</Type>
             <Name>cr_name</Name>
             <LogicalName>cr_name</LogicalName>
@@ -49,6 +79,10 @@
             <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
             <IsPrimaryName>true</IsPrimaryName>
             <Length>100</Length>
+            <IsLogical>false</IsLogical>
+            <IsSecured>false</IsSecured>
+            <IsCustom>true</IsCustom>
+            <SourceType>0</SourceType>
             <LocalizedNames>
               <LocalizedName description="Supplier Name" languagecode="1033"/>
             </LocalizedNames>
@@ -65,11 +99,9 @@
   <FieldSecurityProfiles />
   <Templates />
   <EntityMaps />
+  <EntityRelationships />
   <OrganizationSettings />
   <optionsets />
   <CustomControls />
   <EntityDataProviders />
-  <Languages>
-    <Language>1033</Language>
-  </Languages>
 </ImportExportXml>
