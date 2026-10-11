@@ -4,3 +4,5 @@ EditorState:
     - NewOrderScreen
     - MyOrdersScreen
     - InventoryScreen
+    - ApprovalsScreen
+    - ReceivingScreen

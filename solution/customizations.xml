@@ -2634,8 +2634,8 @@
       <TriggerOnDelete>0</TriggerOnDelete>
       <AsyncAutodelete>0</AsyncAutodelete>
       <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
-      <StateCode>0</StateCode>
-      <StatusCode>1</StatusCode>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
       <RunAs>1</RunAs>
       <IsTransacted>1</IsTransacted>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -2659,8 +2659,8 @@
       <TriggerOnDelete>0</TriggerOnDelete>
       <AsyncAutodelete>0</AsyncAutodelete>
       <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
-      <StateCode>0</StateCode>
-      <StatusCode>1</StatusCode>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
       <RunAs>1</RunAs>
       <IsTransacted>1</IsTransacted>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -2684,8 +2684,8 @@
       <TriggerOnDelete>0</TriggerOnDelete>
       <AsyncAutodelete>0</AsyncAutodelete>
       <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
-      <StateCode>0</StateCode>
-      <StatusCode>1</StatusCode>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
       <RunAs>1</RunAs>
       <IsTransacted>1</IsTransacted>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -3353,9 +3353,9 @@
       <statecode>0</statecode>
       <statuscode>1</statuscode>
     </connectionreference>
-    <connectionreference connectionreferencelogicalname="cr_pantry_mail">
-      <connectionreferencedisplayname>Pantry - Mail</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_sendmail</connectorid>
+    <connectionreference connectionreferencelogicalname="cr_pantry_outlook">
+      <connectionreferencedisplayname>Pantry - Office 365 Outlook</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_office365</connectorid>
       <iscustomizable>1</iscustomizable>
       <promptingbehavior>0</promptingbehavior>
       <statecode>0</statecode>

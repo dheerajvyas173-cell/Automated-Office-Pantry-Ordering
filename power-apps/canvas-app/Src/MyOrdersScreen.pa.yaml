@@ -5,7 +5,7 @@ Screens:
       OnVisible: =If(!IsBlank(gSelOrder), Set(gSelOrder, LookUp('Supply Orders', 'Supply Order' = gSelOrder.'Supply Order')))
     Children:
       - MoRoot:
-          Control: GroupContainer@1.4.0
+          Control: GroupContainer@1.5.0
           Variant: AutoLayout
           Properties:
             DropShadow: =DropShadow.None
@@ -14,16 +14,10 @@ Screens:
             LayoutAlignItems: =LayoutAlignItems.Stretch
             LayoutDirection: =LayoutDirection.Horizontal
             LayoutGap: =0
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingRight: =0
-            PaddingTop: =0
             Width: =Parent.Width
-            X: =0
-            Y: =0
           Children:
             - MoNavRail:
-                Control: GroupContainer@1.4.0
+                Control: GroupContainer@1.5.0
                 Variant: AutoLayout
                 Properties:
                   DropShadow: =DropShadow.None
@@ -36,42 +30,77 @@ Screens:
                   PaddingLeft: =12
                   PaddingRight: =12
                   PaddingTop: =12
-                  Width: =If(App.Width < 900, 72, 232)
+                  Width: =If(App.Width < 900, 72, 240)
                 Children:
                   - MoBrand:
-                      Control: GroupContainer@1.4.0
+                      Control: GroupContainer@1.5.0
                       Variant: AutoLayout
                       Properties:
                         DropShadow: =DropShadow.None
                         Fill: =Color.Transparent
                         FillPortions: =0
-                        Height: =48
+                        Height: =56
                         LayoutAlignItems: =LayoutAlignItems.Center
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =10
-                        PaddingBottom: =0
-                        PaddingLeft: =0
-                        PaddingRight: =0
-                        PaddingTop: =0
                       Children:
-                        - MoBrandIcon:
-                            Control: ModernIcon@1.1.0
+                        - MoBrandTile:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
                             Properties:
-                              Height: =28
-                              Icon: ="FoodPizza"
-                              IconColor: =clrBrand
-                              IconStyle: =IconStyle.Filled
-                              Width: =28
-                        - MoBrandName:
-                            Control: ModernText@1.0.0
+                              Fill: =clrBrand
+                              FillPortions: =0
+                              Height: =40
+                              RadiusBottomLeft: =10
+                              RadiusBottomRight: =10
+                              RadiusTopLeft: =10
+                              RadiusTopRight: =10
+                              Width: =40
+                            Children:
+                              - MoBrandIcon:
+                                  Control: ModernIcon@1.1.1
+                                  Properties:
+                                    Height: =22
+                                    Icon: ="FoodPizza"
+                                    IconColor: =Color.White
+                                    IconStyle: =IconStyle.Filled
+                                    Width: =22
+                                    X: =9
+                                    Y: =9
+                        - MoBrandText:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
                             Properties:
-                              Color: =clrTextPrimary
-                              FillPortions: =1
-                              FontWeight: =FontWeight.Semibold
-                              Height: =28
-                              Size: =16
-                              Text: ="Office Pantry"
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =0
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
                               Visible: =App.Width >= 900
+                            Children:
+                              - MoBrandName:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =22
+                                    Size: =15
+                                    Text: ="Office Pantry"
+                              - MoBrandSub:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =16
+                                    Size: =11
+                                    Text: ="Supply ordering"
+                  - MoNavGap:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =8
                   - MoNavHome:
                       Control: ModernButton@1.0.0
                       Properties:
@@ -120,64 +149,134 @@ Screens:
                         OnSelect: =Navigate(InventoryScreen, ScreenTransition.None)
                         Text: ="Inventory"
                         Tooltip: ="Inventory"
+                  - MoNavApprovals:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="Approvals"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="TaskListSquareLtr"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(ApprovalsScreen, ScreenTransition.None)
+                        Text: ="Approvals"
+                        Tooltip: ="Approvals"
+                        Visible: =gRole = "Approver" || gRole = "Pantry Admin"
+                  - MoNavReceiving:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="Receiving"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="VehicleTruckProfile"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(ReceivingScreen, ScreenTransition.None)
+                        Text: ="Receiving"
+                        Tooltip: ="Receiving"
+                        Visible: =gRole = "Pantry Admin"
                   - MoNavSpacer:
-                      Control: GroupContainer@1.4.0
+                      Control: GroupContainer@1.5.0
                       Variant: AutoLayout
                       Properties:
                         DropShadow: =DropShadow.None
                         Fill: =Color.Transparent
-                        FillPortions: =1
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =8
                         LayoutMinHeight: =0
                         LayoutMinWidth: =0
-                        PaddingBottom: =0
-                        PaddingLeft: =0
-                        PaddingRight: =0
-                        PaddingTop: =0
+                  - MoRoleBox:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =clrCanvas
+                        FillPortions: =0
+                        Height: =64
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =4
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =10
+                        RadiusBottomRight: =10
+                        RadiusTopLeft: =10
+                        RadiusTopRight: =10
+                        Visible: =App.Width >= 900
+                      Children:
+                        - MoRoleCaption:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              Color: =clrTextSecondary
+                              FontWeight: =FontWeight.Semibold
+                              Height: =16
+                              Size: =11
+                              Text: ="Viewing as"
+                        - MoRole:
+                            Control: ModernCombobox@1.1.2
+                            Properties:
+                              AccessibleLabel: ="Switch role"
+                              DefaultSelectedItems: =[gRole]
+                              Height: =36
+                              IsSearchable: =false
+                              ItemDisplayText: =ThisItem.Value
+                              Items: =["Requester", "Approver", "Pantry Admin"]
+                              OnChange: =Set(gRole, Coalesce(Self.Selected.Value, gRole))
+                              SelectMultiple: =false
                   - MoUserRow:
-                      Control: GroupContainer@1.4.0
+                      Control: GroupContainer@1.5.0
                       Variant: AutoLayout
                       Properties:
                         DropShadow: =DropShadow.None
                         Fill: =Color.Transparent
                         FillPortions: =0
-                        Height: =48
+                        Height: =52
                         LayoutAlignItems: =LayoutAlignItems.Center
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =10
-                        PaddingBottom: =0
-                        PaddingLeft: =0
-                        PaddingRight: =0
-                        PaddingTop: =0
                       Children:
                         - MoUserAvatar:
-                            Control: ModernAvatar@1.0.0
+                            Control: ModernAvatar@1.1.0
                             Properties:
                               Height: =32
-                              Image: =User().Image
-                              Name: =User().FullName
-                              Shape: =AvatarShape.Circular
                               Tooltip: =User().FullName
                               Width: =32
-                        - MoUserName:
-                            Control: ModernText@1.0.0
+                        - MoUserText:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
                             Properties:
-                              Color: =clrTextPrimary
-                              FillPortions: =1
-                              FontWeight: =FontWeight.Normal
-                              Height: =32
-                              Size: =13
-                              Text: =User().FullName
-                              VerticalAlign: =VerticalAlign.Middle
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =0
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
                               Visible: =App.Width >= 900
+                            Children:
+                              - MoUserName:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =20
+                                    Size: =13
+                                    Text: =User().FullName
+                              - MoUserRoleText:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =16
+                                    Size: =11
+                                    Text: =gRole
             - MoMain:
-                Control: GroupContainer@1.4.0
+                Control: GroupContainer@1.5.0
                 Variant: AutoLayout
                 Properties:
                   DropShadow: =DropShadow.None
                   Fill: =Color.Transparent
-                  FillPortions: =1
                   LayoutAlignItems: =LayoutAlignItems.Stretch
                   LayoutDirection: =LayoutDirection.Vertical
                   LayoutGap: =16
@@ -187,7 +286,7 @@ Screens:
                   PaddingTop: =24
                 Children:
                   - MoHeader:
-                      Control: GroupContainer@1.4.0
+                      Control: GroupContainer@1.5.0
                       Variant: AutoLayout
                       Properties:
                         DropShadow: =DropShadow.None
@@ -197,33 +296,25 @@ Screens:
                         LayoutAlignItems: =LayoutAlignItems.Center
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =8
-                        PaddingBottom: =0
-                        PaddingLeft: =0
-                        PaddingRight: =0
-                        PaddingTop: =0
                       Children:
                         - MoTitleBlock:
-                            Control: GroupContainer@1.4.0
+                            Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
-                              FillPortions: =1
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =2
                               LayoutJustifyContent: =LayoutJustifyContent.Center
-                              PaddingBottom: =0
-                              PaddingLeft: =0
-                              PaddingRight: =0
-                              PaddingTop: =0
                             Children:
                               - MoTitle:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextPrimary
                                     FontWeight: =FontWeight.Semibold
-                                    Height: =36
-                                    Size: =24
+                                    Height: =38
+                                    Size: =26
                                     Text: ="My requests"
                               - MoSubtitle:
                                   Control: ModernText@1.0.0
@@ -234,7 +325,7 @@ Screens:
                                     Size: =14
                                     Text: ="Track your supply requests and their approvals."
                         - MoActions:
-                            Control: GroupContainer@1.4.0
+                            Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
                               DropShadow: =DropShadow.None
@@ -244,11 +335,7 @@ Screens:
                               LayoutDirection: =LayoutDirection.Horizontal
                               LayoutGap: =8
                               LayoutJustifyContent: =LayoutJustifyContent.End
-                              PaddingBottom: =0
-                              PaddingLeft: =0
-                              PaddingRight: =0
-                              PaddingTop: =0
-                              Width: =300
+                              Width: =320
                             Children:
                               - MoRefresh:
                                   Control: ModernButton@1.0.0
@@ -269,22 +356,17 @@ Screens:
                                     Text: ="New request"
                                     Width: =150
                   - MoBody:
-                      Control: GroupContainer@1.4.0
+                      Control: GroupContainer@1.5.0
                       Variant: AutoLayout
                       Properties:
                         DropShadow: =DropShadow.None
                         Fill: =Color.Transparent
-                        FillPortions: =1
                         LayoutAlignItems: =LayoutAlignItems.Stretch
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =16
-                        PaddingBottom: =0
-                        PaddingLeft: =0
-                        PaddingRight: =0
-                        PaddingTop: =0
                       Children:
                         - MoList:
-                            Control: GroupContainer@1.4.0
+                            Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
                               BorderColor: =clrStroke
@@ -299,23 +381,22 @@ Screens:
                               PaddingLeft: =16
                               PaddingRight: =16
                               PaddingTop: =16
-                              RadiusBottomLeft: =8
-                              RadiusBottomRight: =8
-                              RadiusTopLeft: =8
-                              RadiusTopRight: =8
+                              RadiusBottomLeft: =12
+                              RadiusBottomRight: =12
+                              RadiusTopLeft: =12
+                              RadiusTopRight: =12
                               Width: =If(App.Width < 1200, 360, 420)
                             Children:
                               - MoTabs:
-                                  Control: ModernTabList@1.0.0
+                                  Control: ModernTabList@1.0.2
                                   Properties:
                                     AccessibleLabel: ="Filter requests"
                                     Alignment: =TabListAlignment.Start
-                                    Appearance: =TabListAppearance.Subtle
-                                    Default: ="All"
+                                    Appearance: =TabListAppearance.SubtleCircular
                                     Height: =40
                                     Items: =["All", "Open", "Completed"]
                               - MoSearch:
-                                  Control: ModernTextInput@1.0.0
+                                  Control: ModernTextInput@1.1.2
                                   Properties:
                                     AccessibleLabel: ="Search requests"
                                     Height: =36
@@ -326,9 +407,7 @@ Screens:
                                   Control: Gallery@2.15.0
                                   Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                   Properties:
-                                    BorderThickness: =0
                                     Fill: =Color.Transparent
-                                    FillPortions: =1
                                     Items: |-
                                       =Sort(
                                           Switch(MoTabs.Selected.Value,
@@ -340,20 +419,21 @@ Screens:
                                       )
                                     LayoutMinHeight: =120
                                     OnSelect: =Set(gSelOrder, ThisItem)
-                                    ShowScrollbar: =true
                                     TemplateFill: =If(!IsBlank(gSelOrder) && ThisItem.'Supply Order' = gSelOrder.'Supply Order', clrBrandTint, Color.Transparent)
-                                    TemplatePadding: =0
-                                    TemplateSize: =68
+                                    TemplateSize: =72
                                   Children:
-                                    - MoOrSelectedBar:
+                                    - MoOrSelBar:
                                         Control: Rectangle@2.3.0
                                         Properties:
                                           Fill: =clrBrand
-                                          Height: =Parent.TemplateHeight - 16
+                                          Height: =Parent.TemplateHeight - 20
+                                          RadiusBottomLeft: =2
+                                          RadiusBottomRight: =2
+                                          RadiusTopLeft: =2
+                                          RadiusTopRight: =2
                                           Visible: =!IsBlank(gSelOrder) && ThisItem.'Supply Order' = gSelOrder.'Supply Order'
                                           Width: =3
-                                          X: =0
-                                          Y: =8
+                                          Y: =10
                                     - MoOrNumber:
                                         Control: ModernText@1.0.0
                                         Properties:
@@ -362,9 +442,9 @@ Screens:
                                           Height: =22
                                           Size: =14
                                           Text: =ThisItem.'Order Number'
-                                          Width: =Parent.TemplateWidth - 160
-                                          X: =12
-                                          Y: =10
+                                          Width: =Parent.TemplateWidth - 170
+                                          X: =14
+                                          Y: =12
                                     - MoOrMeta:
                                         Control: ModernText@1.0.0
                                         Properties:
@@ -373,20 +453,19 @@ Screens:
                                           Height: =20
                                           Size: =12
                                           Text: =Text(ThisItem.'Created On', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.'Total Amount', 0), "#,##0.00")
-                                          Width: =Parent.TemplateWidth - 160
-                                          X: =12
-                                          Y: =36
+                                          Width: =Parent.TemplateWidth - 170
+                                          X: =14
+                                          Y: =38
                                     - MoOrBadge:
                                         Control: ModernBadge@1.0.0
                                         Properties:
-                                          Appearance: =BadgeAppearance.Tint
                                           Content: =Text(ThisItem.'Order Status')
                                           Height: =24
                                           Intent: =Switch(Text(ThisItem.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
                                           Shape: =BadgeShape.Rounded
                                           Width: =128
-                                          X: =Parent.TemplateWidth - 140
-                                          Y: =22
+                                          X: =Parent.TemplateWidth - 142
+                                          Y: =24
                                     - MoOrDivider:
                                         Control: Rectangle@2.3.0
                                         Properties:
@@ -395,55 +474,69 @@ Screens:
                                           Width: =Parent.TemplateWidth
                                           Y: =Parent.TemplateHeight - 1
                               - MoOrdersEmpty:
-                                  Control: ModernText@1.0.0
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    Align: =Align.Center
-                                    Color: =clrTextSecondary
-                                    FontWeight: =FontWeight.Normal
-                                    Height: =48
-                                    Size: =13
-                                    Text: ="No requests found."
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =96
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =6
+                                    LayoutJustifyContent: =LayoutJustifyContent.Center
                                     Visible: =IsEmpty(MoOrders.AllItems)
+                                  Children:
+                                    - MoOrdersEmptyIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          Height: =28
+                                          Icon: ="DocumentSearch"
+                                          IconColor: =clrTextTertiary
+                                          Width: =28
+                                    - MoOrdersEmptyText:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Color: =clrTextSecondary
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =40
+                                          Size: =13
+                                          Text: ="No requests found."
                         - MoDetail:
-                            Control: GroupContainer@1.4.0
+                            Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
                               BorderColor: =clrStroke
                               BorderThickness: =1
                               DropShadow: =DropShadow.None
                               Fill: =clrSurface
-                              FillPortions: =1
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =16
-                              LayoutMinWidth: =420
+                              LayoutMinWidth: =440
                               PaddingBottom: =24
                               PaddingLeft: =24
                               PaddingRight: =24
                               PaddingTop: =24
-                              RadiusBottomLeft: =8
-                              RadiusBottomRight: =8
-                              RadiusTopLeft: =8
-                              RadiusTopRight: =8
+                              RadiusBottomLeft: =12
+                              RadiusBottomRight: =12
+                              RadiusTopLeft: =12
+                              RadiusTopRight: =12
                             Children:
                               - MoDetailBody:
-                                  Control: GroupContainer@1.4.0
+                                  Control: GroupContainer@1.5.0
                                   Variant: AutoLayout
                                   Properties:
                                     DropShadow: =DropShadow.None
                                     Fill: =Color.Transparent
-                                    FillPortions: =1
                                     LayoutAlignItems: =LayoutAlignItems.Stretch
                                     LayoutDirection: =LayoutDirection.Vertical
                                     LayoutGap: =16
-                                    PaddingBottom: =0
-                                    PaddingLeft: =0
-                                    PaddingRight: =0
-                                    PaddingTop: =0
                                     Visible: =!IsBlank(gSelOrder)
                                   Children:
                                     - MoDetailHead:
-                                        Control: GroupContainer@1.4.0
+                                        Control: GroupContainer@1.5.0
                                         Variant: AutoLayout
                                         Properties:
                                           DropShadow: =DropShadow.None
@@ -453,10 +546,6 @@ Screens:
                                           LayoutAlignItems: =LayoutAlignItems.Center
                                           LayoutDirection: =LayoutDirection.Horizontal
                                           LayoutGap: =12
-                                          PaddingBottom: =0
-                                          PaddingLeft: =0
-                                          PaddingRight: =0
-                                          PaddingTop: =0
                                         Children:
                                           - MoDetailNumber:
                                               Control: ModernText@1.0.0
@@ -470,7 +559,6 @@ Screens:
                                           - MoDetailBadge:
                                               Control: ModernBadge@1.0.0
                                               Properties:
-                                                Appearance: =BadgeAppearance.Tint
                                                 Content: =Text(gSelOrder.'Order Status')
                                                 Height: =28
                                                 Intent: =Switch(Text(gSelOrder.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
@@ -488,34 +576,26 @@ Screens:
                                                 Visible: =Text(gSelOrder.'Order Status') in ["Draft", "Submitted"]
                                                 Width: =160
                                     - MoFields:
-                                        Control: GroupContainer@1.4.0
+                                        Control: GroupContainer@1.5.0
                                         Variant: AutoLayout
                                         Properties:
                                           DropShadow: =DropShadow.None
                                           Fill: =Color.Transparent
                                           FillPortions: =0
-                                          Height: =44
+                                          Height: =48
                                           LayoutDirection: =LayoutDirection.Horizontal
                                           LayoutGap: =16
-                                          PaddingBottom: =0
-                                          PaddingLeft: =0
-                                          PaddingRight: =0
-                                          PaddingTop: =0
                                         Children:
                                           - MoFCreated:
-                                              Control: GroupContainer@1.4.0
+                                              Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
-                                                FillPortions: =1
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =2
-                                                LayoutMinWidth: =120
-                                                PaddingBottom: =0
-                                                PaddingLeft: =0
-                                                PaddingRight: =0
-                                                PaddingTop: =0
+                                                LayoutMinWidth: =110
                                               Children:
                                                 - MoFCreatedCaption:
                                                     Control: ModernText@1.0.0
@@ -534,19 +614,15 @@ Screens:
                                                       Size: =14
                                                       Text: =Text(gSelOrder.'Created On', "dd mmm yyyy")
                                           - MoFRequired:
-                                              Control: GroupContainer@1.4.0
+                                              Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
-                                                FillPortions: =1
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =2
-                                                LayoutMinWidth: =120
-                                                PaddingBottom: =0
-                                                PaddingLeft: =0
-                                                PaddingRight: =0
-                                                PaddingTop: =0
+                                                LayoutMinWidth: =110
                                               Children:
                                                 - MoFRequiredCaption:
                                                     Control: ModernText@1.0.0
@@ -565,19 +641,15 @@ Screens:
                                                       Size: =14
                                                       Text: =Text(gSelOrder.'Required By Date', "dd mmm yyyy")
                                           - MoFTotal:
-                                              Control: GroupContainer@1.4.0
+                                              Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
-                                                FillPortions: =1
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =2
-                                                LayoutMinWidth: =120
-                                                PaddingBottom: =0
-                                                PaddingLeft: =0
-                                                PaddingRight: =0
-                                                PaddingTop: =0
+                                                LayoutMinWidth: =110
                                               Children:
                                                 - MoFTotalCaption:
                                                     Control: ModernText@1.0.0
@@ -596,19 +668,15 @@ Screens:
                                                       Size: =14
                                                       Text: =Text(Coalesce(gSelOrder.'Total Amount', 0), "#,##0.00")
                                           - MoFApproval:
-                                              Control: GroupContainer@1.4.0
+                                              Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
-                                                FillPortions: =1
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =2
-                                                LayoutMinWidth: =120
-                                                PaddingBottom: =0
-                                                PaddingLeft: =0
-                                                PaddingRight: =0
-                                                PaddingTop: =0
+                                                LayoutMinWidth: =110
                                               Children:
                                                 - MoFApprovalCaption:
                                                     Control: ModernText@1.0.0
@@ -638,54 +706,72 @@ Screens:
                                           VerticalAlign: =VerticalAlign.Top
                                           Visible: =!IsBlank(gSelOrder.'Approver Comments')
                                     - MoDetailCols:
-                                        Control: GroupContainer@1.4.0
+                                        Control: GroupContainer@1.5.0
                                         Variant: AutoLayout
                                         Properties:
                                           DropShadow: =DropShadow.None
                                           Fill: =Color.Transparent
-                                          FillPortions: =1
                                           LayoutAlignItems: =LayoutAlignItems.Stretch
                                           LayoutDirection: =LayoutDirection.Horizontal
                                           LayoutGap: =24
-                                          PaddingBottom: =0
-                                          PaddingLeft: =0
-                                          PaddingRight: =0
-                                          PaddingTop: =0
                                         Children:
                                           - MoLinesCol:
-                                              Control: GroupContainer@1.4.0
+                                              Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
-                                                FillPortions: =1
                                                 LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =8
-                                                PaddingBottom: =0
-                                                PaddingLeft: =0
-                                                PaddingRight: =0
-                                                PaddingTop: =0
                                               Children:
-                                                - MoLinesTitle:
-                                                    Control: ModernText@1.0.0
+                                                - MoLnHead:
+                                                    Control: GroupContainer@1.5.0
+                                                    Variant: AutoLayout
                                                     Properties:
-                                                      Color: =clrTextPrimary
-                                                      FontWeight: =FontWeight.Semibold
-                                                      Height: =28
-                                                      Size: =16
-                                                      Text: ="Items"
+                                                      DropShadow: =DropShadow.None
+                                                      Fill: =Color.Transparent
+                                                      FillPortions: =0
+                                                      Height: =36
+                                                      LayoutAlignItems: =LayoutAlignItems.Center
+                                                      LayoutDirection: =LayoutDirection.Horizontal
+                                                      LayoutGap: =8
+                                                    Children:
+                                                      - MoLnHeadIcon:
+                                                          Control: ModernIcon@1.1.1
+                                                          Properties:
+                                                            Height: =20
+                                                            Icon: ="BoxMultiple"
+                                                            IconColor: =clrBrand
+                                                            IconStyle: =IconStyle.Filled
+                                                            Width: =20
+                                                      - MoLnHeadTitle:
+                                                          Control: ModernText@1.0.0
+                                                          Properties:
+                                                            Color: =clrTextPrimary
+                                                            FillPortions: =0
+                                                            FontWeight: =FontWeight.Semibold
+                                                            Height: =28
+                                                            Size: =16
+                                                            Text: ="Items"
+                                                            Width: =240
+                                                      - MoLnHeadSpacer:
+                                                          Control: GroupContainer@1.5.0
+                                                          Variant: AutoLayout
+                                                          Properties:
+                                                            DropShadow: =DropShadow.None
+                                                            Fill: =Color.Transparent
+                                                            LayoutDirection: =LayoutDirection.Horizontal
+                                                            LayoutGap: =8
+                                                            LayoutMinHeight: =0
+                                                            LayoutMinWidth: =0
                                                 - MoLines:
                                                     Control: Gallery@2.15.0
                                                     Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                                     Properties:
-                                                      BorderThickness: =0
                                                       Fill: =Color.Transparent
-                                                      FillPortions: =1
                                                       Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = gSelOrder.'Supply Order')
                                                       LayoutMinHeight: =120
-                                                      ShowScrollbar: =true
-                                                      TemplatePadding: =0
                                                       TemplateSize: =56
                                                     Children:
                                                       - MoLnName:
@@ -696,7 +782,7 @@ Screens:
                                                             Height: =20
                                                             Size: =13
                                                             Text: =ThisItem.'Line Item Name'
-                                                            Width: =Parent.TemplateWidth - 120
+                                                            Width: =Parent.TemplateWidth - 130
                                                             X: =4
                                                             Y: =6
                                                       - MoLnSupplier:
@@ -707,7 +793,7 @@ Screens:
                                                             Height: =20
                                                             Size: =12
                                                             Text: =Coalesce(ThisItem.Supplier.'Supplier Name', "No supplier set")
-                                                            Width: =Parent.TemplateWidth - 120
+                                                            Width: =Parent.TemplateWidth - 130
                                                             X: =4
                                                             Y: =30
                                                       - MoLnQty:
@@ -719,9 +805,21 @@ Screens:
                                                             Height: =22
                                                             Size: =14
                                                             Text: ="× " & ThisItem.Quantity
-                                                            Width: =104
-                                                            X: =Parent.TemplateWidth - 112
-                                                            Y: =14
+                                                            Width: =112
+                                                            X: =Parent.TemplateWidth - 120
+                                                            Y: =6
+                                                      - MoLnCost:
+                                                          Control: ModernText@1.0.0
+                                                          Properties:
+                                                            Align: =Align.Right
+                                                            Color: =clrTextSecondary
+                                                            FontWeight: =FontWeight.Normal
+                                                            Height: =20
+                                                            Size: =12
+                                                            Text: =Text(Coalesce(ThisItem.'Total Cost', 0), "#,##0.00")
+                                                            Width: =112
+                                                            X: =Parent.TemplateWidth - 120
+                                                            Y: =30
                                                       - MoLnDivider:
                                                           Control: Rectangle@2.3.0
                                                           Properties:
@@ -730,50 +828,72 @@ Screens:
                                                             Width: =Parent.TemplateWidth
                                                             Y: =Parent.TemplateHeight - 1
                                           - MoHistoryCol:
-                                              Control: GroupContainer@1.4.0
+                                              Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
-                                                FillPortions: =1
                                                 LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =8
-                                                PaddingBottom: =0
-                                                PaddingLeft: =0
-                                                PaddingRight: =0
-                                                PaddingTop: =0
                                               Children:
-                                                - MoHistoryTitle:
-                                                    Control: ModernText@1.0.0
+                                                - MoHsHead:
+                                                    Control: GroupContainer@1.5.0
+                                                    Variant: AutoLayout
                                                     Properties:
-                                                      Color: =clrTextPrimary
-                                                      FontWeight: =FontWeight.Semibold
-                                                      Height: =28
-                                                      Size: =16
-                                                      Text: ="Approval history"
+                                                      DropShadow: =DropShadow.None
+                                                      Fill: =Color.Transparent
+                                                      FillPortions: =0
+                                                      Height: =36
+                                                      LayoutAlignItems: =LayoutAlignItems.Center
+                                                      LayoutDirection: =LayoutDirection.Horizontal
+                                                      LayoutGap: =8
+                                                    Children:
+                                                      - MoHsHeadIcon:
+                                                          Control: ModernIcon@1.1.1
+                                                          Properties:
+                                                            Height: =20
+                                                            Icon: ="History"
+                                                            IconColor: =clrBrand
+                                                            IconStyle: =IconStyle.Filled
+                                                            Width: =20
+                                                      - MoHsHeadTitle:
+                                                          Control: ModernText@1.0.0
+                                                          Properties:
+                                                            Color: =clrTextPrimary
+                                                            FillPortions: =0
+                                                            FontWeight: =FontWeight.Semibold
+                                                            Height: =28
+                                                            Size: =16
+                                                            Text: ="Approval history"
+                                                            Width: =240
+                                                      - MoHsHeadSpacer:
+                                                          Control: GroupContainer@1.5.0
+                                                          Variant: AutoLayout
+                                                          Properties:
+                                                            DropShadow: =DropShadow.None
+                                                            Fill: =Color.Transparent
+                                                            LayoutDirection: =LayoutDirection.Horizontal
+                                                            LayoutGap: =8
+                                                            LayoutMinHeight: =0
+                                                            LayoutMinWidth: =0
                                                 - MoHistory:
                                                     Control: Gallery@2.15.0
                                                     Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                                     Properties:
-                                                      BorderThickness: =0
                                                       Fill: =Color.Transparent
-                                                      FillPortions: =1
                                                       Items: =Sort(Filter('Approval History Records', 'Supply Order'.'Supply Order' = gSelOrder.'Supply Order'), 'Action Date', SortOrder.Descending)
                                                       LayoutMinHeight: =120
-                                                      ShowScrollbar: =true
-                                                      TemplatePadding: =0
                                                       TemplateSize: =64
                                                     Children:
                                                       - MoHsDot:
-                                                          Control: ModernIcon@1.1.0
+                                                          Control: ModernIcon@1.1.1
                                                           Properties:
                                                             Height: =20
                                                             Icon: ="CircleSmall"
                                                             IconColor: =clrBrand
                                                             IconStyle: =IconStyle.Filled
                                                             Width: =20
-                                                            X: =0
                                                             Y: =8
                                                       - MoHsAction:
                                                           Control: ModernText@1.0.0
@@ -798,38 +918,76 @@ Screens:
                                                             X: =24
                                                             Y: =30
                                                 - MoHistoryEmpty:
-                                                    Control: ModernText@1.0.0
+                                                    Control: GroupContainer@1.5.0
+                                                    Variant: AutoLayout
                                                     Properties:
-                                                      Align: =Align.Center
-                                                      Color: =clrTextSecondary
-                                                      FontWeight: =FontWeight.Normal
-                                                      Height: =48
-                                                      Size: =13
-                                                      Text: ="No approval activity yet."
+                                                      DropShadow: =DropShadow.None
+                                                      Fill: =Color.Transparent
+                                                      FillPortions: =0
+                                                      Height: =96
+                                                      LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                      LayoutDirection: =LayoutDirection.Vertical
+                                                      LayoutGap: =6
+                                                      LayoutJustifyContent: =LayoutJustifyContent.Center
                                                       Visible: =IsEmpty(MoHistory.AllItems)
+                                                    Children:
+                                                      - MoHistoryEmptyIcon:
+                                                          Control: ModernIcon@1.1.1
+                                                          Properties:
+                                                            Height: =28
+                                                            Icon: ="History"
+                                                            IconColor: =clrTextTertiary
+                                                            Width: =28
+                                                      - MoHistoryEmptyText:
+                                                          Control: ModernText@1.0.0
+                                                          Properties:
+                                                            Align: =Align.Center
+                                                            Color: =clrTextSecondary
+                                                            FontWeight: =FontWeight.Normal
+                                                            Height: =40
+                                                            Size: =13
+                                                            Text: ="No approval activity yet."
                               - MoDetailEmpty:
-                                  Control: ModernText@1.0.0
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
                                   Properties:
-                                    Align: =Align.Center
-                                    Color: =clrTextSecondary
-                                    FontWeight: =FontWeight.Normal
-                                    Height: =48
-                                    Size: =13
-                                    Text: ="Select a request to see its items and approval history."
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =96
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =6
+                                    LayoutJustifyContent: =LayoutJustifyContent.Center
                                     Visible: =IsBlank(gSelOrder)
+                                  Children:
+                                    - MoDetailEmptyIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          Height: =28
+                                          Icon: ="DocumentBulletList"
+                                          IconColor: =clrTextTertiary
+                                          Width: =28
+                                    - MoDetailEmptyText:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Color: =clrTextSecondary
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =40
+                                          Size: =13
+                                          Text: ="Select a request to see its items and approval history."
       - MoDialog:
-          Control: GroupContainer@1.4.0
+          Control: GroupContainer@1.5.0
           Variant: ManualLayout
           Properties:
             Fill: =RGBA(0, 0, 0, 0.35)
             Height: =Parent.Height
             Visible: =locConfirmCancel
             Width: =Parent.Width
-            X: =0
-            Y: =0
           Children:
             - MoDialogCard:
-                Control: GroupContainer@1.4.0
+                Control: GroupContainer@1.5.0
                 Variant: AutoLayout
                 Properties:
                   BorderColor: =clrStroke
@@ -837,16 +995,17 @@ Screens:
                   DropShadow: =DropShadow.None
                   Fill: =clrSurface
                   Height: =200
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
                   LayoutDirection: =LayoutDirection.Vertical
                   LayoutGap: =16
                   PaddingBottom: =24
                   PaddingLeft: =24
                   PaddingRight: =24
                   PaddingTop: =24
-                  RadiusBottomLeft: =8
-                  RadiusBottomRight: =8
-                  RadiusTopLeft: =8
-                  RadiusTopRight: =8
+                  RadiusBottomLeft: =12
+                  RadiusBottomRight: =12
+                  RadiusTopLeft: =12
+                  RadiusTopRight: =12
                   Width: =440
                   X: =(Parent.Width - Self.Width) / 2
                   Y: =(Parent.Height - Self.Height) / 2
@@ -869,7 +1028,7 @@ Screens:
                         Text: ="The request will be marked as cancelled and won't be sent to suppliers."
                         VerticalAlign: =VerticalAlign.Top
                   - MoDialogButtons:
-                      Control: GroupContainer@1.4.0
+                      Control: GroupContainer@1.5.0
                       Variant: AutoLayout
                       Properties:
                         DropShadow: =DropShadow.None
@@ -878,26 +1037,17 @@ Screens:
                         Height: =40
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =8
-                        PaddingBottom: =0
-                        PaddingLeft: =0
-                        PaddingRight: =0
-                        PaddingTop: =0
                       Children:
                         - MoDialogSpacer:
-                            Control: GroupContainer@1.4.0
+                            Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
-                              FillPortions: =1
                               LayoutDirection: =LayoutDirection.Horizontal
                               LayoutGap: =8
                               LayoutMinHeight: =0
                               LayoutMinWidth: =0
-                              PaddingBottom: =0
-                              PaddingLeft: =0
-                              PaddingRight: =0
-                              PaddingTop: =0
                         - MoDialogCancel:
                             Control: ModernButton@1.0.0
                             Properties:
@@ -913,37 +1063,36 @@ Screens:
                               Appearance: =ButtonAppearance.Primary
                               Height: =36
                               OnSelect: |-
-                                =UpdateContext({locConfirmCancel: false, locBusy: true});
+                                =UpdateContext({locConfirmCancel: false});
+                                UpdateContext({locBusy: true});
                                 IfError(
                                     Patch('Supply Orders', gSelOrder, {'Order Status': [@'Order Status'].Cancelled});
                                     Set(gSelOrder, LookUp('Supply Orders', 'Supply Order' = gSelOrder.'Supply Order'));
                                     Notify("Request cancelled.", NotificationType.Success),
-                                    Notify("Couldn't cancel the request: " & FirstError.Message, NotificationType.Error)
+                                    Notify("Something went wrong: " & FirstError.Message, NotificationType.Error)
                                 );
                                 UpdateContext({locBusy: false})
                               Text: ="Cancel request"
                               Width: =160
       - MoBusy:
-          Control: GroupContainer@1.4.0
+          Control: GroupContainer@1.5.0
           Variant: ManualLayout
           Properties:
             Fill: =RGBA(0, 0, 0, 0.35)
             Height: =Parent.Height
             Visible: =locBusy
             Width: =Parent.Width
-            X: =0
-            Y: =0
           Children:
             - MoBusyCard:
-                Control: GroupContainer@1.4.0
+                Control: GroupContainer@1.5.0
                 Variant: ManualLayout
                 Properties:
                   Fill: =clrSurface
                   Height: =120
-                  RadiusBottomLeft: =8
-                  RadiusBottomRight: =8
-                  RadiusTopLeft: =8
-                  RadiusTopRight: =8
+                  RadiusBottomLeft: =12
+                  RadiusBottomRight: =12
+                  RadiusTopLeft: =12
+                  RadiusTopRight: =12
                   Width: =280
                   X: =(Parent.Width - Self.Width) / 2
                   Y: =(Parent.Height - Self.Height) / 2
@@ -952,7 +1101,7 @@ Screens:
                       Control: ModernSpinner@1.1.0
                       Properties:
                         Height: =80
-                        Label: ="Saving your request..."
+                        Label: ="Working on it..."
                         LabelPosition: =SpinnerLabelPosition.Below
                         Width: =240
                         X: =20

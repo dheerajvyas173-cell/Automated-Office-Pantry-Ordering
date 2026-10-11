@@ -13,11 +13,11 @@ ORDER_SUBMITTED, ORDER_APPROVED, ORDER_REJECTED, ORDER_ORDERED = 100000001, 1000
 APPROVAL_PENDING, APPROVAL_APPROVED, APPROVAL_REJECTED = 100000000, 100000001, 100000002
 ACTION_SUBMITTED, ACTION_APPROVED, ACTION_REJECTED = 100000000, 100000001, 100000002
 
-DV, APPROVALS, MAIL = "shared_commondataserviceforapps", "shared_approvals", "shared_sendmail"
+DV, APPROVALS, OUTLOOK = "shared_commondataserviceforapps", "shared_approvals", "shared_office365"
 CONNECTORS = {
     DV: ("cr_pantry_dataverse", "Pantry - Dataverse"),
     APPROVALS: ("cr_pantry_approvals", "Pantry - Approvals"),
-    MAIL: ("cr_pantry_mail", "Pantry - Mail"),
+    OUTLOOK: ("cr_pantry_outlook", "Pantry - Office 365 Outlook"),
 }
 
 ORDER_ID = "@{triggerOutputs()?['body/cr_supplyorderid']}"
@@ -80,9 +80,9 @@ def log_history(name, action, approver, comments="", previous=None, new=None):
 
 
 def send_email(to, subject, body):
-    # Mail connector: sends from Microsoft's no-reply address, so no Exchange mailbox is needed.
-    return _op(MAIL, "SendEmailV3", {
-        "request/to": to, "request/subject": subject, "request/text": body, "request/ishtml": True,
+    return _op(OUTLOOK, "SendEmailV2", {
+        "emailMessage/To": to, "emailMessage/Subject": subject,
+        "emailMessage/Body": body, "emailMessage/Importance": "Normal",
     })
 
 
@@ -279,11 +279,11 @@ def supplier_flow():
 
 FLOWS = [
     ("Pantry Order Approval", "Sends submitted supply orders for approval and records the decision.",
-     approval_flow, [DV, APPROVALS, MAIL]),
+     approval_flow, [DV, APPROVALS, OUTLOOK]),
     ("Pantry Daily Low Stock Alert", "Emails the pantry admin every morning about items at or below minimum stock.",
-     low_stock_flow, [DV, MAIL]),
+     low_stock_flow, [DV, OUTLOOK]),
     ("Pantry Supplier Order Email", "Emails each supplier their part of an approved order and marks it Ordered.",
-     supplier_flow, [DV, MAIL]),
+     supplier_flow, [DV, OUTLOOK]),
 ]
 
 
@@ -313,9 +313,7 @@ def flow_json(triggers, actions, connectors):
 
 
 def build():
-    """Flows import switched off (draft) so the import does not need connections mapped up front.
-
-    Returns (workflows xml, root components xml, connection references xml, {zip path: content})."""
+    """Returns (workflows xml, root components xml, connection references xml, {zip path: content})."""
     wf_xml, roots, files = "\n", "", {}
     for name, description, builder, connectors in FLOWS:
         wid = str(uuid.uuid5(uuid.NAMESPACE_URL, f"pantrysupplyordering/flow/{name}"))
@@ -333,8 +331,8 @@ def build():
       <TriggerOnDelete>0</TriggerOnDelete>
       <AsyncAutodelete>0</AsyncAutodelete>
       <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
-      <StateCode>0</StateCode>
-      <StatusCode>1</StatusCode>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
       <RunAs>1</RunAs>
       <IsTransacted>1</IsTransacted>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>

@@ -1,0 +1,882 @@
+Screens:
+  ReceivingScreen:
+    Properties:
+      Fill: =clrCanvas
+    Children:
+      - RvRoot:
+          Control: GroupContainer@1.5.0
+          Variant: AutoLayout
+          Properties:
+            DropShadow: =DropShadow.None
+            Fill: =clrCanvas
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Horizontal
+            LayoutGap: =0
+            Width: =Parent.Width
+          Children:
+            - RvNavRail:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =clrSurface
+                  FillPortions: =0
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =4
+                  PaddingBottom: =12
+                  PaddingLeft: =12
+                  PaddingRight: =12
+                  PaddingTop: =12
+                  Width: =If(App.Width < 900, 72, 240)
+                Children:
+                  - RvBrand:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =56
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                      Children:
+                        - RvBrandTile:
+                            Control: GroupContainer@1.5.0
+                            Variant: ManualLayout
+                            Properties:
+                              Fill: =clrBrand
+                              FillPortions: =0
+                              Height: =40
+                              RadiusBottomLeft: =10
+                              RadiusBottomRight: =10
+                              RadiusTopLeft: =10
+                              RadiusTopRight: =10
+                              Width: =40
+                            Children:
+                              - RvBrandIcon:
+                                  Control: ModernIcon@1.1.1
+                                  Properties:
+                                    Height: =22
+                                    Icon: ="FoodPizza"
+                                    IconColor: =Color.White
+                                    IconStyle: =IconStyle.Filled
+                                    Width: =22
+                                    X: =9
+                                    Y: =9
+                        - RvBrandText:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =0
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              Visible: =App.Width >= 900
+                            Children:
+                              - RvBrandName:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =22
+                                    Size: =15
+                                    Text: ="Office Pantry"
+                              - RvBrandSub:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =16
+                                    Size: =11
+                                    Text: ="Supply ordering"
+                  - RvNavGap:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =8
+                  - RvNavHome:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="Dashboard"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="Home"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
+                        Text: ="Dashboard"
+                        Tooltip: ="Dashboard"
+                  - RvNavNewOrder:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="New request"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="Add"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(NewOrderScreen, ScreenTransition.None)
+                        Text: ="New request" & If(CountRows(colCart) > 0, " (" & CountRows(colCart) & ")", "")
+                        Tooltip: ="New request"
+                  - RvNavMyOrders:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="My requests"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="DocumentBulletList"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.None)
+                        Text: ="My requests"
+                        Tooltip: ="My requests"
+                  - RvNavInventory:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="Inventory"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="Box"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(InventoryScreen, ScreenTransition.None)
+                        Text: ="Inventory"
+                        Tooltip: ="Inventory"
+                  - RvNavApprovals:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="Approvals"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="TaskListSquareLtr"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(ApprovalsScreen, ScreenTransition.None)
+                        Text: ="Approvals"
+                        Tooltip: ="Approvals"
+                        Visible: =gRole = "Approver" || gRole = "Pantry Admin"
+                  - RvNavReceiving:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="Receiving"
+                        Appearance: =ButtonAppearance.Secondary
+                        Height: =40
+                        Icon: ="VehicleTruckProfile"
+                        IconStyle: =IconStyle.Filled
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(ReceivingScreen, ScreenTransition.None)
+                        Text: ="Receiving"
+                        Tooltip: ="Receiving"
+                        Visible: =gRole = "Pantry Admin"
+                  - RvNavSpacer:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                  - RvRoleBox:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =clrCanvas
+                        FillPortions: =0
+                        Height: =64
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Vertical
+                        LayoutGap: =4
+                        PaddingBottom: =8
+                        PaddingLeft: =8
+                        PaddingRight: =8
+                        PaddingTop: =8
+                        RadiusBottomLeft: =10
+                        RadiusBottomRight: =10
+                        RadiusTopLeft: =10
+                        RadiusTopRight: =10
+                        Visible: =App.Width >= 900
+                      Children:
+                        - RvRoleCaption:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              Color: =clrTextSecondary
+                              FontWeight: =FontWeight.Semibold
+                              Height: =16
+                              Size: =11
+                              Text: ="Viewing as"
+                        - RvRole:
+                            Control: ModernCombobox@1.1.2
+                            Properties:
+                              AccessibleLabel: ="Switch role"
+                              DefaultSelectedItems: =[gRole]
+                              Height: =36
+                              IsSearchable: =false
+                              ItemDisplayText: =ThisItem.Value
+                              Items: =["Requester", "Approver", "Pantry Admin"]
+                              OnChange: =Set(gRole, Coalesce(Self.Selected.Value, gRole)); If(!(gRole = "Pantry Admin"), Navigate(HomeScreen, ScreenTransition.None))
+                              SelectMultiple: =false
+                  - RvUserRow:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =52
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                      Children:
+                        - RvUserAvatar:
+                            Control: ModernAvatar@1.1.0
+                            Properties:
+                              Height: =32
+                              Tooltip: =User().FullName
+                              Width: =32
+                        - RvUserText:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =0
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              Visible: =App.Width >= 900
+                            Children:
+                              - RvUserName:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =20
+                                    Size: =13
+                                    Text: =User().FullName
+                              - RvUserRoleText:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =16
+                                    Size: =11
+                                    Text: =gRole
+            - RvMain:
+                Control: GroupContainer@1.5.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =Color.Transparent
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =16
+                  PaddingBottom: =24
+                  PaddingLeft: =24
+                  PaddingRight: =24
+                  PaddingTop: =24
+                Children:
+                  - RvHeader:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =64
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                      Children:
+                        - RvTitleBlock:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =2
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                            Children:
+                              - RvTitle:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =38
+                                    Size: =26
+                                    Text: ="Receiving"
+                              - RvSubtitle:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =22
+                                    Size: =14
+                                    Text: ="Record deliveries from suppliers. Received quantities are added to stock."
+                        - RvActions:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              FillPortions: =0
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =8
+                              LayoutJustifyContent: =LayoutJustifyContent.End
+                              Width: =160
+                            Children:
+                              - RvRefresh:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Height: =36
+                                    Icon: ="ArrowClockwise"
+                                    OnSelect: =Refresh('Supply Orders'); Set(gRecvOrder, Blank())
+                                    Text: ="Refresh"
+                                    Width: =120
+                  - RvBody:
+                      Control: GroupContainer@1.5.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =16
+                      Children:
+                        - RvList:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =clrStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =clrSurface
+                              FillPortions: =0
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =10
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =12
+                              RadiusBottomRight: =12
+                              RadiusTopLeft: =12
+                              RadiusTopRight: =12
+                              Width: =If(App.Width < 1200, 380, 440)
+                            Children:
+                              - RvTabs:
+                                  Control: ModernTabList@1.0.2
+                                  Properties:
+                                    AccessibleLabel: ="Filter receiving"
+                                    Alignment: =TabListAlignment.Start
+                                    Appearance: =TabListAppearance.SubtleCircular
+                                    Height: =40
+                                    Items: =["To receive", "Received"]
+                              - RvOrders:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                  Properties:
+                                    Fill: =Color.Transparent
+                                    Items: |-
+                                      =Switch(RvTabs.Selected.Value,
+                                              "Received", Sort(Filter('Supply Orders', 'Order Status' = [@'Order Status'].Received), 'Modified On', SortOrder.Descending),
+                                              Sort(Filter('Supply Orders', 'Order Status' = [@'Order Status'].Ordered || 'Order Status' = [@'Order Status'].Approved || 'Order Status' = [@'Order Status'].'Partially Received'), 'Created On', SortOrder.Ascending))
+                                    LayoutMinHeight: =120
+                                    OnSelect: =Set(gRecvOrder, ThisItem)
+                                    TemplateFill: =If(!IsBlank(gRecvOrder) && ThisItem.'Supply Order' = gRecvOrder.'Supply Order', clrBrandTint, Color.Transparent)
+                                    TemplateSize: =72
+                                  Children:
+                                    - RvOrSelBar:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          Fill: =clrBrand
+                                          Height: =Parent.TemplateHeight - 20
+                                          RadiusBottomLeft: =2
+                                          RadiusBottomRight: =2
+                                          RadiusTopLeft: =2
+                                          RadiusTopRight: =2
+                                          Visible: =!IsBlank(gRecvOrder) && ThisItem.'Supply Order' = gRecvOrder.'Supply Order'
+                                          Width: =3
+                                          Y: =10
+                                    - RvOrNumber:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextPrimary
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =22
+                                          Size: =14
+                                          Text: =ThisItem.'Order Number'
+                                          Width: =Parent.TemplateWidth - 170
+                                          X: =14
+                                          Y: =12
+                                    - RvOrMeta:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextSecondary
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =20
+                                          Size: =12
+                                          Text: =ThisItem.'Requested By' & "  ·  " & Text(Coalesce(ThisItem.'Total Amount', 0), "#,##0.00")
+                                          Width: =Parent.TemplateWidth - 170
+                                          X: =14
+                                          Y: =38
+                                    - RvOrBadge:
+                                        Control: ModernBadge@1.0.0
+                                        Properties:
+                                          Content: =Text(ThisItem.'Order Status')
+                                          Height: =24
+                                          Intent: =Switch(Text(ThisItem.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
+                                          Shape: =BadgeShape.Rounded
+                                          Width: =128
+                                          X: =Parent.TemplateWidth - 142
+                                          Y: =24
+                                    - RvOrDivider:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          Fill: =clrStroke
+                                          Height: =1
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - 1
+                              - RvOrdersEmpty:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =96
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =6
+                                    LayoutJustifyContent: =LayoutJustifyContent.Center
+                                    Visible: =IsEmpty(RvOrders.AllItems)
+                                  Children:
+                                    - RvOrdersEmptyIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          Height: =28
+                                          Icon: ="CheckmarkCircle"
+                                          IconColor: =clrTextTertiary
+                                          Width: =28
+                                    - RvOrdersEmptyText:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Color: =clrTextSecondary
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =40
+                                          Size: =13
+                                          Text: ="Nothing here right now."
+                        - RvDetail:
+                            Control: GroupContainer@1.5.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =clrStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =clrSurface
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =16
+                              LayoutMinWidth: =440
+                              PaddingBottom: =24
+                              PaddingLeft: =24
+                              PaddingRight: =24
+                              PaddingTop: =24
+                              RadiusBottomLeft: =12
+                              RadiusBottomRight: =12
+                              RadiusTopLeft: =12
+                              RadiusTopRight: =12
+                            Children:
+                              - RvDetailBody:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =12
+                                    Visible: =!IsBlank(gRecvOrder)
+                                  Children:
+                                    - RvDetailHead:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Fill: =Color.Transparent
+                                          FillPortions: =0
+                                          Height: =40
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =12
+                                        Children:
+                                          - RvDetailNumber:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                Color: =clrTextPrimary
+                                                FillPortions: =1
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =32
+                                                Size: =20
+                                                Text: =gRecvOrder.'Order Number'
+                                          - RvDetailBadge:
+                                              Control: ModernBadge@1.0.0
+                                              Properties:
+                                                Content: =Text(gRecvOrder.'Order Status')
+                                                Height: =28
+                                                Intent: =Switch(Text(gRecvOrder.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
+                                                Shape: =BadgeShape.Rounded
+                                                Width: =140
+                                    - RvFields:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Fill: =Color.Transparent
+                                          FillPortions: =0
+                                          Height: =48
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =16
+                                        Children:
+                                          - RvFBy:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =Color.Transparent
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                LayoutGap: =2
+                                                LayoutMinWidth: =110
+                                              Children:
+                                                - RvFByCaption:
+                                                    Control: ModernText@1.0.0
+                                                    Properties:
+                                                      Color: =clrTextSecondary
+                                                      FontWeight: =FontWeight.Normal
+                                                      Height: =18
+                                                      Size: =12
+                                                      Text: ="Requested by"
+                                                - RvFByValue:
+                                                    Control: ModernText@1.0.0
+                                                    Properties:
+                                                      Color: =clrTextPrimary
+                                                      FontWeight: =FontWeight.Semibold
+                                                      Height: =22
+                                                      Size: =14
+                                                      Text: =gRecvOrder.'Requested By'
+                                          - RvFRequired:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =Color.Transparent
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                LayoutGap: =2
+                                                LayoutMinWidth: =110
+                                              Children:
+                                                - RvFRequiredCaption:
+                                                    Control: ModernText@1.0.0
+                                                    Properties:
+                                                      Color: =clrTextSecondary
+                                                      FontWeight: =FontWeight.Normal
+                                                      Height: =18
+                                                      Size: =12
+                                                      Text: ="Required by"
+                                                - RvFRequiredValue:
+                                                    Control: ModernText@1.0.0
+                                                    Properties:
+                                                      Color: =clrTextPrimary
+                                                      FontWeight: =FontWeight.Semibold
+                                                      Height: =22
+                                                      Size: =14
+                                                      Text: =Text(gRecvOrder.'Required By Date', "dd mmm yyyy")
+                                          - RvFTotal:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =Color.Transparent
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                LayoutGap: =2
+                                                LayoutMinWidth: =110
+                                              Children:
+                                                - RvFTotalCaption:
+                                                    Control: ModernText@1.0.0
+                                                    Properties:
+                                                      Color: =clrTextSecondary
+                                                      FontWeight: =FontWeight.Normal
+                                                      Height: =18
+                                                      Size: =12
+                                                      Text: ="Estimated total"
+                                                - RvFTotalValue:
+                                                    Control: ModernText@1.0.0
+                                                    Properties:
+                                                      Color: =clrTextPrimary
+                                                      FontWeight: =FontWeight.Semibold
+                                                      Height: =22
+                                                      Size: =14
+                                                      Text: =Text(Coalesce(gRecvOrder.'Total Amount', 0), "#,##0.00")
+                                          - RvFWhere:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =Color.Transparent
+                                                LayoutAlignItems: =LayoutAlignItems.Stretch
+                                                LayoutDirection: =LayoutDirection.Vertical
+                                                LayoutGap: =2
+                                                LayoutMinWidth: =110
+                                              Children:
+                                                - RvFWhereCaption:
+                                                    Control: ModernText@1.0.0
+                                                    Properties:
+                                                      Color: =clrTextSecondary
+                                                      FontWeight: =FontWeight.Normal
+                                                      Height: =18
+                                                      Size: =12
+                                                      Text: ="Deliver to"
+                                                - RvFWhereValue:
+                                                    Control: ModernText@1.0.0
+                                                    Properties:
+                                                      Color: =clrTextPrimary
+                                                      FontWeight: =FontWeight.Semibold
+                                                      Height: =22
+                                                      Size: =14
+                                                      Text: =Coalesce(gRecvOrder.'Delivery Address', "-")
+                                    - RvWhy:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextSecondary
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =40
+                                          Size: =13
+                                          Text: |-
+                                            ="Justification: " & Coalesce(gRecvOrder.Justification, "none given")
+                                          VerticalAlign: =VerticalAlign.Top
+                                    - RvLnHead:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Fill: =Color.Transparent
+                                          FillPortions: =0
+                                          Height: =36
+                                          LayoutAlignItems: =LayoutAlignItems.Center
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =8
+                                        Children:
+                                          - RvLnHeadIcon:
+                                              Control: ModernIcon@1.1.1
+                                              Properties:
+                                                Height: =20
+                                                Icon: ="BoxMultiple"
+                                                IconColor: =clrBrand
+                                                IconStyle: =IconStyle.Filled
+                                                Width: =20
+                                          - RvLnHeadTitle:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                Color: =clrTextPrimary
+                                                FillPortions: =0
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =28
+                                                Size: =16
+                                                Text: ="Items"
+                                                Width: =240
+                                          - RvLnHeadSpacer:
+                                              Control: GroupContainer@1.5.0
+                                              Variant: AutoLayout
+                                              Properties:
+                                                DropShadow: =DropShadow.None
+                                                Fill: =Color.Transparent
+                                                LayoutDirection: =LayoutDirection.Horizontal
+                                                LayoutGap: =8
+                                                LayoutMinHeight: =0
+                                                LayoutMinWidth: =0
+                                    - RvLines:
+                                        Control: Gallery@2.15.0
+                                        Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                        Properties:
+                                          Fill: =Color.Transparent
+                                          Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order')
+                                          LayoutMinHeight: =120
+                                          TemplateSize: =56
+                                        Children:
+                                          - RvLnName:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                Color: =clrTextPrimary
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =20
+                                                Size: =13
+                                                Text: =ThisItem.'Line Item Name'
+                                                Width: =Parent.TemplateWidth - 130
+                                                X: =4
+                                                Y: =6
+                                          - RvLnSupplier:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                Color: =clrTextSecondary
+                                                FontWeight: =FontWeight.Normal
+                                                Height: =20
+                                                Size: =12
+                                                Text: =Coalesce(ThisItem.Supplier.'Supplier Name', "No supplier set")
+                                                Width: =Parent.TemplateWidth - 130
+                                                X: =4
+                                                Y: =30
+                                          - RvLnQty:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                Align: =Align.Right
+                                                Color: =clrTextPrimary
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =22
+                                                Size: =14
+                                                Text: ="× " & ThisItem.Quantity
+                                                Width: =112
+                                                X: =Parent.TemplateWidth - 120
+                                                Y: =6
+                                          - RvLnCost:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                Align: =Align.Right
+                                                Color: =clrTextSecondary
+                                                FontWeight: =FontWeight.Normal
+                                                Height: =20
+                                                Size: =12
+                                                Text: =Text(Coalesce(ThisItem.'Total Cost', 0), "#,##0.00")
+                                                Width: =112
+                                                X: =Parent.TemplateWidth - 120
+                                                Y: =30
+                                          - RvLnDivider:
+                                              Control: Rectangle@2.3.0
+                                              Properties:
+                                                Fill: =clrStroke
+                                                Height: =1
+                                                Width: =Parent.TemplateWidth
+                                                Y: =Parent.TemplateHeight - 1
+                                    - RvDecide:
+                                        Control: GroupContainer@1.5.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Fill: =Color.Transparent
+                                          FillPortions: =0
+                                          Height: =40
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =8
+                                          Visible: =Text(gRecvOrder.'Order Status') in ["Approved", "Ordered", "Partially Received"]
+                                        Children:
+                                          - RvHint:
+                                              Control: ModernText@1.0.0
+                                              Properties:
+                                                Color: =clrTextSecondary
+                                                FillPortions: =1
+                                                FontWeight: =FontWeight.Normal
+                                                Height: =36
+                                                Size: =12
+                                                Text: ="Marking it received adds every item quantity to the pantry stock."
+                                                VerticalAlign: =VerticalAlign.Middle
+                                          - RvReceive:
+                                              Control: ModernButton@1.0.0
+                                              Properties:
+                                                Appearance: =ButtonAppearance.Primary
+                                                FillPortions: =0
+                                                Height: =36
+                                                Icon: ="CheckmarkCircle"
+                                                OnSelect: |-
+                                                  =UpdateContext({locBusy: true});
+                                                  IfError(
+                                                      ForAll(Filter('Order Line Items', 'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order') As L,
+                                                          With({item: LookUp('Pantry Items', 'Pantry Item' = L.'Pantry Item'.'Pantry Item')},
+                                                              If(!IsBlank(item), Patch('Pantry Items', item, {'Current Stock': Coalesce(item.'Current Stock', 0) + L.Quantity}))
+                                                          )
+                                                      );
+                                                      Patch('Supply Orders', gRecvOrder, {'Order Status': [@'Order Status'].Received});
+                                                      ClearCollect(colItems, Sort('Pantry Items', 'Item Name'));
+                                                      Notify(gRecvOrder.'Order Number' & " received. Stock levels updated.", NotificationType.Success);
+                                                      Set(gRecvOrder, Blank()),
+                                                      Notify("Something went wrong: " & FirstError.Message, NotificationType.Error)
+                                                  );
+                                                  UpdateContext({locBusy: false})
+                                                Text: ="Mark as received"
+                                                Width: =190
+                              - RvDetailEmpty:
+                                  Control: GroupContainer@1.5.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =96
+                                    LayoutAlignItems: =LayoutAlignItems.Stretch
+                                    LayoutDirection: =LayoutDirection.Vertical
+                                    LayoutGap: =6
+                                    LayoutJustifyContent: =LayoutJustifyContent.Center
+                                    Visible: =IsBlank(gRecvOrder)
+                                  Children:
+                                    - RvDetailEmptyIcon:
+                                        Control: ModernIcon@1.1.1
+                                        Properties:
+                                          Height: =28
+                                          Icon: ="DocumentBulletList"
+                                          IconColor: =clrTextTertiary
+                                          Width: =28
+                                    - RvDetailEmptyText:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Align: =Align.Center
+                                          Color: =clrTextSecondary
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =40
+                                          Size: =13
+                                          Text: ="Select a request to review it."
+      - RvBusy:
+          Control: GroupContainer@1.5.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.35)
+            Height: =Parent.Height
+            Visible: =locBusy
+            Width: =Parent.Width
+          Children:
+            - RvBusyCard:
+                Control: GroupContainer@1.5.0
+                Variant: ManualLayout
+                Properties:
+                  Fill: =clrSurface
+                  Height: =120
+                  RadiusBottomLeft: =12
+                  RadiusBottomRight: =12
+                  RadiusTopLeft: =12
+                  RadiusTopRight: =12
+                  Width: =280
+                  X: =(Parent.Width - Self.Width) / 2
+                  Y: =(Parent.Height - Self.Height) / 2
+                Children:
+                  - RvBusySpinner:
+                      Control: ModernSpinner@1.1.0
+                      Properties:
+                        Height: =80
+                        Label: ="Working on it..."
+                        LabelPosition: =SpinnerLabelPosition.Below
+                        Width: =240
+                        X: =20
+                        Y: =20

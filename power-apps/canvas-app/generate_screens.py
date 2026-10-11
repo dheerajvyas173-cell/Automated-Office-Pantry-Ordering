@@ -1,23 +1,24 @@
 """Generates the canvas app screens (Src/*.pa.yaml) from a small Fluent 2 design system.
 
 Run: python3 power-apps/canvas-app/generate_screens.py
-Control types/versions follow Microsoft's modern controls docs (2026 updates).
+Control versions match what Power Apps Studio uses for this app (2026 modern controls).
 """
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "Src")
 
-TEXT, BUTTON, INPUT, NUMBER = "ModernText@1.0.0", "ModernButton@1.0.0", "ModernTextInput@1.0.0", "ModernNumberInput@1.0.0"
-DATE, COMBO, BADGE, TABS = "ModernDatePicker@1.0.0", "ModernCombobox@1.0.0", "ModernBadge@1.0.0", "ModernTabList@1.0.0"
-ICON, AVATAR, SPINNER = "ModernIcon@1.1.0", "ModernAvatar@1.0.0", "ModernSpinner@1.1.0"
-CONTAINER, GALLERY, RECT = "GroupContainer@1.4.0", "Gallery@2.15.0", "Rectangle@2.3.0"
+TEXT, BUTTON, BADGE, SPINNER = "ModernText@1.0.0", "ModernButton@1.0.0", "ModernBadge@1.0.0", "ModernSpinner@1.1.0"
+INPUT, NUMBER, COMBO = "ModernTextInput@1.1.2", "ModernNumberInput@1.1.2", "ModernCombobox@1.1.2"
+DATE, TABS, ICON, AVATAR = "ModernDatePicker@1.0.2", "ModernTabList@1.0.2", "ModernIcon@1.1.1", "ModernAvatar@1.1.0"
+CONTAINER, GALLERY, RECT, IMAGE = "GroupContainer@1.5.0", "Gallery@2.15.0", "Rectangle@2.3.0", "Image@2.2.3"
 GALLERY_VARIANT = "BrowseLayout_Vertical_OneTextVariant_ver5.0"
 
-OS = "[@'Order Status']"
+OS, AS, AA = "[@'Order Status']", "[@'Approval Status']", "[@'Approval Action']"
 OPEN_STATUSES = ["Draft", "Submitted", "Approved", "Ordered", "'Partially Received'"]
 DONE_STATUSES = ["Received", "Rejected", "Cancelled"]
 MONEY = '"#,##0.00"'
+ROLES = ["Requester", "Approver", "Pantry Admin"]
 
 
 # --- YAML emitter -------------------------------------------------------------
@@ -25,8 +26,7 @@ MONEY = '"#,##0.00"'
 def _formula(key, value, ind):
     value = str(value)
     if "\n" in value or ": " in value or " #" in value or value.endswith(":"):
-        lines = ("=" + value).split("\n")
-        return [f"{ind}{key}: |-"] + [f"{ind}  {line}" for line in lines]
+        return [f"{ind}{key}: |-"] + [f"{ind}  {line}" for line in ("=" + value).split("\n")]
     return [f"{ind}{key}: ={value}"]
 
 
@@ -75,8 +75,7 @@ def button(name, label, on_select, appearance="Primary", icon=None, **p):
 
 def badge(name, content, intent, **p):
     p.setdefault("Height", 24)
-    return ctl(name, BADGE, Content=content, Intent=intent, Appearance="BadgeAppearance.Tint",
-               Shape="BadgeShape.Rounded", **p)
+    return ctl(name, BADGE, Content=content, Intent=intent, Shape="BadgeShape.Rounded", **p)
 
 
 def icon(name, glyph, color="clrTextSecondary", **p):
@@ -85,10 +84,17 @@ def icon(name, glyph, color="clrTextSecondary", **p):
     return ctl(name, ICON, Icon=f'"{glyph}"', IconColor=color, **p)
 
 
+def radius(r):
+    return {k: r for k in ("RadiusTopLeft", "RadiusTopRight", "RadiusBottomLeft", "RadiusBottomRight")}
+
+
 def box(name, direction, children, gap=8, pad=0, **p):
-    props = dict(LayoutDirection=f"LayoutDirection.{direction}", LayoutGap=gap,
-                 PaddingTop=pad, PaddingBottom=pad, PaddingLeft=pad, PaddingRight=pad,
-                 DropShadow="DropShadow.None", Fill="Color.Transparent")
+    props = dict(LayoutDirection=f"LayoutDirection.{direction}", LayoutGap=gap, DropShadow="DropShadow.None",
+                 Fill="Color.Transparent")
+    if pad:
+        props.update(PaddingTop=pad, PaddingBottom=pad, PaddingLeft=pad, PaddingRight=pad)
+    if direction == "Vertical":
+        props["LayoutAlignItems"] = "LayoutAlignItems.Stretch"
     props.update(p)
     return ctl(name, CONTAINER, "AutoLayout", children, **props)
 
@@ -97,33 +103,54 @@ def card(name, direction, children, gap=12, pad=16, **p):
     p.setdefault("Fill", "clrSurface")
     p.setdefault("BorderColor", "clrStroke")
     p.setdefault("BorderThickness", 1)
-    for corner in ("RadiusTopLeft", "RadiusTopRight", "RadiusBottomLeft", "RadiusBottomRight"):
-        p.setdefault(corner, 8)
+    for k, v in radius(12).items():
+        p.setdefault(k, v)
     return box(name, direction, children, gap=gap, pad=pad, **p)
 
 
 def spacer(name):
-    return box(name, "Horizontal", [], FillPortions=1, LayoutMinWidth=0, LayoutMinHeight=0)
+    return box(name, "Horizontal", [], LayoutMinWidth=0, LayoutMinHeight=0)
+
+
+def chip(name, glyph, accent, size=36):
+    """Icon on a softly tinted rounded tile."""
+    return ctl(name, CONTAINER, "ManualLayout", [
+        icon(f"{name}Icon", glyph, accent, IconStyle="IconStyle.Filled", Width=20, Height=20,
+             X=(size - 20) // 2, Y=(size - 20) // 2),
+    ], Fill=f"ColorFade({accent}, 0.86)", Width=size, Height=size, FillPortions=0, **radius(10))
 
 
 def gallery(name, items, template_size, children, **p):
-    p.setdefault("FillPortions", 1)
     p.setdefault("LayoutMinHeight", 120)
     return ctl(name, GALLERY, GALLERY_VARIANT, children, Items=items, TemplateSize=template_size,
-               TemplatePadding=0, ShowScrollbar="true", BorderThickness=0, Fill="Color.Transparent", **p)
+               Fill="Color.Transparent", **p)
 
 
 def row_divider(name):
     return ctl(name, RECT, Fill="clrStroke", Height=1, Width="Parent.TemplateWidth", Y="Parent.TemplateHeight - 1")
 
 
-def empty_state(name, message, visible):
-    return text(name, f'"{message}"', 13, color="clrTextSecondary", Align="Align.Center",
-                Visible=visible, Height=48)
+def empty_state(name, glyph, message, visible):
+    return box(name, "Vertical", [
+        icon(f"{name}Icon", glyph, "clrTextTertiary", Width=28, Height=28),
+        text(f"{name}Text", f'"{message}"', 13, color="clrTextSecondary", Align="Align.Center", Height=40),
+    ], gap=6, Height=96, FillPortions=0, Visible=visible, LayoutJustifyContent="LayoutJustifyContent.Center")
 
 
-def section_title(name, value):
-    return text(name, value, 16, "Semibold", Height=28)
+def section_head(prefix, title, glyph, extra=()):
+    return box(f"{prefix}Head", "Horizontal", [
+        icon(f"{prefix}HeadIcon", glyph, "clrBrand", IconStyle="IconStyle.Filled"),
+        text(f"{prefix}HeadTitle", f'"{title}"', 16, "Semibold", Height=28, Width=240, FillPortions=0),
+        spacer(f"{prefix}HeadSpacer"),
+        *extra,
+    ], gap=8, Height=36, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center")
+
+
+def field(name, caption, value):
+    return box(name, "Vertical", [
+        text(f"{name}Caption", f'"{caption}"', 12, color="clrTextSecondary", Height=18),
+        text(f"{name}Value", value, 14, "Semibold", Height=22),
+    ], gap=2, LayoutMinWidth=110)
 
 
 # --- Shared formulas ----------------------------------------------------------------
@@ -132,6 +159,11 @@ def status_intent(expr):
     return (f'Switch(Text({expr}), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, '
             f'"Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, '
             f'"Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)')
+
+
+def status_badge(name, expr, **p):
+    p.setdefault("Width", 128)
+    return badge(name, f"Text({expr})", status_intent(expr), **p)
 
 
 def stock_label(item):
@@ -162,77 +194,116 @@ def status_filter(statuses):
 
 
 MY_ORDERS = "'Requested By' = gUserEmail"
+LOW = "Filter(colItems, 'Current Stock' <= 'Minimum Stock Level')"
+
+
+def busy(action):
+    """Runs `action` with the busy overlay shown and errors reported."""
+    return f"""UpdateContext({{locBusy: true}});
+IfError(
+    {action},
+    Notify("Something went wrong: " & FirstError.Message, NotificationType.Error)
+);
+UpdateContext({{locBusy: false}})"""
 
 
 # --- Page frame: navigation rail + header ------------------------------------------------
 
+# key, label, icon, screen, roles that see it
 NAV = [
-    ("Home", "Dashboard", "Home", "HomeScreen"),
-    ("NewOrder", "New request", "Add", "NewOrderScreen"),
-    ("MyOrders", "My requests", "DocumentBulletList", "MyOrdersScreen"),
-    ("Inventory", "Inventory", "Box", "InventoryScreen"),
+    ("Home", "Dashboard", "Home", "HomeScreen", ROLES),
+    ("NewOrder", "New request", "Add", "NewOrderScreen", ROLES),
+    ("MyOrders", "My requests", "DocumentBulletList", "MyOrdersScreen", ROLES),
+    ("Inventory", "Inventory", "Box", "InventoryScreen", ROLES),
+    ("Approvals", "Approvals", "TaskListSquareLtr", "ApprovalsScreen", ["Approver", "Pantry Admin"]),
+    ("Receiving", "Receiving", "VehicleTruckProfile", "ReceivingScreen", ["Pantry Admin"]),
 ]
+
+
+def role_visible(roles):
+    if set(roles) == set(ROLES):
+        return None
+    return " || ".join(f'gRole = "{r}"' for r in roles)
 
 
 def nav_rail(prefix, current):
     items = []
-    for key, label, glyph, screen in NAV:
+    for key, label, glyph, screen, roles in NAV:
         selected = key == current
         caption = f'"{label}"'
         if key == "NewOrder":
             caption = f'"{label}" & If(CountRows(colCart) > 0, " (" & CountRows(colCart) & ")", "")'
-        items.append(button(
-            f"{prefix}Nav{key}", caption, f"Navigate({screen}, ScreenTransition.None)",
-            "Secondary" if selected else "Subtle", glyph,
-            IconStyle="IconStyle.Filled" if selected else "IconStyle.Outline",
-            Layout="If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)",
-            Tooltip=f'"{label}"', AccessibleLabel=f'"{label}"', Height=40))
+        props = dict(IconStyle="IconStyle.Filled" if selected else "IconStyle.Outline",
+                     Layout="If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)",
+                     Tooltip=f'"{label}"', AccessibleLabel=f'"{label}"', Height=40)
+        if role_visible(roles):
+            props["Visible"] = role_visible(roles)
+        items.append(button(f"{prefix}Nav{key}", caption, f"Navigate({screen}, ScreenTransition.None)",
+                            "Secondary" if selected else "Subtle", glyph, **props))
+    # Leave screens the selected role can't use.
+    allowed = next(r for k, _, _, _, r in NAV if k == current)
+    leave = "" if set(allowed) == set(ROLES) else (
+        f"; If(!({role_visible(allowed)}), Navigate(HomeScreen, ScreenTransition.None))")
     return box(f"{prefix}NavRail", "Vertical", [
         box(f"{prefix}Brand", "Horizontal", [
-            icon(f"{prefix}BrandIcon", "FoodPizza", "clrBrand", Width=28, Height=28, IconStyle="IconStyle.Filled"),
-            text(f"{prefix}BrandName", '"Office Pantry"', 16, "Semibold", Visible="App.Width >= 900",
-                 FillPortions=1, Height=28),
-        ], gap=10, Height=48, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
+            ctl(f"{prefix}BrandTile", CONTAINER, "ManualLayout", [
+                icon(f"{prefix}BrandIcon", "FoodPizza", "Color.White", IconStyle="IconStyle.Filled",
+                     Width=22, Height=22, X=9, Y=9),
+            ], Fill="clrBrand", Width=40, Height=40, FillPortions=0, **radius(10)),
+            box(f"{prefix}BrandText", "Vertical", [
+                text(f"{prefix}BrandName", '"Office Pantry"', 15, "Semibold", Height=22),
+                text(f"{prefix}BrandSub", '"Supply ordering"', 11, color="clrTextSecondary", Height=16),
+            ], gap=0, Visible="App.Width >= 900", LayoutJustifyContent="LayoutJustifyContent.Center"),
+        ], gap=10, Height=56, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
+        ctl(f"{prefix}NavGap", RECT, Fill="Color.Transparent", Height=8, FillPortions=0),
         *items,
         spacer(f"{prefix}NavSpacer"),
+        box(f"{prefix}RoleBox", "Vertical", [
+            text(f"{prefix}RoleCaption", '"Viewing as"', 11, "Semibold", color="clrTextSecondary", Height=16),
+            ctl(f"{prefix}Role", COMBO, Items="[" + ", ".join(f'"{r}"' for r in ROLES) + "]",
+                DefaultSelectedItems="[gRole]", ItemDisplayText="ThisItem.Value", SelectMultiple="false",
+                IsSearchable="false", AccessibleLabel='"Switch role"', Height=36,
+                OnChange=f"Set(gRole, Coalesce(Self.Selected.Value, gRole)){leave}"),
+        ], gap=4, Height=64, FillPortions=0, Visible="App.Width >= 900", Fill="clrCanvas",
+            PaddingTop=8, PaddingBottom=8, PaddingLeft=8, PaddingRight=8, **radius(10)),
         box(f"{prefix}UserRow", "Horizontal", [
-            ctl(f"{prefix}UserAvatar", AVATAR, Name="User().FullName", Image="User().Image",
-                Shape="AvatarShape.Circular", Width=32, Height=32, Tooltip="User().FullName"),
-            text(f"{prefix}UserName", "User().FullName", 13, Visible="App.Width >= 900", FillPortions=1,
-                 Height=32, VerticalAlign="VerticalAlign.Middle"),
-        ], gap=10, Height=48, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
-    ], gap=4, pad=12, Width="If(App.Width < 900, 72, 232)", FillPortions=0, Fill="clrSurface",
+            ctl(f"{prefix}UserAvatar", AVATAR, Tooltip="User().FullName", Width=32, Height=32),
+            box(f"{prefix}UserText", "Vertical", [
+                text(f"{prefix}UserName", "User().FullName", 13, "Semibold", Height=20),
+                text(f"{prefix}UserRoleText", "gRole", 11, color="clrTextSecondary", Height=16),
+            ], gap=0, Visible="App.Width >= 900", LayoutJustifyContent="LayoutJustifyContent.Center"),
+        ], gap=10, Height=52, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
+    ], gap=4, pad=12, Width="If(App.Width < 900, 72, 240)", FillPortions=0, Fill="clrSurface",
         LayoutAlignItems="LayoutAlignItems.Stretch")
 
 
 def page(name, prefix, current, title, subtitle, actions, body, overlays=(), screen_props=None):
     header = box(f"{prefix}Header", "Horizontal", [
         box(f"{prefix}TitleBlock", "Vertical", [
-            text(f"{prefix}Title", f'"{title}"', 24, "Semibold", Height=36),
+            text(f"{prefix}Title", f'"{title}"', 26, "Semibold", Height=38),
             text(f"{prefix}Subtitle", subtitle, 14, color="clrTextSecondary", Height=22),
-        ], gap=2, FillPortions=1, LayoutJustifyContent="LayoutJustifyContent.Center"),
-        box(f"{prefix}Actions", "Horizontal", actions, gap=8, FillPortions=0, Width=f"{150 * max(1, len(actions))}",
+        ], gap=2, LayoutJustifyContent="LayoutJustifyContent.Center"),
+        box(f"{prefix}Actions", "Horizontal", actions, gap=8, FillPortions=0, Width=f"{160 * max(1, len(actions))}",
             LayoutJustifyContent="LayoutJustifyContent.End", LayoutAlignItems="LayoutAlignItems.Center"),
     ], Height=64, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center")
-    main = box(f"{prefix}Main", "Vertical", [header, *body], gap=16, pad=24, FillPortions=1,
+    main = box(f"{prefix}Main", "Vertical", [header, *body], gap=16, pad=24,
                LayoutAlignItems="LayoutAlignItems.Stretch")
     root = box(f"{prefix}Root", "Horizontal", [nav_rail(prefix, current), main], gap=0,
-               Width="Parent.Width", Height="Parent.Height", X=0, Y=0, Fill="clrCanvas",
+               Width="Parent.Width", Height="Parent.Height", Fill="clrCanvas",
                LayoutAlignItems="LayoutAlignItems.Stretch")
-    busy = ctl(f"{prefix}Busy", CONTAINER, "ManualLayout", [
+    overlay = ctl(f"{prefix}Busy", CONTAINER, "ManualLayout", [
         ctl(f"{prefix}BusyCard", CONTAINER, "ManualLayout", [
-            ctl(f"{prefix}BusySpinner", SPINNER, Label='"Saving your request..."', Width=240, Height=80,
+            ctl(f"{prefix}BusySpinner", SPINNER, Label='"Working on it..."', Width=240, Height=80,
                 X=20, Y=20, LabelPosition="SpinnerLabelPosition.Below"),
         ], Fill="clrSurface", Width=280, Height=120, X="(Parent.Width - Self.Width) / 2",
-            Y="(Parent.Height - Self.Height) / 2", RadiusTopLeft=8, RadiusTopRight=8, RadiusBottomLeft=8,
-            RadiusBottomRight=8),
-    ], Fill="RGBA(0, 0, 0, 0.35)", Width="Parent.Width", Height="Parent.Height", X=0, Y=0, Visible="locBusy")
+            Y="(Parent.Height - Self.Height) / 2", **radius(12)),
+    ], Fill="RGBA(0, 0, 0, 0.35)", Width="Parent.Width", Height="Parent.Height", Visible="locBusy")
     props = {"Fill": "clrCanvas"}
     props.update(screen_props or {})
-    return screen_yaml(name, props, [root, *overlays, busy])
+    return screen_yaml(name, props, [root, *overlays, overlay])
 
 
-def confirm_dialog(prefix, visible, title, message, confirm_label, on_confirm, on_cancel):
+def confirm_dialog(prefix, visible, title, message, keep_label, confirm_label, on_confirm, on_cancel):
     return ctl(f"{prefix}Dialog", CONTAINER, "ManualLayout", [
         card(f"{prefix}DialogCard", "Vertical", [
             text(f"{prefix}DialogTitle", f'"{title}"', 20, "Semibold", Height=32),
@@ -240,92 +311,124 @@ def confirm_dialog(prefix, visible, title, message, confirm_label, on_confirm, o
                  VerticalAlign="VerticalAlign.Top"),
             box(f"{prefix}DialogButtons", "Horizontal", [
                 spacer(f"{prefix}DialogSpacer"),
-                button(f"{prefix}DialogCancel", '"Keep request"', on_cancel, "Secondary", Width=140),
+                button(f"{prefix}DialogCancel", f'"{keep_label}"', on_cancel, "Secondary", Width=140),
                 button(f"{prefix}DialogConfirm", f'"{confirm_label}"', on_confirm, "Primary", Width=160),
             ], Height=40, FillPortions=0),
         ], gap=16, pad=24, Width=440, Height=200, X="(Parent.Width - Self.Width) / 2",
             Y="(Parent.Height - Self.Height) / 2"),
-    ], Fill="RGBA(0, 0, 0, 0.35)", Width="Parent.Width", Height="Parent.Height", X=0, Y=0, Visible=visible)
+    ], Fill="RGBA(0, 0, 0, 0.35)", Width="Parent.Width", Height="Parent.Height", Visible=visible)
+
+
+def order_row(prefix, selected_expr, subtitle):
+    """Gallery template for a supply order: number, subtitle, status badge, selection marker."""
+    return [
+        ctl(f"{prefix}SelBar", RECT, Fill="clrBrand", Width=3, Height="Parent.TemplateHeight - 20", Y=10,
+            Visible=selected_expr, **radius(2)),
+        text(f"{prefix}Number", "ThisItem.'Order Number'", 14, "Semibold", X=14, Y=12, Width="Parent.TemplateWidth - 170"),
+        text(f"{prefix}Meta", subtitle, 12, color="clrTextSecondary", X=14, Y=38, Width="Parent.TemplateWidth - 170"),
+        status_badge(f"{prefix}Badge", "ThisItem.'Order Status'", X="Parent.TemplateWidth - 142", Y=24),
+        row_divider(f"{prefix}Divider"),
+    ]
+
+
+def lines_gallery(prefix, order):
+    return gallery(f"{prefix}Lines", f"Filter('Order Line Items', 'Supply Order'.'Supply Order' = {order}.'Supply Order')", 56, [
+        text(f"{prefix}LnName", "ThisItem.'Line Item Name'", 13, "Semibold", X=4, Y=6, Width="Parent.TemplateWidth - 130"),
+        text(f"{prefix}LnSupplier", 'Coalesce(ThisItem.Supplier.\'Supplier Name\', "No supplier set")', 12,
+             color="clrTextSecondary", X=4, Y=30, Width="Parent.TemplateWidth - 130"),
+        text(f"{prefix}LnQty", '"× " & ThisItem.Quantity', 14, "Semibold", Align="Align.Right",
+             X="Parent.TemplateWidth - 120", Y=6, Width=112),
+        text(f"{prefix}LnCost", f"Text(Coalesce(ThisItem.'Total Cost', 0), {MONEY})", 12, color="clrTextSecondary",
+             Align="Align.Right", X="Parent.TemplateWidth - 120", Y=30, Width=112),
+        row_divider(f"{prefix}LnDivider"),
+    ])
 
 
 # --- Screens ----------------------------------------------------------------------
 
 def kpi(prefix, key, caption, value, hint, glyph, accent="clrBrand"):
-    return card(f"{prefix}Kpi{key}", "Vertical", [
-        box(f"{prefix}Kpi{key}Head", "Horizontal", [
-            icon(f"{prefix}Kpi{key}Icon", glyph, accent, IconStyle="IconStyle.Filled"),
-            text(f"{prefix}Kpi{key}Caption", f'"{caption}"', 13, "Semibold", color="clrTextSecondary",
-                 FillPortions=1, Height=20),
-        ], Height=24, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
-        text(f"{prefix}Kpi{key}Value", value, 30, "Semibold", Height=44),
-        text(f"{prefix}Kpi{key}Hint", f'"{hint}"', 12, color="clrTextSecondary", Height=18),
-    ], gap=4, FillPortions=1, LayoutMinWidth=160)
+    return card(f"{prefix}Kpi{key}", "Horizontal", [
+        chip(f"{prefix}Kpi{key}Chip", glyph, accent, 44),
+        box(f"{prefix}Kpi{key}Text", "Vertical", [
+            text(f"{prefix}Kpi{key}Caption", f'"{caption}"', 13, "Semibold", color="clrTextSecondary", Height=20),
+            text(f"{prefix}Kpi{key}Value", value, 28, "Semibold", Height=40),
+            text(f"{prefix}Kpi{key}Hint", hint, 12, color="clrTextSecondary", Height=18),
+        ], gap=0, LayoutJustifyContent="LayoutJustifyContent.Center"),
+    ], gap=14, pad=18, LayoutMinWidth=200, LayoutAlignItems="LayoutAlignItems.Center")
 
 
 def home_screen():
     p = "Hm"
-    low = "Filter(colItems, 'Current Stock' <= 'Minimum Stock Level')"
     on_visible = f"""Concurrent(
     UpdateContext({{locMyOpen: CountRows(Filter('Supply Orders', {MY_ORDERS} && {status_filter(["Submitted", "Approved", "Ordered"])}))}}),
     UpdateContext({{locAwaiting: CountRows(Filter('Supply Orders', {MY_ORDERS} && 'Order Status' = {OS}.Submitted))}}),
+    UpdateContext({{locPendingAll: CountRows(Filter('Supply Orders', 'Order Status' = {OS}.Submitted))}}),
+    UpdateContext({{locToReceive: CountRows(Filter('Supply Orders', 'Order Status' = {OS}.Ordered || 'Order Status' = {OS}.Approved))}}),
     UpdateContext({{locRecent: FirstN(Sort(Filter('Supply Orders', {MY_ORDERS}), 'Created On', SortOrder.Descending), 6)}})
 )"""
+    hero_subtitle = f'''Switch(gRole,
+    "Approver", locPendingAll & " request(s) are waiting for your decision.",
+    "Pantry Admin", CountRows({LOW}) & " item(s) need restocking and " & locToReceive & " order(s) are on their way.",
+    "Request pantry supplies and follow them from approval to delivery.")'''
+    hero_action = '''Switch(gRole,
+    "Approver", Navigate(ApprovalsScreen, ScreenTransition.None),
+    "Pantry Admin", Navigate(ReceivingScreen, ScreenTransition.None),
+    Navigate(NewOrderScreen, ScreenTransition.None))'''
+    hero = ctl(f"{p}Hero", CONTAINER, "ManualLayout", [
+        ctl(f"{p}HeroImage", IMAGE, Image="imgHero", ImagePosition="ImagePosition.Fill",
+            Width="Parent.Width", Height="Parent.Height", **radius(12)),
+        text(f"{p}HeroTitle", '"Good " & Switch(true, Hour(Now()) < 12, "morning", Hour(Now()) < 17, "afternoon", "evening") & ", " & First(Split(User().FullName, " ")).Value',
+             24, "Semibold", "Color.White", X=28, Y=26, Width="Parent.Width - 280", Height=36),
+        text(f"{p}HeroSubtitle", hero_subtitle, 14, color="RGBA(255, 255, 255, 0.88)",
+             X=28, Y=66, Width="Parent.Width - 280", Height=40, VerticalAlign="VerticalAlign.Top"),
+        button(f"{p}HeroAction", 'Switch(gRole, "Approver", "Review approvals", "Pantry Admin", "Receive orders", "New request")',
+               hero_action, "Secondary", Icon='Switch(gRole, "Approver", "TaskListSquareLtr", "Pantry Admin", "VehicleTruckProfile", "Add")',
+               X="Parent.Width - 216", Y=46, Width=188, Height=40),
+    ], Height=132, FillPortions=0, **radius(12))
+
     kpis = box(f"{p}Kpis", "Horizontal", [
-        kpi(p, "Low", "Low stock items", f"CountRows({low})", "At or below minimum level", "Warning",
-            f"If(CountRows({low}) > 0, clrDanger, clrSuccess)"),
-        kpi(p, "Open", "My open requests", "locMyOpen", "Submitted, approved or ordered", "DocumentBulletList"),
-        kpi(p, "Awaiting", "Awaiting approval", "locAwaiting", "Waiting for your approver", "Clock"),
-        kpi(p, "Catalog", "Items in catalog", "CountRows(colItems)", "Pantry items you can request", "Box"),
-    ], gap=16, Height=124, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
+        kpi(p, "Low", "Low stock items", f"CountRows({LOW})", '"At or below minimum level"', "Warning",
+            f"If(CountRows({LOW}) > 0, clrDanger, clrSuccess)"),
+        kpi(p, "Open", "My open requests", "locMyOpen", '"Submitted, approved or ordered"', "DocumentBulletList"),
+        kpi(p, "Awaiting", 'Approvals pending', 'If(gRole = "Requester", locAwaiting, locPendingAll)',
+            'If(gRole = "Requester", "Your requests awaiting approval", "Across the whole office")', "Clock", "clrWarning"),
+        kpi(p, "Catalog", "Items in catalog", "CountRows(colItems)", '"Pantry items you can request"', "Box", "clrSuccess"),
+    ], gap=16, Height=104, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
 
     restock = card(f"{p}Restock", "Vertical", [
-        box(f"{p}RestockHead", "Horizontal", [
-            section_title(f"{p}RestockTitle", '"Needs restocking"'),
-            spacer(f"{p}RestockSpacer"),
-            button(f"{p}RestockAll", '"View inventory"',
-                   "Navigate(InventoryScreen, ScreenTransition.None)", "Subtle",
-                   "ArrowRight", Layout="ButtonLayout.IconAfter", Width=150),
-        ], Height=36, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
-        gallery(f"{p}RestockList", f"Sort({low}, 'Current Stock')", 60, [
-            text(f"{p}RsName", "ThisItem.'Item Name'", 14, "Semibold", X=8, Y=8, Width="Parent.TemplateWidth - 260"),
+        section_head(f"{p}Rs", "Needs restocking", "Warning", [
+            button(f"{p}RestockAll", '"View inventory"', "Navigate(InventoryScreen, ScreenTransition.None)", "Subtle",
+                   "ArrowRight", Layout="ButtonLayout.IconAfter", Width=150)]),
+        gallery(f"{p}RestockList", f"Sort({LOW}, 'Current Stock')", 64, [
+            text(f"{p}RsName", "ThisItem.'Item Name'", 14, "Semibold", X=4, Y=10, Width="Parent.TemplateWidth - 260"),
             text(f"{p}RsMeta", '"In stock " & Coalesce(ThisItem.\'Current Stock\', 0) & "  ·  Minimum " & Coalesce(ThisItem.\'Minimum Stock Level\', 0)',
-                 12, color="clrTextSecondary", X=8, Y=32, Width="Parent.TemplateWidth - 260"),
+                 12, color="clrTextSecondary", X=4, Y=36, Width="Parent.TemplateWidth - 260"),
             badge(f"{p}RsBadge", stock_label("ThisItem"), stock_intent("ThisItem"),
-                  X="Parent.TemplateWidth - 240", Y=18, Width=100),
+                  X="Parent.TemplateWidth - 244", Y=20, Width=104),
             button(f"{p}RsAdd", '"Request"', add_to_cart("ThisItem", "Coalesce(ThisItem.'Reorder Quantity', 1)"),
-                   "Outline", "Add", X="Parent.TemplateWidth - 128", Y=12, Width=116, Height=34,
+                   "Outline", "Add", X="Parent.TemplateWidth - 128", Y=14, Width=120, Height=34,
                    Tooltip='"Add the reorder quantity to your request"'),
             row_divider(f"{p}RsDivider"),
         ]),
-        empty_state(f"{p}RestockEmpty", "Everything is well stocked.", f"IsEmpty({p}RestockList.AllItems)"),
-    ], FillPortions=1, LayoutMinWidth=320, LayoutAlignItems="LayoutAlignItems.Stretch")
+        empty_state(f"{p}RestockEmpty", "CheckmarkCircle", "Everything is well stocked.", f"IsEmpty({p}RestockList.AllItems)"),
+    ], LayoutMinWidth=340, LayoutAlignItems="LayoutAlignItems.Stretch")
 
     recent = card(f"{p}Recent", "Vertical", [
-        box(f"{p}RecentHead", "Horizontal", [
-            section_title(f"{p}RecentTitle", '"My recent requests"'),
-            spacer(f"{p}RecentSpacer"),
+        section_head(f"{p}Rc", "My recent requests", "History", [
             button(f"{p}RecentAll", '"All requests"', "Navigate(MyOrdersScreen, ScreenTransition.None)",
-                   "Subtle", "ArrowRight", Layout="ButtonLayout.IconAfter", Width=140),
-        ], Height=36, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
-        gallery(f"{p}RecentList", "locRecent", 60, [
-            text(f"{p}RcNumber", "ThisItem.'Order Number'", 14, "Semibold", X=8, Y=8, Width="Parent.TemplateWidth - 160"),
-            text(f"{p}RcMeta", f'Text(ThisItem.\'Created On\', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})',
-                 12, color="clrTextSecondary", X=8, Y=32, Width="Parent.TemplateWidth - 160"),
-            badge(f"{p}RcBadge", "Text(ThisItem.'Order Status')", status_intent("ThisItem.'Order Status'"),
-                  X="Parent.TemplateWidth - 140", Y=18, Width=128),
-            row_divider(f"{p}RcDivider"),
-        ], OnSelect="Set(gSelOrder, ThisItem); Navigate(MyOrdersScreen, ScreenTransition.None)"),
-        empty_state(f"{p}RecentEmpty", "You have no requests yet.", f"IsEmpty({p}RecentList.AllItems)"),
-    ], FillPortions=1, LayoutMinWidth=320, LayoutAlignItems="LayoutAlignItems.Stretch")
+                   "Subtle", "ArrowRight", Layout="ButtonLayout.IconAfter", Width=140)]),
+        gallery(f"{p}RecentList", "locRecent", 64, order_row(
+            f"{p}Rc", "false",
+            f'Text(ThisItem.\'Created On\', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})'),
+            OnSelect="Set(gSelOrder, ThisItem); Navigate(MyOrdersScreen, ScreenTransition.None)"),
+        empty_state(f"{p}RecentEmpty", "DocumentAdd", "You have no requests yet.", f"IsEmpty({p}RecentList.AllItems)"),
+    ], LayoutMinWidth=340, LayoutAlignItems="LayoutAlignItems.Stretch")
 
-    body = [kpis, box(f"{p}Panels", "Horizontal", [restock, recent], gap=16, FillPortions=1,
-                      LayoutAlignItems="LayoutAlignItems.Stretch")]
-    actions = [
-        button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))",
-               "Subtle", "ArrowClockwise", Width=120),
-        button(f"{p}New", '"New request"', "Navigate(NewOrderScreen, ScreenTransition.None)", "Primary", "Add", Width=150),
-    ]
-    return page("HomeScreen", p, "Home", "Dashboard", '"Welcome back, " & First(Split(User().FullName, " ")).Value',
+    body = [hero, kpis, box(f"{p}Panels", "Horizontal", [restock, recent], gap=16,
+                            LayoutAlignItems="LayoutAlignItems.Stretch")]
+    actions = [button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))",
+                      "Subtle", "ArrowClockwise", Width=120)]
+    return page("HomeScreen", p, "Home", "Dashboard", 'Text(Today(), "dddd, dd mmmm yyyy")',
                 actions, body, screen_props={"OnVisible": on_visible})
 
 
@@ -369,70 +472,69 @@ def new_order_screen():
     )
 )"""
     catalog = card(f"{p}Catalog", "Vertical", [
-        section_title(f"{p}CatalogTitle", '"1. Choose items"'),
+        section_head(f"{p}Cat", "1. Choose items", "Box"),
         box(f"{p}Toolbar", "Horizontal", [
             ctl(f"{p}Search", INPUT, Placeholder='"Search items"', Type="TextInputType.Search",
-                TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search items"', FillPortions=1, Height=36),
-            ctl(f"{p}Category", COMBO, Items="Choices([@'Item Category'])", SelectMultiple="false",
-                InputTextPlaceholder='"All categories"', AccessibleLabel='"Filter by category"', Width=220, Height=36),
+                TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search items"', Height=36),
+            ctl(f"{p}Category", COMBO, Items="Choices('Item Category')", ItemDisplayText="ThisItem.Value",
+                SelectMultiple="false", InputTextPlaceholder='"All categories"', AccessibleLabel='"Filter by category"',
+                Width=220, Height=36),
         ], Height=36, FillPortions=0),
-        gallery(f"{p}Items", catalog_items, 72, [
-            text(f"{p}ItName", "ThisItem.'Item Name'", 14, "Semibold", X=8, Y=10, Width="Parent.TemplateWidth - 380"),
+        gallery(f"{p}Items", catalog_items, 76, [
+            text(f"{p}ItName", "ThisItem.'Item Name'", 14, "Semibold", X=4, Y=12, Width="Parent.TemplateWidth - 390"),
             text(f"{p}ItMeta", f'Text(ThisItem.Category) & "  ·  " & Text(ThisItem.\'Unit of Measure\') & "  ·  " & Text(Coalesce(ThisItem.\'Unit Price\', 0), {MONEY})',
-                 12, color="clrTextSecondary", X=8, Y=36, Width="Parent.TemplateWidth - 380"),
-            badge(f"{p}ItStock", f"{stock_label('ThisItem')} & \" (\" & Coalesce(ThisItem.'Current Stock', 0) & \")\"",
-                  stock_intent("ThisItem"), X="Parent.TemplateWidth - 364", Y=24, Width=130),
+                 12, color="clrTextSecondary", X=4, Y=40, Width="Parent.TemplateWidth - 390"),
+            badge(f"{p}ItStock", f"{stock_label('ThisItem')} & \" · \" & Coalesce(ThisItem.'Current Stock', 0)",
+                  stock_intent("ThisItem"), X="Parent.TemplateWidth - 376", Y=26, Width=136),
             ctl(f"{p}ItQty", NUMBER, Default=1, Min=1, Max=999, Step=1, Precision="DecimalPrecision.'0'",
-                AccessibleLabel='"Quantity of " & ThisItem.\'Item Name\'', X="Parent.TemplateWidth - 222", Y=18,
+                AccessibleLabel='"Quantity of " & ThisItem.\'Item Name\'', X="Parent.TemplateWidth - 228", Y=20,
                 Width=96, Height=36),
             button(f"{p}ItAdd", '"Add"', add_to_cart("ThisItem", f"{p}ItQty.Value"), "Outline", "Add",
-                   X="Parent.TemplateWidth - 116", Y=18, Width=104),
+                   X="Parent.TemplateWidth - 120", Y=20, Width=112),
             row_divider(f"{p}ItDivider"),
         ]),
-        empty_state(f"{p}ItemsEmpty", "No items match your search.", f"IsEmpty({p}Items.AllItems)"),
-    ], FillPortions=1, LayoutMinWidth=420, LayoutAlignItems="LayoutAlignItems.Stretch")
+        empty_state(f"{p}ItemsEmpty", "SearchInfo", "No items match your search.", f"IsEmpty({p}Items.AllItems)"),
+    ], LayoutMinWidth=440, LayoutAlignItems="LayoutAlignItems.Stretch")
 
-    field_label = lambda name, value: text(name, value, 13, "Semibold", Height=20)
+    label = lambda name, value: text(name, value, 13, "Semibold", Height=20)
     cart = card(f"{p}Cart", "Vertical", [
-        box(f"{p}CartHead", "Horizontal", [
-            section_title(f"{p}CartTitle", '"2. Your request"'),
-            spacer(f"{p}CartSpacer"),
+        section_head(f"{p}Ct", "2. Your request", "Cart", [
             badge(f"{p}CartCount", 'CountRows(colCart) & If(CountRows(colCart) = 1, " item", " items")',
-                  "BadgeIntent.Informative", Width=80),
-        ], Height=28, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
-        empty_state(f"{p}CartEmpty", "Add items from the catalog to start a request.", "IsEmpty(colCart)"),
-        gallery(f"{p}CartList", "colCart", 56, [
-            text(f"{p}CtName", "ThisItem.Item.'Item Name'", 13, "Semibold", X=4, Y=6, Width="Parent.TemplateWidth - 150"),
+                  "BadgeIntent.Informative", Width=80)]),
+        empty_state(f"{p}CartEmpty", "Cart", "Add items from the catalog to start a request.", "IsEmpty(colCart)"),
+        gallery(f"{p}CartList", "colCart", 60, [
+            text(f"{p}CtName", "ThisItem.Item.'Item Name'", 13, "Semibold", X=4, Y=8, Width="Parent.TemplateWidth - 150"),
             text(f"{p}CtLine", f"Text(ThisItem.Qty * Coalesce(ThisItem.Item.'Unit Price', 0), {MONEY})", 12,
-                 color="clrTextSecondary", X=4, Y=30, Width="Parent.TemplateWidth - 150"),
+                 color="clrTextSecondary", X=4, Y=32, Width="Parent.TemplateWidth - 150"),
             ctl(f"{p}CtQty", NUMBER, Default="ThisItem.Qty", Min=1, Max=999, Step=1, Precision="DecimalPrecision.'0'",
                 OnChange="Patch(colCart, ThisItem, {Qty: Self.Value})",
                 AccessibleLabel='"Quantity of " & ThisItem.Item.\'Item Name\'',
-                X="Parent.TemplateWidth - 140", Y=10, Width=88, Height=36),
+                X="Parent.TemplateWidth - 140", Y=12, Width=88, Height=36),
             ctl(f"{p}CtRemove", ICON, Icon='"Delete"', IconColor="clrDanger", OnSelect="Remove(colCart, ThisItem)",
                 Tooltip='"Remove"', AccessibleLabel='"Remove " & ThisItem.Item.\'Item Name\'',
-                X="Parent.TemplateWidth - 40", Y=16, Width=24, Height=24),
+                X="Parent.TemplateWidth - 40", Y=18, Width=24, Height=24),
             row_divider(f"{p}CtDivider"),
-        ], LayoutMinHeight=112, Visible="!IsEmpty(colCart)"),
+        ], LayoutMinHeight=120, Visible="!IsEmpty(colCart)"),
         box(f"{p}TotalRow", "Horizontal", [
             text(f"{p}TotalLabel", '"Estimated total"', 14, "Semibold", FillPortions=1),
-            text(f"{p}TotalValue", f"Text({total}, {MONEY})", 16, "Semibold", Align="Align.Right", Width=140),
-        ], Height=28, FillPortions=0),
-        field_label(f"{p}RequiredByLabel", '"Required by"'),
+            text(f"{p}TotalValue", f"Text({total}, {MONEY})", 18, "Semibold", "clrBrand", Align="Align.Right",
+                 Width=150, FillPortions=0),
+        ], Height=32, FillPortions=0, Fill="clrBrandTint", PaddingLeft=12, PaddingRight=12,
+            LayoutAlignItems="LayoutAlignItems.Center", **radius(8)),
+        label(f"{p}RequiredByLabel", '"Required by"'),
         ctl(f"{p}RequiredBy", DATE, DefaultDate="DateAdd(Today(), 3, TimeUnit.Days)", StartDate="Today()",
-            Placeholder='"Select a date"', AccessibleLabel='"Required by date"', Height=36),
-        field_label(f"{p}LocationLabel", '"Delivery location"'),
+            AccessibleLabel='"Required by date"', Height=36),
+        label(f"{p}LocationLabel", '"Delivery location"'),
         ctl(f"{p}Location", INPUT, Placeholder='"For example: 3rd floor pantry"', AccessibleLabel='"Delivery location"', Height=36),
-        field_label(f"{p}JustificationLabel", '"Justification (optional)"'),
+        label(f"{p}JustificationLabel", '"Justification (optional)"'),
         ctl(f"{p}Justification", INPUT, Placeholder='"Why is this needed?"', Type="TextInputType.Multiline",
             TriggerOutput="TriggerOutput.FocusOut", MaxLength=1000, AccessibleLabel='"Justification"', Height=72),
-        button(f"{p}Submit", '"Submit for approval"', submit, "Primary", "Send", Height=40,
+        button(f"{p}Submit", '"Submit for approval"', submit, "Primary", "Send", Height=42,
                DisplayMode="If(IsEmpty(colCart) || locBusy, DisplayMode.Disabled, DisplayMode.Edit)"),
-    ], gap=10, Width="If(App.Width < 1200, 340, 400)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch",
+    ], gap=10, Width="If(App.Width < 1200, 350, 410)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch",
         LayoutOverflowY="LayoutOverflow.Scroll")
 
-    body = [box(f"{p}Body", "Horizontal", [catalog, cart], gap=16, FillPortions=1,
-                LayoutAlignItems="LayoutAlignItems.Stretch")]
+    body = [box(f"{p}Body", "Horizontal", [catalog, cart], gap=16, LayoutAlignItems="LayoutAlignItems.Stretch")]
     actions = [button(f"{p}Clear", '"Clear request"', "Clear(colCart)", "Subtle", "Dismiss", Width=150,
                       DisplayMode="If(IsEmpty(colCart), DisplayMode.Disabled, DisplayMode.Edit)")]
     return page("NewOrderScreen", p, "NewOrder", "New request",
@@ -441,8 +543,7 @@ def new_order_screen():
 
 def my_orders_screen():
     p = "Mo"
-    search = f"StartsWith('Order Number', {p}Search.Text)"
-    base = f"{MY_ORDERS} && {search}"
+    base = f"{MY_ORDERS} && StartsWith('Order Number', {p}Search.Text)"
     items = f"""Sort(
     Switch({p}Tabs.Selected.Value,
         "Open", Filter('Supply Orders', {base} && {status_filter(OPEN_STATUSES)}),
@@ -451,94 +552,71 @@ def my_orders_screen():
     ),
     'Created On', SortOrder.Descending
 )"""
-    selected = f"!IsBlank(gSelOrder) && ThisItem.'Supply Order' = gSelOrder.'Supply Order'"
+    o = "gSelOrder"
+    selected = f"!IsBlank({o}) && ThisItem.'Supply Order' = {o}.'Supply Order'"
     order_list = card(f"{p}List", "Vertical", [
-        ctl(f"{p}Tabs", TABS, Items='["All", "Open", "Completed"]', Default='"All"',
-            Appearance="TabListAppearance.Subtle", Alignment="TabListAlignment.Start",
-            AccessibleLabel='"Filter requests"', Height=40),
+        ctl(f"{p}Tabs", TABS, Items='["All", "Open", "Completed"]', Appearance="TabListAppearance.SubtleCircular",
+            Alignment="TabListAlignment.Start", AccessibleLabel='"Filter requests"', Height=40),
         ctl(f"{p}Search", INPUT, Placeholder='"Search by request number"', Type="TextInputType.Search",
             TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search requests"', Height=36),
-        gallery(f"{p}Orders", items, 68, [
-            ctl(f"{p}OrSelectedBar", RECT, Fill="clrBrand", Width=3, Height="Parent.TemplateHeight - 16", X=0, Y=8,
-                Visible=selected),
-            text(f"{p}OrNumber", "ThisItem.'Order Number'", 14, "Semibold", X=12, Y=10, Width="Parent.TemplateWidth - 160"),
-            text(f"{p}OrMeta", f'Text(ThisItem.\'Created On\', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})',
-                 12, color="clrTextSecondary", X=12, Y=36, Width="Parent.TemplateWidth - 160"),
-            badge(f"{p}OrBadge", "Text(ThisItem.'Order Status')", status_intent("ThisItem.'Order Status'"),
-                  X="Parent.TemplateWidth - 140", Y=22, Width=128),
-            row_divider(f"{p}OrDivider"),
-        ], OnSelect="Set(gSelOrder, ThisItem)", TemplateFill=f"If({selected}, clrBrandTint, Color.Transparent)"),
-        empty_state(f"{p}OrdersEmpty", "No requests found.", f"IsEmpty({p}Orders.AllItems)"),
+        gallery(f"{p}Orders", items, 72, order_row(
+            f"{p}Or", selected,
+            f'Text(ThisItem.\'Created On\', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})'),
+            OnSelect=f"Set({o}, ThisItem)", TemplateFill=f"If({selected}, clrBrandTint, Color.Transparent)"),
+        empty_state(f"{p}OrdersEmpty", "DocumentSearch", "No requests found.", f"IsEmpty({p}Orders.AllItems)"),
     ], gap=10, Width="If(App.Width < 1200, 360, 420)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
 
-    o = "gSelOrder"
-    field = lambda key, caption, value: box(f"{p}F{key}", "Vertical", [
-        text(f"{p}F{key}Caption", f'"{caption}"', 12, color="clrTextSecondary", Height=18),
-        text(f"{p}F{key}Value", value, 14, "Semibold", Height=22),
-    ], gap=2, FillPortions=1, LayoutMinWidth=120)
     history = f"Sort(Filter('Approval History Records', 'Supply Order'.'Supply Order' = {o}.'Supply Order'), 'Action Date', SortOrder.Descending)"
     detail_body = box(f"{p}DetailBody", "Vertical", [
         box(f"{p}DetailHead", "Horizontal", [
-            text(f"{p}DetailNumber", f"{o}.'Order Number'", 20, "Semibold", FillPortions=1, Height=32),
-            badge(f"{p}DetailBadge", f"Text({o}.'Order Status')", status_intent(f"{o}.'Order Status'"), Width=140, Height=28),
+            text(f"{p}DetailNumber", f"{o}.'Order Number'", 20, "Semibold", Height=32, FillPortions=1),
+            status_badge(f"{p}DetailBadge", f"{o}.'Order Status'", Width=140, Height=28),
             button(f"{p}CancelBtn", '"Cancel request"', "UpdateContext({locConfirmCancel: true})", "Outline", "Dismiss",
                    Width=160, Visible=f"Text({o}.'Order Status') in [\"Draft\", \"Submitted\"]"),
         ], gap=12, Height=40, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
         box(f"{p}Fields", "Horizontal", [
-            field("Created", "Created", f'Text({o}.\'Created On\', "dd mmm yyyy")'),
-            field("Required", "Required by", f'Text({o}.\'Required By Date\', "dd mmm yyyy")'),
-            field("Total", "Estimated total", f"Text(Coalesce({o}.'Total Amount', 0), {MONEY})"),
-            field("Approval", "Approval", f'Coalesce(Text({o}.\'Approval Status\'), "Not started")'),
-        ], gap=16, Height=44, FillPortions=0),
+            field(f"{p}FCreated", "Created", f'Text({o}.\'Created On\', "dd mmm yyyy")'),
+            field(f"{p}FRequired", "Required by", f'Text({o}.\'Required By Date\', "dd mmm yyyy")'),
+            field(f"{p}FTotal", "Estimated total", f"Text(Coalesce({o}.'Total Amount', 0), {MONEY})"),
+            field(f"{p}FApproval", "Approval", f'Coalesce(Text({o}.\'Approval Status\'), "Not started")'),
+        ], gap=16, Height=48, FillPortions=0),
         text(f"{p}Comments", f'"Approver comments: " & {o}.\'Approver Comments\'', 13, color="clrTextSecondary",
              Visible=f"!IsBlank({o}.'Approver Comments')", Height=40, VerticalAlign="VerticalAlign.Top"),
         box(f"{p}DetailCols", "Horizontal", [
             box(f"{p}LinesCol", "Vertical", [
-                section_title(f"{p}LinesTitle", '"Items"'),
-                gallery(f"{p}Lines", f"Filter('Order Line Items', 'Supply Order'.'Supply Order' = {o}.'Supply Order')", 56, [
-                    text(f"{p}LnName", "ThisItem.'Line Item Name'", 13, "Semibold", X=4, Y=6, Width="Parent.TemplateWidth - 120"),
-                    text(f"{p}LnSupplier", 'Coalesce(ThisItem.Supplier.\'Supplier Name\', "No supplier set")', 12,
-                         color="clrTextSecondary", X=4, Y=30, Width="Parent.TemplateWidth - 120"),
-                    text(f"{p}LnQty", '"× " & ThisItem.Quantity', 14, "Semibold", Align="Align.Right",
-                         X="Parent.TemplateWidth - 112", Y=14, Width=104),
-                    row_divider(f"{p}LnDivider"),
-                ]),
-            ], gap=8, FillPortions=1, LayoutAlignItems="LayoutAlignItems.Stretch"),
+                section_head(f"{p}Ln", "Items", "BoxMultiple"),
+                lines_gallery(p, o),
+            ], gap=8, LayoutAlignItems="LayoutAlignItems.Stretch"),
             box(f"{p}HistoryCol", "Vertical", [
-                section_title(f"{p}HistoryTitle", '"Approval history"'),
+                section_head(f"{p}Hs", "Approval history", "History"),
                 gallery(f"{p}History", history, 64, [
-                    ctl(f"{p}HsDot", ICON, Icon='"CircleSmall"', IconColor="clrBrand", IconStyle="IconStyle.Filled",
-                        X=0, Y=8, Width=20, Height=20),
+                    icon(f"{p}HsDot", "CircleSmall", "clrBrand", IconStyle="IconStyle.Filled", Y=8),
                     text(f"{p}HsAction", 'Text(ThisItem.Action) & " by " & Coalesce(ThisItem.Approver, "system")', 13,
                          "Semibold", X=24, Y=6, Width="Parent.TemplateWidth - 28"),
                     text(f"{p}HsMeta", 'Text(ThisItem.\'Action Date\', "dd mmm yyyy, hh:mm") & If(IsBlank(ThisItem.Comments), "", "  ·  " & ThisItem.Comments)',
                          12, color="clrTextSecondary", X=24, Y=30, Width="Parent.TemplateWidth - 28"),
                 ]),
-                empty_state(f"{p}HistoryEmpty", "No approval activity yet.", f"IsEmpty({p}History.AllItems)"),
-            ], gap=8, FillPortions=1, LayoutAlignItems="LayoutAlignItems.Stretch"),
-        ], gap=24, FillPortions=1, LayoutAlignItems="LayoutAlignItems.Stretch"),
-    ], gap=16, FillPortions=1, Visible=f"!IsBlank({o})", LayoutAlignItems="LayoutAlignItems.Stretch")
+                empty_state(f"{p}HistoryEmpty", "History", "No approval activity yet.", f"IsEmpty({p}History.AllItems)"),
+            ], gap=8, LayoutAlignItems="LayoutAlignItems.Stretch"),
+        ], gap=24, LayoutAlignItems="LayoutAlignItems.Stretch"),
+    ], gap=16, Visible=f"!IsBlank({o})", LayoutAlignItems="LayoutAlignItems.Stretch")
     detail = card(f"{p}Detail", "Vertical", [
         detail_body,
-        empty_state(f"{p}DetailEmpty", "Select a request to see its items and approval history.", f"IsBlank({o})"),
-    ], gap=16, pad=24, FillPortions=1, LayoutMinWidth=420, LayoutAlignItems="LayoutAlignItems.Stretch")
+        empty_state(f"{p}DetailEmpty", "DocumentBulletList", "Select a request to see its items and approval history.",
+                    f"IsBlank({o})"),
+    ], gap=16, pad=24, LayoutMinWidth=440, LayoutAlignItems="LayoutAlignItems.Stretch")
 
-    cancel = f"""UpdateContext({{locConfirmCancel: false, locBusy: true}});
-IfError(
-    Patch('Supply Orders', {o}, {{'Order Status': {OS}.Cancelled}});
+    cancel = f"""UpdateContext({{locConfirmCancel: false}});
+{busy(f'''Patch('Supply Orders', {o}, {{'Order Status': {OS}.Cancelled}});
     Set({o}, LookUp('Supply Orders', 'Supply Order' = {o}.'Supply Order'));
-    Notify("Request cancelled.", NotificationType.Success),
-    Notify("Couldn't cancel the request: " & FirstError.Message, NotificationType.Error)
-);
-UpdateContext({{locBusy: false}})"""
+    Notify("Request cancelled.", NotificationType.Success)''')}"""
     dialog = confirm_dialog(p, "locConfirmCancel", "Cancel this request?",
                             "The request will be marked as cancelled and won't be sent to suppliers.",
-                            "Cancel request", cancel, "UpdateContext({locConfirmCancel: false})")
-    body = [box(f"{p}Body", "Horizontal", [order_list, detail], gap=16, FillPortions=1,
-                LayoutAlignItems="LayoutAlignItems.Stretch")]
+                            "Keep request", "Cancel request", cancel, "UpdateContext({locConfirmCancel: false})")
+    body = [box(f"{p}Body", "Horizontal", [order_list, detail], gap=16, LayoutAlignItems="LayoutAlignItems.Stretch")]
+    refresh = f"Refresh('Supply Orders'); If(!IsBlank({o}), Set({o}, LookUp('Supply Orders', 'Supply Order' = {o}.'Supply Order')))"
     actions = [
-        button(f"{p}Refresh", '"Refresh"', f"Refresh('Supply Orders'); If(!IsBlank({o}), Set({o}, LookUp('Supply Orders', 'Supply Order' = {o}.'Supply Order')))",
-               "Subtle", "ArrowClockwise", Width=120),
+        button(f"{p}Refresh", '"Refresh"', refresh, "Subtle", "ArrowClockwise", Width=120),
         button(f"{p}New", '"New request"', "Navigate(NewOrderScreen, ScreenTransition.None)", "Primary", "Add", Width=150),
     ]
     on_visible = f"If(!IsBlank({o}), Set({o}, LookUp('Supply Orders', 'Supply Order' = {o}.'Supply Order')))"
@@ -552,57 +630,194 @@ def inventory_screen():
              f"(IsBlank({p}Category.Selected) || Category = {p}Category.Selected.Value) && "
              f"Switch({p}Tabs.Selected.Value, \"Low stock\", 'Current Stock' <= 'Minimum Stock Level', "
              f"\"Out of stock\", 'Current Stock' <= 0, true)), 'Item Name')")
+    admin = 'gRole = "Pantry Admin"'
     # (key, header, cell formula, x fraction, width fraction, align)
     cols = [
         ("Item", "Item", "ThisItem.'Item Name'", 0.00, 0.24, "Left"),
         ("Cat", "Category", "Text(ThisItem.Category)", 0.24, 0.14, "Left"),
-        ("Stock", "In stock", "Coalesce(ThisItem.'Current Stock', 0)", 0.38, 0.08, "Right"),
-        ("Min", "Minimum", "Coalesce(ThisItem.'Minimum Stock Level', 0)", 0.46, 0.08, "Right"),
-        ("Price", "Unit price", f"Text(Coalesce(ThisItem.'Unit Price', 0), {MONEY})", 0.54, 0.09, "Right"),
-        ("Loc", "Location", "Coalesce(ThisItem.'Storage Location', \"-\")", 0.65, 0.12, "Left"),
+        ("Stock", "In stock", "Coalesce(ThisItem.'Current Stock', 0)", 0.38, 0.09, "Right"),
+        ("Min", "Minimum", "Coalesce(ThisItem.'Minimum Stock Level', 0)", 0.47, 0.08, "Right"),
+        ("Price", "Unit price", f"Text(Coalesce(ThisItem.'Unit Price', 0), {MONEY})", 0.55, 0.09, "Right"),
+        ("Loc", "Location", "Coalesce(ThisItem.'Storage Location', \"-\")", 0.66, 0.12, "Left"),
     ]
     header_cells = [text(f"{p}H{k}", f'"{h}"', 12, "Semibold", color="clrTextSecondary", Align=f"Align.{a}",
-                         X=f"Parent.Width * {x} + 12", Y=8, Width=f"Parent.Width * {w} - 8", Height=20)
+                         X=f"Parent.Width * {x} + 12", Y=10, Width=f"Parent.Width * {w} - 8", Height=20)
                     for k, h, _, x, w, a in cols]
     header_cells.append(text(f"{p}HStatus", '"Status"', 12, "Semibold", color="clrTextSecondary",
-                             X="Parent.Width * 0.78 + 12", Y=8, Width=120, Height=20))
-    row_cells = [text(f"{p}C{k}", f, 13, "Semibold" if k == "Item" else "Normal", Align=f"Align.{a}",
-                      X=f"Parent.TemplateWidth * {x} + 12", Y=14, Width=f"Parent.TemplateWidth * {w} - 8", Height=24)
-                 for k, _, f, x, w, a in cols]
+                             X="Parent.Width * 0.79 + 12", Y=10, Width=120, Height=20))
+    row_cells = []
+    for k, _, f, x, w, a in cols:
+        cell = text(f"{p}C{k}", f, 13, "Semibold" if k == "Item" else "Normal", Align=f"Align.{a}",
+                    X=f"Parent.TemplateWidth * {x} + 12", Y=16, Width=f"Parent.TemplateWidth * {w} - 8", Height=24)
+        if k == "Stock":
+            cell["props"]["Visible"] = f"!({admin})"
+        row_cells.append(cell)
+    save_stock = f"""IfError(
+    Patch('Pantry Items', ThisItem, {{'Current Stock': Self.Value}});
+    Patch(colItems, ThisItem, {{'Current Stock': Self.Value}});
+    Notify(ThisItem.'Item Name' & " stock set to " & Self.Value & ".", NotificationType.Success),
+    Notify("Couldn't update stock: " & FirstError.Message, NotificationType.Error)
+)"""
     row_cells += [
+        ctl(f"{p}CStockEdit", NUMBER, Default="Coalesce(ThisItem.'Current Stock', 0)", Min=0, Max=99999, Step=1,
+            Precision="DecimalPrecision.'0'", OnChange=save_stock, Visible=admin,
+            AccessibleLabel='"Stock of " & ThisItem.\'Item Name\'',
+            X="Parent.TemplateWidth * 0.38 + 4", Y=10, Width="Parent.TemplateWidth * 0.09", Height=36),
         badge(f"{p}CStatus", stock_label("ThisItem"), stock_intent("ThisItem"),
-              X="Parent.TemplateWidth * 0.78 + 12", Y=14, Width=110),
+              X="Parent.TemplateWidth * 0.79 + 12", Y=16, Width=110),
         button(f"{p}CAdd", '"Request"', add_to_cart("ThisItem", "Coalesce(ThisItem.'Reorder Quantity', 1)"), "Subtle", "Add",
-               X="Parent.TemplateWidth - 124", Y=8, Width=112, Height=36,
+               X="Parent.TemplateWidth - 124", Y=10, Width=112, Height=36,
                Tooltip='"Add the reorder quantity to your request"'),
         row_divider(f"{p}CDivider"),
     ]
     toolbar = box(f"{p}Toolbar", "Horizontal", [
-        ctl(f"{p}Tabs", TABS, Items='["All", "Low stock", "Out of stock"]', Default='"All"',
-            Appearance="TabListAppearance.Subtle", Alignment="TabListAlignment.Start",
-            AccessibleLabel='"Filter by stock level"', Width=340, Height=40),
+        ctl(f"{p}Tabs", TABS, Items='["All", "Low stock", "Out of stock"]', Appearance="TabListAppearance.SubtleCircular",
+            Alignment="TabListAlignment.Start", AccessibleLabel='"Filter by stock level"', Width=360, Height=40),
         spacer(f"{p}ToolbarSpacer"),
         ctl(f"{p}Search", INPUT, Placeholder='"Search by name or SKU"', Type="TextInputType.Search",
             TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search inventory"', Width=280, Height=36),
-        ctl(f"{p}Category", COMBO, Items="Choices([@'Item Category'])", SelectMultiple="false",
-            InputTextPlaceholder='"All categories"', AccessibleLabel='"Filter by category"', Width=220, Height=36),
+        ctl(f"{p}Category", COMBO, Items="Choices('Item Category')", ItemDisplayText="ThisItem.Value",
+            SelectMultiple="false", InputTextPlaceholder='"All categories"', AccessibleLabel='"Filter by category"',
+            Width=220, Height=36),
     ], gap=12, Height=40, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center")
     table = card(f"{p}Table", "Vertical", [
-        ctl(f"{p}HeaderRow", CONTAINER, "ManualLayout", header_cells, Height=36, FillPortions=0,
-            Fill="clrCanvas", RadiusTopLeft=4, RadiusTopRight=4, RadiusBottomLeft=4, RadiusBottomRight=4),
-        gallery(f"{p}Rows", items, 52, row_cells),
-        empty_state(f"{p}RowsEmpty", "No items match these filters.", f"IsEmpty({p}Rows.AllItems)"),
-        text(f"{p}Count", f'CountRows({p}Rows.AllItems) & " of " & CountRows(colItems) & " items"', 12,
-             color="clrTextSecondary", Height=18),
-    ], gap=8, FillPortions=1, LayoutAlignItems="LayoutAlignItems.Stretch")
+        ctl(f"{p}HeaderRow", CONTAINER, "ManualLayout", header_cells, Height=40, FillPortions=0,
+            Fill="clrCanvas", **radius(8)),
+        gallery(f"{p}Rows", items, 56, row_cells),
+        empty_state(f"{p}RowsEmpty", "SearchInfo", "No items match these filters.", f"IsEmpty({p}Rows.AllItems)"),
+        text(f"{p}Count", f'CountRows({p}Rows.AllItems) & " of " & CountRows(colItems) & " items" & If({admin}, "  ·  Edit a stock number and click away to save it.", "")',
+             12, color="clrTextSecondary", Height=18),
+    ], gap=8, LayoutAlignItems="LayoutAlignItems.Stretch")
     actions = [button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))",
                       "Subtle", "ArrowClockwise", Width=120)]
     return page("InventoryScreen", p, "Inventory", "Inventory",
-                '"Current stock for every pantry item. Request anything that is running low."',
+                'If(gRole = "Pantry Admin", "Update stock counts and request anything that is running low.", "Current stock for every pantry item. Request anything that is running low.")',
                 actions, [toolbar, table])
 
 
-APP = """App:
+def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel, detail_extra, actions_row):
+    """Shared master-detail layout for the Approvals and Receiving screens."""
+    selected = f"!IsBlank({sel}) && ThisItem.'Supply Order' = {sel}.'Supply Order'"
+    switch = ",\n        ".join(f'"{t}", {f}' for t, f in list(items_by_tab.items())[1:])
+    first = list(items_by_tab.values())[0]
+    items = f"Switch({p}Tabs.Selected.Value,\n        {switch},\n        {first})"
+    order_list = card(f"{p}List", "Vertical", [
+        ctl(f"{p}Tabs", TABS, Items="[" + ", ".join(f'"{t}"' for t in tabs) + "]",
+            Appearance="TabListAppearance.SubtleCircular", Alignment="TabListAlignment.Start",
+            AccessibleLabel=f'"Filter {title.lower()}"', Height=40),
+        gallery(f"{p}Orders", items, 72, order_row(
+            f"{p}Or", selected,
+            f'ThisItem.\'Requested By\' & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})'),
+            OnSelect=f"Set({sel}, ThisItem)", TemplateFill=f"If({selected}, clrBrandTint, Color.Transparent)"),
+        empty_state(f"{p}OrdersEmpty", "CheckmarkCircle", "Nothing here right now.", f"IsEmpty({p}Orders.AllItems)"),
+    ], gap=10, Width="If(App.Width < 1200, 380, 440)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
+    detail_body = box(f"{p}DetailBody", "Vertical", [
+        box(f"{p}DetailHead", "Horizontal", [
+            text(f"{p}DetailNumber", f"{sel}.'Order Number'", 20, "Semibold", Height=32, FillPortions=1),
+            status_badge(f"{p}DetailBadge", f"{sel}.'Order Status'", Width=140, Height=28),
+        ], gap=12, Height=40, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
+        box(f"{p}Fields", "Horizontal", [
+            field(f"{p}FBy", "Requested by", f"{sel}.'Requested By'"),
+            field(f"{p}FRequired", "Required by", f'Text({sel}.\'Required By Date\', "dd mmm yyyy")'),
+            field(f"{p}FTotal", "Estimated total", f"Text(Coalesce({sel}.'Total Amount', 0), {MONEY})"),
+            field(f"{p}FWhere", "Deliver to", f'Coalesce({sel}.\'Delivery Address\', "-")'),
+        ], gap=16, Height=48, FillPortions=0),
+        text(f"{p}Why", f'"Justification: " & Coalesce({sel}.Justification, "none given")', 13, color="clrTextSecondary",
+             Height=40, VerticalAlign="VerticalAlign.Top"),
+        section_head(f"{p}Ln", "Items", "BoxMultiple"),
+        lines_gallery(p, sel),
+        *detail_extra,
+        actions_row,
+    ], gap=12, Visible=f"!IsBlank({sel})", LayoutAlignItems="LayoutAlignItems.Stretch")
+    detail = card(f"{p}Detail", "Vertical", [
+        detail_body,
+        empty_state(f"{p}DetailEmpty", "DocumentBulletList", "Select a request to review it.", f"IsBlank({sel})"),
+    ], gap=16, pad=24, LayoutMinWidth=440, LayoutAlignItems="LayoutAlignItems.Stretch")
+    body = [box(f"{p}Body", "Horizontal", [order_list, detail], gap=16, LayoutAlignItems="LayoutAlignItems.Stretch")]
+    actions = [button(f"{p}Refresh", '"Refresh"', f"Refresh('Supply Orders'); Set({sel}, Blank())",
+                      "Subtle", "ArrowClockwise", Width=120)]
+    return page(screen, p, nav_key, title, subtitle, actions, body)
+
+
+def approvals_screen():
+    p, sel = "Ap", "gApprOrder"
+    decided = f"'Approval Status' = {AS}.Approved || 'Approval Status' = {AS}.Rejected"
+
+    def decide(outcome, order_status, action):
+        return busy(f'''Patch('Supply Orders', {sel}, {{
+        'Approval Status': {AS}.{outcome},
+        'Order Status': {OS}.{order_status},
+        'Approval Date': Now(),
+        'Approved By': User().FullName,
+        'Approver Comments': {p}Comment.Text
+    }});
+    Patch('Approval History Records', Defaults('Approval History Records'), {{
+        'Approval Record': "{outcome} - " & {sel}.'Order Number',
+        'Supply Order': {sel},
+        Action: {AA}.{action},
+        Approver: User().FullName,
+        'Action Date': Now(),
+        Comments: {p}Comment.Text,
+        'Previous Status': {AS}.Pending,
+        'New Status': {AS}.{outcome}
+    }});
+    Notify({sel}.'Order Number' & " {outcome.lower()}.", NotificationType.Success);
+    Set({sel}, Blank());
+    Reset({p}Comment)''')
+
+    reject = f'If(IsBlank({p}Comment.Text), Notify("Add a comment explaining why you are rejecting it.", NotificationType.Error), {decide("Rejected", "Rejected", "Rejected")})'
+    pending = f"Text({sel}.'Order Status') = \"Submitted\""
+    comment = ctl(f"{p}Comment", INPUT, Placeholder='"Comment for the requester (required to reject)"',
+                  Type="TextInputType.Multiline", TriggerOutput="TriggerOutput.Keypress", MaxLength=1000,
+                  AccessibleLabel='"Approver comment"', Height=64, Visible=pending)
+    actions_row = box(f"{p}Decide", "Horizontal", [
+        spacer(f"{p}DecideSpacer"),
+        button(f"{p}Reject", '"Reject"', reject, "Outline", "DismissCircle", Width=130),
+        button(f"{p}Approve", '"Approve"', decide("Approved", "Approved", "Approved"), "Primary", "CheckmarkCircle",
+               Width=150),
+    ], Height=40, FillPortions=0, Visible=pending)
+    return decision_screen(
+        p, "ApprovalsScreen", "Approvals", "Approvals",
+        '"Review supply requests from the whole office. Approved requests are emailed to suppliers automatically."',
+        ["Pending", "Decided"],
+        {"Pending": f"Sort(Filter('Supply Orders', 'Order Status' = {OS}.Submitted), 'Created On', SortOrder.Ascending)",
+         "Decided": f"Sort(Filter('Supply Orders', {decided}), 'Modified On', SortOrder.Descending)"},
+        sel, [comment], actions_row)
+
+
+def receiving_screen():
+    p, sel = "Rv", "gRecvOrder"
+    receive = busy(f'''ForAll(Filter('Order Line Items', 'Supply Order'.'Supply Order' = {sel}.'Supply Order') As L,
+        With({{item: LookUp('Pantry Items', 'Pantry Item' = L.'Pantry Item'.'Pantry Item')}},
+            If(!IsBlank(item), Patch('Pantry Items', item, {{'Current Stock': Coalesce(item.'Current Stock', 0) + L.Quantity}}))
+        )
+    );
+    Patch('Supply Orders', {sel}, {{'Order Status': {OS}.Received}});
+    ClearCollect(colItems, Sort('Pantry Items', 'Item Name'));
+    Notify({sel}.'Order Number' & " received. Stock levels updated.", NotificationType.Success);
+    Set({sel}, Blank())''')
+    open_order = f"Text({sel}.'Order Status') in [\"Approved\", \"Ordered\", \"Partially Received\"]"
+    actions_row = box(f"{p}Decide", "Horizontal", [
+        text(f"{p}Hint", '"Marking it received adds every item quantity to the pantry stock."', 12,
+             color="clrTextSecondary", Height=36, VerticalAlign="VerticalAlign.Middle", FillPortions=1),
+        button(f"{p}Receive", '"Mark as received"', receive, "Primary", "CheckmarkCircle", Width=190, FillPortions=0),
+    ], Height=40, FillPortions=0, Visible=open_order)
+    return decision_screen(
+        p, "ReceivingScreen", "Receiving", "Receiving",
+        '"Record deliveries from suppliers. Received quantities are added to stock."',
+        ["To receive", "Received"],
+        {"To receive": f"Sort(Filter('Supply Orders', 'Order Status' = {OS}.Ordered || 'Order Status' = {OS}.Approved || 'Order Status' = {OS}.'Partially Received'), 'Created On', SortOrder.Ascending)",
+         "Received": f"Sort(Filter('Supply Orders', 'Order Status' = {OS}.Received), 'Modified On', SortOrder.Descending)"},
+        sel, [], actions_row)
+
+
+HERO_SVG = ("<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='140' viewBox='0 0 1200 140' preserveAspectRatio='none'>"
+            "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#0F6CBD'/>"
+            "<stop offset='1' stop-color='#2886DE'/></linearGradient></defs><rect width='1200' height='140' fill='url(#g)'/>"
+            "<circle cx='1110' cy='10' r='120' fill='#FFFFFF' fill-opacity='0.08'/>"
+            "<circle cx='960' cy='150' r='80' fill='#FFFFFF' fill-opacity='0.06'/></svg>")
+
+APP = f"""App:
   Properties:
     Formulas: |-
       =clrBrand = ColorValue("#0F6CBD");
@@ -612,20 +827,19 @@ APP = """App:
       clrStroke = ColorValue("#E0E0E0");
       clrTextPrimary = ColorValue("#242424");
       clrTextSecondary = ColorValue("#616161");
+      clrTextTertiary = ColorValue("#9E9E9E");
       clrSuccess = ColorValue("#107C10");
+      clrWarning = ColorValue("#BC4B09");
       clrDanger = ColorValue("#C50F1F");
       gUserEmail = Lower(User().Email);
-    OnStart: =ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))
+      imgHero = "data:image/svg+xml;utf8," & EncodeUrl("{HERO_SVG}");
+    OnStart: |-
+      =Set(gRole, "Requester");
+      ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))
     Theme: =PantryTheme
 """
 
-EDITOR_STATE = """EditorState:
-  ScreensOrder:
-    - HomeScreen
-    - NewOrderScreen
-    - MyOrdersScreen
-    - InventoryScreen
-"""
+SCREENS = ["HomeScreen", "NewOrderScreen", "MyOrdersScreen", "InventoryScreen", "ApprovalsScreen", "ReceivingScreen"]
 
 
 def main():
@@ -634,11 +848,13 @@ def main():
             os.remove(os.path.join(SRC, f))
     files = {
         "App.pa.yaml": APP,
-        "_EditorState.pa.yaml": EDITOR_STATE,
+        "_EditorState.pa.yaml": "EditorState:\n  ScreensOrder:\n" + "".join(f"    - {s}\n" for s in SCREENS),
         "HomeScreen.pa.yaml": home_screen(),
         "NewOrderScreen.pa.yaml": new_order_screen(),
         "MyOrdersScreen.pa.yaml": my_orders_screen(),
         "InventoryScreen.pa.yaml": inventory_screen(),
+        "ApprovalsScreen.pa.yaml": approvals_screen(),
+        "ReceivingScreen.pa.yaml": receiving_screen(),
     }
     for name, content in files.items():
         with open(os.path.join(SRC, name), "w", encoding="utf-8") as f:
