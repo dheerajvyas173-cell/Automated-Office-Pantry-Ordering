@@ -2708,10 +2708,10 @@
   <OrganizationSettings />
   <optionsets>
     <optionset Name="cr_itemcategory">
-      <OptionSetType>picklist</OptionSetType>
-      <IsGlobal>1</IsGlobal>
+      <OptionSetType>Picklist</OptionSetType>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
       <displaynames>
         <displayname description="Item Category" languagecode="1033" />
       </displaynames>
@@ -2767,10 +2767,10 @@
       </options>
     </optionset>
     <optionset Name="cr_itemunit">
-      <OptionSetType>picklist</OptionSetType>
-      <IsGlobal>1</IsGlobal>
+      <OptionSetType>Picklist</OptionSetType>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
       <displaynames>
         <displayname description="Item Unit" languagecode="1033" />
       </displaynames>
@@ -2826,10 +2826,10 @@
       </options>
     </optionset>
     <optionset Name="cr_orderstatus">
-      <OptionSetType>picklist</OptionSetType>
-      <IsGlobal>1</IsGlobal>
+      <OptionSetType>Picklist</OptionSetType>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
       <displaynames>
         <displayname description="Order Status" languagecode="1033" />
       </displaynames>
@@ -2880,10 +2880,10 @@
       </options>
     </optionset>
     <optionset Name="cr_approvalstatus">
-      <OptionSetType>picklist</OptionSetType>
-      <IsGlobal>1</IsGlobal>
+      <OptionSetType>Picklist</OptionSetType>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
       <displaynames>
         <displayname description="Approval Status" languagecode="1033" />
       </displaynames>
@@ -2914,10 +2914,10 @@
       </options>
     </optionset>
     <optionset Name="cr_approvalaction">
-      <OptionSetType>picklist</OptionSetType>
-      <IsGlobal>1</IsGlobal>
+      <OptionSetType>Picklist</OptionSetType>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
       <displaynames>
         <displayname description="Approval Action" languagecode="1033" />
       </displaynames>
@@ -2958,10 +2958,10 @@
       </options>
     </optionset>
     <optionset Name="cr_suppliercategory">
-      <OptionSetType>picklist</OptionSetType>
-      <IsGlobal>1</IsGlobal>
+      <OptionSetType>Picklist</OptionSetType>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
       <displaynames>
         <displayname description="Supplier Category" languagecode="1033" />
       </displaynames>
