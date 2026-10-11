@@ -313,7 +313,9 @@ def flow_json(triggers, actions, connectors):
 
 
 def build():
-    """Returns (workflows xml, root components xml, connection references xml, {zip path: content})."""
+    """Flows import switched off (draft) so the import does not need connections mapped up front.
+
+    Returns (workflows xml, root components xml, connection references xml, {zip path: content})."""
     wf_xml, roots, files = "\n", "", {}
     for name, description, builder, connectors in FLOWS:
         wid = str(uuid.uuid5(uuid.NAMESPACE_URL, f"pantrysupplyordering/flow/{name}"))
@@ -331,8 +333,8 @@ def build():
       <TriggerOnDelete>0</TriggerOnDelete>
       <AsyncAutodelete>0</AsyncAutodelete>
       <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
-      <StateCode>1</StateCode>
-      <StatusCode>2</StatusCode>
+      <StateCode>0</StateCode>
+      <StatusCode>1</StatusCode>
       <RunAs>1</RunAs>
       <IsTransacted>1</IsTransacted>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
