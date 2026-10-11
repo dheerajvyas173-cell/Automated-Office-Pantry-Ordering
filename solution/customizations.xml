@@ -2707,11 +2707,12 @@
   </EntityRelationships>
   <OrganizationSettings />
   <optionsets>
-    <optionset Name="cr_itemcategory">
-      <OptionSetType>Picklist</OptionSetType>
+    <optionset Name="cr_itemcategory" localizedName="Item Category">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
-      <IsGlobal>true</IsGlobal>
+      <ExternalTypeName></ExternalTypeName>
       <displaynames>
         <displayname description="Item Category" languagecode="1033" />
       </displaynames>
@@ -2719,58 +2720,86 @@
         <Description description="" languagecode="1033" />
       </Descriptions>
       <options>
-        <option value="100000000">
+        <option value="100000000" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Beverages" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000001">
+        <option value="100000001" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Snacks" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000002">
+        <option value="100000002" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Coffee &amp; Tea" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000003">
+        <option value="100000003" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Dairy" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000004">
+        <option value="100000004" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Fruits" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000005">
+        <option value="100000005" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Cleaning Supplies" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000006">
+        <option value="100000006" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Paper Products" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000007">
+        <option value="100000007" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Kitchen Supplies" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000008">
+        <option value="100000008" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Other" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
       </options>
     </optionset>
-    <optionset Name="cr_itemunit">
-      <OptionSetType>Picklist</OptionSetType>
+    <optionset Name="cr_itemunit" localizedName="Item Unit">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
-      <IsGlobal>true</IsGlobal>
+      <ExternalTypeName></ExternalTypeName>
       <displaynames>
         <displayname description="Item Unit" languagecode="1033" />
       </displaynames>
@@ -2778,58 +2807,86 @@
         <Description description="" languagecode="1033" />
       </Descriptions>
       <options>
-        <option value="100000000">
+        <option value="100000000" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Each" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000001">
+        <option value="100000001" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Pack" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000002">
+        <option value="100000002" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Box" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000003">
+        <option value="100000003" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Case" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000004">
+        <option value="100000004" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Bag" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000005">
+        <option value="100000005" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Bottle" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000006">
+        <option value="100000006" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Carton" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000007">
+        <option value="100000007" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Roll" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000008">
+        <option value="100000008" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Kg" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
       </options>
     </optionset>
-    <optionset Name="cr_orderstatus">
-      <OptionSetType>Picklist</OptionSetType>
+    <optionset Name="cr_orderstatus" localizedName="Order Status">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
-      <IsGlobal>true</IsGlobal>
+      <ExternalTypeName></ExternalTypeName>
       <displaynames>
         <displayname description="Order Status" languagecode="1033" />
       </displaynames>
@@ -2837,53 +2894,78 @@
         <Description description="" languagecode="1033" />
       </Descriptions>
       <options>
-        <option value="100000000">
+        <option value="100000000" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Draft" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000001">
+        <option value="100000001" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Submitted" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000002">
+        <option value="100000002" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Approved" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000003">
+        <option value="100000003" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Rejected" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000004">
+        <option value="100000004" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Ordered" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000005">
+        <option value="100000005" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Partially Received" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000006">
+        <option value="100000006" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Received" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000007">
+        <option value="100000007" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Cancelled" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
       </options>
     </optionset>
-    <optionset Name="cr_approvalstatus">
-      <OptionSetType>Picklist</OptionSetType>
+    <optionset Name="cr_approvalstatus" localizedName="Approval Status">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
-      <IsGlobal>true</IsGlobal>
+      <ExternalTypeName></ExternalTypeName>
       <displaynames>
         <displayname description="Approval Status" languagecode="1033" />
       </displaynames>
@@ -2891,33 +2973,46 @@
         <Description description="" languagecode="1033" />
       </Descriptions>
       <options>
-        <option value="100000000">
+        <option value="100000000" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Pending" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000001">
+        <option value="100000001" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Approved" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000002">
+        <option value="100000002" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Rejected" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000003">
+        <option value="100000003" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Returned for Revision" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
       </options>
     </optionset>
-    <optionset Name="cr_approvalaction">
-      <OptionSetType>Picklist</OptionSetType>
+    <optionset Name="cr_approvalaction" localizedName="Approval Action">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
-      <IsGlobal>true</IsGlobal>
+      <ExternalTypeName></ExternalTypeName>
       <displaynames>
         <displayname description="Approval Action" languagecode="1033" />
       </displaynames>
@@ -2925,43 +3020,62 @@
         <Description description="" languagecode="1033" />
       </Descriptions>
       <options>
-        <option value="100000000">
+        <option value="100000000" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Submitted" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000001">
+        <option value="100000001" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Approved" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000002">
+        <option value="100000002" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Rejected" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000003">
+        <option value="100000003" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Returned" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000004">
+        <option value="100000004" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Cancelled" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000005">
+        <option value="100000005" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Resubmitted" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
       </options>
     </optionset>
-    <optionset Name="cr_suppliercategory">
-      <OptionSetType>Picklist</OptionSetType>
+    <optionset Name="cr_suppliercategory" localizedName="Supplier Category">
+      <OptionSetType>picklist</OptionSetType>
+      <IsGlobal>1</IsGlobal>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
-      <IsGlobal>true</IsGlobal>
+      <ExternalTypeName></ExternalTypeName>
       <displaynames>
         <displayname description="Supplier Category" languagecode="1033" />
       </displaynames>
@@ -2969,35 +3083,53 @@
         <Description description="" languagecode="1033" />
       </Descriptions>
       <options>
-        <option value="100000000">
+        <option value="100000000" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Food &amp; Beverage" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000001">
+        <option value="100000001" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Office Supplies" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000002">
+        <option value="100000002" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Cleaning Products" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000003">
+        <option value="100000003" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Kitchen Equipment" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000004">
+        <option value="100000004" ExternalValue="" IsHidden="0">
           <labels>
             <label description="Paper Products" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
-        <option value="100000005">
+        <option value="100000005" ExternalValue="" IsHidden="0">
           <labels>
             <label description="General" languagecode="1033" />
           </labels>
+          <Descriptions>
+            <Description description="" languagecode="1033" />
+          </Descriptions>
         </option>
       </options>
     </optionset>
