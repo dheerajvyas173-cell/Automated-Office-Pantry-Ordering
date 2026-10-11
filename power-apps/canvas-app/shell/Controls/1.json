@@ -60,34 +60,13 @@
         "RuleProviderType": "Unknown"
       },
       {
-        "Property": "OnStart",
-        "Category": "Behavior",
-        "InvariantScript": "Set(gRole, \"Requester\");\nClearCollect(colItems, Sort('Pantry Items', 'Item Name'));\nSet(locBusy,false)",
-        "RuleProviderType": "User"
-      },
-      {
         "Property": "SizeBreakpoints",
         "Category": "ConstantData",
         "InvariantScript": "[600, 900, 1200]",
         "RuleProviderType": "Unknown"
-      },
-      {
-        "Property": "Formulas",
-        "Category": "Formulas",
-        "InvariantScript": "clrBrand = ColorValue(\"#0F6CBD\");\nclrBrandTint = ColorValue(\"#EBF3FC\");\nclrCanvas = ColorValue(\"#F5F5F5\");\nclrSurface = Color.White;\nclrStroke = ColorValue(\"#E0E0E0\");\nclrTextPrimary = ColorValue(\"#242424\");\nclrTextSecondary = ColorValue(\"#616161\");\nclrTextTertiary = ColorValue(\"#9E9E9E\");\nclrSuccess = ColorValue(\"#107C10\");\nclrWarning = ColorValue(\"#BC4B09\");\nclrDanger = ColorValue(\"#C50F1F\");\ngUserEmail = Lower(User().Email);\nimgHero = \"data:image/svg+xml;utf8,\" & EncodeUrl(\"<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='140' viewBox='0 0 1200 140' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#0F6CBD'/><stop offset='1' stop-color='#2886DE'/></linearGradient></defs><rect width='1200' height='140' fill='url(#g)'/><circle cx='1110' cy='10' r='120' fill='#FFFFFF' fill-opacity='0.08'/><circle cx='960' cy='150' r='80' fill='#FFFFFF' fill-opacity='0.06'/></svg>\");",
-        "RuleProviderType": "Unknown"
       }
     ],
     "ControlPropertyState": [
-      "Formulas",
-      {
-        "InvariantPropertyName": "OnStart",
-        "AutoRuleBindingEnabled": false,
-        "AutoRuleBindingString": "Set(gRole, \"Requester\");\nClearCollect(colItems, Sort('Pantry Items', 'Item Name'))",
-        "NameMapSourceSchema": "?",
-        "IsLockable": false,
-        "AFDDataSourceName": ""
-      },
       "MinScreenHeight",
       "MinScreenWidth",
       "ConfirmExit",

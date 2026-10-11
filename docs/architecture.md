@@ -69,6 +69,6 @@ The choices (Item Category, Unit, Order Status, Approval Status, Approval Action
 | `solution/flows.py` | Flow definitions, including the approval limits and recipients |
 | `power-apps/canvas-app/generate_screens.py` | Generates the app's `Src/*.pa.yaml` (design system plus screens) |
 | `power-apps/canvas-app/validate_app.py` | Property, enum and layout checks before packing |
-| `power-apps/canvas-app/shell/` | Studio-saved app shell, including the Dataverse table metadata |
+| `power-apps/canvas-app/shell/` | App shell (properties, theme). The tables are added in Studio after import |
 | `copilot-agent/workspace/` | Copilot Studio agent source (instructions and topics) |
 | `dataverse/sample-data/` | Supplier and pantry item CSVs for import |

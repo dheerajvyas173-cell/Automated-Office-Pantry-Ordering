@@ -1,6 +1,6 @@
 # Import guide
 
-`Step6_Copilot_Agent.zip` contains the whole solution (version 1.1.1.0): tables, choices, three security roles, three cloud flows, the canvas app and the Copilot agent. It upgrades any earlier import of `PantrySupplyOrdering`.
+`Step6_Copilot_Agent.zip` contains the whole solution (version 1.1.3.0): tables, choices, three security roles, three cloud flows, the canvas app and the Copilot agent. It upgrades any earlier import of `PantrySupplyOrdering`.
 
 The other ZIPs (`PantrySupplyOrdering_1_0_0_0.zip` and `Step3`–`Step5`) are the earlier step-by-step layers. They aren't needed if you import Step 6.
 
@@ -36,9 +36,11 @@ In the Power Platform admin center → **Users** → **Manage security roles**, 
 Share the app with the same people.
 
 ## 5. Canvas app
-The app ships with its five tables already connected, so it works straight after import. Open it from **Apps** → **Pantry Supply Ordering** → **Play**.
+1. **Apps** → **Pantry Supply Ordering** → **Edit**.
+2. **Data** (cylinder icon) → **Add data** → **Dataverse**, then add Pantry Items, Suppliers, Supply Orders, Order Line Items and Approval History Records. Do this again after each import of a new version.
+3. **Save**, then **Publish**.
 
-The tables are connected using the names Studio gave them in the original environment (`Order Line Items_1` for the line items). If you import into a different environment and Studio reports a data source error, remove and re-add that table under **Data**.
+The tables can't be shipped inside the app: an app packed with its Dataverse tables fails to open in Studio ("Error opening file").
 
 ## 6. Copilot agent
 Open Copilot Studio → **Pantry Supply Assistant**.

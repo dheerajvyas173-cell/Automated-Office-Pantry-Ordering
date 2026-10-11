@@ -11,7 +11,7 @@ A Power Platform solution that automates ordering coffee, snacks and supplies fo
 1. make.powerapps.com → **Solutions** → **Import solution** → `Step6_Copilot_Agent.zip`.
 2. Choose your **Dataverse**, **Approvals** and **Office 365 Outlook** connections, then click **Import**.
 3. Load the sample data from `dataverse/sample-data/` (see [sample-data.md](dataverse/sample-data.md)).
-4. Open **Pantry Supply Ordering**. The five tables are already connected.
+4. Open **Pantry Supply Ordering** → **Edit** → **Data** → **Add data**, and add the five tables: Pantry Items, Suppliers, Supply Orders, Order Line Items and Approval History Records. Then **Save** and **Publish**.
 5. In each flow's **Settings** step, set the approver and pantry-admin email addresses.
 
 ## What it does
