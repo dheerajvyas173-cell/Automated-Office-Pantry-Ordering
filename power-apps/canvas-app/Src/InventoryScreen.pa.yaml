@@ -2,7 +2,6 @@ Screens:
   InventoryScreen:
     Properties:
       Fill: =clrCanvas
-      OnHidden: =Set(gInvTab, Blank())
     Children:
       - IvRoot:
           Control: GroupContainer@1.4.0
@@ -281,7 +280,7 @@ Screens:
                               AccessibleLabel: ="Filter by stock level"
                               Alignment: =TabListAlignment.Start
                               Appearance: =TabListAppearance.Subtle
-                              Default: =Coalesce(gInvTab, "All")
+                              Default: ="All"
                               Height: =40
                               Items: =["All", "Low stock", "Out of stock"]
                               Width: =340

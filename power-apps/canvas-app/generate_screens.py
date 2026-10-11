@@ -283,7 +283,7 @@ def home_screen():
             section_title(f"{p}RestockTitle", '"Needs restocking"'),
             spacer(f"{p}RestockSpacer"),
             button(f"{p}RestockAll", '"View inventory"',
-                   'Set(gInvTab, "Low stock"); Navigate(InventoryScreen, ScreenTransition.None)', "Subtle",
+                   "Navigate(InventoryScreen, ScreenTransition.None)", "Subtle",
                    "ArrowRight", Layout="ButtonLayout.IconAfter", Width=150),
         ], Height=36, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
         gallery(f"{p}RestockList", f"Sort({low}, 'Current Stock')", 60, [
@@ -578,7 +578,7 @@ def inventory_screen():
         row_divider(f"{p}CDivider"),
     ]
     toolbar = box(f"{p}Toolbar", "Horizontal", [
-        ctl(f"{p}Tabs", TABS, Items='["All", "Low stock", "Out of stock"]', Default='Coalesce(gInvTab, "All")',
+        ctl(f"{p}Tabs", TABS, Items='["All", "Low stock", "Out of stock"]', Default='"All"',
             Appearance="TabListAppearance.Subtle", Alignment="TabListAlignment.Start",
             AccessibleLabel='"Filter by stock level"', Width=340, Height=40),
         spacer(f"{p}ToolbarSpacer"),
@@ -599,7 +599,7 @@ def inventory_screen():
                       "Subtle", "ArrowClockwise", Width=120)]
     return page("InventoryScreen", p, "Inventory", "Inventory",
                 '"Current stock for every pantry item. Request anything that is running low."',
-                actions, [toolbar, table], screen_props={"OnHidden": "Set(gInvTab, Blank())"})
+                actions, [toolbar, table])
 
 
 APP = """App:

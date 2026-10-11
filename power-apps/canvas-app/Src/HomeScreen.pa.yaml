@@ -652,7 +652,7 @@ Screens:
                                           Height: =36
                                           Icon: ="ArrowRight"
                                           Layout: =ButtonLayout.IconAfter
-                                          OnSelect: =Set(gInvTab, "Low stock"); Navigate(InventoryScreen, ScreenTransition.None)
+                                          OnSelect: =Navigate(InventoryScreen, ScreenTransition.None)
                                           Text: ="View inventory"
                                           Width: =150
                               - HmRestockList:
