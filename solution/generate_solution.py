@@ -4,8 +4,11 @@ Run: python3 solution/generate_solution.py
 Outputs: PantrySupplyOrdering_1_0_0_0.zip (full) and PantrySupplyOrdering_TEST.zip (one table, diagnostic).
 """
 import os
+import uuid
 import zipfile
 from xml.sax.saxutils import quoteattr
+
+import flows as flows_mod
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOLUTION_DIR = os.path.join(ROOT, "solution")
@@ -371,15 +374,53 @@ FULL_RELATIONSHIPS = [
     ("cr_supplyorder", "cr_approvalhistory", "cr_supplyorder"),
 ]
 
-TEST_ENTITIES = [
-    ("cr_supplier", "Supplier", "Suppliers", "Supplier contact information and details", [
-        a_primarykey("cr_supplierid", "Supplier"),
-        a_primaryname("cr_name", "Supplier Name"),
-    ]),
-]
+
+# Privilege levels: Basic = own records, Global = whole organization.
+ALL_PRIVS = ["Create", "Read", "Write", "Delete", "Append", "AppendTo", "Assign", "Share"]
+TABLES = ["cr_supplier", "cr_pantryitem", "cr_supplyorder", "cr_orderlineitem", "cr_approvalhistory"]
+ROLES = {
+    "Pantry Requester": {
+        "cr_supplyorder": {"Create": "Basic", "Read": "Basic", "Write": "Basic", "Append": "Basic", "AppendTo": "Basic"},
+        "cr_orderlineitem": {"Create": "Basic", "Read": "Basic", "Write": "Basic", "Delete": "Basic", "Append": "Basic", "AppendTo": "Basic"},
+        "cr_pantryitem": {"Read": "Global", "AppendTo": "Global"},
+        "cr_supplier": {"Read": "Global", "AppendTo": "Global"},
+        "cr_approvalhistory": {"Read": "Global"},
+    },
+    "Pantry Approver": {
+        "cr_supplyorder": {"Read": "Global", "Write": "Global", "Append": "Global", "AppendTo": "Global"},
+        "cr_orderlineitem": {"Read": "Global", "Append": "Global", "AppendTo": "Global"},
+        "cr_pantryitem": {"Read": "Global", "AppendTo": "Global"},
+        "cr_supplier": {"Read": "Global", "AppendTo": "Global"},
+        "cr_approvalhistory": {"Create": "Global", "Read": "Global", "Append": "Global"},
+    },
+    "Pantry Admin": {t: {p: "Global" for p in ALL_PRIVS} for t in TABLES},
+}
 
 
-def customizations_xml(entities, relationships, optionsets):
+def stable_guid(name):
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, f"pantrysupplyordering/{name}"))
+
+
+def roles_xml():
+    xml, roots = "\n", ""
+    for role, tables in ROLES.items():
+        rid = stable_guid(f"role/{role}")
+        privs = "".join(
+            f'        <RolePrivilege name="prv{priv}{table}" level="{level}" />\n'
+            for table, perms in tables.items() for priv, level in perms.items())
+        xml += f"""    <Role id="{{{rid}}}" name={label(role)}>
+      <iscustomizable>1</iscustomizable>
+      <canbedeleted>1</canbedeleted>
+      <IsInherited>1</IsInherited>
+      <RolePrivileges>
+{privs}      </RolePrivileges>
+    </Role>
+"""
+        roots += f'      <RootComponent type="20" id="{{{rid}}}" behavior="0" />\n'
+    return xml + "  ", roots
+
+
+def customizations_xml(entities, relationships, optionsets, roles="", workflows="", connrefs=""):
     ents = "".join(entity(*e) for e in entities)
     rels = "".join(relationship(*r) for r in relationships)
     opts = "".join(optionset(n, d, o) for n, (d, o) in optionsets.items())
@@ -389,15 +430,15 @@ def customizations_xml(entities, relationships, optionsets):
 <ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="{ORG_VERSION}" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.24094.00198">
   <Entities>
 {ents}  </Entities>
-  <Roles></Roles>
-  <Workflows></Workflows>
+  <Roles>{roles}</Roles>
+  <Workflows>{workflows}</Workflows>
   <FieldSecurityProfiles></FieldSecurityProfiles>
   <Templates />
   <EntityMaps />
 {rel_block}  <OrganizationSettings />
 {opt_block}  <CustomControls />
   <EntityDataProviders />
-  <Languages>
+{connrefs}  <Languages>
     <Language>1033</Language>
   </Languages>
 </ImportExportXml>
@@ -421,9 +462,10 @@ def address(number):
 """
 
 
-def solution_xml(version, entities, optionsets):
+def solution_xml(version, entities, optionsets, extra_roots=""):
     roots = "".join(f'      <RootComponent type="1" schemaName="{e[0]}" behavior="0" />\n' for e in entities)
     roots += "".join(f'      <RootComponent type="9" schemaName="{n}" behavior="0" />\n' for n in optionsets)
+    roots += extra_roots
     return f"""<?xml version="1.0" encoding="utf-8"?>
 <ImportExportXml version="{ORG_VERSION}" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" OrganizationVersion="{ORG_VERSION}" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.24094.00198" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
@@ -459,7 +501,7 @@ def solution_xml(version, entities, optionsets):
 """
 
 
-CONTENT_TYPES = """<?xml version="1.0" encoding="utf-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="xml" ContentType="application/octet-stream" /></Types>"""
+CONTENT_TYPES = """<?xml version="1.0" encoding="utf-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="xml" ContentType="application/octet-stream" /><Default Extension="json" ContentType="application/octet-stream" /><Default Extension="msapp" ContentType="application/octet-stream" /><Default Extension="png" ContentType="application/octet-stream" /></Types>"""
 
 
 def build_zip(path, files):
@@ -469,41 +511,31 @@ def build_zip(path, files):
     print(f"Wrote {path}")
 
 
-def keep_attrs(entities, predicate):
-    return [(*e[:4], [a for a in e[4] if predicate(a)]) for e in entities]
-
-
-def is_core(attr):
-    return "<Type>primarykey</Type>" in attr or "PrimaryName|" in attr
-
-
-def is_not_lookup(attr):
-    return "<Type>lookup</Type>" not in attr
-
-
-def write_zip(filename, version, entities, relationships, optionsets):
-    build_zip(os.path.join(ROOT, filename), {
+def write_zip(filename, version, entities, relationships, optionsets, roles=False, flows=False):
+    role_xml, role_roots = roles_xml() if roles else ("", "")
+    wf_xml, wf_roots, conn_xml, wf_files = flows_mod.build() if flows else ("", "", "", {})
+    files = {
         "[Content_Types].xml": CONTENT_TYPES,
-        "customizations.xml": customizations_xml(entities, relationships, optionsets),
-        "solution.xml": solution_xml(version, entities, optionsets)})
+        "customizations.xml": customizations_xml(entities, relationships, optionsets,
+                                                 role_xml, wf_xml, conn_xml),
+        "solution.xml": solution_xml(version, entities, optionsets, role_roots + wf_roots),
+    }
+    files.update(wf_files)
+    build_zip(os.path.join(ROOT, filename), files)
+    return files
 
 
 def main():
-    full_cust = customizations_xml(FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS)
-    full_sol = solution_xml("1.0.0.0", FULL_ENTITIES, OPTION_SETS)
-    for name, content in [("customizations.xml", full_cust), ("solution.xml", full_sol),
-                          ("[Content_Types].xml", CONTENT_TYPES)]:
+    full = write_zip("PantrySupplyOrdering_1_0_0_0.zip", "1.0.0.0",
+                     FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS)
+    # Each step upgrades the solution already in the environment, adding one layer.
+    write_zip("Step3_Security_Roles.zip", "1.0.1.0",
+              FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True)
+    latest = write_zip("Step4_Cloud_Flows.zip", "1.0.2.0",
+                       FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True)
+    for name in ("customizations.xml", "solution.xml", "[Content_Types].xml"):
         with open(os.path.join(SOLUTION_DIR, name), "w", encoding="utf-8") as f:
-            f.write(content)
-    write_zip("PantrySupplyOrdering_TEST.zip", "0.0.0.1", TEST_ENTITIES, [], {})
-    # Staged builds: each one upgrades the previous, adding one layer.
-    write_zip("Step1A_Tables_Only.zip", "0.0.1.0",
-              keep_attrs(FULL_ENTITIES, is_core), [], {})
-    write_zip("Step1B_Choices_Only.zip", "0.0.1.2", TEST_ENTITIES, [], OPTION_SETS)
-    write_zip("Step2_All_Columns.zip", "0.0.2.1",
-              keep_attrs(FULL_ENTITIES, is_not_lookup), [], OPTION_SETS)
-    write_zip("PantrySupplyOrdering_1_0_0_0.zip", "1.0.0.0",
-              FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS)
+            f.write(latest[name])
 
 
 if __name__ == "__main__":

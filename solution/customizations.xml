@@ -2528,8 +2528,176 @@
     </RibbonDiffXml>
   </Entity>
   </Entities>
-  <Roles></Roles>
-  <Workflows></Workflows>
+  <Roles>
+    <Role id="{78a7246e-5af2-5466-b3f4-7b3bf5ccf45a}" name="Pantry Requester">
+      <iscustomizable>1</iscustomizable>
+      <canbedeleted>1</canbedeleted>
+      <IsInherited>1</IsInherited>
+      <RolePrivileges>
+        <RolePrivilege name="prvCreatecr_supplyorder" level="Basic" />
+        <RolePrivilege name="prvReadcr_supplyorder" level="Basic" />
+        <RolePrivilege name="prvWritecr_supplyorder" level="Basic" />
+        <RolePrivilege name="prvAppendcr_supplyorder" level="Basic" />
+        <RolePrivilege name="prvAppendTocr_supplyorder" level="Basic" />
+        <RolePrivilege name="prvCreatecr_orderlineitem" level="Basic" />
+        <RolePrivilege name="prvReadcr_orderlineitem" level="Basic" />
+        <RolePrivilege name="prvWritecr_orderlineitem" level="Basic" />
+        <RolePrivilege name="prvDeletecr_orderlineitem" level="Basic" />
+        <RolePrivilege name="prvAppendcr_orderlineitem" level="Basic" />
+        <RolePrivilege name="prvAppendTocr_orderlineitem" level="Basic" />
+        <RolePrivilege name="prvReadcr_pantryitem" level="Global" />
+        <RolePrivilege name="prvAppendTocr_pantryitem" level="Global" />
+        <RolePrivilege name="prvReadcr_supplier" level="Global" />
+        <RolePrivilege name="prvAppendTocr_supplier" level="Global" />
+        <RolePrivilege name="prvReadcr_approvalhistory" level="Global" />
+      </RolePrivileges>
+    </Role>
+    <Role id="{86e987cd-7f4b-570d-b8c9-48e8b250a92a}" name="Pantry Approver">
+      <iscustomizable>1</iscustomizable>
+      <canbedeleted>1</canbedeleted>
+      <IsInherited>1</IsInherited>
+      <RolePrivileges>
+        <RolePrivilege name="prvReadcr_supplyorder" level="Global" />
+        <RolePrivilege name="prvWritecr_supplyorder" level="Global" />
+        <RolePrivilege name="prvAppendcr_supplyorder" level="Global" />
+        <RolePrivilege name="prvAppendTocr_supplyorder" level="Global" />
+        <RolePrivilege name="prvReadcr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvAppendcr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvAppendTocr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvReadcr_pantryitem" level="Global" />
+        <RolePrivilege name="prvAppendTocr_pantryitem" level="Global" />
+        <RolePrivilege name="prvReadcr_supplier" level="Global" />
+        <RolePrivilege name="prvAppendTocr_supplier" level="Global" />
+        <RolePrivilege name="prvCreatecr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvReadcr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvAppendcr_approvalhistory" level="Global" />
+      </RolePrivileges>
+    </Role>
+    <Role id="{302ad8a1-5d03-5543-a2bb-8958ef06ca69}" name="Pantry Admin">
+      <iscustomizable>1</iscustomizable>
+      <canbedeleted>1</canbedeleted>
+      <IsInherited>1</IsInherited>
+      <RolePrivileges>
+        <RolePrivilege name="prvCreatecr_supplier" level="Global" />
+        <RolePrivilege name="prvReadcr_supplier" level="Global" />
+        <RolePrivilege name="prvWritecr_supplier" level="Global" />
+        <RolePrivilege name="prvDeletecr_supplier" level="Global" />
+        <RolePrivilege name="prvAppendcr_supplier" level="Global" />
+        <RolePrivilege name="prvAppendTocr_supplier" level="Global" />
+        <RolePrivilege name="prvAssigncr_supplier" level="Global" />
+        <RolePrivilege name="prvSharecr_supplier" level="Global" />
+        <RolePrivilege name="prvCreatecr_pantryitem" level="Global" />
+        <RolePrivilege name="prvReadcr_pantryitem" level="Global" />
+        <RolePrivilege name="prvWritecr_pantryitem" level="Global" />
+        <RolePrivilege name="prvDeletecr_pantryitem" level="Global" />
+        <RolePrivilege name="prvAppendcr_pantryitem" level="Global" />
+        <RolePrivilege name="prvAppendTocr_pantryitem" level="Global" />
+        <RolePrivilege name="prvAssigncr_pantryitem" level="Global" />
+        <RolePrivilege name="prvSharecr_pantryitem" level="Global" />
+        <RolePrivilege name="prvCreatecr_supplyorder" level="Global" />
+        <RolePrivilege name="prvReadcr_supplyorder" level="Global" />
+        <RolePrivilege name="prvWritecr_supplyorder" level="Global" />
+        <RolePrivilege name="prvDeletecr_supplyorder" level="Global" />
+        <RolePrivilege name="prvAppendcr_supplyorder" level="Global" />
+        <RolePrivilege name="prvAppendTocr_supplyorder" level="Global" />
+        <RolePrivilege name="prvAssigncr_supplyorder" level="Global" />
+        <RolePrivilege name="prvSharecr_supplyorder" level="Global" />
+        <RolePrivilege name="prvCreatecr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvReadcr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvWritecr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvDeletecr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvAppendcr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvAppendTocr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvAssigncr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvSharecr_orderlineitem" level="Global" />
+        <RolePrivilege name="prvCreatecr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvReadcr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvWritecr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvDeletecr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvAppendcr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvAppendTocr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvAssigncr_approvalhistory" level="Global" />
+        <RolePrivilege name="prvSharecr_approvalhistory" level="Global" />
+      </RolePrivileges>
+    </Role>
+  </Roles>
+  <Workflows>
+    <Workflow WorkflowId="{73078bb2-ff3c-55ea-b73c-b96c75a79fc2}" Name="Pantry Order Approval" Description="Sends submitted supply orders for approval and records the decision.">
+      <JsonFileName>/Workflows/PantryOrderApproval-73078BB2-FF3C-55EA-B73C-B96C75A79FC2.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Pantry Order Approval" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{402542cd-c385-5eea-ab48-b5e402c6180f}" Name="Pantry Daily Low Stock Alert" Description="Emails the pantry admin every morning about items at or below minimum stock.">
+      <JsonFileName>/Workflows/PantryDailyLowStockAlert-402542CD-C385-5EEA-AB48-B5E402C6180F.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Pantry Daily Low Stock Alert" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{9469bfb0-cc65-5c2a-950a-a99d285fcac9}" Name="Pantry Supplier Order Email" Description="Emails each supplier their part of an approved order and marks it Ordered.">
+      <JsonFileName>/Workflows/PantrySupplierOrderEmail-9469BFB0-CC65-5C2A-950A-A99D285FCAC9.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.0</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1033" description="Pantry Supplier Order Email" />
+      </LocalizedNames>
+    </Workflow>
+  </Workflows>
   <FieldSecurityProfiles></FieldSecurityProfiles>
   <Templates />
   <EntityMaps />
@@ -3136,6 +3304,32 @@
   </optionsets>
   <CustomControls />
   <EntityDataProviders />
+  <connectionreferences>
+    <connectionreference connectionreferencelogicalname="cr_pantry_dataverse">
+      <connectionreferencedisplayname>Pantry - Dataverse</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="cr_pantry_approvals">
+      <connectionreferencedisplayname>Pantry - Approvals</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_approvals</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="cr_pantry_outlook">
+      <connectionreferencedisplayname>Pantry - Office 365 Outlook</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_office365</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+  </connectionreferences>
   <Languages>
     <Language>1033</Language>
   </Languages>

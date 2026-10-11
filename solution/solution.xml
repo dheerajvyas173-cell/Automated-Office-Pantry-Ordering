@@ -8,7 +8,7 @@
     <Descriptions>
       <Description description="Automated Office Pantry Supply Ordering System" languagecode="1033" />
     </Descriptions>
-    <Version>1.0.0.0</Version>
+    <Version>1.0.2.0</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>PantryDev</UniqueName>
@@ -93,6 +93,12 @@
       <RootComponent type="9" schemaName="cr_approvalstatus" behavior="0" />
       <RootComponent type="9" schemaName="cr_approvalaction" behavior="0" />
       <RootComponent type="9" schemaName="cr_suppliercategory" behavior="0" />
+      <RootComponent type="20" id="{78a7246e-5af2-5466-b3f4-7b3bf5ccf45a}" behavior="0" />
+      <RootComponent type="20" id="{86e987cd-7f4b-570d-b8c9-48e8b250a92a}" behavior="0" />
+      <RootComponent type="20" id="{302ad8a1-5d03-5543-a2bb-8958ef06ca69}" behavior="0" />
+      <RootComponent type="29" id="{73078bb2-ff3c-55ea-b73c-b96c75a79fc2}" behavior="0" />
+      <RootComponent type="29" id="{402542cd-c385-5eea-ab48-b5e402c6180f}" behavior="0" />
+      <RootComponent type="29" id="{9469bfb0-cc65-5c2a-950a-a99d285fcac9}" behavior="0" />
     </RootComponents>
     <MissingDependencies />
   </SolutionManifest>
