@@ -70,18 +70,22 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
+                              FillPortions: =1
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
                               LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinWidth: =0
                               Visible: =App.Width >= 900
                             Children:
                               - RvBrandName:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextPrimary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =22
                                     Size: =15
@@ -90,6 +94,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextSecondary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
@@ -105,6 +110,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="Dashboard"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="Home"
                         IconStyle: =IconStyle.Outline
@@ -117,6 +123,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="New request"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="Add"
                         IconStyle: =IconStyle.Outline
@@ -129,6 +136,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="My requests"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="DocumentBulletList"
                         IconStyle: =IconStyle.Outline
@@ -141,6 +149,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="Inventory"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="Box"
                         IconStyle: =IconStyle.Outline
@@ -153,6 +162,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="Approvals"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="TaskListSquareLtr"
                         IconStyle: =IconStyle.Outline
@@ -166,6 +176,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="Receiving"
                         Appearance: =ButtonAppearance.Secondary
+                        FillPortions: =0
                         Height: =40
                         Icon: ="VehicleTruckProfile"
                         IconStyle: =IconStyle.Filled
@@ -180,6 +191,7 @@ Screens:
                       Properties:
                         DropShadow: =DropShadow.None
                         Fill: =Color.Transparent
+                        FillPortions: =1
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =8
                         LayoutMinHeight: =0
@@ -191,7 +203,7 @@ Screens:
                         DropShadow: =DropShadow.None
                         Fill: =clrCanvas
                         FillPortions: =0
-                        Height: =64
+                        Height: =72
                         LayoutAlignItems: =LayoutAlignItems.Stretch
                         LayoutDirection: =LayoutDirection.Vertical
                         LayoutGap: =4
@@ -209,6 +221,7 @@ Screens:
                             Control: ModernText@1.0.0
                             Properties:
                               Color: =clrTextSecondary
+                              FillPortions: =0
                               FontWeight: =FontWeight.Semibold
                               Height: =16
                               Size: =11
@@ -218,6 +231,7 @@ Screens:
                             Properties:
                               AccessibleLabel: ="Switch role"
                               DefaultSelectedItems: =[gRole]
+                              FillPortions: =0
                               Height: =36
                               IsSearchable: =false
                               ItemDisplayText: =ThisItem.Value
@@ -239,6 +253,7 @@ Screens:
                         - RvUserAvatar:
                             Control: ModernAvatar@1.1.0
                             Properties:
+                              FillPortions: =0
                               Height: =32
                               Tooltip: =User().FullName
                               Width: =32
@@ -246,18 +261,22 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
+                              FillPortions: =1
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
                               LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinWidth: =0
                               Visible: =App.Width >= 900
                             Children:
                               - RvUserName:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextPrimary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
                                     Size: =13
@@ -266,6 +285,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextSecondary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
@@ -276,9 +296,11 @@ Screens:
                 Properties:
                   DropShadow: =DropShadow.None
                   Fill: =Color.Transparent
+                  FillPortions: =1
                   LayoutAlignItems: =LayoutAlignItems.Stretch
                   LayoutDirection: =LayoutDirection.Vertical
                   LayoutGap: =16
+                  LayoutMinWidth: =0
                   PaddingBottom: =24
                   PaddingLeft: =24
                   PaddingRight: =24
@@ -300,17 +322,21 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
+                              FillPortions: =1
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =2
                               LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinWidth: =0
                             Children:
                               - RvTitle:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextPrimary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =38
                                     Size: =26
@@ -319,6 +345,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextSecondary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =22
                                     Size: =14
@@ -327,6 +354,7 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =0
@@ -334,12 +362,13 @@ Screens:
                               LayoutDirection: =LayoutDirection.Horizontal
                               LayoutGap: =8
                               LayoutJustifyContent: =LayoutJustifyContent.End
-                              Width: =160
+                              Width: =120
                             Children:
                               - RvRefresh:
                                   Control: ModernButton@1.0.0
                                   Properties:
                                     Appearance: =ButtonAppearance.Subtle
+                                    FillPortions: =0
                                     Height: =36
                                     Icon: ="ArrowClockwise"
                                     OnSelect: =Refresh('Supply Orders'); Set(gRecvOrder, Blank())
@@ -351,9 +380,11 @@ Screens:
                       Properties:
                         DropShadow: =DropShadow.None
                         Fill: =Color.Transparent
+                        FillPortions: =1
                         LayoutAlignItems: =LayoutAlignItems.Stretch
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =16
+                        LayoutMinHeight: =0
                       Children:
                         - RvList:
                             Control: GroupContainer@1.5.0
@@ -383,6 +414,7 @@ Screens:
                                     AccessibleLabel: ="Filter receiving"
                                     Alignment: =TabListAlignment.Start
                                     Appearance: =TabListAppearance.SubtleCircular
+                                    FillPortions: =0
                                     Height: =40
                                     Items: =["To receive", "Received"]
                               - RvOrders:
@@ -390,11 +422,12 @@ Screens:
                                   Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                   Properties:
                                     Fill: =Color.Transparent
+                                    FillPortions: =1
                                     Items: |-
                                       =Switch(RvTabs.Selected.Value,
                                               "Received", Sort(Filter('Supply Orders', 'Order Status' = [@'Order Status'].Received), 'Modified On', SortOrder.Descending),
                                               Sort(Filter('Supply Orders', 'Order Status' = [@'Order Status'].Ordered || 'Order Status' = [@'Order Status'].Approved || 'Order Status' = [@'Order Status'].'Partially Received'), 'Created On', SortOrder.Ascending))
-                                    LayoutMinHeight: =120
+                                    LayoutMinHeight: =100
                                     OnSelect: =Set(gRecvOrder, ThisItem)
                                     TemplateFill: =If(!IsBlank(gRecvOrder) && ThisItem.'Supply Order' = gRecvOrder.'Supply Order', clrBrandTint, Color.Transparent)
                                     TemplateSize: =72
@@ -404,10 +437,6 @@ Screens:
                                         Properties:
                                           Fill: =clrBrand
                                           Height: =Parent.TemplateHeight - 20
-                                          RadiusBottomLeft: =2
-                                          RadiusBottomRight: =2
-                                          RadiusTopLeft: =2
-                                          RadiusTopRight: =2
                                           Visible: =!IsBlank(gRecvOrder) && ThisItem.'Supply Order' = gRecvOrder.'Supply Order'
                                           Width: =3
                                           Y: =10
@@ -457,7 +486,7 @@ Screens:
                                     DropShadow: =DropShadow.None
                                     Fill: =Color.Transparent
                                     FillPortions: =0
-                                    Height: =96
+                                    Height: =80
                                     LayoutAlignItems: =LayoutAlignItems.Stretch
                                     LayoutDirection: =LayoutDirection.Vertical
                                     LayoutGap: =6
@@ -467,6 +496,7 @@ Screens:
                                     - RvOrdersEmptyIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          FillPortions: =0
                                           Height: =28
                                           Icon: ="CheckmarkCircle"
                                           IconColor: =clrTextTertiary
@@ -476,6 +506,7 @@ Screens:
                                         Properties:
                                           Align: =Align.Center
                                           Color: =clrTextSecondary
+                                          FillPortions: =0
                                           FontWeight: =FontWeight.Normal
                                           Height: =40
                                           Size: =13
@@ -488,6 +519,7 @@ Screens:
                               BorderThickness: =1
                               DropShadow: =DropShadow.None
                               Fill: =clrSurface
+                              FillPortions: =1
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =16
@@ -507,9 +539,12 @@ Screens:
                                   Properties:
                                     DropShadow: =DropShadow.None
                                     Fill: =Color.Transparent
+                                    FillPortions: =1
                                     LayoutAlignItems: =LayoutAlignItems.Stretch
                                     LayoutDirection: =LayoutDirection.Vertical
                                     LayoutGap: =12
+                                    LayoutMinHeight: =0
+                                    LayoutOverflowY: =LayoutOverflow.Scroll
                                     Visible: =!IsBlank(gRecvOrder)
                                   Children:
                                     - RvDetailHead:
@@ -537,6 +572,7 @@ Screens:
                                               Control: ModernBadge@1.0.0
                                               Properties:
                                                 Content: =Text(gRecvOrder.'Order Status')
+                                                FillPortions: =0
                                                 Height: =28
                                                 Intent: =Switch(Text(gRecvOrder.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
                                                 Shape: =BadgeShape.Rounded
@@ -556,8 +592,10 @@ Screens:
                                               Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
+                                                AlignInContainer: =AlignInContainer.Stretch
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
+                                                FillPortions: =1
                                                 LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =2
@@ -567,6 +605,7 @@ Screens:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       Color: =clrTextSecondary
+                                                      FillPortions: =0
                                                       FontWeight: =FontWeight.Normal
                                                       Height: =18
                                                       Size: =12
@@ -575,6 +614,7 @@ Screens:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       Color: =clrTextPrimary
+                                                      FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
@@ -583,8 +623,10 @@ Screens:
                                               Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
+                                                AlignInContainer: =AlignInContainer.Stretch
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
+                                                FillPortions: =1
                                                 LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =2
@@ -594,6 +636,7 @@ Screens:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       Color: =clrTextSecondary
+                                                      FillPortions: =0
                                                       FontWeight: =FontWeight.Normal
                                                       Height: =18
                                                       Size: =12
@@ -602,6 +645,7 @@ Screens:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       Color: =clrTextPrimary
+                                                      FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
@@ -610,8 +654,10 @@ Screens:
                                               Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
+                                                AlignInContainer: =AlignInContainer.Stretch
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
+                                                FillPortions: =1
                                                 LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =2
@@ -621,6 +667,7 @@ Screens:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       Color: =clrTextSecondary
+                                                      FillPortions: =0
                                                       FontWeight: =FontWeight.Normal
                                                       Height: =18
                                                       Size: =12
@@ -629,6 +676,7 @@ Screens:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       Color: =clrTextPrimary
+                                                      FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
@@ -637,8 +685,10 @@ Screens:
                                               Control: GroupContainer@1.5.0
                                               Variant: AutoLayout
                                               Properties:
+                                                AlignInContainer: =AlignInContainer.Stretch
                                                 DropShadow: =DropShadow.None
                                                 Fill: =Color.Transparent
+                                                FillPortions: =1
                                                 LayoutAlignItems: =LayoutAlignItems.Stretch
                                                 LayoutDirection: =LayoutDirection.Vertical
                                                 LayoutGap: =2
@@ -648,6 +698,7 @@ Screens:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       Color: =clrTextSecondary
+                                                      FillPortions: =0
                                                       FontWeight: =FontWeight.Normal
                                                       Height: =18
                                                       Size: =12
@@ -656,6 +707,7 @@ Screens:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       Color: =clrTextPrimary
+                                                      FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
@@ -664,6 +716,7 @@ Screens:
                                         Control: ModernText@1.0.0
                                         Properties:
                                           Color: =clrTextSecondary
+                                          FillPortions: =0
                                           FontWeight: =FontWeight.Normal
                                           Height: =40
                                           Size: =13
@@ -685,6 +738,7 @@ Screens:
                                           - RvLnHeadIcon:
                                               Control: ModernIcon@1.1.1
                                               Properties:
+                                                FillPortions: =0
                                                 Height: =20
                                                 Icon: ="BoxMultiple"
                                                 IconColor: =clrBrand
@@ -694,29 +748,20 @@ Screens:
                                               Control: ModernText@1.0.0
                                               Properties:
                                                 Color: =clrTextPrimary
-                                                FillPortions: =0
+                                                FillPortions: =1
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =28
+                                                LayoutMinWidth: =0
                                                 Size: =16
                                                 Text: ="Items"
-                                                Width: =240
-                                          - RvLnHeadSpacer:
-                                              Control: GroupContainer@1.5.0
-                                              Variant: AutoLayout
-                                              Properties:
-                                                DropShadow: =DropShadow.None
-                                                Fill: =Color.Transparent
-                                                LayoutDirection: =LayoutDirection.Horizontal
-                                                LayoutGap: =8
-                                                LayoutMinHeight: =0
-                                                LayoutMinWidth: =0
                                     - RvLines:
                                         Control: Gallery@2.15.0
                                         Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                                         Properties:
                                           Fill: =Color.Transparent
+                                          FillPortions: =1
                                           Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = gRecvOrder.'Supply Order')
-                                          LayoutMinHeight: =120
+                                          LayoutMinHeight: =100
                                           TemplateSize: =56
                                         Children:
                                           - RvLnName:
@@ -825,7 +870,7 @@ Screens:
                                     DropShadow: =DropShadow.None
                                     Fill: =Color.Transparent
                                     FillPortions: =0
-                                    Height: =96
+                                    Height: =80
                                     LayoutAlignItems: =LayoutAlignItems.Stretch
                                     LayoutDirection: =LayoutDirection.Vertical
                                     LayoutGap: =6
@@ -835,6 +880,7 @@ Screens:
                                     - RvDetailEmptyIcon:
                                         Control: ModernIcon@1.1.1
                                         Properties:
+                                          FillPortions: =0
                                           Height: =28
                                           Icon: ="DocumentBulletList"
                                           IconColor: =clrTextTertiary
@@ -844,6 +890,7 @@ Screens:
                                         Properties:
                                           Align: =Align.Center
                                           Color: =clrTextSecondary
+                                          FillPortions: =0
                                           FontWeight: =FontWeight.Normal
                                           Height: =40
                                           Size: =13

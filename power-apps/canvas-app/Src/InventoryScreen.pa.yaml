@@ -70,18 +70,22 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
+                              FillPortions: =1
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
                               LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinWidth: =0
                               Visible: =App.Width >= 900
                             Children:
                               - IvBrandName:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextPrimary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =22
                                     Size: =15
@@ -90,6 +94,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextSecondary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
@@ -105,6 +110,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="Dashboard"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="Home"
                         IconStyle: =IconStyle.Outline
@@ -117,6 +123,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="New request"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="Add"
                         IconStyle: =IconStyle.Outline
@@ -129,6 +136,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="My requests"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="DocumentBulletList"
                         IconStyle: =IconStyle.Outline
@@ -141,6 +149,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="Inventory"
                         Appearance: =ButtonAppearance.Secondary
+                        FillPortions: =0
                         Height: =40
                         Icon: ="Box"
                         IconStyle: =IconStyle.Filled
@@ -153,6 +162,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="Approvals"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="TaskListSquareLtr"
                         IconStyle: =IconStyle.Outline
@@ -166,6 +176,7 @@ Screens:
                       Properties:
                         AccessibleLabel: ="Receiving"
                         Appearance: =ButtonAppearance.Subtle
+                        FillPortions: =0
                         Height: =40
                         Icon: ="VehicleTruckProfile"
                         IconStyle: =IconStyle.Outline
@@ -180,6 +191,7 @@ Screens:
                       Properties:
                         DropShadow: =DropShadow.None
                         Fill: =Color.Transparent
+                        FillPortions: =1
                         LayoutDirection: =LayoutDirection.Horizontal
                         LayoutGap: =8
                         LayoutMinHeight: =0
@@ -191,7 +203,7 @@ Screens:
                         DropShadow: =DropShadow.None
                         Fill: =clrCanvas
                         FillPortions: =0
-                        Height: =64
+                        Height: =72
                         LayoutAlignItems: =LayoutAlignItems.Stretch
                         LayoutDirection: =LayoutDirection.Vertical
                         LayoutGap: =4
@@ -209,6 +221,7 @@ Screens:
                             Control: ModernText@1.0.0
                             Properties:
                               Color: =clrTextSecondary
+                              FillPortions: =0
                               FontWeight: =FontWeight.Semibold
                               Height: =16
                               Size: =11
@@ -218,6 +231,7 @@ Screens:
                             Properties:
                               AccessibleLabel: ="Switch role"
                               DefaultSelectedItems: =[gRole]
+                              FillPortions: =0
                               Height: =36
                               IsSearchable: =false
                               ItemDisplayText: =ThisItem.Value
@@ -239,6 +253,7 @@ Screens:
                         - IvUserAvatar:
                             Control: ModernAvatar@1.1.0
                             Properties:
+                              FillPortions: =0
                               Height: =32
                               Tooltip: =User().FullName
                               Width: =32
@@ -246,18 +261,22 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
+                              FillPortions: =1
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =0
                               LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinWidth: =0
                               Visible: =App.Width >= 900
                             Children:
                               - IvUserName:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextPrimary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =20
                                     Size: =13
@@ -266,6 +285,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextSecondary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =16
                                     Size: =11
@@ -276,9 +296,11 @@ Screens:
                 Properties:
                   DropShadow: =DropShadow.None
                   Fill: =Color.Transparent
+                  FillPortions: =1
                   LayoutAlignItems: =LayoutAlignItems.Stretch
                   LayoutDirection: =LayoutDirection.Vertical
                   LayoutGap: =16
+                  LayoutMinWidth: =0
                   PaddingBottom: =24
                   PaddingLeft: =24
                   PaddingRight: =24
@@ -300,17 +322,21 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
+                              FillPortions: =1
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =2
                               LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinWidth: =0
                             Children:
                               - IvTitle:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextPrimary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Semibold
                                     Height: =38
                                     Size: =26
@@ -319,6 +345,7 @@ Screens:
                                   Control: ModernText@1.0.0
                                   Properties:
                                     Color: =clrTextSecondary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =22
                                     Size: =14
@@ -327,6 +354,7 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =0
@@ -334,12 +362,13 @@ Screens:
                               LayoutDirection: =LayoutDirection.Horizontal
                               LayoutGap: =8
                               LayoutJustifyContent: =LayoutJustifyContent.End
-                              Width: =160
+                              Width: =120
                             Children:
                               - IvRefresh:
                                   Control: ModernButton@1.0.0
                                   Properties:
                                     Appearance: =ButtonAppearance.Subtle
+                                    FillPortions: =0
                                     Height: =36
                                     Icon: ="ArrowClockwise"
                                     OnSelect: =Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))
@@ -363,6 +392,7 @@ Screens:
                               AccessibleLabel: ="Filter by stock level"
                               Alignment: =TabListAlignment.Start
                               Appearance: =TabListAppearance.SubtleCircular
+                              FillPortions: =0
                               Height: =40
                               Items: =["All", "Low stock", "Out of stock"]
                               Width: =360
@@ -370,8 +400,10 @@ Screens:
                             Control: GroupContainer@1.5.0
                             Variant: AutoLayout
                             Properties:
+                              AlignInContainer: =AlignInContainer.Stretch
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
+                              FillPortions: =1
                               LayoutDirection: =LayoutDirection.Horizontal
                               LayoutGap: =8
                               LayoutMinHeight: =0
@@ -380,6 +412,7 @@ Screens:
                             Control: ModernTextInput@1.1.2
                             Properties:
                               AccessibleLabel: ="Search inventory"
+                              FillPortions: =0
                               Height: =36
                               Placeholder: ="Search by name or SKU"
                               TriggerOutput: =TriggerOutput.Delayed
@@ -389,6 +422,7 @@ Screens:
                             Control: ModernCombobox@1.1.2
                             Properties:
                               AccessibleLabel: ="Filter by category"
+                              FillPortions: =0
                               Height: =36
                               InputTextPlaceholder: ="All categories"
                               ItemDisplayText: =ThisItem.Value
@@ -403,9 +437,11 @@ Screens:
                         BorderThickness: =1
                         DropShadow: =DropShadow.None
                         Fill: =clrSurface
+                        FillPortions: =1
                         LayoutAlignItems: =LayoutAlignItems.Stretch
                         LayoutDirection: =LayoutDirection.Vertical
                         LayoutGap: =8
+                        LayoutMinHeight: =0
                         PaddingBottom: =16
                         PaddingLeft: =16
                         PaddingRight: =16
@@ -436,8 +472,8 @@ Screens:
                                     Height: =20
                                     Size: =12
                                     Text: ="Item"
-                                    Width: =Parent.Width * 0.24 - 8
-                                    X: =Parent.Width * 0.0 + 12
+                                    Width: =(Parent.Width - 256) * 0.3 - 8
+                                    X: =(Parent.Width - 256) * 0.0 + 12
                                     Y: =10
                               - IvHCat:
                                   Control: ModernText@1.0.0
@@ -448,8 +484,8 @@ Screens:
                                     Height: =20
                                     Size: =12
                                     Text: ="Category"
-                                    Width: =Parent.Width * 0.14 - 8
-                                    X: =Parent.Width * 0.24 + 12
+                                    Width: =(Parent.Width - 256) * 0.18 - 8
+                                    X: =(Parent.Width - 256) * 0.3 + 12
                                     Y: =10
                               - IvHStock:
                                   Control: ModernText@1.0.0
@@ -460,8 +496,8 @@ Screens:
                                     Height: =20
                                     Size: =12
                                     Text: ="In stock"
-                                    Width: =Parent.Width * 0.09 - 8
-                                    X: =Parent.Width * 0.38 + 12
+                                    Width: =(Parent.Width - 256) * 0.11 - 8
+                                    X: =(Parent.Width - 256) * 0.48 + 12
                                     Y: =10
                               - IvHMin:
                                   Control: ModernText@1.0.0
@@ -472,8 +508,8 @@ Screens:
                                     Height: =20
                                     Size: =12
                                     Text: ="Minimum"
-                                    Width: =Parent.Width * 0.08 - 8
-                                    X: =Parent.Width * 0.47 + 12
+                                    Width: =(Parent.Width - 256) * 0.11 - 8
+                                    X: =(Parent.Width - 256) * 0.59 + 12
                                     Y: =10
                               - IvHPrice:
                                   Control: ModernText@1.0.0
@@ -484,8 +520,8 @@ Screens:
                                     Height: =20
                                     Size: =12
                                     Text: ="Unit price"
-                                    Width: =Parent.Width * 0.09 - 8
-                                    X: =Parent.Width * 0.55 + 12
+                                    Width: =(Parent.Width - 256) * 0.13 - 8
+                                    X: =(Parent.Width - 256) * 0.7 + 12
                                     Y: =10
                               - IvHLoc:
                                   Control: ModernText@1.0.0
@@ -496,8 +532,8 @@ Screens:
                                     Height: =20
                                     Size: =12
                                     Text: ="Location"
-                                    Width: =Parent.Width * 0.12 - 8
-                                    X: =Parent.Width * 0.66 + 12
+                                    Width: =(Parent.Width - 256) * 0.17 - 8
+                                    X: =(Parent.Width - 256) * 0.83 + 12
                                     Y: =10
                               - IvHStatus:
                                   Control: ModernText@1.0.0
@@ -507,16 +543,17 @@ Screens:
                                     Height: =20
                                     Size: =12
                                     Text: ="Status"
-                                    Width: =120
-                                    X: =Parent.Width * 0.79 + 12
+                                    Width: =110
+                                    X: =Parent.Width - 244
                                     Y: =10
                         - IvRows:
                             Control: Gallery@2.15.0
                             Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
                             Properties:
                               Fill: =Color.Transparent
+                              FillPortions: =1
                               Items: =Sort(Filter(colItems, (IsBlank(IvSearch.Text) || StartsWith('Item Name', IvSearch.Text) || StartsWith(SKU, IvSearch.Text)) && (IsBlank(IvCategory.Selected) || Category = IvCategory.Selected.Value) && Switch(IvTabs.Selected.Value, "Low stock", 'Current Stock' <= 'Minimum Stock Level', "Out of stock", 'Current Stock' <= 0, true)), 'Item Name')
-                              LayoutMinHeight: =120
+                              LayoutMinHeight: =100
                               TemplateSize: =56
                             Children:
                               - IvCItem:
@@ -528,8 +565,8 @@ Screens:
                                     Height: =24
                                     Size: =13
                                     Text: =ThisItem.'Item Name'
-                                    Width: =Parent.TemplateWidth * 0.24 - 8
-                                    X: =Parent.TemplateWidth * 0.0 + 12
+                                    Width: =(Parent.TemplateWidth - 256) * 0.3 - 8
+                                    X: =(Parent.TemplateWidth - 256) * 0.0 + 12
                                     Y: =16
                               - IvCCat:
                                   Control: ModernText@1.0.0
@@ -540,8 +577,8 @@ Screens:
                                     Height: =24
                                     Size: =13
                                     Text: =Text(ThisItem.Category)
-                                    Width: =Parent.TemplateWidth * 0.14 - 8
-                                    X: =Parent.TemplateWidth * 0.24 + 12
+                                    Width: =(Parent.TemplateWidth - 256) * 0.18 - 8
+                                    X: =(Parent.TemplateWidth - 256) * 0.3 + 12
                                     Y: =16
                               - IvCStock:
                                   Control: ModernText@1.0.0
@@ -553,8 +590,8 @@ Screens:
                                     Size: =13
                                     Text: =Coalesce(ThisItem.'Current Stock', 0)
                                     Visible: =!(gRole = "Pantry Admin")
-                                    Width: =Parent.TemplateWidth * 0.09 - 8
-                                    X: =Parent.TemplateWidth * 0.38 + 12
+                                    Width: =(Parent.TemplateWidth - 256) * 0.11 - 8
+                                    X: =(Parent.TemplateWidth - 256) * 0.48 + 12
                                     Y: =16
                               - IvCMin:
                                   Control: ModernText@1.0.0
@@ -565,8 +602,8 @@ Screens:
                                     Height: =24
                                     Size: =13
                                     Text: =Coalesce(ThisItem.'Minimum Stock Level', 0)
-                                    Width: =Parent.TemplateWidth * 0.08 - 8
-                                    X: =Parent.TemplateWidth * 0.47 + 12
+                                    Width: =(Parent.TemplateWidth - 256) * 0.11 - 8
+                                    X: =(Parent.TemplateWidth - 256) * 0.59 + 12
                                     Y: =16
                               - IvCPrice:
                                   Control: ModernText@1.0.0
@@ -577,8 +614,8 @@ Screens:
                                     Height: =24
                                     Size: =13
                                     Text: =Text(Coalesce(ThisItem.'Unit Price', 0), "#,##0.00")
-                                    Width: =Parent.TemplateWidth * 0.09 - 8
-                                    X: =Parent.TemplateWidth * 0.55 + 12
+                                    Width: =(Parent.TemplateWidth - 256) * 0.13 - 8
+                                    X: =(Parent.TemplateWidth - 256) * 0.7 + 12
                                     Y: =16
                               - IvCLoc:
                                   Control: ModernText@1.0.0
@@ -589,8 +626,8 @@ Screens:
                                     Height: =24
                                     Size: =13
                                     Text: =Coalesce(ThisItem.'Storage Location', "-")
-                                    Width: =Parent.TemplateWidth * 0.12 - 8
-                                    X: =Parent.TemplateWidth * 0.66 + 12
+                                    Width: =(Parent.TemplateWidth - 256) * 0.17 - 8
+                                    X: =(Parent.TemplateWidth - 256) * 0.83 + 12
                                     Y: =16
                               - IvCStockEdit:
                                   Control: ModernNumberInput@1.1.2
@@ -610,8 +647,8 @@ Screens:
                                     Precision: =DecimalPrecision.'0'
                                     Step: =1
                                     Visible: =gRole = "Pantry Admin"
-                                    Width: =Parent.TemplateWidth * 0.09
-                                    X: =Parent.TemplateWidth * 0.38 + 4
+                                    Width: =(Parent.TemplateWidth - 256) * 0.11
+                                    X: =(Parent.TemplateWidth - 256) * 0.48 + 4
                                     Y: =10
                               - IvCStatus:
                                   Control: ModernBadge@1.0.0
@@ -621,7 +658,7 @@ Screens:
                                     Intent: =If(ThisItem.'Current Stock' <= 0, BadgeIntent.Critical, ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', BadgeIntent.Caution, BadgeIntent.Positive)
                                     Shape: =BadgeShape.Rounded
                                     Width: =110
-                                    X: =Parent.TemplateWidth * 0.79 + 12
+                                    X: =Parent.TemplateWidth - 244
                                     Y: =16
                               - IvCAdd:
                                   Control: ModernButton@1.0.0
@@ -659,7 +696,7 @@ Screens:
                               DropShadow: =DropShadow.None
                               Fill: =Color.Transparent
                               FillPortions: =0
-                              Height: =96
+                              Height: =80
                               LayoutAlignItems: =LayoutAlignItems.Stretch
                               LayoutDirection: =LayoutDirection.Vertical
                               LayoutGap: =6
@@ -669,6 +706,7 @@ Screens:
                               - IvRowsEmptyIcon:
                                   Control: ModernIcon@1.1.1
                                   Properties:
+                                    FillPortions: =0
                                     Height: =28
                                     Icon: ="SearchInfo"
                                     IconColor: =clrTextTertiary
@@ -678,6 +716,7 @@ Screens:
                                   Properties:
                                     Align: =Align.Center
                                     Color: =clrTextSecondary
+                                    FillPortions: =0
                                     FontWeight: =FontWeight.Normal
                                     Height: =40
                                     Size: =13
@@ -686,6 +725,7 @@ Screens:
                             Control: ModernText@1.0.0
                             Properties:
                               Color: =clrTextSecondary
+                              FillPortions: =0
                               FontWeight: =FontWeight.Normal
                               Height: =18
                               Size: =12

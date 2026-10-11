@@ -1,6 +1,6 @@
 """Generates the canvas app screens (Src/*.pa.yaml) from a small Fluent 2 design system.
 
-Run: python3 power-apps/canvas-app/generate_screens.py
+Run: python3 power-apps/canvas-app/generate_screens.py, then validate_app.py to check properties and layout.
 Control versions match what Power Apps Studio uses for this app (2026 modern controls).
 """
 import os
@@ -30,7 +30,25 @@ def _formula(key, value, ind):
     return [f"{ind}{key}: ={value}"]
 
 
-def _control(c, ind):
+def _explicit_layout(c, parent):
+    """Sets FillPortions on every auto-layout child so sizing never depends on Studio defaults:
+    containers and galleries fill the free space, everything else keeps its Width/Height."""
+    if parent and parent.get("variant") == "AutoLayout" and "FillPortions" not in c["props"]:
+        flexible = c["type"] in (CONTAINER, GALLERY)
+        c["props"]["FillPortions"] = 1 if flexible else 0
+        if flexible:
+            horizontal = parent["props"].get("LayoutDirection") == "LayoutDirection.Horizontal"
+            c["props"].setdefault("LayoutMinWidth" if horizontal else "LayoutMinHeight", 0)
+    if parent and parent.get("variant") == "AutoLayout":
+        # A child without a cross-axis size fills the container's cross axis.
+        cross = "Height" if parent["props"].get("LayoutDirection") == "LayoutDirection.Horizontal" else "Width"
+        stretched = parent["props"].get("LayoutAlignItems") == "LayoutAlignItems.Stretch"
+        if cross not in c["props"] and not stretched:
+            c["props"].setdefault("AlignInContainer", "AlignInContainer.Stretch")
+
+
+def _control(c, ind, parent=None):
+    _explicit_layout(c, parent)
     out = [f"{ind}- {c['name']}:", f"{ind}    Control: {c['type']}"]
     if c.get("variant"):
         out.append(f"{ind}    Variant: {c['variant']}")
@@ -41,7 +59,7 @@ def _control(c, ind):
     if c.get("children"):
         out.append(f"{ind}    Children:")
         for child in c["children"]:
-            out += _control(child, ind + "      ")
+            out += _control(child, ind + "      ", c)
     return out
 
 
@@ -121,7 +139,7 @@ def chip(name, glyph, accent, size=36):
 
 
 def gallery(name, items, template_size, children, **p):
-    p.setdefault("LayoutMinHeight", 120)
+    p.setdefault("LayoutMinHeight", 100)
     return ctl(name, GALLERY, GALLERY_VARIANT, children, Items=items, TemplateSize=template_size,
                Fill="Color.Transparent", **p)
 
@@ -134,14 +152,13 @@ def empty_state(name, glyph, message, visible):
     return box(name, "Vertical", [
         icon(f"{name}Icon", glyph, "clrTextTertiary", Width=28, Height=28),
         text(f"{name}Text", f'"{message}"', 13, color="clrTextSecondary", Align="Align.Center", Height=40),
-    ], gap=6, Height=96, FillPortions=0, Visible=visible, LayoutJustifyContent="LayoutJustifyContent.Center")
+    ], gap=6, Height=80, FillPortions=0, Visible=visible, LayoutJustifyContent="LayoutJustifyContent.Center")
 
 
 def section_head(prefix, title, glyph, extra=()):
     return box(f"{prefix}Head", "Horizontal", [
         icon(f"{prefix}HeadIcon", glyph, "clrBrand", IconStyle="IconStyle.Filled"),
-        text(f"{prefix}HeadTitle", f'"{title}"', 16, "Semibold", Height=28, Width=240, FillPortions=0),
-        spacer(f"{prefix}HeadSpacer"),
+        text(f"{prefix}HeadTitle", f'"{title}"', 16, "Semibold", Height=28, FillPortions=1, LayoutMinWidth=0),
         *extra,
     ], gap=8, Height=36, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center")
 
@@ -264,7 +281,7 @@ def nav_rail(prefix, current):
                 DefaultSelectedItems="[gRole]", ItemDisplayText="ThisItem.Value", SelectMultiple="false",
                 IsSearchable="false", AccessibleLabel='"Switch role"', Height=36,
                 OnChange=f"Set(gRole, Coalesce(Self.Selected.Value, gRole)){leave}"),
-        ], gap=4, Height=64, FillPortions=0, Visible="App.Width >= 900", Fill="clrCanvas",
+        ], gap=4, Height=72, FillPortions=0, Visible="App.Width >= 900", Fill="clrCanvas",
             PaddingTop=8, PaddingBottom=8, PaddingLeft=8, PaddingRight=8, **radius(10)),
         box(f"{prefix}UserRow", "Horizontal", [
             ctl(f"{prefix}UserAvatar", AVATAR, Tooltip="User().FullName", Width=32, Height=32),
@@ -283,7 +300,7 @@ def page(name, prefix, current, title, subtitle, actions, body, overlays=(), scr
             text(f"{prefix}Title", f'"{title}"', 26, "Semibold", Height=38),
             text(f"{prefix}Subtitle", subtitle, 14, color="clrTextSecondary", Height=22),
         ], gap=2, LayoutJustifyContent="LayoutJustifyContent.Center"),
-        box(f"{prefix}Actions", "Horizontal", actions, gap=8, FillPortions=0, Width=f"{160 * max(1, len(actions))}",
+        box(f"{prefix}Actions", "Horizontal", actions, gap=8, FillPortions=0, Width=sum(int(a["props"]["Width"]) for a in actions) + 8 * max(0, len(actions) - 1),
             LayoutJustifyContent="LayoutJustifyContent.End", LayoutAlignItems="LayoutAlignItems.Center"),
     ], Height=64, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center")
     main = box(f"{prefix}Main", "Vertical", [header, *body], gap=16, pad=24,
@@ -314,7 +331,7 @@ def confirm_dialog(prefix, visible, title, message, keep_label, confirm_label, o
                 button(f"{prefix}DialogCancel", f'"{keep_label}"', on_cancel, "Secondary", Width=140),
                 button(f"{prefix}DialogConfirm", f'"{confirm_label}"', on_confirm, "Primary", Width=160),
             ], Height=40, FillPortions=0),
-        ], gap=16, pad=24, Width=440, Height=200, X="(Parent.Width - Self.Width) / 2",
+        ], gap=16, pad=24, Width=440, Height=220, X="(Parent.Width - Self.Width) / 2",
             Y="(Parent.Height - Self.Height) / 2"),
     ], Fill="RGBA(0, 0, 0, 0.35)", Width="Parent.Width", Height="Parent.Height", Visible=visible)
 
@@ -323,7 +340,7 @@ def order_row(prefix, selected_expr, subtitle):
     """Gallery template for a supply order: number, subtitle, status badge, selection marker."""
     return [
         ctl(f"{prefix}SelBar", RECT, Fill="clrBrand", Width=3, Height="Parent.TemplateHeight - 20", Y=10,
-            Visible=selected_expr, **radius(2)),
+            Visible=selected_expr),
         text(f"{prefix}Number", "ThisItem.'Order Number'", 14, "Semibold", X=14, Y=12, Width="Parent.TemplateWidth - 170"),
         text(f"{prefix}Meta", subtitle, 12, color="clrTextSecondary", X=14, Y=38, Width="Parent.TemplateWidth - 170"),
         status_badge(f"{prefix}Badge", "ThisItem.'Order Status'", X="Parent.TemplateWidth - 142", Y=24),
@@ -348,13 +365,13 @@ def lines_gallery(prefix, order):
 
 def kpi(prefix, key, caption, value, hint, glyph, accent="clrBrand"):
     return card(f"{prefix}Kpi{key}", "Horizontal", [
-        chip(f"{prefix}Kpi{key}Chip", glyph, accent, 44),
+        chip(f"{prefix}Kpi{key}Chip", glyph, accent, 40),
         box(f"{prefix}Kpi{key}Text", "Vertical", [
             text(f"{prefix}Kpi{key}Caption", f'"{caption}"', 13, "Semibold", color="clrTextSecondary", Height=20),
             text(f"{prefix}Kpi{key}Value", value, 28, "Semibold", Height=40),
             text(f"{prefix}Kpi{key}Hint", hint, 12, color="clrTextSecondary", Height=18),
         ], gap=0, LayoutJustifyContent="LayoutJustifyContent.Center"),
-    ], gap=14, pad=18, LayoutMinWidth=200, LayoutAlignItems="LayoutAlignItems.Center")
+    ], gap=12, pad=14, LayoutMinWidth=200, LayoutAlignItems="LayoutAlignItems.Center")
 
 
 def home_screen():
@@ -387,18 +404,18 @@ def home_screen():
     ], Height=132, FillPortions=0, **radius(12))
 
     kpis = box(f"{p}Kpis", "Horizontal", [
-        kpi(p, "Low", "Low stock items", f"CountRows({LOW})", '"At or below minimum level"', "Warning",
+        kpi(p, "Low", "Low stock items", f"CountRows({LOW})", '"At or below minimum"', "Warning",
             f"If(CountRows({LOW}) > 0, clrDanger, clrSuccess)"),
-        kpi(p, "Open", "My open requests", "locMyOpen", '"Submitted, approved or ordered"', "DocumentBulletList"),
+        kpi(p, "Open", "My open requests", "locMyOpen", '"Waiting or in progress"', "DocumentBulletList"),
         kpi(p, "Awaiting", 'Approvals pending', 'If(gRole = "Requester", locAwaiting, locPendingAll)',
-            'If(gRole = "Requester", "Your requests awaiting approval", "Across the whole office")', "Clock", "clrWarning"),
-        kpi(p, "Catalog", "Items in catalog", "CountRows(colItems)", '"Pantry items you can request"', "Box", "clrSuccess"),
-    ], gap=16, Height=104, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
+            'If(gRole = "Requester", "Waiting for a decision", "Across the office")', "Clock", "clrWarning"),
+        kpi(p, "Catalog", "Items in catalog", "CountRows(colItems)", '"Ready to request"', "Box", "clrSuccess"),
+    ], gap=16, Height=112, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
 
     restock = card(f"{p}Restock", "Vertical", [
         section_head(f"{p}Rs", "Needs restocking", "Warning", [
             button(f"{p}RestockAll", '"View inventory"', "Navigate(InventoryScreen, ScreenTransition.None)", "Subtle",
-                   "ArrowRight", Layout="ButtonLayout.IconAfter", Width=150)]),
+                   "ArrowRight", Layout="ButtonLayout.IconAfter", Width=172)]),
         gallery(f"{p}RestockList", f"Sort({LOW}, 'Current Stock')", 64, [
             text(f"{p}RsName", "ThisItem.'Item Name'", 14, "Semibold", X=4, Y=10, Width="Parent.TemplateWidth - 260"),
             text(f"{p}RsMeta", '"In stock " & Coalesce(ThisItem.\'Current Stock\', 0) & "  ·  Minimum " & Coalesce(ThisItem.\'Minimum Stock Level\', 0)',
@@ -416,7 +433,7 @@ def home_screen():
     recent = card(f"{p}Recent", "Vertical", [
         section_head(f"{p}Rc", "My recent requests", "History", [
             button(f"{p}RecentAll", '"All requests"', "Navigate(MyOrdersScreen, ScreenTransition.None)",
-                   "Subtle", "ArrowRight", Layout="ButtonLayout.IconAfter", Width=140)]),
+                   "Subtle", "ArrowRight", Layout="ButtonLayout.IconAfter", Width=156)]),
         gallery(f"{p}RecentList", "locRecent", 64, order_row(
             f"{p}Rc", "false",
             f'Text(ThisItem.\'Created On\', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})'),
@@ -475,7 +492,8 @@ def new_order_screen():
         section_head(f"{p}Cat", "1. Choose items", "Box"),
         box(f"{p}Toolbar", "Horizontal", [
             ctl(f"{p}Search", INPUT, Placeholder='"Search items"', Type="TextInputType.Search",
-                TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search items"', Height=36),
+                TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search items"', Height=36, FillPortions=1,
+                LayoutMinWidth=120),
             ctl(f"{p}Category", COMBO, Items="Choices('Item Category')", ItemDisplayText="ThisItem.Value",
                 SelectMultiple="false", InputTextPlaceholder='"All categories"', AccessibleLabel='"Filter by category"',
                 Width=220, Height=36),
@@ -535,7 +553,7 @@ def new_order_screen():
         LayoutOverflowY="LayoutOverflow.Scroll")
 
     body = [box(f"{p}Body", "Horizontal", [catalog, cart], gap=16, LayoutAlignItems="LayoutAlignItems.Stretch")]
-    actions = [button(f"{p}Clear", '"Clear request"', "Clear(colCart)", "Subtle", "Dismiss", Width=150,
+    actions = [button(f"{p}Clear", '"Clear request"', "Clear(colCart)", "Subtle", "Dismiss", Width=164,
                       DisplayMode="If(IsEmpty(colCart), DisplayMode.Disabled, DisplayMode.Edit)")]
     return page("NewOrderScreen", p, "NewOrder", "New request",
                 '"Pick the supplies you need. Your approver is notified when you submit."', actions, body)
@@ -572,7 +590,7 @@ def my_orders_screen():
             text(f"{p}DetailNumber", f"{o}.'Order Number'", 20, "Semibold", Height=32, FillPortions=1),
             status_badge(f"{p}DetailBadge", f"{o}.'Order Status'", Width=140, Height=28),
             button(f"{p}CancelBtn", '"Cancel request"', "UpdateContext({locConfirmCancel: true})", "Outline", "Dismiss",
-                   Width=160, Visible=f"Text({o}.'Order Status') in [\"Draft\", \"Submitted\"]"),
+                   Width=176, Visible=f"Text({o}.'Order Status') in [\"Draft\", \"Submitted\"]"),
         ], gap=12, Height=40, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
         box(f"{p}Fields", "Horizontal", [
             field(f"{p}FCreated", "Created", f'Text({o}.\'Created On\', "dd mmm yyyy")'),
@@ -599,7 +617,8 @@ def my_orders_screen():
                 empty_state(f"{p}HistoryEmpty", "History", "No approval activity yet.", f"IsEmpty({p}History.AllItems)"),
             ], gap=8, LayoutAlignItems="LayoutAlignItems.Stretch"),
         ], gap=24, LayoutAlignItems="LayoutAlignItems.Stretch"),
-    ], gap=16, Visible=f"!IsBlank({o})", LayoutAlignItems="LayoutAlignItems.Stretch")
+    ], gap=16, Visible=f"!IsBlank({o})", LayoutAlignItems="LayoutAlignItems.Stretch",
+        LayoutOverflowY="LayoutOverflow.Scroll")
     detail = card(f"{p}Detail", "Vertical", [
         detail_body,
         empty_state(f"{p}DetailEmpty", "DocumentBulletList", "Select a request to see its items and approval history.",
@@ -631,24 +650,28 @@ def inventory_screen():
              f"Switch({p}Tabs.Selected.Value, \"Low stock\", 'Current Stock' <= 'Minimum Stock Level', "
              f"\"Out of stock\", 'Current Stock' <= 0, true)), 'Item Name')")
     admin = 'gRole = "Pantry Admin"'
-    # (key, header, cell formula, x fraction, width fraction, align)
+    # (key, header, cell formula, x fraction, width fraction, align). Fractions are of the width left
+    # after the fixed Status (110) and Request (112) columns, so the columns never collide.
     cols = [
-        ("Item", "Item", "ThisItem.'Item Name'", 0.00, 0.24, "Left"),
-        ("Cat", "Category", "Text(ThisItem.Category)", 0.24, 0.14, "Left"),
-        ("Stock", "In stock", "Coalesce(ThisItem.'Current Stock', 0)", 0.38, 0.09, "Right"),
-        ("Min", "Minimum", "Coalesce(ThisItem.'Minimum Stock Level', 0)", 0.47, 0.08, "Right"),
-        ("Price", "Unit price", f"Text(Coalesce(ThisItem.'Unit Price', 0), {MONEY})", 0.55, 0.09, "Right"),
-        ("Loc", "Location", "Coalesce(ThisItem.'Storage Location', \"-\")", 0.66, 0.12, "Left"),
+        ("Item", "Item", "ThisItem.'Item Name'", 0.00, 0.30, "Left"),
+        ("Cat", "Category", "Text(ThisItem.Category)", 0.30, 0.18, "Left"),
+        ("Stock", "In stock", "Coalesce(ThisItem.'Current Stock', 0)", 0.48, 0.11, "Right"),
+        ("Min", "Minimum", "Coalesce(ThisItem.'Minimum Stock Level', 0)", 0.59, 0.11, "Right"),
+        ("Price", "Unit price", f"Text(Coalesce(ThisItem.'Unit Price', 0), {MONEY})", 0.70, 0.13, "Right"),
+        ("Loc", "Location", "Coalesce(ThisItem.'Storage Location', \"-\")", 0.83, 0.17, "Left"),
     ]
+    fixed = 256
     header_cells = [text(f"{p}H{k}", f'"{h}"', 12, "Semibold", color="clrTextSecondary", Align=f"Align.{a}",
-                         X=f"Parent.Width * {x} + 12", Y=10, Width=f"Parent.Width * {w} - 8", Height=20)
+                         X=f"(Parent.Width - {fixed}) * {x} + 12", Y=10, Width=f"(Parent.Width - {fixed}) * {w} - 8",
+                         Height=20)
                     for k, h, _, x, w, a in cols]
     header_cells.append(text(f"{p}HStatus", '"Status"', 12, "Semibold", color="clrTextSecondary",
-                             X="Parent.Width * 0.79 + 12", Y=10, Width=120, Height=20))
+                             X="Parent.Width - 244", Y=10, Width=110, Height=20))
     row_cells = []
     for k, _, f, x, w, a in cols:
         cell = text(f"{p}C{k}", f, 13, "Semibold" if k == "Item" else "Normal", Align=f"Align.{a}",
-                    X=f"Parent.TemplateWidth * {x} + 12", Y=16, Width=f"Parent.TemplateWidth * {w} - 8", Height=24)
+                    X=f"(Parent.TemplateWidth - {fixed}) * {x} + 12", Y=16,
+                    Width=f"(Parent.TemplateWidth - {fixed}) * {w} - 8", Height=24)
         if k == "Stock":
             cell["props"]["Visible"] = f"!({admin})"
         row_cells.append(cell)
@@ -662,9 +685,10 @@ def inventory_screen():
         ctl(f"{p}CStockEdit", NUMBER, Default="Coalesce(ThisItem.'Current Stock', 0)", Min=0, Max=99999, Step=1,
             Precision="DecimalPrecision.'0'", OnChange=save_stock, Visible=admin,
             AccessibleLabel='"Stock of " & ThisItem.\'Item Name\'',
-            X="Parent.TemplateWidth * 0.38 + 4", Y=10, Width="Parent.TemplateWidth * 0.09", Height=36),
+            X=f"(Parent.TemplateWidth - {fixed}) * 0.48 + 4", Y=10, Width=f"(Parent.TemplateWidth - {fixed}) * 0.11",
+            Height=36),
         badge(f"{p}CStatus", stock_label("ThisItem"), stock_intent("ThisItem"),
-              X="Parent.TemplateWidth * 0.79 + 12", Y=16, Width=110),
+              X="Parent.TemplateWidth - 244", Y=16, Width=110),
         button(f"{p}CAdd", '"Request"', add_to_cart("ThisItem", "Coalesce(ThisItem.'Reorder Quantity', 1)"), "Subtle", "Add",
                X="Parent.TemplateWidth - 124", Y=10, Width=112, Height=36,
                Tooltip='"Add the reorder quantity to your request"'),
@@ -728,7 +752,8 @@ def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel
         lines_gallery(p, sel),
         *detail_extra,
         actions_row,
-    ], gap=12, Visible=f"!IsBlank({sel})", LayoutAlignItems="LayoutAlignItems.Stretch")
+    ], gap=12, Visible=f"!IsBlank({sel})", LayoutAlignItems="LayoutAlignItems.Stretch",
+        LayoutOverflowY="LayoutOverflow.Scroll")
     detail = card(f"{p}Detail", "Vertical", [
         detail_body,
         empty_state(f"{p}DetailEmpty", "DocumentBulletList", "Select a request to review it.", f"IsBlank({sel})"),
