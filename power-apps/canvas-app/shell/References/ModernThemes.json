@@ -5,13 +5,13 @@
       "ThemeName": "PowerAppsTheme"
     },
     {
-      "EntityName": "MyGreenishTheme",
-      "ThemeName": "MyGreenishTheme",
-      "BasePaletteColor": "#1cba4b",
-      "HueTorsion": 96,
-      "Vibrancy": -29,
+      "EntityName": "PantryTheme",
+      "ThemeName": "PantryTheme",
+      "BasePaletteColor": "#0f6cbd",
+      "HueTorsion": 0,
+      "Vibrancy": 0,
       "ThemePrimaryColorLocked": false,
-      "Font": "'Courier New', monospace"
+      "Font": "'Segoe UI', 'Open Sans', sans-serif"
     }
   ]
 }

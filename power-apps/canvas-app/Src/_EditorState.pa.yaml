@@ -1,7 +1,6 @@
 EditorState:
   ScreensOrder:
     - HomeScreen
-    - InventoryScreen
     - NewOrderScreen
     - MyOrdersScreen
-    - OrderDetailScreen
+    - InventoryScreen

@@ -1,89 +1,911 @@
 Screens:
   HomeScreen:
     Properties:
-      Fill: =gblBackground
+      Fill: =clrCanvas
+      OnVisible: |-
+        =Concurrent(
+            UpdateContext({locMyOpen: CountRows(Filter('Supply Orders', 'Requested By' = gUserEmail && ('Order Status' = [@'Order Status'].Submitted || 'Order Status' = [@'Order Status'].Approved || 'Order Status' = [@'Order Status'].Ordered)))}),
+            UpdateContext({locAwaiting: CountRows(Filter('Supply Orders', 'Requested By' = gUserEmail && 'Order Status' = [@'Order Status'].Submitted))}),
+            UpdateContext({locRecent: FirstN(Sort(Filter('Supply Orders', 'Requested By' = gUserEmail), 'Created On', SortOrder.Descending), 6)})
+        )
     Children:
-      - HomeHeader:
-          Control: Rectangle@2.3.0
+      - HmRoot:
+          Control: GroupContainer@1.4.0
+          Variant: AutoLayout
           Properties:
-            Fill: =gblPrimary
-            Height: =80
+            DropShadow: =DropShadow.None
+            Fill: =clrCanvas
+            Height: =Parent.Height
+            LayoutAlignItems: =LayoutAlignItems.Stretch
+            LayoutDirection: =LayoutDirection.Horizontal
+            LayoutGap: =0
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
             Width: =Parent.Width
-      - HomeTitle:
-          Control: Label@2.5.1
+            X: =0
+            Y: =0
+          Children:
+            - HmNavRail:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =clrSurface
+                  FillPortions: =0
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =4
+                  PaddingBottom: =12
+                  PaddingLeft: =12
+                  PaddingRight: =12
+                  PaddingTop: =12
+                  Width: =If(App.Width < 900, 72, 232)
+                Children:
+                  - HmBrand:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                      Children:
+                        - HmBrandIcon:
+                            Control: ModernIcon@1.1.0
+                            Properties:
+                              Height: =28
+                              Icon: ="FoodPizza"
+                              IconColor: =clrBrand
+                              IconStyle: =IconStyle.Filled
+                              Width: =28
+                        - HmBrandName:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              Color: =clrTextPrimary
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Semibold
+                              Height: =28
+                              Size: =16
+                              Text: ="Office Pantry"
+                              Visible: =App.Width >= 900
+                  - HmNavHome:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="Dashboard"
+                        Appearance: =ButtonAppearance.Secondary
+                        Height: =40
+                        Icon: ="Home"
+                        IconStyle: =IconStyle.Filled
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
+                        Text: ="Dashboard"
+                        Tooltip: ="Dashboard"
+                  - HmNavNewOrder:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="New request"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="Add"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(NewOrderScreen, ScreenTransition.None)
+                        Text: ="New request" & If(CountRows(colCart) > 0, " (" & CountRows(colCart) & ")", "")
+                        Tooltip: ="New request"
+                  - HmNavMyOrders:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="My requests"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="DocumentBulletList"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.None)
+                        Text: ="My requests"
+                        Tooltip: ="My requests"
+                  - HmNavInventory:
+                      Control: ModernButton@1.0.0
+                      Properties:
+                        AccessibleLabel: ="Inventory"
+                        Appearance: =ButtonAppearance.Subtle
+                        Height: =40
+                        Icon: ="Box"
+                        IconStyle: =IconStyle.Outline
+                        Layout: =If(App.Width < 900, ButtonLayout.IconOnly, ButtonLayout.IconBefore)
+                        OnSelect: =Navigate(InventoryScreen, ScreenTransition.None)
+                        Text: ="Inventory"
+                        Tooltip: ="Inventory"
+                  - HmNavSpacer:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =1
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                        LayoutMinHeight: =0
+                        LayoutMinWidth: =0
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                  - HmUserRow:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =48
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                      Children:
+                        - HmUserAvatar:
+                            Control: ModernAvatar@1.0.0
+                            Properties:
+                              Height: =32
+                              Image: =User().Image
+                              Name: =User().FullName
+                              Shape: =AvatarShape.Circular
+                              Tooltip: =User().FullName
+                              Width: =32
+                        - HmUserName:
+                            Control: ModernText@1.0.0
+                            Properties:
+                              Color: =clrTextPrimary
+                              FillPortions: =1
+                              FontWeight: =FontWeight.Normal
+                              Height: =32
+                              Size: =13
+                              Text: =User().FullName
+                              VerticalAlign: =VerticalAlign.Middle
+                              Visible: =App.Width >= 900
+            - HmMain:
+                Control: GroupContainer@1.4.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  Fill: =Color.Transparent
+                  FillPortions: =1
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =16
+                  PaddingBottom: =24
+                  PaddingLeft: =24
+                  PaddingRight: =24
+                  PaddingTop: =24
+                Children:
+                  - HmHeader:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =64
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =8
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                      Children:
+                        - HmTitleBlock:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              FillPortions: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =2
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                            Children:
+                              - HmTitle:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =36
+                                    Size: =24
+                                    Text: ="Dashboard"
+                              - HmSubtitle:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =22
+                                    Size: =14
+                                    Text: ="Welcome back, " & First(Split(User().FullName, " ")).Value
+                        - HmActions:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              DropShadow: =DropShadow.None
+                              Fill: =Color.Transparent
+                              FillPortions: =0
+                              LayoutAlignItems: =LayoutAlignItems.Center
+                              LayoutDirection: =LayoutDirection.Horizontal
+                              LayoutGap: =8
+                              LayoutJustifyContent: =LayoutJustifyContent.End
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Width: =300
+                            Children:
+                              - HmRefresh:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    Appearance: =ButtonAppearance.Subtle
+                                    Height: =36
+                                    Icon: ="ArrowClockwise"
+                                    OnSelect: =Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))
+                                    Text: ="Refresh"
+                                    Width: =120
+                              - HmNew:
+                                  Control: ModernButton@1.0.0
+                                  Properties:
+                                    Appearance: =ButtonAppearance.Primary
+                                    Height: =36
+                                    Icon: ="Add"
+                                    OnSelect: =Navigate(NewOrderScreen, ScreenTransition.None)
+                                    Text: ="New request"
+                                    Width: =150
+                  - HmKpis:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =0
+                        Height: =124
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =16
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                      Children:
+                        - HmKpiLow:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =clrStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =clrSurface
+                              FillPortions: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =4
+                              LayoutMinWidth: =160
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - HmKpiLowHead:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =24
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =8
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                  Children:
+                                    - HmKpiLowIcon:
+                                        Control: ModernIcon@1.1.0
+                                        Properties:
+                                          Height: =20
+                                          Icon: ="Warning"
+                                          IconColor: =If(CountRows(Filter(colItems, 'Current Stock' <= 'Minimum Stock Level')) > 0, clrDanger, clrSuccess)
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                    - HmKpiLowCaption:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextSecondary
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =20
+                                          Size: =13
+                                          Text: ="Low stock items"
+                              - HmKpiLowValue:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =44
+                                    Size: =30
+                                    Text: =CountRows(Filter(colItems, 'Current Stock' <= 'Minimum Stock Level'))
+                              - HmKpiLowHint:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =18
+                                    Size: =12
+                                    Text: ="At or below minimum level"
+                        - HmKpiOpen:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =clrStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =clrSurface
+                              FillPortions: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =4
+                              LayoutMinWidth: =160
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - HmKpiOpenHead:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =24
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =8
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                  Children:
+                                    - HmKpiOpenIcon:
+                                        Control: ModernIcon@1.1.0
+                                        Properties:
+                                          Height: =20
+                                          Icon: ="DocumentBulletList"
+                                          IconColor: =clrBrand
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                    - HmKpiOpenCaption:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextSecondary
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =20
+                                          Size: =13
+                                          Text: ="My open requests"
+                              - HmKpiOpenValue:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =44
+                                    Size: =30
+                                    Text: =locMyOpen
+                              - HmKpiOpenHint:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =18
+                                    Size: =12
+                                    Text: ="Submitted, approved or ordered"
+                        - HmKpiAwaiting:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =clrStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =clrSurface
+                              FillPortions: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =4
+                              LayoutMinWidth: =160
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - HmKpiAwaitingHead:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =24
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =8
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                  Children:
+                                    - HmKpiAwaitingIcon:
+                                        Control: ModernIcon@1.1.0
+                                        Properties:
+                                          Height: =20
+                                          Icon: ="Clock"
+                                          IconColor: =clrBrand
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                    - HmKpiAwaitingCaption:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextSecondary
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =20
+                                          Size: =13
+                                          Text: ="Awaiting approval"
+                              - HmKpiAwaitingValue:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =44
+                                    Size: =30
+                                    Text: =locAwaiting
+                              - HmKpiAwaitingHint:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =18
+                                    Size: =12
+                                    Text: ="Waiting for your approver"
+                        - HmKpiCatalog:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =clrStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =clrSurface
+                              FillPortions: =1
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =4
+                              LayoutMinWidth: =160
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - HmKpiCatalogHead:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =24
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =8
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                  Children:
+                                    - HmKpiCatalogIcon:
+                                        Control: ModernIcon@1.1.0
+                                        Properties:
+                                          Height: =20
+                                          Icon: ="Box"
+                                          IconColor: =clrBrand
+                                          IconStyle: =IconStyle.Filled
+                                          Width: =20
+                                    - HmKpiCatalogCaption:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextSecondary
+                                          FillPortions: =1
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =20
+                                          Size: =13
+                                          Text: ="Items in catalog"
+                              - HmKpiCatalogValue:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextPrimary
+                                    FontWeight: =FontWeight.Semibold
+                                    Height: =44
+                                    Size: =30
+                                    Text: =CountRows(colItems)
+                              - HmKpiCatalogHint:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =18
+                                    Size: =12
+                                    Text: ="Pantry items you can request"
+                  - HmPanels:
+                      Control: GroupContainer@1.4.0
+                      Variant: AutoLayout
+                      Properties:
+                        DropShadow: =DropShadow.None
+                        Fill: =Color.Transparent
+                        FillPortions: =1
+                        LayoutAlignItems: =LayoutAlignItems.Stretch
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =16
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                      Children:
+                        - HmRestock:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =clrStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =clrSurface
+                              FillPortions: =1
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =12
+                              LayoutMinWidth: =320
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - HmRestockHead:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =36
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =8
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                  Children:
+                                    - HmRestockTitle:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextPrimary
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =28
+                                          Size: =16
+                                          Text: ="Needs restocking"
+                                    - HmRestockSpacer:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Fill: =Color.Transparent
+                                          FillPortions: =1
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =8
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                    - HmRestockAll:
+                                        Control: ModernButton@1.0.0
+                                        Properties:
+                                          Appearance: =ButtonAppearance.Subtle
+                                          Height: =36
+                                          Icon: ="ArrowRight"
+                                          Layout: =ButtonLayout.IconAfter
+                                          OnSelect: =Set(gInvTab, "Low stock"); Navigate(InventoryScreen, ScreenTransition.None)
+                                          Text: ="View inventory"
+                                          Width: =150
+                              - HmRestockList:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                  Properties:
+                                    BorderThickness: =0
+                                    Fill: =Color.Transparent
+                                    FillPortions: =1
+                                    Items: =Sort(Filter(colItems, 'Current Stock' <= 'Minimum Stock Level'), 'Current Stock')
+                                    LayoutMinHeight: =120
+                                    ShowScrollbar: =true
+                                    TemplatePadding: =0
+                                    TemplateSize: =60
+                                  Children:
+                                    - HmRsName:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextPrimary
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =22
+                                          Size: =14
+                                          Text: =ThisItem.'Item Name'
+                                          Width: =Parent.TemplateWidth - 260
+                                          X: =8
+                                          Y: =8
+                                    - HmRsMeta:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextSecondary
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =20
+                                          Size: =12
+                                          Text: ="In stock " & Coalesce(ThisItem.'Current Stock', 0) & "  ·  Minimum " & Coalesce(ThisItem.'Minimum Stock Level', 0)
+                                          Width: =Parent.TemplateWidth - 260
+                                          X: =8
+                                          Y: =32
+                                    - HmRsBadge:
+                                        Control: ModernBadge@1.0.0
+                                        Properties:
+                                          Appearance: =BadgeAppearance.Tint
+                                          Content: =If(ThisItem.'Current Stock' <= 0, "Out of stock", ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', "Low stock", "In stock")
+                                          Height: =24
+                                          Intent: =If(ThisItem.'Current Stock' <= 0, BadgeIntent.Critical, ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level', BadgeIntent.Caution, BadgeIntent.Positive)
+                                          Shape: =BadgeShape.Rounded
+                                          Width: =100
+                                          X: =Parent.TemplateWidth - 240
+                                          Y: =18
+                                    - HmRsAdd:
+                                        Control: ModernButton@1.0.0
+                                        Properties:
+                                          Appearance: =ButtonAppearance.Outline
+                                          Height: =34
+                                          Icon: ="Add"
+                                          OnSelect: |-
+                                            =With({existing: LookUp(colCart, Item.'Pantry Item' = ThisItem.'Pantry Item'), qty: Coalesce(ThisItem.'Reorder Quantity', 1)},
+                                                If(IsBlank(existing),
+                                                    Collect(colCart, {Item: ThisItem, Qty: qty}),
+                                                    Patch(colCart, existing, {Qty: existing.Qty + qty})
+                                                )
+                                            );
+                                            If(ThisItem.'Current Stock' > ThisItem.'Minimum Stock Level',
+                                                Notify(ThisItem.'Item Name' & " added. Note: the pantry still has " & ThisItem.'Current Stock' & " in stock.", NotificationType.Warning),
+                                                Notify(ThisItem.'Item Name' & " added to your request.", NotificationType.Success)
+                                            )
+                                          Text: ="Request"
+                                          Tooltip: ="Add the reorder quantity to your request"
+                                          Width: =116
+                                          X: =Parent.TemplateWidth - 128
+                                          Y: =12
+                                    - HmRsDivider:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          Fill: =clrStroke
+                                          Height: =1
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - 1
+                              - HmRestockEmpty:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Align: =Align.Center
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =48
+                                    Size: =13
+                                    Text: ="Everything is well stocked."
+                                    Visible: =IsEmpty(HmRestockList.AllItems)
+                        - HmRecent:
+                            Control: GroupContainer@1.4.0
+                            Variant: AutoLayout
+                            Properties:
+                              BorderColor: =clrStroke
+                              BorderThickness: =1
+                              DropShadow: =DropShadow.None
+                              Fill: =clrSurface
+                              FillPortions: =1
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutGap: =12
+                              LayoutMinWidth: =320
+                              PaddingBottom: =16
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PaddingTop: =16
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                            Children:
+                              - HmRecentHead:
+                                  Control: GroupContainer@1.4.0
+                                  Variant: AutoLayout
+                                  Properties:
+                                    DropShadow: =DropShadow.None
+                                    Fill: =Color.Transparent
+                                    FillPortions: =0
+                                    Height: =36
+                                    LayoutAlignItems: =LayoutAlignItems.Center
+                                    LayoutDirection: =LayoutDirection.Horizontal
+                                    LayoutGap: =8
+                                    PaddingBottom: =0
+                                    PaddingLeft: =0
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                  Children:
+                                    - HmRecentTitle:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextPrimary
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =28
+                                          Size: =16
+                                          Text: ="My recent requests"
+                                    - HmRecentSpacer:
+                                        Control: GroupContainer@1.4.0
+                                        Variant: AutoLayout
+                                        Properties:
+                                          DropShadow: =DropShadow.None
+                                          Fill: =Color.Transparent
+                                          FillPortions: =1
+                                          LayoutDirection: =LayoutDirection.Horizontal
+                                          LayoutGap: =8
+                                          LayoutMinHeight: =0
+                                          LayoutMinWidth: =0
+                                          PaddingBottom: =0
+                                          PaddingLeft: =0
+                                          PaddingRight: =0
+                                          PaddingTop: =0
+                                    - HmRecentAll:
+                                        Control: ModernButton@1.0.0
+                                        Properties:
+                                          Appearance: =ButtonAppearance.Subtle
+                                          Height: =36
+                                          Icon: ="ArrowRight"
+                                          Layout: =ButtonLayout.IconAfter
+                                          OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.None)
+                                          Text: ="All requests"
+                                          Width: =140
+                              - HmRecentList:
+                                  Control: Gallery@2.15.0
+                                  Variant: BrowseLayout_Vertical_OneTextVariant_ver5.0
+                                  Properties:
+                                    BorderThickness: =0
+                                    Fill: =Color.Transparent
+                                    FillPortions: =1
+                                    Items: =locRecent
+                                    LayoutMinHeight: =120
+                                    OnSelect: =Set(gSelOrder, ThisItem); Navigate(MyOrdersScreen, ScreenTransition.None)
+                                    ShowScrollbar: =true
+                                    TemplatePadding: =0
+                                    TemplateSize: =60
+                                  Children:
+                                    - HmRcNumber:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextPrimary
+                                          FontWeight: =FontWeight.Semibold
+                                          Height: =22
+                                          Size: =14
+                                          Text: =ThisItem.'Order Number'
+                                          Width: =Parent.TemplateWidth - 160
+                                          X: =8
+                                          Y: =8
+                                    - HmRcMeta:
+                                        Control: ModernText@1.0.0
+                                        Properties:
+                                          Color: =clrTextSecondary
+                                          FontWeight: =FontWeight.Normal
+                                          Height: =20
+                                          Size: =12
+                                          Text: =Text(ThisItem.'Created On', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.'Total Amount', 0), "#,##0.00")
+                                          Width: =Parent.TemplateWidth - 160
+                                          X: =8
+                                          Y: =32
+                                    - HmRcBadge:
+                                        Control: ModernBadge@1.0.0
+                                        Properties:
+                                          Appearance: =BadgeAppearance.Tint
+                                          Content: =Text(ThisItem.'Order Status')
+                                          Height: =24
+                                          Intent: =Switch(Text(ThisItem.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
+                                          Shape: =BadgeShape.Rounded
+                                          Width: =128
+                                          X: =Parent.TemplateWidth - 140
+                                          Y: =18
+                                    - HmRcDivider:
+                                        Control: Rectangle@2.3.0
+                                        Properties:
+                                          Fill: =clrStroke
+                                          Height: =1
+                                          Width: =Parent.TemplateWidth
+                                          Y: =Parent.TemplateHeight - 1
+                              - HmRecentEmpty:
+                                  Control: ModernText@1.0.0
+                                  Properties:
+                                    Align: =Align.Center
+                                    Color: =clrTextSecondary
+                                    FontWeight: =FontWeight.Normal
+                                    Height: =48
+                                    Size: =13
+                                    Text: ="You have no requests yet."
+                                    Visible: =IsEmpty(HmRecentList.AllItems)
+      - HmBusy:
+          Control: GroupContainer@1.4.0
+          Variant: ManualLayout
           Properties:
-            Color: =RGBA(255, 255, 255, 1)
-            FontWeight: =FontWeight.Semibold
-            Height: =80
-            Size: =22
-            Text: ="Office Pantry Supply Ordering"
-            Width: =Parent.Width - 40
-            X: =24
-      - HomeGreeting:
-          Control: Label@2.5.1
-          Properties:
-            Height: =50
-            Size: =18
-            Text: |-
-              ="Hello, " & User().FullName & "!"
-            Width: =Parent.Width - 48
-            X: =24
-            Y: =100
-      - HomeLowStock:
-          Control: Label@2.5.1
-          Properties:
-            Color: =If(Self.Text = "All pantry items are above their minimum stock level.", RGBA(16, 124, 16, 1), RGBA(168, 0, 0, 1))
-            Height: =40
-            Size: =14
-            Text: |-
-              =With({low: CountRows(Filter('Pantry Items', 'Current Stock' <= 'Minimum Stock Level'))},
-                If(low = 0, "All pantry items are above their minimum stock level.",
-                  low & " pantry item(s) are at or below minimum stock."))
-            Width: =Parent.Width - 48
-            X: =24
-            Y: =150
-      - BtnNewRequest:
-          Control: Classic/Button@2.2.0
-          Properties:
-            Fill: =gblPrimary
-            Height: =70
-            OnSelect: =Navigate(NewOrderScreen, ScreenTransition.Fade)
-            Size: =16
-            Text: ="New supply request"
-            Width: =300
-            X: =24
-            Y: =220
-      - BtnMyOrders:
-          Control: Classic/Button@2.2.0
-          Properties:
-            Fill: =gblPrimary
-            Height: =70
-            OnSelect: =Navigate(MyOrdersScreen, ScreenTransition.Fade)
-            Size: =16
-            Text: ="My orders"
-            Width: =300
-            X: =344
-            Y: =220
-      - BtnInventory:
-          Control: Classic/Button@2.2.0
-          Properties:
-            Fill: =gblPrimary
-            Height: =70
-            OnSelect: =Navigate(InventoryScreen, ScreenTransition.Fade)
-            Size: =16
-            Text: ="Pantry inventory"
-            Width: =300
-            X: =664
-            Y: =220
-      - HomeHelp:
-          Control: Label@2.5.1
-          Properties:
-            Color: =RGBA(96, 94, 92, 1)
-            Height: =120
-            Size: =12
-            Text: |-
-              ="Submitted requests go to your approver automatically. Once approved, each supplier is emailed their part of the order and you are notified by email."
-            VerticalAlign: =VerticalAlign.Top
-            Width: =940
-            X: =24
-            Y: =320
+            Fill: =RGBA(0, 0, 0, 0.35)
+            Height: =Parent.Height
+            Visible: =locBusy
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+          Children:
+            - HmBusyCard:
+                Control: GroupContainer@1.4.0
+                Variant: ManualLayout
+                Properties:
+                  Fill: =clrSurface
+                  Height: =120
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  Width: =280
+                  X: =(Parent.Width - Self.Width) / 2
+                  Y: =(Parent.Height - Self.Height) / 2
+                Children:
+                  - HmBusySpinner:
+                      Control: ModernSpinner@1.1.0
+                      Properties:
+                        Height: =80
+                        Label: ="Saving your request..."
+                        LabelPosition: =SpinnerLabelPosition.Below
+                        Width: =240
+                        X: =20
+                        Y: =20

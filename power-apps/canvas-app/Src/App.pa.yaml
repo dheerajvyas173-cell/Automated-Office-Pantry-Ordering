@@ -1,5 +1,15 @@
 App:
   Properties:
-    OnStart: |-
-      =Set(gblPrimary, RGBA(0, 120, 212, 1));
-      Set(gblBackground, RGBA(243, 242, 241, 1))
+    Formulas: |-
+      =clrBrand = ColorValue("#0F6CBD");
+      clrBrandTint = ColorValue("#EBF3FC");
+      clrCanvas = ColorValue("#F5F5F5");
+      clrSurface = Color.White;
+      clrStroke = ColorValue("#E0E0E0");
+      clrTextPrimary = ColorValue("#242424");
+      clrTextSecondary = ColorValue("#616161");
+      clrSuccess = ColorValue("#107C10");
+      clrDanger = ColorValue("#C50F1F");
+      gUserEmail = Lower(User().Email);
+    OnStart: =ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))
+    Theme: =PantryTheme
