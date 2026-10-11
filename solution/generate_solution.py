@@ -258,10 +258,10 @@ def optionset(name, display, options):
         </option>
 """ for i, text in enumerate(options))
     return f"""    <optionset Name="{name}">
-      <OptionSetType>picklist</OptionSetType>
-      <IsGlobal>1</IsGlobal>
+      <OptionSetType>Picklist</OptionSetType>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
       <IsCustomizable>1</IsCustomizable>
+      <IsGlobal>true</IsGlobal>
       <displaynames>
         <displayname description={label(display)} languagecode="1033" />
       </displaynames>
@@ -487,8 +487,9 @@ def main():
             f.write(content)
     write_zip("PantrySupplyOrdering_TEST.zip", "0.0.0.1", TEST_ENTITIES, [], {})
     # Staged builds: each one upgrades the previous, adding one layer.
-    write_zip("Step1_Tables_and_Choices.zip", "0.0.1.0",
-              keep_attrs(FULL_ENTITIES, is_core), [], OPTION_SETS)
+    write_zip("Step1A_Tables_Only.zip", "0.0.1.0",
+              keep_attrs(FULL_ENTITIES, is_core), [], {})
+    write_zip("Step1B_Choices_Only.zip", "0.0.1.1", TEST_ENTITIES, [], OPTION_SETS)
     write_zip("Step2_All_Columns.zip", "0.0.2.0",
               keep_attrs(FULL_ENTITIES, is_not_lookup), [], OPTION_SETS)
     write_zip("PantrySupplyOrdering_1_0_0_0.zip", "1.0.0.0",
