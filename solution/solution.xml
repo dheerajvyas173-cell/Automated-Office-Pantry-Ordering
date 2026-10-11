@@ -6,7 +6,7 @@
       <LocalizedName description="Pantry Supply Ordering" languagecode="1033"/>
     </LocalizedNames>
     <Descriptions>
-      <Description description="Automated Office Pantry Supply Ordering System with inventory tracking, approval workflows, and supplier management." languagecode="1033"/>
+      <Description description="Automated Office Pantry Supply Ordering System" languagecode="1033"/>
     </Descriptions>
     <Version>1.0.0.0</Version>
     <Managed>0</Managed>
@@ -23,16 +23,6 @@
     </Publisher>
     <RootComponents>
       <RootComponent type="1" schemaName="cr_supplier" behavior="0"/>
-      <RootComponent type="1" schemaName="cr_pantryitem" behavior="0"/>
-      <RootComponent type="1" schemaName="cr_supplyorder" behavior="0"/>
-      <RootComponent type="1" schemaName="cr_orderlineitem" behavior="0"/>
-      <RootComponent type="1" schemaName="cr_approvalhistory" behavior="0"/>
-      <RootComponent type="9" schemaName="cr_itemcategory" behavior="0"/>
-      <RootComponent type="9" schemaName="cr_itemunit" behavior="0"/>
-      <RootComponent type="9" schemaName="cr_orderstatus" behavior="0"/>
-      <RootComponent type="9" schemaName="cr_approvalstatus" behavior="0"/>
-      <RootComponent type="9" schemaName="cr_approvalaction" behavior="0"/>
-      <RootComponent type="9" schemaName="cr_suppliercategory" behavior="0"/>
     </RootComponents>
     <MissingDependencies />
   </SolutionManifest>
