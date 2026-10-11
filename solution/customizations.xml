@@ -3321,7 +3321,7 @@
       <Publisher xsi:nil="true"></Publisher>
       <AuthorizationReferences>[]</AuthorizationReferences>
       <ConnectionReferences>{}</ConnectionReferences>
-      <DatabaseReferences>{"default.cds": {"state": "Configured", "instanceUrl": "", "webApiVersion": "v9.0", "environmentVariableName": "", "dataSources": {"Supply Orders": {"entitySetName": "cr_supplyorders", "logicalName": "cr_supplyorder"}, "Order Line Items": {"entitySetName": "cr_orderlineitems", "logicalName": "cr_orderlineitem"}, "Pantry Items": {"entitySetName": "cr_pantryitems", "logicalName": "cr_pantryitem"}, "Suppliers": {"entitySetName": "cr_suppliers", "logicalName": "cr_supplier"}, "Approval History Records": {"entitySetName": "cr_approvalhistories", "logicalName": "cr_approvalhistory"}}}}</DatabaseReferences>
+      <DatabaseReferences>{}</DatabaseReferences>
       <AppComponents>[]</AppComponents>
       <AppComponentDependencies>[]</AppComponentDependencies>
       <CanConsumeAppPass>1</CanConsumeAppPass>
@@ -3330,7 +3330,7 @@
       <AdminControlBypassConsent>0</AdminControlBypassConsent>
       <EmbeddedApp xsi:nil="true"></EmbeddedApp>
       <IntroducedVersion>1.0</IntroducedVersion>
-      <CdsDependencies>{"cdsdependencies": [{"logicalname": "cr_supplyorder", "componenttype": "entity"}, {"logicalname": "cr_orderlineitem", "componenttype": "entity"}, {"logicalname": "cr_pantryitem", "componenttype": "entity"}, {"logicalname": "cr_supplier", "componenttype": "entity"}, {"logicalname": "cr_approvalhistory", "componenttype": "entity"}]}</CdsDependencies>
+      <CdsDependencies>{"cdsdependencies": []}</CdsDependencies>
       <IsCustomizable>1</IsCustomizable>
       <BackgroundImageUri>/CanvasApps/cr_pantrysupplyordering_7a1c3_BackgroundImageUri</BackgroundImageUri>
       <DocumentUri>/CanvasApps/cr_pantrysupplyordering_7a1c3_DocumentUri.msapp</DocumentUri>

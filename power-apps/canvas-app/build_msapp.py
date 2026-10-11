@@ -14,8 +14,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUTPUT = os.path.join(HERE, "PantrySupplyOrdering.msapp")
 
 
-def pack(src_dir=os.path.join(HERE, "Src"), output=OUTPUT, properties=None):
-    """Packs src_dir (*.pa.yaml) with the shell; `properties` overrides keys in shell/Properties.json."""
+def pack(src_dir=os.path.join(HERE, "Src"), output=OUTPUT, properties=None, replace=None):
+    """Packs src_dir (*.pa.yaml) with the shell.
+
+    `properties` overrides keys in shell/Properties.json; `replace` maps shell paths to new file content.
+    """
+    replace = replace or {}
     pac = os.environ.get("PAC", "pac")
     with tempfile.TemporaryDirectory() as work:
         sources = os.path.join(work, "app")
@@ -30,7 +34,9 @@ def pack(src_dir=os.path.join(HERE, "Src"), output=OUTPUT, properties=None):
                 for name in files:
                     path = os.path.join(folder, name)
                     arcname = "msapp/" + os.path.relpath(path, shell).replace(os.sep, "/")
-                    if arcname == "msapp/Properties.json" and properties:
+                    if arcname[len("msapp/"):] in replace:
+                        zf.writestr(arcname, replace[arcname[len("msapp/"):]])
+                    elif arcname == "msapp/Properties.json" and properties:
                         with open(path) as f:
                             props = json.load(f)
                         props.update(properties)

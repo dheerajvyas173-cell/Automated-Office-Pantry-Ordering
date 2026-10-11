@@ -11,13 +11,6 @@ APP_NAME = "cr_pantrysupplyordering_7a1c3"
 DISPLAY_NAME = "Pantry Supply Ordering"
 CLIENT_VERSION = "3.26021.0"
 
-TABLES = {
-    "Supply Orders": ("cr_supplyorders", "cr_supplyorder"),
-    "Order Line Items": ("cr_orderlineitems", "cr_orderlineitem"),
-    "Pantry Items": ("cr_pantryitems", "cr_pantryitem"),
-    "Suppliers": ("cr_suppliers", "cr_supplier"),
-    "Approval History Records": ("cr_approvalhistories", "cr_approvalhistory"),
-}
 
 
 def icon_png(size=64, rgb=(0, 120, 212)):
@@ -33,9 +26,11 @@ def icon_png(size=64, rgb=(0, 120, 212)):
 def build(apps=None):
     """Returns (CanvasApps xml, root components xml, {zip path: content}).
 
-    apps: list of (schema name, display name, msapp path, tables); defaults to the Pantry app.
+    apps: list of (schema name, display name, msapp path, {data source name: (entity set, logical name)}).
+    The Pantry app declares no tables: Studio fails to open apps whose Dataverse tables lack the
+    metadata it caches when a table is added in Studio, so the tables are added there once instead.
     """
-    apps = apps or [(APP_NAME, DISPLAY_NAME, MSAPP, TABLES)]
+    apps = apps or [(APP_NAME, DISPLAY_NAME, MSAPP, {})]
     xml, roots, files = "  <CanvasApps>\n", "", {}
     for app in apps:
         app_xml, root, app_files = _app(*app)

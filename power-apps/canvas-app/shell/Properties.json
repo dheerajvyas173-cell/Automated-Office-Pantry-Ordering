@@ -4,7 +4,7 @@
   "Id": "fbf1672a-429d-50db-a117-7f68dfeaa8dd",
   "FileID": "97e99173-5baa-530f-ba9c-d5b2fcd7d19a",
   "LocalConnectionReferences": "{}",
-  "LocalDatabaseReferences": "{\"default.cds\": {\"state\": \"Configured\", \"instanceUrl\": \"\", \"webApiVersion\": \"v9.0\", \"environmentVariableName\": \"\", \"dataSources\": {\"Supply Orders\": {\"entitySetName\": \"cr_supplyorders\", \"logicalName\": \"cr_supplyorder\"}, \"Order Line Items\": {\"entitySetName\": \"cr_orderlineitems\", \"logicalName\": \"cr_orderlineitem\"}, \"Pantry Items\": {\"entitySetName\": \"cr_pantryitems\", \"logicalName\": \"cr_pantryitem\"}, \"Suppliers\": {\"entitySetName\": \"cr_suppliers\", \"logicalName\": \"cr_supplier\"}, \"Approval History Records\": {\"entitySetName\": \"cr_approvalhistories\", \"logicalName\": \"cr_approvalhistory\"}}}}",
+  "LocalDatabaseReferences": "{}",
   "LibraryDependencies": "[]",
   "AppPreviewFlagsMap": {
     "delayloadscreens": true,
