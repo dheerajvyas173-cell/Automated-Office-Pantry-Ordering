@@ -1,0 +1,25 @@
+Item Name,SKU,Category,Unit of Measure,Current Stock,Minimum Stock Level,Reorder Quantity,Unit Price,Preferred Supplier,Storage Location,Description
+Nescafe Classic Instant Coffee 200g,CT-001,Coffee & Tea,Each,6,4,10,650,BrewCraft Beverages,Pantry cabinet A,Instant coffee jar
+Coffee Beans Arabica 1kg,CT-002,Coffee & Tea,Bag,2,3,5,1200,BrewCraft Beverages,Pantry cabinet A,For the bean-to-cup machine
+Green Tea Bags (100 pack),CT-003,Coffee & Tea,Box,3,3,6,450,BrewCraft Beverages,Pantry cabinet A,Assorted green tea
+Masala Chai Premix 1kg,CT-004,Coffee & Tea,Pack,0,2,5,380,BrewCraft Beverages,Pantry cabinet A,For the vending machine
+Mineral Water 1L,BV-001,Beverages,Bottle,48,24,48,20,BrewCraft Beverages,Store room shelf 1,Packaged drinking water
+Sparkling Water 500ml,BV-002,Beverages,Bottle,10,12,24,40,BrewCraft Beverages,Pantry fridge,Unflavoured soda
+Orange Juice 1L,BV-003,Beverages,Carton,8,6,12,110,BrewCraft Beverages,Pantry fridge,No added sugar
+Milk Toned 1L,DY-001,Dairy,Carton,5,10,20,68,SnackHub Distributors,Pantry fridge,Delivered fresh; check expiry dates
+Oat Milk 1L,DY-002,Dairy,Carton,4,3,6,250,SnackHub Distributors,Pantry fridge,Dairy-free option
+Greek Yogurt Cups (6 pack),DY-003,Dairy,Pack,2,2,4,300,SnackHub Distributors,Pantry fridge,Assorted flavours
+Bananas,FR-001,Fruits,Kg,3,2,5,60,FreshFarm Produce,Fruit bowl,Delivered Mon/Wed/Fri
+Apples (Shimla),FR-002,Fruits,Kg,1,2,5,180,FreshFarm Produce,Fruit bowl,Delivered Mon/Wed/Fri
+Mixed Nuts 500g,SN-001,Snacks,Pack,12,5,10,550,SnackHub Distributors,Snack drawer,"Roasted, lightly salted"
+Granola Bars (box of 12),SN-002,Snacks,Box,4,5,10,360,SnackHub Distributors,Snack drawer,Oats and honey
+Digestive Biscuits 250g,SN-003,Snacks,Pack,25,10,20,45,SnackHub Distributors,Snack drawer,
+Roasted Makhana 100g,SN-004,Snacks,Pack,0,6,12,120,SnackHub Distributors,Snack drawer,Healthy snack option
+Dishwashing Liquid 750ml,CL-001,Cleaning Supplies,Bottle,5,2,4,160,CleanPro Supplies,Under sink,
+Hand Wash Refill 1L,CL-002,Cleaning Supplies,Bottle,1,3,6,220,CleanPro Supplies,Under sink,For all washroom dispensers
+Paper Towels (pack of 6),PP-001,Paper Products,Pack,8,4,8,320,OfficeEssentials Co.,Store room shelf 2,
+Paper Cups 200ml (100 pack),PP-002,Paper Products,Pack,3,5,10,150,OfficeEssentials Co.,Store room shelf 2,For tea and coffee
+Tissue Box,PP-003,Paper Products,Box,15,6,12,90,OfficeEssentials Co.,Store room shelf 2,
+Sugar Sachets (100 pack),KS-001,Kitchen Supplies,Pack,2,2,5,140,OfficeEssentials Co.,Pantry cabinet B,
+Wooden Stirrers (500 pack),KS-002,Kitchen Supplies,Pack,6,2,4,110,OfficeEssentials Co.,Pantry cabinet B,
+Garbage Bags Large (30 pack),OT-001,Other,Roll,4,3,6,130,CleanPro Supplies,Store room shelf 3,
