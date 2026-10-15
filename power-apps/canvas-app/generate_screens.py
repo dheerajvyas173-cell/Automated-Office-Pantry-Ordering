@@ -15,8 +15,7 @@ DATE, TABS, ICON, AVATAR = "ModernDatePicker@1.0.2", "ModernTabList@1.0.2", "Mod
 CONTAINER, GALLERY, RECT, IMAGE = "GroupContainer@1.5.0", "Gallery@2.15.0", "Rectangle@2.3.0", "Image@2.2.3"
 GALLERY_VARIANT = "BrowseLayout_Vertical_OneTextVariant_ver5.0"
 
-OS, AS, AA = "[@'Order Status']", "[@'Approval Status']", "[@'Approval Action']"
-OPEN_STATUSES = ["Draft", "Submitted", "Approved", "Ordered", "'Partially Received'"]
+OPEN_STATUSES = ["Draft", "Submitted", "Approved", "Ordered", "Partially Received"]
 DONE_STATUSES = ["Received", "Rejected", "Cancelled"]
 MONEY = '"#,##0.00"'
 ROLES = ["Requester", "Approver", "Pantry Admin"]
@@ -215,7 +214,7 @@ def stage_index(expr):
 
 def status_tracker(prefix, order):
     """Submitted → Approved → Ordered → Received, with the steps reached so far highlighted."""
-    stage = stage_index(f"{order}.'Order Status'")
+    stage = stage_index(f"{order}.'Order Status'.Value")
     children = []
     for i, label in enumerate(STAGES, start=1):
         reached = f"{stage} >= {i}"
@@ -231,7 +230,7 @@ def status_tracker(prefix, order):
         ], gap=6, Height=28, Width=len(label) * 8 + 34, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"))
     return box(f"{prefix}Tracker", "Horizontal", children, gap=8, Height=28, FillPortions=0,
                LayoutAlignItems="LayoutAlignItems.Center",
-               Visible=f"!(Text({order}.'Order Status') in [\"Rejected\", \"Cancelled\", \"Draft\"])")
+               Visible=f"!(Text({order}.'Order Status'.Value) in [\"Rejected\", \"Cancelled\", \"Draft\"])")
 
 
 def status_badge(name, expr, **p):
@@ -259,20 +258,20 @@ def stock_intent(item):
 
 
 def add_to_cart(item, qty):
-    return f"""With({{existing: LookUp(colCart, Item.'Pantry Item' = {item}.'Pantry Item'), qty: {qty}}},
+    return f"""With({{existing: LookUp(colCart, Item.ID = {item}.ID), qty: {qty}}},
     If(IsBlank(existing),
         Collect(colCart, {{Item: {item}, Qty: qty}}),
         Patch(colCart, existing, {{Qty: existing.Qty + qty}})
     )
 );
 If({item}.'Current Stock' > {item}.'Minimum Stock Level',
-    Notify({item}.'Item Name' & " added as a pantry admin override. " & {item}.'Current Stock' & " are still in stock.", NotificationType.Warning),
-    Notify({item}.'Item Name' & " added to your request.", NotificationType.Success)
+    Notify({item}.Title & " added as a pantry admin override. " & {item}.'Current Stock' & " are still in stock.", NotificationType.Warning),
+    Notify({item}.Title & " added to your request.", NotificationType.Success)
 )"""
 
 
 def status_filter(statuses):
-    return "(" + " || ".join(f"'Order Status' = {OS}.{s}" for s in statuses) + ")"
+    return "(" + " || ".join(f"'Order Status'.Value = \"{s}\"" for s in statuses) + ")"
 
 
 MY_ORDERS = "'Requested By' = gUserEmail"
@@ -411,17 +410,17 @@ def order_row(prefix, selected_expr, subtitle):
     return [
         ctl(f"{prefix}SelBar", RECT, Fill="clrBrand", Width=3, Height="Parent.TemplateHeight - 20", Y=10,
             Visible=selected_expr, TabIndex=-1),
-        text(f"{prefix}Number", "ThisItem.'Order Number'", 14, "Semibold", X=14, Y=12, Width="Parent.TemplateWidth - 170"),
+        text(f"{prefix}Number", "ThisItem.Title", 14, "Semibold", X=14, Y=12, Width="Parent.TemplateWidth - 170"),
         text(f"{prefix}Meta", subtitle, 12, color="clrTextSecondary", X=14, Y=38, Width="Parent.TemplateWidth - 170"),
-        status_badge(f"{prefix}Badge", "ThisItem.'Order Status'", X="Parent.TemplateWidth - 142", Y=24),
+        status_badge(f"{prefix}Badge", "ThisItem.'Order Status'.Value", X="Parent.TemplateWidth - 142", Y=24),
         row_divider(f"{prefix}Divider"),
     ]
 
 
 def lines_gallery(prefix, order):
-    return gallery(f"{prefix}Lines", f"Filter('Order Line Items', 'Supply Order'.'Supply Order' = {order}.'Supply Order')", 56, [
-        text(f"{prefix}LnName", "ThisItem.'Line Item Name'", 13, "Semibold", X=4, Y=6, Width="Parent.TemplateWidth - 130"),
-        text(f"{prefix}LnSupplier", 'Coalesce(ThisItem.Supplier.\'Supplier Name\', "No supplier set")', 12,
+    return gallery(f"{prefix}Lines", f"Filter('Pantry Order Lines', 'Supply Order'.Id = {order}.ID)", 56, [
+        text(f"{prefix}LnName", "ThisItem.Title", 13, "Semibold", X=4, Y=6, Width="Parent.TemplateWidth - 130"),
+        text(f"{prefix}LnSupplier", 'Coalesce(ThisItem.Supplier.Value, "No supplier set")', 12,
              color="clrTextSecondary", X=4, Y=30, Width="Parent.TemplateWidth - 130"),
         text(f"{prefix}LnQty", '"× " & ThisItem.Quantity', 14, "Semibold", Align="Align.Right",
              X="Parent.TemplateWidth - 120", Y=6, Width=112),
@@ -449,11 +448,11 @@ def kpi(prefix, key, caption, value, hint, glyph, accent="clrBrand"):
 def home_screen():
     p = "Hm"
     on_visible = f"""Concurrent(
-    UpdateContext({{locMyOpen: CountRows(Filter('Supply Orders', {MY_ORDERS} && {status_filter(["Submitted", "Approved", "Ordered"])}))}}),
-    UpdateContext({{locAwaiting: CountRows(Filter('Supply Orders', {MY_ORDERS} && 'Order Status' = {OS}.Submitted))}}),
-    UpdateContext({{locPendingAll: CountRows(Filter('Supply Orders', 'Order Status' = {OS}.Submitted))}}),
-    UpdateContext({{locToReceive: CountRows(Filter('Supply Orders', 'Order Status' = {OS}.Ordered || 'Order Status' = {OS}.Approved))}}),
-    UpdateContext({{locRecent: FirstN(Sort(Filter('Supply Orders', {MY_ORDERS}), 'Created On', SortOrder.Descending), 6)}})
+    UpdateContext({{locMyOpen: CountRows(Filter('Pantry Orders', {MY_ORDERS} && {status_filter(["Submitted", "Approved", "Ordered"])}))}}),
+    UpdateContext({{locAwaiting: CountRows(Filter('Pantry Orders', {MY_ORDERS} && 'Order Status'.Value = "Submitted"))}}),
+    UpdateContext({{locPendingAll: CountRows(Filter('Pantry Orders', 'Order Status'.Value = "Submitted"))}}),
+    UpdateContext({{locToReceive: CountRows(Filter('Pantry Orders', 'Order Status'.Value = "Ordered" || 'Order Status'.Value = "Approved"))}}),
+    UpdateContext({{locRecent: FirstN(Sort(Filter('Pantry Orders', {MY_ORDERS}), Created, SortOrder.Descending), 6)}})
 )"""
     hero_subtitle = f'''Switch(gRole,
     "Approver", locPendingAll & " request(s) are waiting for your decision.",
@@ -489,7 +488,7 @@ def home_screen():
             button(f"{p}RestockAll", '"View inventory"', "Navigate(InventoryScreen, ScreenTransition.None)", "Subtle",
                    "ArrowRight", Layout="ButtonLayout.IconAfter", Width=172)]),
         gallery(f"{p}RestockList", f"Sort({LOW}, 'Current Stock')", 64, [
-            text(f"{p}RsName", "ThisItem.'Item Name'", 14, "Semibold", X=4, Y=10, Width="Parent.TemplateWidth - 260"),
+            text(f"{p}RsName", "ThisItem.Title", 14, "Semibold", X=4, Y=10, Width="Parent.TemplateWidth - 260"),
             text(f"{p}RsMeta", '"In stock " & Coalesce(ThisItem.\'Current Stock\', 0) & "  ·  Minimum " & Coalesce(ThisItem.\'Minimum Stock Level\', 0)',
                  12, color="clrTextSecondary", X=4, Y=36, Width="Parent.TemplateWidth - 260"),
             badge(f"{p}RsBadge", stock_label("ThisItem"), stock_intent("ThisItem"),
@@ -508,7 +507,7 @@ def home_screen():
                    "Subtle", "ArrowRight", Layout="ButtonLayout.IconAfter", Width=156)]),
         gallery(f"{p}RecentList", "locRecent", 64, order_row(
             f"{p}Rc", "false",
-            f'Text(ThisItem.\'Created On\', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})'),
+            f'Text(ThisItem.Created, "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})'),
             OnSelect="Set(gSelOrder, ThisItem); Navigate(MyOrdersScreen, ScreenTransition.None)"),
         empty_state(f"{p}RecentEmpty", "DocumentAdd", "You have no requests yet.", f"IsEmpty({p}RecentList.AllItems)"),
     ], LayoutMinWidth=340, LayoutAlignItems="LayoutAlignItems.Stretch")
@@ -531,7 +530,7 @@ def home_screen():
 
     body = [hero, kpis, how, box(f"{p}Panels", "Horizontal", [restock, recent], gap=16,
                                  LayoutAlignItems="LayoutAlignItems.Stretch")]
-    actions = [button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))",
+    actions = [button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', Title))",
                       "Subtle", "ArrowClockwise", Width=120)]
     return page("HomeScreen", p, "Home", "Dashboard", 'Text(Today(), "dddd, dd mmmm yyyy")',
                 actions, body, screen_props={"OnVisible": on_visible})
@@ -539,16 +538,16 @@ def home_screen():
 
 def new_order_screen():
     p = "No"
-    catalog_items = (f"Sort(Filter(colItems, (IsBlank({p}Search.Text) || StartsWith('Item Name', {p}Search.Text)) && "
-                     f"(IsBlank({p}Category.Selected) || Category = {p}Category.Selected.Value) && "
-                     f"({p}View.Selected.Value = \"All items\" || 'Current Stock' <= 'Minimum Stock Level')), 'Item Name')")
+    catalog_items = (f"Sort(Filter(colItems, (IsBlank({p}Search.Text) || StartsWith(Title, {p}Search.Text)) && "
+                     f"(IsBlank({p}Category.Selected) || Category.Value = {p}Category.Selected.Value) && "
+                     f"({p}View.Selected.Value = \"All items\" || 'Current Stock' <= 'Minimum Stock Level')), Title)")
     total = "Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0))"
     units = "Sum(colCart, Qty)"
     needs_approval = f"({total} > cfgBudgetLimit || {units} > cfgQuantityLimit)"
-    # Inventory check at submit time against live Dataverse stock (it may have changed since the app loaded).
+    # Inventory check at submit time against live SharePoint stock (it may have changed since the app loaded).
     recheck = f"""UpdateContext({{locWellStocked: If(gRole = "Pantry Admin", "",
-    Concat(Filter(colCart As L, With({{live: LookUp('Pantry Items', 'Pantry Item' = L.Item.'Pantry Item')}},
-        live.'Current Stock' > live.'Minimum Stock Level')), Item.'Item Name', ", "))}});"""
+    Concat(Filter(colCart As L, With({{live: LookUp('Pantry Items', ID = L.Item.ID)}},
+        live.'Current Stock' > live.'Minimum Stock Level')), Item.Title, ", "))}});"""
     submit = f"""{recheck}
 If(IsBlank({p}RequiredBy.SelectedDate),
     Notify("Choose a required-by date.", NotificationType.Error),
@@ -557,9 +556,10 @@ If(IsBlank({p}RequiredBy.SelectedDate),
     UpdateContext({{locNeedsApproval: {needs_approval}}});
     UpdateContext({{locBusy: true}});
     IfError(
-        Set(gNewOrder, Patch('Supply Orders', Defaults('Supply Orders'), {{
-            'Order Number': "PO-" & Text(Now(), "yyyymmdd-hhmmss"),
-            'Order Status': {OS}.Draft,
+        Set(gNewOrder, Patch('Pantry Orders', Defaults('Pantry Orders'), {{
+            Title: "PO-" & Text(Now(), "yyyymmdd-hhmmss"),
+            'Requester Name': User().FullName,
+            'Order Status': {{Value: "Draft"}},
             'Required By Date': {p}RequiredBy.SelectedDate,
             Justification: {p}Justification.Text,
             'Delivery Address': {p}Location.Text,
@@ -567,20 +567,21 @@ If(IsBlank({p}RequiredBy.SelectedDate),
             'Total Amount': {total}
         }}));
         ForAll(colCart As L,
-            With({{item: LookUp('Pantry Items', 'Pantry Item' = L.Item.'Pantry Item')}},
-                Patch('Order Line Items', Defaults('Order Line Items'), {{
-                    'Line Item Name': item.'Item Name',
-                    'Supply Order': gNewOrder,
-                    'Pantry Item': item,
-                    Supplier: item.'Preferred Supplier',
+            With({{item: LookUp('Pantry Items', ID = L.Item.ID)}},
+                Patch('Pantry Order Lines', Defaults('Pantry Order Lines'), {{
+                    Title: item.Title,
+                    'Supply Order': {{Id: gNewOrder.ID, Value: gNewOrder.Title}},
+                    'Pantry Item': {{Id: item.ID, Value: item.Title}},
+                    Supplier: If(IsBlank(item.'Preferred Supplier'.Id), Blank(),
+                        {{Id: item.'Preferred Supplier'.Id, Value: item.'Preferred Supplier'.Value}}),
                     Quantity: L.Qty,
                     'Unit Price': item.'Unit Price',
                     'Total Cost': L.Qty * Coalesce(item.'Unit Price', 0)
                 }})
             )
         );
-        Patch('Supply Orders', gNewOrder, {{'Order Status': {OS}.Submitted}});
-        Notify("Request " & gNewOrder.'Order Number' & If(locNeedsApproval,
+        Patch('Pantry Orders', gNewOrder, {{'Order Status': {{Value: "Submitted"}}}});
+        Notify("Request " & gNewOrder.Title & If(locNeedsApproval,
             " submitted. It is over the approval limits, so the office manager has been asked to approve it.",
             " submitted. It is under the approval limits, so it will be approved and sent to the supplier automatically."),
             NotificationType.Success);
@@ -605,19 +606,19 @@ If(IsBlank({p}RequiredBy.SelectedDate),
             ctl(f"{p}Search", INPUT, Placeholder='"Search items"', Type="TextInputType.Search",
                 TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search items"', Height=36, FillPortions=1,
                 LayoutMinWidth=120),
-            ctl(f"{p}Category", COMBO, Items="Choices('Item Category')", ItemDisplayText="ThisItem.Value",
+            ctl(f"{p}Category", COMBO, Items="Choices('Pantry Items'.Category)", ItemDisplayText="ThisItem.Value",
                 SelectMultiple="false", InputTextPlaceholder='"All categories"', AccessibleLabel='"Filter by category"',
                 Width=220, Height=36),
         ], Height=36, FillPortions=0),
         gallery(f"{p}Items", catalog_items, 76, [
-            text(f"{p}ItName", "ThisItem.'Item Name'", 14, "Semibold", X=4, Y=12, Width="Parent.TemplateWidth - 390"),
-            text(f"{p}ItMeta", f'Text(ThisItem.Category) & "  ·  " & Text(ThisItem.\'Unit of Measure\') & "  ·  " & Text(Coalesce(ThisItem.\'Unit Price\', 0), {MONEY})',
+            text(f"{p}ItName", "ThisItem.Title", 14, "Semibold", X=4, Y=12, Width="Parent.TemplateWidth - 390"),
+            text(f"{p}ItMeta", f'ThisItem.Category.Value & "  ·  " & ThisItem.\'Unit of Measure\'.Value & "  ·  " & Text(Coalesce(ThisItem.\'Unit Price\', 0), {MONEY})',
                  12, color="clrTextSecondary", X=4, Y=40, Width="Parent.TemplateWidth - 390"),
             badge(f"{p}ItStock", f"{stock_label('ThisItem')} & \" · \" & Coalesce(ThisItem.'Current Stock', 0)",
                   stock_intent("ThisItem"), X="Parent.TemplateWidth - 376", Y=26, Width=136),
             ctl(f"{p}ItQty", NUMBER, Default="Coalesce(ThisItem.'Reorder Quantity', 1)", Min=1, Max=999, Step=1,
                 Precision="DecimalPrecision.'0'", DisplayMode=request_mode("ThisItem"),
-                AccessibleLabel='"Quantity of " & ThisItem.\'Item Name\'', X="Parent.TemplateWidth - 228", Y=20,
+                AccessibleLabel='"Quantity of " & ThisItem.Title', X="Parent.TemplateWidth - 228", Y=20,
                 Width=96, Height=36),
             button(f"{p}ItAdd", '"Add"', add_to_cart("ThisItem", f"{p}ItQty.Value"), "Outline", "Add",
                    X="Parent.TemplateWidth - 120", Y=20, Width=112, DisplayMode=request_mode("ThisItem"),
@@ -635,15 +636,15 @@ If(IsBlank({p}RequiredBy.SelectedDate),
                   "BadgeIntent.Informative", Width=80)]),
         empty_state(f"{p}CartEmpty", "Cart", "Add items from the catalog to start a request.", "IsEmpty(colCart)"),
         gallery(f"{p}CartList", "colCart", 60, [
-            text(f"{p}CtName", "ThisItem.Item.'Item Name'", 13, "Semibold", X=4, Y=8, Width="Parent.TemplateWidth - 150"),
+            text(f"{p}CtName", "ThisItem.Item.Title", 13, "Semibold", X=4, Y=8, Width="Parent.TemplateWidth - 150"),
             text(f"{p}CtLine", f"Text(ThisItem.Qty * Coalesce(ThisItem.Item.'Unit Price', 0), {MONEY})", 12,
                  color="clrTextSecondary", X=4, Y=32, Width="Parent.TemplateWidth - 150"),
             ctl(f"{p}CtQty", NUMBER, Default="ThisItem.Qty", Min=1, Max=999, Step=1, Precision="DecimalPrecision.'0'",
                 OnChange="Patch(colCart, ThisItem, {Qty: Self.Value})",
-                AccessibleLabel='"Quantity of " & ThisItem.Item.\'Item Name\'',
+                AccessibleLabel='"Quantity of " & ThisItem.Item.Title',
                 X="Parent.TemplateWidth - 140", Y=12, Width=88, Height=36),
             ctl(f"{p}CtRemove", ICON, Icon='"Delete"', IconColor="clrDanger", OnSelect="Remove(colCart, ThisItem)",
-                Tooltip='"Remove"', AccessibleLabel='"Remove " & ThisItem.Item.\'Item Name\'',
+                Tooltip='"Remove"', AccessibleLabel='"Remove " & ThisItem.Item.Title',
                 X="Parent.TemplateWidth - 40", Y=18, Width=24, Height=24),
             row_divider(f"{p}CtDivider"),
         ], LayoutMinHeight=120, Visible="!IsEmpty(colCart)"),
@@ -682,17 +683,17 @@ If(IsBlank({p}RequiredBy.SelectedDate),
 
 def my_orders_screen():
     p = "Mo"
-    base = f"{MY_ORDERS} && StartsWith('Order Number', {p}Search.Text)"
+    base = f"{MY_ORDERS} && StartsWith(Title, {p}Search.Text)"
     items = f"""Sort(
     Switch({p}Tabs.Selected.Value,
-        "Open", Filter('Supply Orders', {base} && {status_filter(OPEN_STATUSES)}),
-        "Completed", Filter('Supply Orders', {base} && {status_filter(DONE_STATUSES)}),
-        Filter('Supply Orders', {base})
+        "Open", Filter('Pantry Orders', {base} && {status_filter(OPEN_STATUSES)}),
+        "Completed", Filter('Pantry Orders', {base} && {status_filter(DONE_STATUSES)}),
+        Filter('Pantry Orders', {base})
     ),
-    'Created On', SortOrder.Descending
+    Created, SortOrder.Descending
 )"""
     o = "gSelOrder"
-    selected = f"!IsBlank({o}) && ThisItem.'Supply Order' = {o}.'Supply Order'"
+    selected = f"!IsBlank({o}) && ThisItem.ID = {o}.ID"
     order_list = card(f"{p}List", "Vertical", [
         ctl(f"{p}Tabs", TABS, Items='["All", "Open", "Completed"]', Appearance="TabListAppearance.SubtleCircular",
             Alignment="TabListAlignment.Start", AccessibleLabel='"Filter requests"', Height=40),
@@ -700,25 +701,25 @@ def my_orders_screen():
             TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search requests"', Height=36),
         gallery(f"{p}Orders", items, 72, order_row(
             f"{p}Or", selected,
-            f'Text(ThisItem.\'Created On\', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})'),
+            f'Text(ThisItem.Created, "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.\'Total Amount\', 0), {MONEY})'),
             OnSelect=f"Set({o}, ThisItem)", TemplateFill=f"If({selected}, clrBrandTint, Color.Transparent)"),
         empty_state(f"{p}OrdersEmpty", "DocumentSearch", "No requests found.", f"IsEmpty({p}Orders.AllItems)"),
     ], gap=10, Width="If(App.Width < 1200, 360, 420)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
 
-    history = f"Sort(Filter('Approval History Records', 'Supply Order'.'Supply Order' = {o}.'Supply Order'), 'Action Date', SortOrder.Descending)"
+    history = f"Sort(Filter('Pantry Approval History', 'Supply Order'.Id = {o}.ID), 'Action Date', SortOrder.Descending)"
     detail_body = box(f"{p}DetailBody", "Vertical", [
         box(f"{p}DetailHead", "Horizontal", [
-            text(f"{p}DetailNumber", f"{o}.'Order Number'", 20, "Semibold", Height=32, FillPortions=1),
-            status_badge(f"{p}DetailBadge", f"{o}.'Order Status'", Width=140, Height=28),
+            text(f"{p}DetailNumber", f"{o}.Title", 20, "Semibold", Height=32, FillPortions=1),
+            status_badge(f"{p}DetailBadge", f"{o}.'Order Status'.Value", Width=140, Height=28),
             button(f"{p}CancelBtn", '"Cancel request"', "UpdateContext({locConfirmCancel: true})", "Outline", "Dismiss",
-                   Width=176, Visible=f"Text({o}.'Order Status') in [\"Draft\", \"Submitted\"]"),
+                   Width=176, Visible=f"Text({o}.'Order Status'.Value) in [\"Draft\", \"Submitted\"]"),
         ], gap=12, Height=40, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
         status_tracker(p, o),
         box(f"{p}Fields", "Horizontal", [
-            field(f"{p}FCreated", "Created", f'Text({o}.\'Created On\', "dd mmm yyyy")'),
+            field(f"{p}FCreated", "Created", f'Text({o}.Created, "dd mmm yyyy")'),
             field(f"{p}FRequired", "Required by", f'Text({o}.\'Required By Date\', "dd mmm yyyy")'),
             field(f"{p}FTotal", "Estimated total", f"Text(Coalesce({o}.'Total Amount', 0), {MONEY})"),
-            field(f"{p}FApproval", "Approval", f'Coalesce(Text({o}.\'Approval Status\'), "Not started")'),
+            field(f"{p}FApproval", "Approval", f'Coalesce({o}.\'Approval Status\'.Value, "Not started")'),
         ], gap=16, Height=60, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch"),
         text(f"{p}Comments", f'"Approver comments: " & {o}.\'Approver Comments\'', 13, color="clrTextSecondary",
              Visible=f"!IsBlank({o}.'Approver Comments')", Height=40, VerticalAlign="VerticalAlign.Top"),
@@ -731,7 +732,7 @@ def my_orders_screen():
                 section_head(f"{p}Hs", "Approval history", "History"),
                 gallery(f"{p}History", history, 64, [
                     icon(f"{p}HsDot", "CircleSmall", "clrBrand", IconStyle="IconStyle.Filled", Y=8),
-                    text(f"{p}HsAction", 'Text(ThisItem.Action) & " by " & Coalesce(ThisItem.Approver, "system")', 13,
+                    text(f"{p}HsAction", 'ThisItem.Action.Value & " by " & Coalesce(ThisItem.Approver, "system")', 13,
                          "Semibold", X=24, Y=6, Width="Parent.TemplateWidth - 28"),
                     text(f"{p}HsMeta", 'Text(ThisItem.\'Action Date\', "dd mmm yyyy, hh:mm") & If(IsBlank(ThisItem.Comments), "", "  ·  " & ThisItem.Comments)',
                          12, color="clrTextSecondary", X=24, Y=30, Width="Parent.TemplateWidth - 28"),
@@ -748,19 +749,19 @@ def my_orders_screen():
     ], gap=16, pad=24, LayoutMinWidth=440, LayoutAlignItems="LayoutAlignItems.Stretch")
 
     cancel = f"""UpdateContext({{locConfirmCancel: false}});
-{busy(f'''Patch('Supply Orders', {o}, {{'Order Status': {OS}.Cancelled}});
-    Set({o}, LookUp('Supply Orders', 'Supply Order' = {o}.'Supply Order'));
+{busy(f'''Patch('Pantry Orders', {o}, {{'Order Status': {{Value: "Cancelled"}}}});
+    Set({o}, LookUp('Pantry Orders', ID = {o}.ID));
     Notify("Request cancelled.", NotificationType.Success)''')}"""
     dialog = confirm_dialog(p, "locConfirmCancel", "Cancel this request?",
                             "The request will be marked as cancelled and won't be sent to suppliers.",
                             "Keep request", "Cancel request", cancel, "UpdateContext({locConfirmCancel: false})")
     body = [box(f"{p}Body", "Horizontal", [order_list, detail], gap=16, LayoutAlignItems="LayoutAlignItems.Stretch")]
-    refresh = f"Refresh('Supply Orders'); If(!IsBlank({o}), Set({o}, LookUp('Supply Orders', 'Supply Order' = {o}.'Supply Order')))"
+    refresh = f"Refresh('Pantry Orders'); If(!IsBlank({o}), Set({o}, LookUp('Pantry Orders', ID = {o}.ID)))"
     actions = [
         button(f"{p}Refresh", '"Refresh"', refresh, "Subtle", "ArrowClockwise", Width=120),
         button(f"{p}New", '"New request"', "Navigate(NewOrderScreen, ScreenTransition.None)", "Primary", "Add", Width=150),
     ]
-    on_visible = f"If(!IsBlank({o}), Set({o}, LookUp('Supply Orders', 'Supply Order' = {o}.'Supply Order')))"
+    on_visible = f"If(!IsBlank({o}), Set({o}, LookUp('Pantry Orders', ID = {o}.ID)))"
     return page("MyOrdersScreen", p, "MyOrders", "My requests",
                 '"Track your requests. You get an email when one is approved or rejected."',
                 actions, body, overlays=[dialog], screen_props={"OnVisible": on_visible})
@@ -768,16 +769,16 @@ def my_orders_screen():
 
 def inventory_screen():
     p = "Iv"
-    items = (f"Sort(Filter(colItems, (IsBlank({p}Search.Text) || StartsWith('Item Name', {p}Search.Text) || StartsWith(SKU, {p}Search.Text)) && "
-             f"(IsBlank({p}Category.Selected) || Category = {p}Category.Selected.Value) && "
+    items = (f"Sort(Filter(colItems, (IsBlank({p}Search.Text) || StartsWith(Title, {p}Search.Text) || StartsWith(SKU, {p}Search.Text)) && "
+             f"(IsBlank({p}Category.Selected) || Category.Value = {p}Category.Selected.Value) && "
              f"Switch({p}Tabs.Selected.Value, \"Low stock\", 'Current Stock' <= 'Minimum Stock Level', "
-             f"\"Out of stock\", 'Current Stock' <= 0, true)), 'Item Name')")
+             f"\"Out of stock\", 'Current Stock' <= 0, true)), Title)")
     admin = 'gRole = "Pantry Admin"'
     # (key, header, cell formula, x fraction, width fraction, align). Fractions are of the width left
     # after the fixed Status (110) and Request (112) columns, so the columns never collide.
     cols = [
-        ("Item", "Item", "ThisItem.'Item Name'", 0.00, 0.30, "Left"),
-        ("Cat", "Category", "Text(ThisItem.Category)", 0.30, 0.18, "Left"),
+        ("Item", "Item", "ThisItem.Title", 0.00, 0.30, "Left"),
+        ("Cat", "Category", "ThisItem.Category.Value", 0.30, 0.18, "Left"),
         ("Stock", "In stock", "Coalesce(ThisItem.'Current Stock', 0)", 0.48, 0.11, "Right"),
         ("Min", "Minimum", "Coalesce(ThisItem.'Minimum Stock Level', 0)", 0.59, 0.11, "Right"),
         ("Price", "Unit price", f"Text(Coalesce(ThisItem.'Unit Price', 0), {MONEY})", 0.70, 0.13, "Right"),
@@ -801,13 +802,13 @@ def inventory_screen():
     save_stock = f"""IfError(
     Patch('Pantry Items', ThisItem, {{'Current Stock': Self.Value}});
     Patch(colItems, ThisItem, {{'Current Stock': Self.Value}});
-    Notify(ThisItem.'Item Name' & " stock set to " & Self.Value & ".", NotificationType.Success),
+    Notify(ThisItem.Title & " stock set to " & Self.Value & ".", NotificationType.Success),
     Notify("Couldn't update stock: " & FirstError.Message, NotificationType.Error)
 )"""
     row_cells += [
         ctl(f"{p}CStockEdit", NUMBER, Default="Coalesce(ThisItem.'Current Stock', 0)", Min=0, Max=99999, Step=1,
             Precision="DecimalPrecision.'0'", OnChange=save_stock, Visible=admin,
-            AccessibleLabel='"Stock of " & ThisItem.\'Item Name\'',
+            AccessibleLabel='"Stock of " & ThisItem.Title',
             X=f"(Parent.TemplateWidth - {fixed}) * 0.48 + 4", Y=10, Width=f"(Parent.TemplateWidth - {fixed}) * 0.11",
             Height=36),
         badge(f"{p}CStatus", stock_label("ThisItem"), stock_intent("ThisItem"),
@@ -823,7 +824,7 @@ def inventory_screen():
         spacer(f"{p}ToolbarSpacer"),
         ctl(f"{p}Search", INPUT, Placeholder='"Search by name or SKU"', Type="TextInputType.Search",
             TriggerOutput="TriggerOutput.Delayed", AccessibleLabel='"Search inventory"', Width=280, Height=36),
-        ctl(f"{p}Category", COMBO, Items="Choices('Item Category')", ItemDisplayText="ThisItem.Value",
+        ctl(f"{p}Category", COMBO, Items="Choices('Pantry Items'.Category)", ItemDisplayText="ThisItem.Value",
             SelectMultiple="false", InputTextPlaceholder='"All categories"', AccessibleLabel='"Filter by category"',
             Width=220, Height=36),
     ], gap=12, Height=40, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center")
@@ -835,7 +836,7 @@ def inventory_screen():
         text(f"{p}Count", f'CountRows({p}Rows.AllItems) & " of " & CountRows(colItems) & " items" & If({admin}, "  ·  Edit a stock number and click away to save it.", "")',
              12, color="clrTextSecondary", Height=18),
     ], gap=8, LayoutAlignItems="LayoutAlignItems.Stretch")
-    actions = [button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))",
+    actions = [button(f"{p}Refresh", '"Refresh"', "Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', Title))",
                       "Subtle", "ArrowClockwise", Width=120)]
     stock_note = note(f"{p}Note", '"Low stock alert: every morning at 8 AM the pantry admin is emailed a list of items at or below their minimum level."',
                       glyph="Alert")
@@ -847,7 +848,7 @@ def inventory_screen():
 def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel, detail_extra, actions_row,
                     top_note=None):
     """Shared master-detail layout for the Approvals and Receiving screens."""
-    selected = f"!IsBlank({sel}) && ThisItem.'Supply Order' = {sel}.'Supply Order'"
+    selected = f"!IsBlank({sel}) && ThisItem.ID = {sel}.ID"
     switch = ",\n        ".join(f'"{t}", {f}' for t, f in list(items_by_tab.items())[1:])
     first = list(items_by_tab.values())[0]
     items = f"Switch({p}Tabs.Selected.Value,\n        {switch},\n        {first})"
@@ -861,11 +862,11 @@ def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel
             OnSelect=f"Set({sel}, ThisItem)", TemplateFill=f"If({selected}, clrBrandTint, Color.Transparent)"),
         empty_state(f"{p}OrdersEmpty", "CheckmarkCircle", "Nothing here right now.", f"IsEmpty({p}Orders.AllItems)"),
     ], gap=10, Width="If(App.Width < 1200, 380, 440)", FillPortions=0, LayoutAlignItems="LayoutAlignItems.Stretch")
-    refresh_selected = f"If(!IsBlank({sel}), Set({sel}, LookUp('Supply Orders', 'Supply Order' = {sel}.'Supply Order')))"
+    refresh_selected = f"If(!IsBlank({sel}), Set({sel}, LookUp('Pantry Orders', ID = {sel}.ID)))"
     detail_body = box(f"{p}DetailBody", "Vertical", [
         box(f"{p}DetailHead", "Horizontal", [
-            text(f"{p}DetailNumber", f"{sel}.'Order Number'", 20, "Semibold", Height=32, FillPortions=1),
-            status_badge(f"{p}DetailBadge", f"{sel}.'Order Status'", Width=140, Height=28),
+            text(f"{p}DetailNumber", f"{sel}.Title", 20, "Semibold", Height=32, FillPortions=1),
+            status_badge(f"{p}DetailBadge", f"{sel}.'Order Status'.Value", Width=140, Height=28),
         ], gap=12, Height=40, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center"),
         box(f"{p}Fields", "Horizontal", [
             field(f"{p}FBy", "Requested by", f"{sel}.'Requested By'"),
@@ -888,34 +889,34 @@ def decision_screen(p, screen, nav_key, title, subtitle, tabs, items_by_tab, sel
     body = [box(f"{p}Body", "Horizontal", [order_list, detail], gap=16, LayoutAlignItems="LayoutAlignItems.Stretch")]
     if top_note:
         body.insert(0, top_note)
-    actions = [button(f"{p}Refresh", '"Refresh"', f"Refresh('Supply Orders'); Set({sel}, Blank())",
+    actions = [button(f"{p}Refresh", '"Refresh"', f"Refresh('Pantry Orders'); Set({sel}, Blank())",
                       "Subtle", "ArrowClockwise", Width=120)]
     return page(screen, p, nav_key, title, subtitle, actions, body, screen_props={"OnVisible": refresh_selected})
 
 
 def approvals_screen():
     p, sel = "Ap", "gApprOrder"
-    decided = f"'Approval Status' = {AS}.Approved || 'Approval Status' = {AS}.Rejected"
+    decided = "'Approval Status'.Value = \"Approved\" || 'Approval Status'.Value = \"Rejected\""
 
     def decide(outcome, order_status, action):
-        return busy(f'''Patch('Supply Orders', {sel}, {{
-        'Approval Status': {AS}.{outcome},
-        'Order Status': {OS}.{order_status},
+        return busy(f'''Patch('Pantry Orders', {sel}, {{
+        'Approval Status': {{Value: "{outcome}"}},
+        'Order Status': {{Value: "{order_status}"}},
         'Approval Date': Now(),
         'Approved By': User().FullName,
         'Approver Comments': {p}Comment.Text
     }});
-    Patch('Approval History Records', Defaults('Approval History Records'), {{
-        'Approval Record': "{outcome} - " & {sel}.'Order Number',
-        'Supply Order': {sel},
-        Action: {AA}.{action},
+    Patch('Pantry Approval History', Defaults('Pantry Approval History'), {{
+        Title: "{outcome} - " & {sel}.Title,
+        'Supply Order': {{Id: {sel}.ID, Value: {sel}.Title}},
+        Action: {{Value: "{action}"}},
         Approver: User().FullName,
         'Action Date': Now(),
         Comments: {p}Comment.Text,
-        'Previous Status': {AS}.Pending,
-        'New Status': {AS}.{outcome}
+        'Previous Status': {{Value: "Pending"}},
+        'New Status': {{Value: "{outcome}"}}
     }});
-    Notify({sel}.'Order Number' & " {outcome.lower()}.", NotificationType.Success);
+    Notify({sel}.Title & " {outcome.lower()}.", NotificationType.Success);
     Set({sel}, Blank());
     Reset({p}Comment)''')
 
@@ -924,10 +925,10 @@ def approvals_screen():
         badge(f"{p}OverBudget", f'"Over ₹{BUDGET_LIMIT:,}"', "BadgeIntent.Caution", Width=120,
               Visible=f"Coalesce({sel}.'Total Amount', 0) > cfgBudgetLimit"),
         badge(f"{p}OverQty", f'"Over {QUANTITY_LIMIT} units"', "BadgeIntent.Caution", Width=120,
-              Visible=f"Sum(Filter('Order Line Items', 'Supply Order'.'Supply Order' = {sel}.'Supply Order'), Quantity) > cfgQuantityLimit"),
-    ], gap=8, Height=28, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center", Visible=f"Text({sel}.'Order Status') = \"Submitted\"")
+              Visible=f"Sum(Filter('Pantry Order Lines', 'Supply Order'.Id = {sel}.ID), Quantity) > cfgQuantityLimit"),
+    ], gap=8, Height=28, FillPortions=0, LayoutAlignItems="LayoutAlignItems.Center", Visible=f"Text({sel}.'Order Status'.Value) = \"Submitted\"")
     reject = f'If(IsBlank({p}Comment.Text), Notify("Add a comment explaining why you are rejecting it.", NotificationType.Error), {decide("Rejected", "Rejected", "Rejected")})'
-    pending = f"Text({sel}.'Order Status') = \"Submitted\""
+    pending = f"Text({sel}.'Order Status'.Value) = \"Submitted\""
     comment = ctl(f"{p}Comment", INPUT, Placeholder='"Comment for the requester (required to reject)"',
                   Type="TextInputType.Multiline", TriggerOutput="TriggerOutput.Keypress", MaxLength=1000,
                   AccessibleLabel='"Approver comment"', Height=64, Visible=pending)
@@ -941,24 +942,24 @@ def approvals_screen():
         p, "ApprovalsScreen", "Approvals", "Approvals",
         '"Review supply requests from the whole office. Approved requests are emailed to suppliers automatically."',
         ["Pending", "Decided"],
-        {"Pending": f"Sort(Filter('Supply Orders', 'Order Status' = {OS}.Submitted), 'Created On', SortOrder.Ascending)",
-         "Decided": f"Sort(Filter('Supply Orders', {decided}), 'Modified On', SortOrder.Descending)"},
+        {"Pending": f"Sort(Filter('Pantry Orders', 'Order Status'.Value = \"Submitted\"), Created, SortOrder.Ascending)",
+         "Decided": f"Sort(Filter('Pantry Orders', {decided}), Modified, SortOrder.Descending)"},
         sel, [why, comment], actions_row,
         top_note=note(f"{p}Note", f'"Only requests over ₹{BUDGET_LIMIT:,} or {QUANTITY_LIMIT} units come here. Smaller ones are approved automatically. You can also decide from the Outlook or Teams approval request."', height=52))
 
 
 def receiving_screen():
     p, sel = "Rv", "gRecvOrder"
-    receive = busy(f'''ForAll(Filter('Order Line Items', 'Supply Order'.'Supply Order' = {sel}.'Supply Order') As L,
-        With({{item: LookUp('Pantry Items', 'Pantry Item' = L.'Pantry Item'.'Pantry Item')}},
+    receive = busy(f'''ForAll(Filter('Pantry Order Lines', 'Supply Order'.Id = {sel}.ID) As L,
+        With({{item: LookUp('Pantry Items', ID = L.'Pantry Item'.Id)}},
             If(!IsBlank(item), Patch('Pantry Items', item, {{'Current Stock': Coalesce(item.'Current Stock', 0) + L.Quantity}}))
         )
     );
-    Patch('Supply Orders', {sel}, {{'Order Status': {OS}.Received}});
-    ClearCollect(colItems, Sort('Pantry Items', 'Item Name'));
-    Notify({sel}.'Order Number' & " received. Stock levels updated.", NotificationType.Success);
+    Patch('Pantry Orders', {sel}, {{'Order Status': {{Value: "Received"}}}});
+    ClearCollect(colItems, Sort('Pantry Items', Title));
+    Notify({sel}.Title & " received. Stock levels updated.", NotificationType.Success);
     Set({sel}, Blank())''')
-    open_order = f"Text({sel}.'Order Status') in [\"Approved\", \"Ordered\", \"Partially Received\"]"
+    open_order = f"Text({sel}.'Order Status'.Value) in [\"Approved\", \"Ordered\", \"Partially Received\"]"
     actions_row = box(f"{p}Decide", "Horizontal", [
         text(f"{p}Hint", '"Marking it received adds every item quantity to the pantry stock."', 12,
              color="clrTextSecondary", Height=36, VerticalAlign="VerticalAlign.Middle", FillPortions=1),
@@ -968,8 +969,8 @@ def receiving_screen():
         p, "ReceivingScreen", "Receiving", "Receiving",
         '"Record deliveries from suppliers. Received quantities are added to stock."',
         ["To receive", "Received"],
-        {"To receive": f"Sort(Filter('Supply Orders', 'Order Status' = {OS}.Ordered || 'Order Status' = {OS}.Approved || 'Order Status' = {OS}.'Partially Received'), 'Created On', SortOrder.Ascending)",
-         "Received": f"Sort(Filter('Supply Orders', 'Order Status' = {OS}.Received), 'Modified On', SortOrder.Descending)"},
+        {"To receive": f"Sort(Filter('Pantry Orders', 'Order Status'.Value = \"Ordered\" || 'Order Status'.Value = \"Approved\" || 'Order Status'.Value = \"Partially Received\"), Created, SortOrder.Ascending)",
+         "Received": f"Sort(Filter('Pantry Orders', 'Order Status'.Value = \"Received\"), Modified, SortOrder.Descending)"},
         sel, [], actions_row)
 
 
@@ -999,7 +1000,7 @@ APP = f"""App:
       imgHero = "data:image/svg+xml;utf8," & EncodeUrl("{HERO_SVG}");
     OnStart: |-
       =Set(gRole, "Requester");
-      ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))
+      ClearCollect(colItems, Sort('Pantry Items', Title))
     Theme: =PantryTheme
 """
 

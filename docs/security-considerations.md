@@ -1,36 +1,43 @@
-# Security considerations
+# Security considerations (SharePoint edition)
 
 ## What is built
-### Security roles (in the solution)
-| Role | Supply Orders | Order Line Items | Pantry Items / Suppliers | Approval History |
-|---|---|---|---|---|
-| **Pantry Requester** | Create, read, write **own** (user level) | Create, read, write, delete **own** | Read all | Read all |
-| **Pantry Approver** | Read and write **all** | Read all | Read all | Create, read |
-| **Pantry Admin** | Full | Full | Full (including stock edits) | Full |
+### Access to the data
+The five lists live on one SharePoint site, so access is the site's permissions:
 
-Assign the roles with **Manage roles** on users or teams in the Power Platform admin center. Users also need the app shared with them.
+| Who | SharePoint group | Can |
+|---|---|---|
+| Staff (requesters) | Site Members (Edit) | Create orders and lines, read the catalog and suppliers |
+| Office manager, pantry admins | Site Owners (Full control) | Everything, including stock edits and approvals |
 
-### Enforcement on the server, not in the app
-- **Dataverse privileges** decide what each user can read or change. The app's role switcher only changes which screens are shown, for the demo, and grants no access.
-- **The approval flow** makes the threshold decision. A modified app can't skip approval for a large order, because the flow re-evaluates the order total and quantities when the order is submitted.
-- **The inventory check** runs against live Dataverse data at submit time.
+The app's role switcher only changes which screens are shown (for the demo). It grants no access. SharePoint enforces what each person can read or change.
+
+**Requesters seeing only their own orders.** On **Pantry Orders** and **Pantry Order Lines**, open **List settings** → **Advanced settings** → **Item-level permissions**:
+- set *Read access* to "Read items that were created by the user";
+- set *Create and Edit access* to "Create items and edit items that were created by the user".
+
+Site owners still see everything. The setup flow doesn't change this setting, so you choose whether to apply it.
+
+### Server-side rules
+- **The approval flow** makes the threshold decision. A modified app can't skip approval for a large order: the flow recalculates the total units from the order's lines and checks the order's total amount when the order is submitted.
+- **The inventory check** re-reads live stock from the list at submit time.
 
 ### Audit trail
-Every submission, approval (manual or automatic) and rejection writes an **Approval History** row: who, when, comments, and the old and new status. Dataverse auditing can also be turned on for the five tables.
+Every submission, approval (manual or automatic) and rejection writes a row to **Pantry Approval History**: who, when, comments, and the old and new status. SharePoint also keeps version history on every list item (who changed what, and when).
 
 ### Flows and connections
-- The flows use **connection references**: Dataverse, Approvals and Office 365 Outlook. In production, bind them to a service account so approvals and emails don't depend on one person's account.
-- Supplier emails go only to the **Email** stored on the Supplier record. Lines without a supplier are reported to the pantry admin instead of being sent anywhere.
+- The flows use **connection references** for SharePoint, Approvals and Office 365 Outlook. In production, bind them to a service account that is a site owner, so approvals and emails don't depend on one person.
+- The site address is an **environment variable**, so the same solution can point to a test site and a production site.
+- Supplier emails only go to the **Email** stored on the supplier item. Lines without a supplier are reported to the pantry admin instead of being sent anywhere.
 - Recipients and approval limits sit in each flow's first **Settings** step. There are no secrets in the flow definitions.
 
 ### Copilot agent
-- The agent uses **read-only** Dataverse "List rows" tools, running with the end user's identity (Invoker), so it can't show data the user can't read.
+- Its tools are read-only SharePoint "Get items" actions that run as the end user (Invoker), so it can't show items the user isn't allowed to read.
 - Its instructions limit it to pantry topics, and web browsing is off.
 
 ## Recommended for production
-- **DLP policy:** put Dataverse, Approvals and Office 365 Outlook in the Business group, and block other connectors in the pantry environment.
-- **Environments:** develop in a Dev environment, then export a **managed** solution to Test and Production.
-- **Environment variables:** use them for approval limits, the approver and admin addresses, and the time zone.
+- **DLP policy:** put SharePoint, Approvals and Office 365 Outlook in the Business group.
+- **Item-level permissions** on Pantry Orders and Order Lines (above), plus a **Visitors** group for read-only viewers.
+- **Separate sites** for test and production, selected by the environment variable. Export a **managed** solution for production.
 - **Entra ID:** require MFA and conditional access for app users.
-- **Real roles:** replace the demo role switcher with a check of the user's Dataverse security role.
-- **Monitoring:** use flow run history and failure alerts (Power Automate analytics), and Dataverse audit logs.
+- **Real roles:** replace the demo role switcher with a check of SharePoint group membership (for example via the Office 365 Groups or SharePoint connector).
+- **Monitoring:** use flow run history and failure alerts (Power Automate analytics).

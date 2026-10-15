@@ -38,8 +38,8 @@ def build(apps=None):
     """Returns (CanvasApps xml, root components xml, {zip path: content}).
 
     apps: list of (schema name, display name, msapp path, {data source name: (entity set, logical name)}).
-    The Pantry app declares no tables: Studio fails to open apps packed with Dataverse tables, so
-    the five tables are added in Studio (Data → Add data) after import.
+    The Pantry app declares no data sources: Studio fails to open apps packed with them, so the
+    five SharePoint lists are added in Studio (Data → Add data → SharePoint) after import.
     """
     apps = apps or [(APP_NAME, DISPLAY_NAME, MSAPP, {})]
     xml, roots, files = "  <CanvasApps>\n", "", {}

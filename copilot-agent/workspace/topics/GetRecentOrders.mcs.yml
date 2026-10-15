@@ -1,21 +1,21 @@
 mcs.metadata:
   componentName: Get recent supply orders
-  description: Returns the 100 most recent supply orders with order number, order status, approval status, order date, required-by date, approval date, total amount, requester, approver and approver comments. Use it for questions about orders, their status, approvals, last orders and spending.
+  description: Returns the 100 most recent supply orders (Title is the order number) with order status, approval status, order date, required-by date, approval date, total amount, requester, approver, approver comments and created date. Use it for questions about orders, their status, approvals, the last order placed and spending.
 kind: TaskDialog
 modelDisplayName: Get recent supply orders
-modelDescription: Returns the 100 most recent supply orders with order number, order status, approval status, order date, required-by date, approval date, total amount, requester, approver and approver comments. Use it for questions about orders, their status, approvals, last orders and spending.
+modelDescription: Returns the 100 most recent supply orders (Title is the order number) with order status, approval status, order date, required-by date, approval date, total amount, requester, approver, approver comments and created date. Use it for questions about orders, their status, approvals, the last order placed and spending.
 inputs:
   - kind: ManualTaskInput
-    propertyName: entityName
-    value: 'cr_supplyorders'
+    propertyName: dataset
+    value: 'https://dheerajvyas173gmail.sharepoint.com/sites/OfficePantry'
 
   - kind: ManualTaskInput
-    propertyName: $select
-    value: 'cr_name,cr_orderstatus,cr_approvalstatus,cr_orderdate,cr_requiredbydate,cr_approvaldate,cr_totalamount,cr_requestedby,cr_approvedby,cr_approvercomments,createdon'
+    propertyName: table
+    value: 'Pantry Orders'
 
   - kind: ManualTaskInput
     propertyName: $orderby
-    value: 'createdon desc'
+    value: 'Created desc'
 
   - kind: ManualTaskInput
     propertyName: $top
@@ -26,10 +26,10 @@ outputs:
 
 action:
   kind: InvokeConnectorTaskAction
-  connectionReference: cr_pantry_dataverse
+  connectionReference: cr_pantry_sharepoint
   connectionProperties:
     mode: Invoker
 
-  operationId: ListRecords
+  operationId: GetItems
 
 outputMode: All

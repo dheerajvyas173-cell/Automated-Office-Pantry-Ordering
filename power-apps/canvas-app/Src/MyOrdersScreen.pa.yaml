@@ -2,7 +2,7 @@ Screens:
   MyOrdersScreen:
     Properties:
       Fill: =clrCanvas
-      OnVisible: =If(!IsBlank(gSelOrder), Set(gSelOrder, LookUp('Supply Orders', 'Supply Order' = gSelOrder.'Supply Order')))
+      OnVisible: =If(!IsBlank(gSelOrder), Set(gSelOrder, LookUp('Pantry Orders', ID = gSelOrder.ID)))
     Children:
       - MoRoot:
           Control: GroupContainer@1.5.0
@@ -405,7 +405,7 @@ Screens:
                                     FillPortions: =0
                                     Height: =36
                                     Icon: ="ArrowClockwise"
-                                    OnSelect: =Refresh('Supply Orders'); If(!IsBlank(gSelOrder), Set(gSelOrder, LookUp('Supply Orders', 'Supply Order' = gSelOrder.'Supply Order')))
+                                    OnSelect: =Refresh('Pantry Orders'); If(!IsBlank(gSelOrder), Set(gSelOrder, LookUp('Pantry Orders', ID = gSelOrder.ID)))
                                     Text: ="Refresh"
                                     Width: =120
                               - MoNew:
@@ -481,15 +481,15 @@ Screens:
                                     Items: |-
                                       =Sort(
                                           Switch(MoTabs.Selected.Value,
-                                              "Open", Filter('Supply Orders', 'Requested By' = gUserEmail && StartsWith('Order Number', MoSearch.Text) && ('Order Status' = [@'Order Status'].Draft || 'Order Status' = [@'Order Status'].Submitted || 'Order Status' = [@'Order Status'].Approved || 'Order Status' = [@'Order Status'].Ordered || 'Order Status' = [@'Order Status'].'Partially Received')),
-                                              "Completed", Filter('Supply Orders', 'Requested By' = gUserEmail && StartsWith('Order Number', MoSearch.Text) && ('Order Status' = [@'Order Status'].Received || 'Order Status' = [@'Order Status'].Rejected || 'Order Status' = [@'Order Status'].Cancelled)),
-                                              Filter('Supply Orders', 'Requested By' = gUserEmail && StartsWith('Order Number', MoSearch.Text))
+                                              "Open", Filter('Pantry Orders', 'Requested By' = gUserEmail && StartsWith(Title, MoSearch.Text) && ('Order Status'.Value = "Draft" || 'Order Status'.Value = "Submitted" || 'Order Status'.Value = "Approved" || 'Order Status'.Value = "Ordered" || 'Order Status'.Value = "Partially Received")),
+                                              "Completed", Filter('Pantry Orders', 'Requested By' = gUserEmail && StartsWith(Title, MoSearch.Text) && ('Order Status'.Value = "Received" || 'Order Status'.Value = "Rejected" || 'Order Status'.Value = "Cancelled")),
+                                              Filter('Pantry Orders', 'Requested By' = gUserEmail && StartsWith(Title, MoSearch.Text))
                                           ),
-                                          'Created On', SortOrder.Descending
+                                          Created, SortOrder.Descending
                                       )
                                     LayoutMinHeight: =100
                                     OnSelect: =Set(gSelOrder, ThisItem)
-                                    TemplateFill: =If(!IsBlank(gSelOrder) && ThisItem.'Supply Order' = gSelOrder.'Supply Order', clrBrandTint, Color.Transparent)
+                                    TemplateFill: =If(!IsBlank(gSelOrder) && ThisItem.ID = gSelOrder.ID, clrBrandTint, Color.Transparent)
                                     TemplateSize: =72
                                   Children:
                                     - MoOrSelBar:
@@ -498,7 +498,7 @@ Screens:
                                           Fill: =clrBrand
                                           Height: =Parent.TemplateHeight - 20
                                           TabIndex: =-1
-                                          Visible: =!IsBlank(gSelOrder) && ThisItem.'Supply Order' = gSelOrder.'Supply Order'
+                                          Visible: =!IsBlank(gSelOrder) && ThisItem.ID = gSelOrder.ID
                                           Width: =3
                                           Y: =10
                                     - MoOrNumber:
@@ -509,7 +509,7 @@ Screens:
                                           FontWeight: =FontWeight.Semibold
                                           Height: =22
                                           Size: =14
-                                          Text: =ThisItem.'Order Number'
+                                          Text: =ThisItem.Title
                                           Width: =Parent.TemplateWidth - 170
                                           Wrap: =false
                                           X: =14
@@ -522,7 +522,7 @@ Screens:
                                           FontWeight: =FontWeight.Normal
                                           Height: =20
                                           Size: =12
-                                          Text: =Text(ThisItem.'Created On', "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.'Total Amount', 0), "#,##0.00")
+                                          Text: =Text(ThisItem.Created, "dd mmm yyyy") & "  ·  " & Text(Coalesce(ThisItem.'Total Amount', 0), "#,##0.00")
                                           Width: =Parent.TemplateWidth - 170
                                           Wrap: =false
                                           X: =14
@@ -530,10 +530,10 @@ Screens:
                                     - MoOrBadge:
                                         Control: ModernBadge@1.0.0
                                         Properties:
-                                          AccessibleLabel: =Text(ThisItem.'Order Status')
-                                          Content: =Text(ThisItem.'Order Status')
+                                          AccessibleLabel: =Text(ThisItem.'Order Status'.Value)
+                                          Content: =Text(ThisItem.'Order Status'.Value)
                                           Height: =24
-                                          Intent: =Switch(Text(ThisItem.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
+                                          Intent: =Switch(Text(ThisItem.'Order Status'.Value), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
                                           Shape: =BadgeShape.Rounded
                                           Width: =128
                                           X: =Parent.TemplateWidth - 142
@@ -637,15 +637,15 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =32
                                                 Size: =20
-                                                Text: =gSelOrder.'Order Number'
+                                                Text: =gSelOrder.Title
                                           - MoDetailBadge:
                                               Control: ModernBadge@1.0.0
                                               Properties:
-                                                AccessibleLabel: =Text(gSelOrder.'Order Status')
-                                                Content: =Text(gSelOrder.'Order Status')
+                                                AccessibleLabel: =Text(gSelOrder.'Order Status'.Value)
+                                                Content: =Text(gSelOrder.'Order Status'.Value)
                                                 FillPortions: =0
                                                 Height: =28
-                                                Intent: =Switch(Text(gSelOrder.'Order Status'), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
+                                                Intent: =Switch(Text(gSelOrder.'Order Status'.Value), "Received", BadgeIntent.Positive, "Ordered", BadgeIntent.Positive, "Approved", BadgeIntent.Highlight, "Submitted", BadgeIntent.Informative, "Partially Received", BadgeIntent.Caution, "Rejected", BadgeIntent.Critical, BadgeIntent.Neutral)
                                                 Shape: =BadgeShape.Rounded
                                                 Width: =140
                                           - MoCancelBtn:
@@ -659,7 +659,7 @@ Screens:
                                                 OnSelect: |-
                                                   =UpdateContext({locConfirmCancel: true})
                                                 Text: ="Cancel request"
-                                                Visible: =Text(gSelOrder.'Order Status') in ["Draft", "Submitted"]
+                                                Visible: =Text(gSelOrder.'Order Status'.Value) in ["Draft", "Submitted"]
                                                 Width: =176
                                     - MoTracker:
                                         Control: GroupContainer@1.5.0
@@ -672,7 +672,7 @@ Screens:
                                           LayoutAlignItems: =LayoutAlignItems.Center
                                           LayoutDirection: =LayoutDirection.Horizontal
                                           LayoutGap: =8
-                                          Visible: =!(Text(gSelOrder.'Order Status') in ["Rejected", "Cancelled", "Draft"])
+                                          Visible: =!(Text(gSelOrder.'Order Status'.Value) in ["Rejected", "Cancelled", "Draft"])
                                         Children:
                                           - MoStep1:
                                               Control: GroupContainer@1.5.0
@@ -694,14 +694,14 @@ Screens:
                                                       FillPortions: =0
                                                       Height: =20
                                                       Icon: ="CheckmarkCircle"
-                                                      IconColor: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 1, clrBrand, clrTextTertiary)
-                                                      IconStyle: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 1, IconStyle.Filled, IconStyle.Outline)
+                                                      IconColor: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 1, clrBrand, clrTextTertiary)
+                                                      IconStyle: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 1, IconStyle.Filled, IconStyle.Outline)
                                                       Width: =20
                                                 - MoStep1Text:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       AutoHeight: =true
-                                                      Color: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 1, clrTextPrimary, clrTextSecondary)
+                                                      Color: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 1, clrTextPrimary, clrTextSecondary)
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =20
@@ -712,7 +712,7 @@ Screens:
                                           - MoLink2:
                                               Control: Rectangle@2.3.0
                                               Properties:
-                                                Fill: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 2, clrBrand, clrStroke)
+                                                Fill: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 2, clrBrand, clrStroke)
                                                 FillPortions: =1
                                                 Height: =2
                                                 LayoutMinWidth: =12
@@ -737,14 +737,14 @@ Screens:
                                                       FillPortions: =0
                                                       Height: =20
                                                       Icon: ="CheckmarkCircle"
-                                                      IconColor: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 2, clrBrand, clrTextTertiary)
-                                                      IconStyle: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 2, IconStyle.Filled, IconStyle.Outline)
+                                                      IconColor: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 2, clrBrand, clrTextTertiary)
+                                                      IconStyle: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 2, IconStyle.Filled, IconStyle.Outline)
                                                       Width: =20
                                                 - MoStep2Text:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       AutoHeight: =true
-                                                      Color: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 2, clrTextPrimary, clrTextSecondary)
+                                                      Color: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 2, clrTextPrimary, clrTextSecondary)
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =20
@@ -755,7 +755,7 @@ Screens:
                                           - MoLink3:
                                               Control: Rectangle@2.3.0
                                               Properties:
-                                                Fill: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 3, clrBrand, clrStroke)
+                                                Fill: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 3, clrBrand, clrStroke)
                                                 FillPortions: =1
                                                 Height: =2
                                                 LayoutMinWidth: =12
@@ -780,14 +780,14 @@ Screens:
                                                       FillPortions: =0
                                                       Height: =20
                                                       Icon: ="CheckmarkCircle"
-                                                      IconColor: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 3, clrBrand, clrTextTertiary)
-                                                      IconStyle: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 3, IconStyle.Filled, IconStyle.Outline)
+                                                      IconColor: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 3, clrBrand, clrTextTertiary)
+                                                      IconStyle: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 3, IconStyle.Filled, IconStyle.Outline)
                                                       Width: =20
                                                 - MoStep3Text:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       AutoHeight: =true
-                                                      Color: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 3, clrTextPrimary, clrTextSecondary)
+                                                      Color: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 3, clrTextPrimary, clrTextSecondary)
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =20
@@ -798,7 +798,7 @@ Screens:
                                           - MoLink4:
                                               Control: Rectangle@2.3.0
                                               Properties:
-                                                Fill: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 4, clrBrand, clrStroke)
+                                                Fill: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 4, clrBrand, clrStroke)
                                                 FillPortions: =1
                                                 Height: =2
                                                 LayoutMinWidth: =12
@@ -823,14 +823,14 @@ Screens:
                                                       FillPortions: =0
                                                       Height: =20
                                                       Icon: ="CheckmarkCircle"
-                                                      IconColor: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 4, clrBrand, clrTextTertiary)
-                                                      IconStyle: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 4, IconStyle.Filled, IconStyle.Outline)
+                                                      IconColor: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 4, clrBrand, clrTextTertiary)
+                                                      IconStyle: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 4, IconStyle.Filled, IconStyle.Outline)
                                                       Width: =20
                                                 - MoStep4Text:
                                                     Control: ModernText@1.0.0
                                                     Properties:
                                                       AutoHeight: =true
-                                                      Color: =If(Switch(Text(gSelOrder.'Order Status'), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 4, clrTextPrimary, clrTextSecondary)
+                                                      Color: =If(Switch(Text(gSelOrder.'Order Status'.Value), "Submitted", 1, "Approved", 2, "Ordered", 3, "Partially Received", 3, "Received", 4, 0) >= 4, clrTextPrimary, clrTextSecondary)
                                                       FillPortions: =0
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =20
@@ -881,7 +881,7 @@ Screens:
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
-                                                      Text: =Text(gSelOrder.'Created On', "dd mmm yyyy")
+                                                      Text: =Text(gSelOrder.Created, "dd mmm yyyy")
                                                       Wrap: =false
                                           - MoFRequired:
                                               Control: GroupContainer@1.5.0
@@ -980,7 +980,7 @@ Screens:
                                                       FontWeight: =FontWeight.Semibold
                                                       Height: =22
                                                       Size: =14
-                                                      Text: =Coalesce(Text(gSelOrder.'Approval Status'), "Not started")
+                                                      Text: =Coalesce(gSelOrder.'Approval Status'.Value, "Not started")
                                                       Wrap: =false
                                     - MoComments:
                                         Control: ModernText@1.0.0
@@ -1059,7 +1059,7 @@ Screens:
                                                       AccessibleLabel: ="Lines list"
                                                       Fill: =Color.Transparent
                                                       FillPortions: =1
-                                                      Items: =Filter('Order Line Items', 'Supply Order'.'Supply Order' = gSelOrder.'Supply Order')
+                                                      Items: =Filter('Pantry Order Lines', 'Supply Order'.Id = gSelOrder.ID)
                                                       LayoutMinHeight: =100
                                                       TemplateSize: =56
                                                     Children:
@@ -1071,7 +1071,7 @@ Screens:
                                                             FontWeight: =FontWeight.Semibold
                                                             Height: =20
                                                             Size: =13
-                                                            Text: =ThisItem.'Line Item Name'
+                                                            Text: =ThisItem.Title
                                                             Width: =Parent.TemplateWidth - 130
                                                             Wrap: =false
                                                             X: =4
@@ -1084,7 +1084,7 @@ Screens:
                                                             FontWeight: =FontWeight.Normal
                                                             Height: =20
                                                             Size: =12
-                                                            Text: =Coalesce(ThisItem.Supplier.'Supplier Name', "No supplier set")
+                                                            Text: =Coalesce(ThisItem.Supplier.Value, "No supplier set")
                                                             Width: =Parent.TemplateWidth - 130
                                                             Wrap: =false
                                                             X: =4
@@ -1177,7 +1177,7 @@ Screens:
                                                       AccessibleLabel: ="History list"
                                                       Fill: =Color.Transparent
                                                       FillPortions: =1
-                                                      Items: =Sort(Filter('Approval History Records', 'Supply Order'.'Supply Order' = gSelOrder.'Supply Order'), 'Action Date', SortOrder.Descending)
+                                                      Items: =Sort(Filter('Pantry Approval History', 'Supply Order'.Id = gSelOrder.ID), 'Action Date', SortOrder.Descending)
                                                       LayoutMinHeight: =100
                                                       TemplateSize: =64
                                                     Children:
@@ -1199,7 +1199,7 @@ Screens:
                                                             FontWeight: =FontWeight.Semibold
                                                             Height: =20
                                                             Size: =13
-                                                            Text: =Text(ThisItem.Action) & " by " & Coalesce(ThisItem.Approver, "system")
+                                                            Text: =ThisItem.Action.Value & " by " & Coalesce(ThisItem.Approver, "system")
                                                             Width: =Parent.TemplateWidth - 28
                                                             Wrap: =false
                                                             X: =24
@@ -1384,8 +1384,8 @@ Screens:
                                 =UpdateContext({locConfirmCancel: false});
                                 UpdateContext({locBusy: true});
                                 IfError(
-                                    Patch('Supply Orders', gSelOrder, {'Order Status': [@'Order Status'].Cancelled});
-                                    Set(gSelOrder, LookUp('Supply Orders', 'Supply Order' = gSelOrder.'Supply Order'));
+                                    Patch('Pantry Orders', gSelOrder, {'Order Status': {Value: "Cancelled"}});
+                                    Set(gSelOrder, LookUp('Pantry Orders', ID = gSelOrder.ID));
                                     Notify("Request cancelled.", NotificationType.Success),
                                     Notify("Something went wrong: " & FirstError.Message, NotificationType.Error)
                                 );

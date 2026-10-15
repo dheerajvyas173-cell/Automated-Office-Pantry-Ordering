@@ -1,16 +1,18 @@
-"""Builds the importable Dataverse solution ZIPs in the format Dataverse itself exports.
+"""Builds the importable solution ZIP in the format Dataverse itself exports.
 
 Run: python3 solution/generate_solution.py
-Outputs: PantrySupplyOrdering_1_0_0_0.zip (full) and PantrySupplyOrdering_TEST.zip (one table, diagnostic).
+Output: PantrySupplyOrdering_SharePoint.zip (flows, canvas app, Copilot agent, site URL variable).
+The Dataverse table, choice and role builders below are kept for the earlier Dataverse edition.
 """
 import os
 import uuid
 import zipfile
-from xml.sax.saxutils import quoteattr
+from xml.sax.saxutils import escape, quoteattr
 
 import canvas_app
 import copilot_agent
 import flows as flows_mod
+import sharepoint
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOLUTION_DIR = os.path.join(ROOT, "solution")
@@ -519,15 +521,42 @@ def build_zip(path, files):
     print(f"Wrote {path}")
 
 
+def environment_variable(schema_name, display_name, description, default):
+    """Solution environment variable (String). Import asks for its value; flows read it as a parameter."""
+    path = f"environmentvariabledefinitions/{schema_name}/environmentvariabledefinition.xml"
+    xml = f"""<environmentvariabledefinition schemaname="{schema_name}">
+  <defaultvalue>{escape(default)}</defaultvalue>
+  <description default={quoteattr(description)}>
+    <label description={quoteattr(description)} languagecode="1033" />
+  </description>
+  <displayname default={quoteattr(display_name)}>
+    <label description={quoteattr(display_name)} languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>
+"""
+    return {path: xml}, f'      <RootComponent type="380" schemaName="{schema_name}" behavior="0" />\n'
+
+
 def write_zip(filename, version, entities, relationships, optionsets, roles=False, flows=False, canvas=False,
-              agent=False):
+              agent=False, env_vars=()):
     role_xml, role_roots = roles_xml() if roles else ("", "")
     wf_xml, wf_roots, conn_xml, wf_files = flows_mod.build() if flows else ("", "", "", {})
     app_xml, app_roots, app_files = canvas_app.build() if canvas else ("", "", {})
+    var_files, var_roots = {}, ""
+    for var in env_vars:
+        f, r = environment_variable(*var)
+        var_files.update(f)
+        var_roots += r
     files = {
         "customizations.xml": customizations_xml(entities, relationships, optionsets,
                                                  role_xml, wf_xml, conn_xml, app_xml),
-        "solution.xml": solution_xml(version, entities, optionsets, role_roots + wf_roots + app_roots),
+        "solution.xml": solution_xml(version, entities, optionsets, role_roots + wf_roots + app_roots + var_roots),
+        **var_files,
         **wf_files,
         **app_files,
         **(copilot_agent.build() if agent else {}),
@@ -538,18 +567,15 @@ def write_zip(filename, version, entities, relationships, optionsets, roles=Fals
 
 
 def main():
-    full = write_zip("PantrySupplyOrdering_1_0_0_0.zip", "1.0.0.0",
-                     FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS)
-    # Each step upgrades the solution already in the environment, adding one layer.
-    write_zip("Step3_Security_Roles.zip", "1.0.1.0",
-              FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True)
-    write_zip("Step4_Cloud_Flows.zip", "1.0.2.1",
-              FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True)
-    write_zip("Step5_Canvas_App.zip", "1.1.2.0",
-              FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True)
-    latest = write_zip("Step6_Copilot_Agent.zip", "1.1.3.0",
-                       FULL_ENTITIES, FULL_RELATIONSHIPS, OPTION_SETS, roles=True, flows=True, canvas=True,
-                       agent=True)
+    """Builds the SharePoint edition: lists on a SharePoint site, no Dataverse tables or roles.
+
+    The solution holds the flows (including the one that creates the site and lists), the canvas
+    app, the Copilot agent and the site URL environment variable.
+    """
+    latest = write_zip("PantrySupplyOrdering_SharePoint.zip", "2.0.0.0", [], [], {}, flows=True, canvas=True,
+                       agent=True, env_vars=[(sharepoint.SITE_VAR, "Pantry SharePoint site",
+                                              "URL of the SharePoint site that holds the pantry lists",
+                                              sharepoint.SITE_URL)])
     for name in ("customizations.xml", "solution.xml", "[Content_Types].xml"):
         with open(os.path.join(SOLUTION_DIR, name), "w", encoding="utf-8") as f:
             f.write(latest[name])

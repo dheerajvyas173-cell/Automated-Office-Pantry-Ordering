@@ -1,19 +1,36 @@
-# Import guide
+# Import guide (SharePoint edition)
 
-`Step6_Copilot_Agent.zip` contains the whole solution (version 1.1.3.0): tables, choices, three security roles, three cloud flows, the canvas app and the Copilot agent. It upgrades any earlier import of `PantrySupplyOrdering`.
+`PantrySupplyOrdering_SharePoint.zip` (version 2.0.0.0) contains:
+- the canvas app;
+- four cloud flows, including the one that builds the SharePoint site;
+- the Copilot agent;
+- the **Pantry SharePoint site** environment variable.
 
-The other ZIPs (`PantrySupplyOrdering_1_0_0_0.zip` and `Step3`–`Step5`) are the earlier step-by-step layers. They aren't needed if you import Step 6.
+All data lives in five SharePoint lists. There are no Dataverse tables.
 
-## 1. Import
+## 1. Import (about 2 minutes)
 1. make.powerapps.com → pick your environment → **Solutions** → **Import solution**.
-2. Browse to `Step6_Copilot_Agent.zip` → **Next**.
+2. Browse to `PantrySupplyOrdering_SharePoint.zip` → **Next**.
 3. **Connections:** pick, or create, a connection for each:
-   - **Pantry - Dataverse** (Microsoft Dataverse)
+   - **Pantry - SharePoint** (SharePoint)
    - **Pantry - Approvals** (Approvals)
    - **Pantry - Office 365 Outlook** (Office 365 Outlook)
-4. **Import**. The flows are switched on as part of the import.
+4. **Environment variable "Pantry SharePoint site":** keep `https://dheerajvyas173gmail.sharepoint.com/sites/OfficePantry`, or enter another site address. The site doesn't need to exist yet.
+5. **Import**.
 
-## 2. Settings
+## 2. Create the site, lists and sample data (one click)
+1. In the solution, open the flow **Pantry - Create SharePoint site and lists** → **Run** → **Run flow**.
+2. Wait until it shows **Succeeded** (1–3 minutes). It:
+   - creates the site if it doesn't exist;
+   - creates the five lists and their columns;
+   - adds 5 suppliers and 24 pantry items.
+
+It's safe to run again: lists that already exist are left as they are.
+
+## 3. Turn on the order flows
+In the solution, select **Pantry Order Approval** and **Pantry Supplier Order Email** → **Turn on**. They import switched off because their lists only exist after step 2. The low-stock alert is already on.
+
+## 4. Settings
 Open each flow → **Edit** → its first step, **Settings**:
 
 | Flow | What to set |
@@ -24,36 +41,32 @@ Open each flow → **Edit** → its first step, **Settings**:
 
 If you change the limits, also change `cfgBudgetLimit` / `cfgQuantityLimit` in the app (**App** → **Formulas**) so the cart preview matches.
 
-## 3. Sample data
-Import `dataverse/sample-data/1_Suppliers.csv` first, then `2_PantryItems.csv`. Steps are in [../dataverse/sample-data.md](../dataverse/sample-data.md).
-
-## 4. Security roles
-In the Power Platform admin center → **Users** → **Manage security roles**, give:
-- **Pantry Requester** to staff;
-- **Pantry Approver** to the office manager;
-- **Pantry Admin** to cafeteria and pantry staff.
-
-Share the app with the same people.
-
-## 5. Canvas app
+## 5. Connect the app to the lists
 1. **Apps** → **Pantry Supply Ordering** → **Edit**.
-2. **Data** (cylinder icon) → **Add data** → **Dataverse**, then add Pantry Items, Suppliers, Supply Orders, Order Line Items and Approval History Records. Do this again after each import of a new version.
-3. **Save**, then **Publish**.
+2. **Data** (cylinder icon) → **Add data** → **SharePoint**, then pick the site.
+3. Tick **Pantry Items**, **Pantry Suppliers**, **Pantry Orders**, **Pantry Order Lines** and **Pantry Approval History** → **Connect**.
+4. **Save**, then **Publish**.
 
-The tables can't be shipped inside the app: an app packed with its Dataverse tables fails to open in Studio ("Error opening file").
+Do step 5 again after each import of a new app version. Studio can't open an app that is packaged with its data sources.
 
 ## 6. Copilot agent
 Open Copilot Studio → **Pantry Supply Assistant**.
-1. Sign in to the Dataverse connection if prompted.
+1. Sign in to the SharePoint connection if prompted.
 2. **Publish**.
-3. Optionally, add it to Teams under **Channels**.
 
-Test it with "How many coffee pods are left?" or "When was the last order placed?".
+The agent's four tools read the lists on `https://dheerajvyas173gmail.sharepoint.com/sites/OfficePantry`. If you used a different site, open each tool (**Get pantry stock**, **Get recent supply orders**, **Get recent order line items**, **Get suppliers**) and change **Site Address**.
+
+## 7. People and permissions
+SharePoint site permissions control who sees the data:
+- **Site Members** (edit): staff who request supplies.
+- **Site Owners**: the office manager and pantry admins.
+
+Share the app and the Copilot agent with the same people. For requesters who should only see their own orders, see [docs/security-considerations.md](../docs/security-considerations.md).
 
 ## Troubleshooting
 | Symptom | Fix |
 |---|---|
 | "Connection not found" during import | Create the connection first (Power Automate → **Connections** → **New connection**), then import again |
-| A flow is Off after import | Open it, fix any connection marked red, then **Turn on** |
-| Approval email never arrives | Check `approverEmail` in the approval flow's Settings step, and the flow's run history |
-| Small orders aren't auto-approved | The flow uses the order's **Total Amount** and the sum of line quantities. Check that both are under the limits |
+| The setup flow fails at **Create_site** | You may not be allowed to create sites. Create a communication site at the same address in SharePoint, then run the flow again |
+| The order flows don't start | Check that they're **On**. They check the Pantry Orders list every minute, so allow 1–2 minutes |
+| App formulas show errors | Make sure all five lists are added under **Data** with the names above |

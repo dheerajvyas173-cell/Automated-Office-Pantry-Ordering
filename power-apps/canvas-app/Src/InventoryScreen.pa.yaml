@@ -404,7 +404,7 @@ Screens:
                                     FillPortions: =0
                                     Height: =36
                                     Icon: ="ArrowClockwise"
-                                    OnSelect: =Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', 'Item Name'))
+                                    OnSelect: =Refresh('Pantry Items'); ClearCollect(colItems, Sort('Pantry Items', Title))
                                     Text: ="Refresh"
                                     Width: =120
                   - IvToolbar:
@@ -459,7 +459,7 @@ Screens:
                               Height: =36
                               InputTextPlaceholder: ="All categories"
                               ItemDisplayText: =ThisItem.Value
-                              Items: =Choices('Item Category')
+                              Items: =Choices('Pantry Items'.Category)
                               SelectMultiple: =false
                               Width: =220
                   - IvNote:
@@ -634,7 +634,7 @@ Screens:
                               AccessibleLabel: ="Rows list"
                               Fill: =Color.Transparent
                               FillPortions: =1
-                              Items: =Sort(Filter(colItems, (IsBlank(IvSearch.Text) || StartsWith('Item Name', IvSearch.Text) || StartsWith(SKU, IvSearch.Text)) && (IsBlank(IvCategory.Selected) || Category = IvCategory.Selected.Value) && Switch(IvTabs.Selected.Value, "Low stock", 'Current Stock' <= 'Minimum Stock Level', "Out of stock", 'Current Stock' <= 0, true)), 'Item Name')
+                              Items: =Sort(Filter(colItems, (IsBlank(IvSearch.Text) || StartsWith(Title, IvSearch.Text) || StartsWith(SKU, IvSearch.Text)) && (IsBlank(IvCategory.Selected) || Category.Value = IvCategory.Selected.Value) && Switch(IvTabs.Selected.Value, "Low stock", 'Current Stock' <= 'Minimum Stock Level', "Out of stock", 'Current Stock' <= 0, true)), Title)
                               LayoutMinHeight: =100
                               ShowScrollbar: =false
                               TemplateSize: =56
@@ -648,7 +648,7 @@ Screens:
                                     FontWeight: =FontWeight.Semibold
                                     Height: =24
                                     Size: =13
-                                    Text: =ThisItem.'Item Name'
+                                    Text: =ThisItem.Title
                                     Width: =(Parent.TemplateWidth - 256) * 0.3 - 8
                                     Wrap: =false
                                     X: =(Parent.TemplateWidth - 256) * 0.0 + 12
@@ -662,7 +662,7 @@ Screens:
                                     FontWeight: =FontWeight.Normal
                                     Height: =24
                                     Size: =13
-                                    Text: =Text(ThisItem.Category)
+                                    Text: =ThisItem.Category.Value
                                     Width: =(Parent.TemplateWidth - 256) * 0.18 - 8
                                     Wrap: =false
                                     X: =(Parent.TemplateWidth - 256) * 0.3 + 12
@@ -727,7 +727,7 @@ Screens:
                               - IvCStockEdit:
                                   Control: ModernNumberInput@1.1.2
                                   Properties:
-                                    AccessibleLabel: ="Stock of " & ThisItem.'Item Name'
+                                    AccessibleLabel: ="Stock of " & ThisItem.Title
                                     Default: =Coalesce(ThisItem.'Current Stock', 0)
                                     Height: =36
                                     Max: =99999
@@ -736,7 +736,7 @@ Screens:
                                       =IfError(
                                           Patch('Pantry Items', ThisItem, {'Current Stock': Self.Value});
                                           Patch(colItems, ThisItem, {'Current Stock': Self.Value});
-                                          Notify(ThisItem.'Item Name' & " stock set to " & Self.Value & ".", NotificationType.Success),
+                                          Notify(ThisItem.Title & " stock set to " & Self.Value & ".", NotificationType.Success),
                                           Notify("Couldn't update stock: " & FirstError.Message, NotificationType.Error)
                                       )
                                     Precision: =DecimalPrecision.'0'
@@ -765,15 +765,15 @@ Screens:
                                     Height: =36
                                     Icon: ="Add"
                                     OnSelect: |-
-                                      =With({existing: LookUp(colCart, Item.'Pantry Item' = ThisItem.'Pantry Item'), qty: Coalesce(ThisItem.'Reorder Quantity', 1)},
+                                      =With({existing: LookUp(colCart, Item.ID = ThisItem.ID), qty: Coalesce(ThisItem.'Reorder Quantity', 1)},
                                           If(IsBlank(existing),
                                               Collect(colCart, {Item: ThisItem, Qty: qty}),
                                               Patch(colCart, existing, {Qty: existing.Qty + qty})
                                           )
                                       );
                                       If(ThisItem.'Current Stock' > ThisItem.'Minimum Stock Level',
-                                          Notify(ThisItem.'Item Name' & " added as a pantry admin override. " & ThisItem.'Current Stock' & " are still in stock.", NotificationType.Warning),
-                                          Notify(ThisItem.'Item Name' & " added to your request.", NotificationType.Success)
+                                          Notify(ThisItem.Title & " added as a pantry admin override. " & ThisItem.'Current Stock' & " are still in stock.", NotificationType.Warning),
+                                          Notify(ThisItem.Title & " added to your request.", NotificationType.Success)
                                       )
                                     Text: ="Request"
                                     Tooltip: |-

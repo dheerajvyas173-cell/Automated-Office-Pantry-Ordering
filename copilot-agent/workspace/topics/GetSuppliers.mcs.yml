@@ -1,35 +1,35 @@
 mcs.metadata:
   componentName: Get suppliers
-  description: Returns all suppliers with name, contact person, email, phone, address, website, category and notes. Use it for supplier contact details and for finding which supplier provides a category of items.
+  description: Returns all suppliers (Title is the supplier name) with contact person, email, phone, address, website, category and notes. Use it for supplier contact details and for finding which supplier provides which items.
 kind: TaskDialog
 modelDisplayName: Get suppliers
-modelDescription: Returns all suppliers with name, contact person, email, phone, address, website, category and notes. Use it for supplier contact details and for finding which supplier provides a category of items.
+modelDescription: Returns all suppliers (Title is the supplier name) with contact person, email, phone, address, website, category and notes. Use it for supplier contact details and for finding which supplier provides which items.
 inputs:
   - kind: ManualTaskInput
-    propertyName: entityName
-    value: 'cr_suppliers'
+    propertyName: dataset
+    value: 'https://dheerajvyas173gmail.sharepoint.com/sites/OfficePantry'
 
   - kind: ManualTaskInput
-    propertyName: $select
-    value: 'cr_name,cr_contactperson,cr_email,cr_phone,cr_address,cr_website,cr_category,cr_notes,statecode'
+    propertyName: table
+    value: 'Pantry Suppliers'
 
   - kind: ManualTaskInput
     propertyName: $orderby
-    value: 'cr_name asc'
+    value: 'Title'
 
   - kind: ManualTaskInput
     propertyName: $top
-    value: 500
+    value: 100
 
 outputs:
   - propertyName: value
 
 action:
   kind: InvokeConnectorTaskAction
-  connectionReference: cr_pantry_dataverse
+  connectionReference: cr_pantry_sharepoint
   connectionProperties:
     mode: Invoker
 
-  operationId: ListRecords
+  operationId: GetItems
 
 outputMode: All

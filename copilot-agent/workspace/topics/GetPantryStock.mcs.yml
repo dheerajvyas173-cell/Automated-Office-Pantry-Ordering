@@ -1,25 +1,21 @@
 mcs.metadata:
   componentName: Get pantry stock
-  description: Returns every pantry item with its current stock, minimum stock level, reorder quantity, unit price, category, unit, storage location and preferred supplier. Use it for questions about stock levels, low or out-of-stock items, item prices and where items are kept.
+  description: Returns every pantry item (Title is the item name) with its current stock, minimum stock level, reorder quantity, unit price, category, unit of measure, storage location and preferred supplier. Use it for questions about stock levels, low or out-of-stock items, what to reorder, item prices and where items are kept.
 kind: TaskDialog
 modelDisplayName: Get pantry stock
-modelDescription: Returns every pantry item with its current stock, minimum stock level, reorder quantity, unit price, category, unit, storage location and preferred supplier. Use it for questions about stock levels, low or out-of-stock items, item prices and where items are kept.
+modelDescription: Returns every pantry item (Title is the item name) with its current stock, minimum stock level, reorder quantity, unit price, category, unit of measure, storage location and preferred supplier. Use it for questions about stock levels, low or out-of-stock items, what to reorder, item prices and where items are kept.
 inputs:
   - kind: ManualTaskInput
-    propertyName: entityName
-    value: 'cr_pantryitems'
+    propertyName: dataset
+    value: 'https://dheerajvyas173gmail.sharepoint.com/sites/OfficePantry'
 
   - kind: ManualTaskInput
-    propertyName: $select
-    value: 'cr_name,cr_sku,cr_category,cr_unit,cr_currentstock,cr_minimumstock,cr_reorderquantity,cr_unitprice,cr_location,statecode'
-
-  - kind: ManualTaskInput
-    propertyName: $expand
-    value: 'cr_preferredsupplier($select=cr_name)'
+    propertyName: table
+    value: 'Pantry Items'
 
   - kind: ManualTaskInput
     propertyName: $orderby
-    value: 'cr_name asc'
+    value: 'Title'
 
   - kind: ManualTaskInput
     propertyName: $top
@@ -30,10 +26,10 @@ outputs:
 
 action:
   kind: InvokeConnectorTaskAction
-  connectionReference: cr_pantry_dataverse
+  connectionReference: cr_pantry_sharepoint
   connectionProperties:
     mode: Invoker
 
-  operationId: ListRecords
+  operationId: GetItems
 
 outputMode: All

@@ -555,7 +555,7 @@ Screens:
                                           Height: =36
                                           InputTextPlaceholder: ="All categories"
                                           ItemDisplayText: =ThisItem.Value
-                                          Items: =Choices('Item Category')
+                                          Items: =Choices('Pantry Items'.Category)
                                           SelectMultiple: =false
                                           Width: =220
                               - NoItems:
@@ -565,7 +565,7 @@ Screens:
                                     AccessibleLabel: ="Items list"
                                     Fill: =Color.Transparent
                                     FillPortions: =1
-                                    Items: =Sort(Filter(colItems, (IsBlank(NoSearch.Text) || StartsWith('Item Name', NoSearch.Text)) && (IsBlank(NoCategory.Selected) || Category = NoCategory.Selected.Value) && (NoView.Selected.Value = "All items" || 'Current Stock' <= 'Minimum Stock Level')), 'Item Name')
+                                    Items: =Sort(Filter(colItems, (IsBlank(NoSearch.Text) || StartsWith(Title, NoSearch.Text)) && (IsBlank(NoCategory.Selected) || Category.Value = NoCategory.Selected.Value) && (NoView.Selected.Value = "All items" || 'Current Stock' <= 'Minimum Stock Level')), Title)
                                     LayoutMinHeight: =100
                                     TemplateSize: =76
                                   Children:
@@ -577,7 +577,7 @@ Screens:
                                           FontWeight: =FontWeight.Semibold
                                           Height: =22
                                           Size: =14
-                                          Text: =ThisItem.'Item Name'
+                                          Text: =ThisItem.Title
                                           Width: =Parent.TemplateWidth - 390
                                           Wrap: =false
                                           X: =4
@@ -590,7 +590,7 @@ Screens:
                                           FontWeight: =FontWeight.Normal
                                           Height: =20
                                           Size: =12
-                                          Text: =Text(ThisItem.Category) & "  ·  " & Text(ThisItem.'Unit of Measure') & "  ·  " & Text(Coalesce(ThisItem.'Unit Price', 0), "#,##0.00")
+                                          Text: =ThisItem.Category.Value & "  ·  " & ThisItem.'Unit of Measure'.Value & "  ·  " & Text(Coalesce(ThisItem.'Unit Price', 0), "#,##0.00")
                                           Width: =Parent.TemplateWidth - 390
                                           Wrap: =false
                                           X: =4
@@ -609,7 +609,7 @@ Screens:
                                     - NoItQty:
                                         Control: ModernNumberInput@1.1.2
                                         Properties:
-                                          AccessibleLabel: ="Quantity of " & ThisItem.'Item Name'
+                                          AccessibleLabel: ="Quantity of " & ThisItem.Title
                                           Default: =Coalesce(ThisItem.'Reorder Quantity', 1)
                                           DisplayMode: =If((gRole = "Pantry Admin" || ThisItem.'Current Stock' <= ThisItem.'Minimum Stock Level'), DisplayMode.Edit, DisplayMode.Disabled)
                                           Height: =36
@@ -629,15 +629,15 @@ Screens:
                                           Height: =36
                                           Icon: ="Add"
                                           OnSelect: |-
-                                            =With({existing: LookUp(colCart, Item.'Pantry Item' = ThisItem.'Pantry Item'), qty: NoItQty.Value},
+                                            =With({existing: LookUp(colCart, Item.ID = ThisItem.ID), qty: NoItQty.Value},
                                                 If(IsBlank(existing),
                                                     Collect(colCart, {Item: ThisItem, Qty: qty}),
                                                     Patch(colCart, existing, {Qty: existing.Qty + qty})
                                                 )
                                             );
                                             If(ThisItem.'Current Stock' > ThisItem.'Minimum Stock Level',
-                                                Notify(ThisItem.'Item Name' & " added as a pantry admin override. " & ThisItem.'Current Stock' & " are still in stock.", NotificationType.Warning),
-                                                Notify(ThisItem.'Item Name' & " added to your request.", NotificationType.Success)
+                                                Notify(ThisItem.Title & " added as a pantry admin override. " & ThisItem.'Current Stock' & " are still in stock.", NotificationType.Warning),
+                                                Notify(ThisItem.Title & " added to your request.", NotificationType.Success)
                                             )
                                           Text: ="Add"
                                           Tooltip: |-
@@ -807,7 +807,7 @@ Screens:
                                           FontWeight: =FontWeight.Semibold
                                           Height: =20
                                           Size: =13
-                                          Text: =ThisItem.Item.'Item Name'
+                                          Text: =ThisItem.Item.Title
                                           Width: =Parent.TemplateWidth - 150
                                           Wrap: =false
                                           X: =4
@@ -828,7 +828,7 @@ Screens:
                                     - NoCtQty:
                                         Control: ModernNumberInput@1.1.2
                                         Properties:
-                                          AccessibleLabel: ="Quantity of " & ThisItem.Item.'Item Name'
+                                          AccessibleLabel: ="Quantity of " & ThisItem.Item.Title
                                           Default: =ThisItem.Qty
                                           Height: =36
                                           Max: =999
@@ -843,7 +843,7 @@ Screens:
                                     - NoCtRemove:
                                         Control: ModernIcon@1.1.1
                                         Properties:
-                                          AccessibleLabel: ="Remove " & ThisItem.Item.'Item Name'
+                                          AccessibleLabel: ="Remove " & ThisItem.Item.Title
                                           Height: =24
                                           Icon: ="Delete"
                                           IconColor: =clrDanger
@@ -1011,8 +1011,8 @@ Screens:
                                     Icon: ="Send"
                                     OnSelect: |-
                                       =UpdateContext({locWellStocked: If(gRole = "Pantry Admin", "",
-                                          Concat(Filter(colCart As L, With({live: LookUp('Pantry Items', 'Pantry Item' = L.Item.'Pantry Item')},
-                                              live.'Current Stock' > live.'Minimum Stock Level')), Item.'Item Name', ", "))});
+                                          Concat(Filter(colCart As L, With({live: LookUp('Pantry Items', ID = L.Item.ID)},
+                                              live.'Current Stock' > live.'Minimum Stock Level')), Item.Title, ", "))});
                                       If(IsBlank(NoRequiredBy.SelectedDate),
                                           Notify("Choose a required-by date.", NotificationType.Error),
                                           !IsBlank(locWellStocked),
@@ -1020,9 +1020,10 @@ Screens:
                                           UpdateContext({locNeedsApproval: (Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0)) > cfgBudgetLimit || Sum(colCart, Qty) > cfgQuantityLimit)});
                                           UpdateContext({locBusy: true});
                                           IfError(
-                                              Set(gNewOrder, Patch('Supply Orders', Defaults('Supply Orders'), {
-                                                  'Order Number': "PO-" & Text(Now(), "yyyymmdd-hhmmss"),
-                                                  'Order Status': [@'Order Status'].Draft,
+                                              Set(gNewOrder, Patch('Pantry Orders', Defaults('Pantry Orders'), {
+                                                  Title: "PO-" & Text(Now(), "yyyymmdd-hhmmss"),
+                                                  'Requester Name': User().FullName,
+                                                  'Order Status': {Value: "Draft"},
                                                   'Required By Date': NoRequiredBy.SelectedDate,
                                                   Justification: NoJustification.Text,
                                                   'Delivery Address': NoLocation.Text,
@@ -1030,20 +1031,21 @@ Screens:
                                                   'Total Amount': Sum(colCart, Qty * Coalesce(Item.'Unit Price', 0))
                                               }));
                                               ForAll(colCart As L,
-                                                  With({item: LookUp('Pantry Items', 'Pantry Item' = L.Item.'Pantry Item')},
-                                                      Patch('Order Line Items', Defaults('Order Line Items'), {
-                                                          'Line Item Name': item.'Item Name',
-                                                          'Supply Order': gNewOrder,
-                                                          'Pantry Item': item,
-                                                          Supplier: item.'Preferred Supplier',
+                                                  With({item: LookUp('Pantry Items', ID = L.Item.ID)},
+                                                      Patch('Pantry Order Lines', Defaults('Pantry Order Lines'), {
+                                                          Title: item.Title,
+                                                          'Supply Order': {Id: gNewOrder.ID, Value: gNewOrder.Title},
+                                                          'Pantry Item': {Id: item.ID, Value: item.Title},
+                                                          Supplier: If(IsBlank(item.'Preferred Supplier'.Id), Blank(),
+                                                              {Id: item.'Preferred Supplier'.Id, Value: item.'Preferred Supplier'.Value}),
                                                           Quantity: L.Qty,
                                                           'Unit Price': item.'Unit Price',
                                                           'Total Cost': L.Qty * Coalesce(item.'Unit Price', 0)
                                                       })
                                                   )
                                               );
-                                              Patch('Supply Orders', gNewOrder, {'Order Status': [@'Order Status'].Submitted});
-                                              Notify("Request " & gNewOrder.'Order Number' & If(locNeedsApproval,
+                                              Patch('Pantry Orders', gNewOrder, {'Order Status': {Value: "Submitted"}});
+                                              Notify("Request " & gNewOrder.Title & If(locNeedsApproval,
                                                   " submitted. It is over the approval limits, so the office manager has been asked to approve it.",
                                                   " submitted. It is under the approval limits, so it will be approved and sent to the supplier automatically."),
                                                   NotificationType.Success);
