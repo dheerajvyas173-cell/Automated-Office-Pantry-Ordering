@@ -1,6 +1,6 @@
 # Import guide (SharePoint edition)
 
-`PantrySupplyOrdering_SharePoint.zip` (version 2.0.0.0) contains:
+`PantrySupplyOrdering_SharePoint.zip` (version 2.0.2.0) contains:
 - the canvas app;
 - four cloud flows, including the one that builds the SharePoint site;
 - the Copilot agent;
@@ -19,7 +19,9 @@ All data lives in five SharePoint lists. There are no Dataverse tables.
 5. **Import**.
 
 ## 2. Create the site, lists and sample data (one click)
-1. In the solution, open the flow **Pantry - Create SharePoint site and lists** → **Run** → **Run flow**.
+The setup flow uses "Send an HTTP request to SharePoint", which some data loss prevention (DLP) policies block. It imports switched off. If your policy blocks it, create the lists by hand using the columns in [docs/architecture.md](../docs/architecture.md). The other flows use only standard SharePoint actions.
+
+1. In the solution, open the flow **Pantry - Create SharePoint site and lists** → **Turn on** → **Run** → **Run flow**.
 2. Wait until it shows **Succeeded** (1–3 minutes). It:
    - creates the site if it doesn't exist;
    - creates the five lists and their columns;

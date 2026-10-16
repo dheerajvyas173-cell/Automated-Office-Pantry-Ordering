@@ -42,7 +42,7 @@ Follow the demo script in [requirements-checklist.md](requirements-checklist.md#
   - in the UI (buttons disabled);
   - again at submit against the live Pantry Items list, because the app's cached stock can be stale.
 - **Trigger conditions** on "When an item is created or modified": the approval flow only runs for Submitted orders with no approval status yet. Its first action sets the status to Pending, so it never re-triggers itself.
-- **REST for list access in flows.** "Send an HTTP request to SharePoint" reads and writes columns by internal name, and filters lines by their order lookup on the server. User text goes through a Compose step, so it's always valid JSON.
+- **Standard SharePoint actions only** in the order flows (Get items, Get item, Create item, Update item), so they pass the tenant's DLP policy, which blocks "Send an HTTP request to SharePoint".
 - **Infrastructure as a flow.** The setup flow creates the site, lists, columns (including lookups) and sample data, and is safe to re-run. The site address is an **environment variable** for test and production.
 - **Approvals connector** instead of custom emails. The manager can approve from Outlook, Teams or the Power Automate app, and gets reminders and reassignment for free.
 - **Audit trail.** Every submit and decision writes a Pantry Approval History item, and SharePoint version history records every change.

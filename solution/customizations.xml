@@ -91,8 +91,8 @@
       <TriggerOnDelete>0</TriggerOnDelete>
       <AsyncAutodelete>0</AsyncAutodelete>
       <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
-      <StateCode>1</StateCode>
-      <StatusCode>2</StatusCode>
+      <StateCode>0</StateCode>
+      <StatusCode>1</StatusCode>
       <RunAs>1</RunAs>
       <IsTransacted>1</IsTransacted>
       <IntroducedVersion>1.0.0.0</IntroducedVersion>
@@ -116,7 +116,7 @@
   <CanvasApps>
     <CanvasApp>
       <Name>cr_pantrysupplyordering_7a1c3</Name>
-      <AppVersion>2026-10-16T09:57:18Z</AppVersion>
+      <AppVersion>2026-10-16T10:05:11Z</AppVersion>
       <Status>Ready</Status>
       <CreatedByClientVersion>3.26021.0</CreatedByClientVersion>
       <MinClientVersion>3.26021.0</MinClientVersion>

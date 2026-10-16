@@ -66,9 +66,8 @@ Every list's **Title** column holds its name field.
 
 ## How the flows talk to SharePoint
 - **Triggers:** "When an item is created or modified" on Pantry Orders, with trigger conditions. The approval flow only starts when Order Status = Submitted and Approval Status is empty. It sets Approval Status to Pending first, so it never re-triggers itself.
-- **Reads and writes:** "Send an HTTP request to SharePoint" (REST), addressing columns by internal name and lookups by `…Id`.
-  - Filtering lines by order is done on the server (`SupplyOrderId eq {ID}`).
-  - Text people type goes through a Compose step first, so it's always valid JSON.
+- **Reads and writes:** only the standard SharePoint actions (Get items, Get item, Create item, Update item), so the flows pass DLP policies that block "Send an HTTP request to SharePoint". Lines are matched to their order with a Filter array on the Supply Order lookup's Id.
+- **Setup flow:** creating lists and columns has no standard action, so it uses "Send an HTTP request to SharePoint". It imports switched off. Turn it on and run it only where your DLP policy allows that action; otherwise create the lists by hand from the table above.
 
 ## Source layout
 | Path | What |

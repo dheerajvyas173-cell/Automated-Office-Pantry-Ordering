@@ -67,14 +67,38 @@ def items_uri(list_title, item_id=None, query=""):
     return uri + (f"?{query}" if query else "")
 
 
+# The order flows use only the standard SharePoint actions (Get items, Get item, Create item,
+# Update item): data loss prevention policies often block "Send an HTTP request to SharePoint".
+CHOICE_FIELDS = {"OrderStatus", "ApprovalStatus", "ApprovalAction", "PreviousStatus", "NewStatus"}
+LOOKUP_FIELDS = {"SupplyOrderId": "SupplyOrder"}
+
+
+def item_params(fields):
+    params = {}
+    for k, v in fields.items():
+        if k in CHOICE_FIELDS:
+            params[f"item/{k}/Value"] = v
+        elif k in LOOKUP_FIELDS:
+            params[f"item/{LOOKUP_FIELDS[k]}/Id"] = v
+        else:
+            params[f"item/{k}"] = v
+    return params
+
+
+def get_items(list_title, top=5000):
+    return _op(SHAREPOINT, "GetItems", {"dataset": sp.SITE, "table": list_title, "$top": top})
+
+
+def get_item(list_title, item_id):
+    return _op(SHAREPOINT, "GetItem", {"dataset": sp.SITE, "table": list_title, "id": item_id})
+
+
 def write_steps(name, list_title, fields, item_id=None):
-    """Create (or, with item_id, update) a list item. Values go through a Compose so any text the
-    users typed (quotes, new lines) is JSON-escaped by Power Automate rather than by hand."""
-    return [
-        (f"{name}_values", compose(fields)),
-        (name, http("POST", items_uri(list_title, item_id), f"@{{string(outputs('{name}_values'))}}",
-                    merge=item_id is not None)),
-    ]
+    """Create (or, with item_id, update) a list item with the standard SharePoint actions."""
+    params = {"dataset": sp.SITE, "table": list_title, **item_params(fields)}
+    if item_id is not None:
+        params["id"] = item_id
+    return [(name, _op(SHAREPOINT, "PatchItem" if item_id is not None else "PostItem", params))]
 
 
 def sp_trigger(list_title, condition_expression):
@@ -206,7 +230,7 @@ def approval_flow():
                 + ("<p>It has been sent to the supplier.</p>" if approval_status == "Approved" else ""))),
         ]
 
-    lines = "@body('Get_order_lines')?['value']"
+    lines = "@body('Get_order_lines')"
     total_amount = "float(coalesce(triggerOutputs()?['body/TotalAmount'], 0))"
     needs_approval = {"or": [
         {"greater": [f"@{total_amount}", "@outputs('Settings')?['budgetLimit']"]},
@@ -228,8 +252,9 @@ def approval_flow():
         ("Initialize_total_quantity", init_variable("TotalQuantity", "Integer", 0)),
         *update_order("Mark_pending", ApprovalStatus="Pending"),
         *log_history("Log_submission", f"Submitted - {ORDER_NAME}", "Submitted", requester_name, new="Pending"),
-        ("Get_order_lines", http("GET", items_uri(
-            sp.LINES, query=f"$select=Title,Quantity&$filter=SupplyOrderId eq {ORDER_ID}&$top=500"))),
+        ("Get_all_order_lines", get_items(sp.LINES)),
+        ("Get_order_lines", query("@body('Get_all_order_lines')?['value']",
+                                  "@equals(item()?['SupplyOrder']?['Id'], int(triggerOutputs()?['body/ID']))")),
         ("Add_up_quantities", foreach(lines, [
             ("Add_line_quantity", increment_variable("TotalQuantity", "@int(coalesce(item()?['Quantity'], 0))")),
         ], sequential=True)),
@@ -272,9 +297,7 @@ def low_stock_flow():
     }}
     actions = chain([
         ("Settings", compose({"pantryAdminEmail": PANTRY_ADMIN_EMAIL})),
-        ("Get_pantry_items", http("GET", items_uri(
-            sp.ITEMS, query="$select=Title,SKU,CurrentStock,MinimumStock,ReorderQuantity,StorageLocation,"
-                            "PreferredSupplier/Title&$expand=PreferredSupplier&$top=5000"))),
+        ("Get_pantry_items", get_items(sp.ITEMS)),
         ("Filter_low_stock", query(
             "@body('Get_pantry_items')?['value']",
             "@lessOrEquals(coalesce(item()?['CurrentStock'], 0), coalesce(item()?['MinimumStock'], 0))")),
@@ -287,7 +310,7 @@ def low_stock_flow():
                     "In stock": "@item()?['CurrentStock']",
                     "Minimum": "@item()?['MinimumStock']",
                     "Reorder qty": "@item()?['ReorderQuantity']",
-                    "Supplier": "@item()?['PreferredSupplier']?['Title']",
+                    "Supplier": "@item()?['PreferredSupplier']?['Value']",
                     "Location": "@item()?['StorageLocation']",
                 })),
                 ("Low_stock_table", html_table("@body('Low_stock_rows')")),
@@ -305,26 +328,25 @@ def low_stock_flow():
 # --- Flow 3: send approved orders to suppliers --------------------------------
 
 def supplier_flow():
-    lines = "@body('Get_order_lines')?['value']"
-    supplier = "first(body('Supplier_lines'))?['Supplier']"
+    lines = "@body('Get_order_lines')"
+    supplier = "body('Get_supplier')"
     triggers = {"When_an_order_is_approved": sp_trigger(
         sp.ORDERS, "@equals(triggerOutputs()?['body/OrderStatus/Value'], 'Approved')")}
     actions = chain([
         ("Settings", compose({"pantryAdminEmail": PANTRY_ADMIN_EMAIL, "senderName": "Office Pantry Team"})),
-        ("Get_order_lines", http("GET", items_uri(
-            sp.LINES, query="$select=Title,Quantity,SupplierId,Supplier/Title,Supplier/Email,Supplier/ContactPerson,"
-                            f"PantryItem/Title,PantryItem/SKU&$expand=Supplier,PantryItem"
-                            f"&$filter=SupplyOrderId eq {ORDER_ID}&$top=500"))),
-        ("Supplier_ids", select(lines, "@item()?['SupplierId']")),
+        ("Get_all_order_lines", get_items(sp.LINES)),
+        ("Get_order_lines", query("@body('Get_all_order_lines')?['value']",
+                                  "@equals(item()?['SupplyOrder']?['Id'], int(triggerOutputs()?['body/ID']))")),
+        ("Supplier_ids", select(lines, "@item()?['Supplier']?['Id']")),
         ("Unique_suppliers", compose("@union(body('Supplier_ids'), body('Supplier_ids'))")),
         ("For_each_supplier", foreach("@outputs('Unique_suppliers')", [
             ("If_supplier_set", condition(
                 {"and": [{"greater": ["@int(coalesce(items('For_each_supplier'), 0))", 0]}]},
                 [
-                    ("Supplier_lines", query(lines, "@equals(item()?['SupplierId'], items('For_each_supplier'))")),
+                    ("Get_supplier", get_item(sp.SUPPLIERS, "@items('For_each_supplier')")),
+                    ("Supplier_lines", query(lines, "@equals(item()?['Supplier']?['Id'], items('For_each_supplier'))")),
                     ("PO_rows", select("@body('Supplier_lines')", {
-                        "Item": "@coalesce(item()?['PantryItem']?['Title'], item()?['Title'])",
-                        "SKU": "@item()?['PantryItem']?['SKU']",
+                        "Item": "@coalesce(item()?['PantryItem']?['Value'], item()?['Title'])",
                         "Quantity": "@item()?['Quantity']",
                     })),
                     ("PO_table", html_table("@body('PO_rows')")),
@@ -339,7 +361,7 @@ def supplier_flow():
                         "<p>Thank you,<br/>@{outputs('Settings')?['senderName']}</p>")),
                 ])),
         ])),
-        ("Lines_without_supplier", query(lines, "@equals(int(coalesce(item()?['SupplierId'], 0)), 0)")),
+        ("Lines_without_supplier", query(lines, "@equals(int(coalesce(item()?['Supplier']?['Id'], 0)), 0)")),
         ("If_lines_without_supplier", condition(
             {"and": [{"greater": ["@length(body('Lines_without_supplier'))", 0]}]},
             [("Email_admin_missing_supplier", send_email(
@@ -480,8 +502,9 @@ def build(only=None, switched_on=()):
     used = {c for f in flows for c in f[3]}
     for name, description, builder, connectors in flows:
         # The list-triggered flows import switched off: their lists only exist once the setup flow
-        # has run. Turn them on after running it.
-        on = builder is setup_flow or builder is low_stock_flow or name in switched_on
+        # has run. The setup flow imports off too: it uses "Send an HTTP request to SharePoint",
+        # which DLP policies may block, so it is turned on only where that is allowed.
+        on = builder is low_stock_flow or name in switched_on
         wid = str(uuid.uuid5(uuid.NAMESPACE_URL, f"pantrysupplyordering/flow/{name}"))
         path = f"Workflows/{''.join(c for c in name if c.isalnum())}-{wid.upper()}.json"
         files[path] = flow_json(*builder(), connectors)
