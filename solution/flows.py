@@ -319,7 +319,7 @@ def supplier_flow():
         ("Unique_suppliers", compose("@union(body('Supplier_ids'), body('Supplier_ids'))")),
         ("For_each_supplier", foreach("@outputs('Unique_suppliers')", [
             ("If_supplier_set", condition(
-                {"and": [{"not": {"equals": ["@empty(items('For_each_supplier'))", True]}}]},
+                {"and": [{"greater": ["@int(coalesce(items('For_each_supplier'), 0))", 0]}]},
                 [
                     ("Supplier_lines", query(lines, "@equals(item()?['SupplierId'], items('For_each_supplier'))")),
                     ("PO_rows", select("@body('Supplier_lines')", {
@@ -339,7 +339,7 @@ def supplier_flow():
                         "<p>Thank you,<br/>@{outputs('Settings')?['senderName']}</p>")),
                 ])),
         ])),
-        ("Lines_without_supplier", query(lines, "@empty(item()?['SupplierId'])")),
+        ("Lines_without_supplier", query(lines, "@equals(int(coalesce(item()?['SupplierId'], 0)), 0)")),
         ("If_lines_without_supplier", condition(
             {"and": [{"greater": ["@length(body('Lines_without_supplier'))", 0]}]},
             [("Email_admin_missing_supplier", send_email(
@@ -470,13 +470,18 @@ def flow_json(triggers, actions, connectors):
     }, indent=2)
 
 
-def build():
-    """Returns (workflows xml, root components xml, connection references xml, {zip path: content})."""
+def build(only=None, switched_on=()):
+    """Returns (workflows xml, root components xml, connection references xml, {zip path: content}).
+
+    only: flow names to include (default all). switched_on: extra flows to import switched on.
+    """
     wf_xml, roots, files = "\n", "", {}
-    for name, description, builder, connectors in FLOWS:
+    flows = [f for f in FLOWS if only is None or f[0] in only]
+    used = {c for f in flows for c in f[3]}
+    for name, description, builder, connectors in flows:
         # The list-triggered flows import switched off: their lists only exist once the setup flow
         # has run. Turn them on after running it.
-        on = builder is setup_flow or builder is low_stock_flow
+        on = builder is setup_flow or builder is low_stock_flow or name in switched_on
         wid = str(uuid.uuid5(uuid.NAMESPACE_URL, f"pantrysupplyordering/flow/{name}"))
         path = f"Workflows/{''.join(c for c in name if c.isalnum())}-{wid.upper()}.json"
         files[path] = flow_json(*builder(), connectors)
@@ -516,5 +521,5 @@ def build():
       <statecode>0</statecode>
       <statuscode>1</statuscode>
     </connectionreference>
-""" for connector, (logical, display) in CONNECTORS.items()) + "  </connectionreferences>\n"
+""" for connector, (logical, display) in CONNECTORS.items() if connector in used) + "  </connectionreferences>\n"
     return wf_xml + "  ", roots, conn_xml, files

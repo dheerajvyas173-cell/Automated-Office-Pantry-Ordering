@@ -545,7 +545,9 @@ def environment_variable(schema_name, display_name, description, default):
 def write_zip(filename, version, entities, relationships, optionsets, roles=False, flows=False, canvas=False,
               agent=False, env_vars=()):
     role_xml, role_roots = roles_xml() if roles else ("", "")
-    wf_xml, wf_roots, conn_xml, wf_files = flows_mod.build() if flows else ("", "", "", {})
+    # flows: True for every flow, or a dict of flows.build() arguments (e.g. one flow for a fix).
+    wf_xml, wf_roots, conn_xml, wf_files = (
+        flows_mod.build(**(flows if isinstance(flows, dict) else {})) if flows else ("", "", "", {}))
     app_xml, app_roots, app_files = canvas_app.build() if canvas else ("", "", {})
     var_files, var_roots = {}, ""
     for var in env_vars:
@@ -572,10 +574,14 @@ def main():
     The solution holds the flows (including the one that creates the site and lists), the canvas
     app, the Copilot agent and the site URL environment variable.
     """
-    latest = write_zip("PantrySupplyOrdering_SharePoint.zip", "2.0.0.0", [], [], {}, flows=True, canvas=True,
-                       agent=True, env_vars=[(sharepoint.SITE_VAR, "Pantry SharePoint site",
-                                              "URL of the SharePoint site that holds the pantry lists",
-                                              sharepoint.SITE_URL)])
+    site_var = [(sharepoint.SITE_VAR, "Pantry SharePoint site",
+                 "URL of the SharePoint site that holds the pantry lists", sharepoint.SITE_URL)]
+    latest = write_zip("PantrySupplyOrdering_SharePoint.zip", "2.0.1.0", [], [], {}, flows=True, canvas=True,
+                       agent=True, env_vars=site_var)
+    # Hotfix: only the supplier flow, imported switched on, into the same solution (nothing else changes).
+    supplier = "Pantry Supplier Order Email"
+    write_zip("PantrySupplierFlowFix.zip", "2.0.1.0", [], [], {},
+              flows={"only": [supplier], "switched_on": [supplier]}, env_vars=site_var)
     for name in ("customizations.xml", "solution.xml", "[Content_Types].xml"):
         with open(os.path.join(SOLUTION_DIR, name), "w", encoding="utf-8") as f:
             f.write(latest[name])
