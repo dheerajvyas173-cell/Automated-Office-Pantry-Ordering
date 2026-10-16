@@ -6,7 +6,7 @@ Screens:
         =Concurrent(
             UpdateContext({locMyOpen: CountRows(Filter('Pantry Orders', 'Requested By' = gUserEmail && ('Order Status'.Value = "Submitted" || 'Order Status'.Value = "Approved" || 'Order Status'.Value = "Ordered")))}),
             UpdateContext({locAwaiting: CountRows(Filter('Pantry Orders', 'Requested By' = gUserEmail && 'Order Status'.Value = "Submitted"))}),
-            UpdateContext({locPendingAll: CountRows(Filter('Pantry Orders', 'Order Status'.Value = "Submitted"))}),
+            UpdateContext({locPendingAll: CountRows(Filter(Filter('Pantry Orders', 'Order Status'.Value = "Submitted") As O, O.'Total Amount' > cfgBudgetLimit || Sum(Filter('Pantry Order Lines', 'Supply Order'.Id = O.ID), Quantity) > cfgQuantityLimit))}),
             UpdateContext({locToReceive: CountRows(Filter('Pantry Orders', 'Order Status'.Value = "Ordered" || 'Order Status'.Value = "Approved"))}),
             UpdateContext({locRecent: FirstN(Sort(Filter('Pantry Orders', 'Requested By' = gUserEmail), Created, SortOrder.Descending), 6)})
         )

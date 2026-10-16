@@ -18,6 +18,11 @@ GALLERY_VARIANT = "BrowseLayout_Vertical_OneTextVariant_ver5.0"
 OPEN_STATUSES = ["Draft", "Submitted", "Approved", "Ordered", "Partially Received"]
 DONE_STATUSES = ["Received", "Rejected", "Cancelled"]
 MONEY = '"#,##0.00"'
+# Submitted orders over the approval limits: only these wait for the office manager. Smaller ones
+# are approved by the flow within a minute, so they never belong on the Approvals screen.
+OVER_LIMITS = ("Filter(Filter('Pantry Orders', 'Order Status'.Value = \"Submitted\") As O, "
+               "O.'Total Amount' > cfgBudgetLimit || "
+               "Sum(Filter('Pantry Order Lines', 'Supply Order'.Id = O.ID), Quantity) > cfgQuantityLimit)")
 ROLES = ["Requester", "Approver", "Pantry Admin"]
 # Approval limits: orders above either one need the office manager. Keep in step with
 # BUDGET_LIMIT / QUANTITY_LIMIT in solution/flows.py, which enforces them.
@@ -450,7 +455,7 @@ def home_screen():
     on_visible = f"""Concurrent(
     UpdateContext({{locMyOpen: CountRows(Filter('Pantry Orders', {MY_ORDERS} && {status_filter(["Submitted", "Approved", "Ordered"])}))}}),
     UpdateContext({{locAwaiting: CountRows(Filter('Pantry Orders', {MY_ORDERS} && 'Order Status'.Value = "Submitted"))}}),
-    UpdateContext({{locPendingAll: CountRows(Filter('Pantry Orders', 'Order Status'.Value = "Submitted"))}}),
+    UpdateContext({{locPendingAll: CountRows({OVER_LIMITS})}}),
     UpdateContext({{locToReceive: CountRows(Filter('Pantry Orders', 'Order Status'.Value = "Ordered" || 'Order Status'.Value = "Approved"))}}),
     UpdateContext({{locRecent: FirstN(Sort(Filter('Pantry Orders', {MY_ORDERS}), Created, SortOrder.Descending), 6)}})
 )"""
@@ -942,7 +947,7 @@ def approvals_screen():
         p, "ApprovalsScreen", "Approvals", "Approvals",
         '"Review supply requests from the whole office. Approved requests are emailed to suppliers automatically."',
         ["Pending", "Decided"],
-        {"Pending": f"Sort(Filter('Pantry Orders', 'Order Status'.Value = \"Submitted\"), Created, SortOrder.Ascending)",
+        {"Pending": f"Sort({OVER_LIMITS}, Created, SortOrder.Ascending)",
          "Decided": f"Sort(Filter('Pantry Orders', {decided}), Modified, SortOrder.Descending)"},
         sel, [why, comment], actions_row,
         top_note=note(f"{p}Note", f'"Only requests over ₹{BUDGET_LIMIT:,} or {QUANTITY_LIMIT} units come here. Smaller ones are approved automatically. You can also decide from the Outlook or Teams approval request."', height=52))

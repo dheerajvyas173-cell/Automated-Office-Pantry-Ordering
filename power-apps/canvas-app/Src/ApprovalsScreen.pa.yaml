@@ -501,7 +501,7 @@ Screens:
                                     Items: |-
                                       =Switch(ApTabs.Selected.Value,
                                               "Decided", Sort(Filter('Pantry Orders', 'Approval Status'.Value = "Approved" || 'Approval Status'.Value = "Rejected"), Modified, SortOrder.Descending),
-                                              Sort(Filter('Pantry Orders', 'Order Status'.Value = "Submitted"), Created, SortOrder.Ascending))
+                                              Sort(Filter(Filter('Pantry Orders', 'Order Status'.Value = "Submitted") As O, O.'Total Amount' > cfgBudgetLimit || Sum(Filter('Pantry Order Lines', 'Supply Order'.Id = O.ID), Quantity) > cfgQuantityLimit), Created, SortOrder.Ascending))
                                     LayoutMinHeight: =100
                                     OnSelect: =Set(gApprOrder, ThisItem)
                                     TemplateFill: =If(!IsBlank(gApprOrder) && ThisItem.ID = gApprOrder.ID, clrBrandTint, Color.Transparent)
