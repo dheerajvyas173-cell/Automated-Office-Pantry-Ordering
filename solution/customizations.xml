@@ -116,7 +116,7 @@
   <CanvasApps>
     <CanvasApp>
       <Name>cr_pantrysupplyordering_7a1c3</Name>
-      <AppVersion>2026-10-16T10:05:11Z</AppVersion>
+      <AppVersion>2026-10-16T11:04:52Z</AppVersion>
       <Status>Ready</Status>
       <CreatedByClientVersion>3.26021.0</CreatedByClientVersion>
       <MinClientVersion>3.26021.0</MinClientVersion>
@@ -149,14 +149,6 @@
     <connectionreference connectionreferencelogicalname="cr_pantry_sharepoint">
       <connectionreferencedisplayname>Pantry - SharePoint</connectionreferencedisplayname>
       <connectorid>/providers/Microsoft.PowerApps/apis/shared_sharepointonline</connectorid>
-      <iscustomizable>1</iscustomizable>
-      <promptingbehavior>0</promptingbehavior>
-      <statecode>0</statecode>
-      <statuscode>1</statuscode>
-    </connectionreference>
-    <connectionreference connectionreferencelogicalname="cr_pantry_approvals">
-      <connectionreferencedisplayname>Pantry - Approvals</connectionreferencedisplayname>
-      <connectorid>/providers/Microsoft.PowerApps/apis/shared_approvals</connectorid>
       <iscustomizable>1</iscustomizable>
       <promptingbehavior>0</promptingbehavior>
       <statecode>0</statecode>

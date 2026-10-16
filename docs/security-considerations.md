@@ -25,7 +25,7 @@ Site owners still see everything. The setup flow doesn't change this setting, so
 Every submission, approval (manual or automatic) and rejection writes a row to **Pantry Approval History**: who, when, comments, and the old and new status. SharePoint also keeps version history on every list item (who changed what, and when).
 
 ### Flows and connections
-- The flows use **connection references** for SharePoint, Approvals and Office 365 Outlook. In production, bind them to a service account that is a site owner, so approvals and emails don't depend on one person.
+- The flows use **connection references** for SharePoint and Office 365 Outlook. In production, bind them to a service account that is a site owner, so approvals and emails don't depend on one person.
 - The site address is an **environment variable**, so the same solution can point to a test site and a production site.
 - Supplier emails only go to the **Email** stored on the supplier item. Lines without a supplier are reported to the pantry admin instead of being sent anywhere.
 - Recipients and approval limits sit in each flow's first **Settings** step. There are no secrets in the flow definitions.
@@ -35,7 +35,7 @@ Every submission, approval (manual or automatic) and rejection writes a row to *
 - Its instructions limit it to pantry topics, and web browsing is off.
 
 ## Recommended for production
-- **DLP policy:** put SharePoint, Approvals and Office 365 Outlook in the Business group.
+- **DLP policy:** the flows only use SharePoint (standard actions) and Office 365 Outlook, so they pass the tenant's "Advanced Connector Policy", which blocks the Approvals connector and SharePoint HTTP requests.
 - **Item-level permissions** on Pantry Orders and Order Lines (above), plus a **Visitors** group for read-only viewers.
 - **Separate sites** for test and production, selected by the environment variable. Export a **managed** solution for production.
 - **Entra ID:** require MFA and conditional access for app users.

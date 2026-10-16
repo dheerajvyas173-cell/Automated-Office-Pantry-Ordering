@@ -19,10 +19,9 @@ TIME_ZONE = "India Standard Time"
 BUDGET_LIMIT = 5000      # total amount, INR
 QUANTITY_LIMIT = 50      # total units across all lines
 
-SHAREPOINT, APPROVALS, OUTLOOK = "shared_sharepointonline", "shared_approvals", "shared_office365"
+SHAREPOINT, OUTLOOK = "shared_sharepointonline", "shared_office365"
 CONNECTORS = {
     SHAREPOINT: ("cr_pantry_sharepoint", "Pantry - SharePoint"),
-    APPROVALS: ("cr_pantry_approvals", "Pantry - Approvals"),
     OUTLOOK: ("cr_pantry_outlook", "Pantry - Office 365 Outlook"),
 }
 
@@ -209,9 +208,10 @@ def update_order(name, **fields):
 # --- Flow 1: approval -------------------------------------------------------
 
 def approval_flow():
-    response = "first(body('Request_approval')?['responses'])"
-    approver = f"@{{{response}?['responder']?['displayName']}}"
-    comments = f"@{{coalesce({response}?['comments'], '')}}"
+    # The manager decides from an Outlook email with Approve / Reject buttons ("Send email with
+    # options"): DLP policies that block the Approvals connector still allow Office 365 Outlook.
+    approver = "@{body('Request_approval')?['UserEmailAddress']}"
+    comments = "Decided from the approval email"
     requester_email = "@{triggerOutputs()?['body/RequestedBy']}"
     requester_name = "@{coalesce(triggerOutputs()?['body/RequesterName'], triggerOutputs()?['body/RequestedBy'])}"
 
@@ -260,22 +260,23 @@ def approval_flow():
         ], sequential=True)),
         ("Item_lines", select(lines, "@concat('- ', item()?['Title'], ' x ', string(coalesce(item()?['Quantity'], 0)))")),
         ("If_over_approval_limits", condition(needs_approval, [
-            ("Request_approval", _op(APPROVALS, "StartAndWaitForAnApproval", {
-                "approvalType": "Basic",
-                "WebhookApprovalCreationInput/title": f"Pantry order {ORDER_NAME} needs approval",
-                "WebhookApprovalCreationInput/assignedTo": "@{outputs('Settings')?['approverEmail']}",
-                "WebhookApprovalCreationInput/details":
-                    f"**Requested by:** {requester_name}\n\n"
-                    "**Required by:** @{triggerOutputs()?['body/RequiredByDate']}\n\n"
-                    "**Total amount:** @{triggerOutputs()?['body/TotalAmount']}\n\n"
-                    "**Total units:** @{variables('TotalQuantity')}\n\n"
-                    "**Justification:** @{triggerOutputs()?['body/Justification']}\n\n"
-                    "**Items:**\n\n@{join(body('Item_lines'), decodeUriComponent('%0A'))}",
-                "WebhookApprovalCreationInput/enableNotifications": True,
-                "WebhookApprovalCreationInput/enableReassignment": True,
+            ("Request_approval", _op(OUTLOOK, "SendMailWithOptions", {
+                "optionsEmailSubscription/Message/To": "@{outputs('Settings')?['approverEmail']}",
+                "optionsEmailSubscription/Message/Subject": f"Pantry order {ORDER_NAME} needs approval",
+                "optionsEmailSubscription/Message/Options": "Approve, Reject",
+                "optionsEmailSubscription/Message/Body":
+                    f"Pantry order {ORDER_NAME} is over the approval limits.\n\n"
+                    f"Requested by: {requester_name}\n"
+                    "Required by: @{triggerOutputs()?['body/RequiredByDate']}\n"
+                    "Total amount: @{triggerOutputs()?['body/TotalAmount']}\n"
+                    "Total units: @{variables('TotalQuantity')}\n"
+                    "Justification: @{triggerOutputs()?['body/Justification']}\n\n"
+                    "Items:\n@{join(body('Item_lines'), decodeUriComponent('%0A'))}\n\n"
+                    "Choose Approve or Reject below.",
+                "optionsEmailSubscription/Message/Importance": "High",
             }, webhook=True)),
             ("If_approved", condition(
-                {"and": [{"equals": ["@body('Request_approval')?['outcome']", "Approve"]}]},
+                {"and": [{"equals": ["@body('Request_approval')?['SelectedOption']", "Approve"]}]},
                 decided("approved", "Approved", "Approved", "Approved",
                         f"Your pantry order {ORDER_NAME} was approved"),
                 decided("rejected", "Rejected", "Rejected", "Rejected",
@@ -454,7 +455,7 @@ def setup_flow():
 
 FLOWS = [
     ("Pantry Order Approval", "Sends submitted orders over the approval limits to the office manager, "
-     "approves smaller ones automatically and records the decision.", approval_flow, [SHAREPOINT, APPROVALS, OUTLOOK]),
+     "approves smaller ones automatically and records the decision.", approval_flow, [SHAREPOINT, OUTLOOK]),
     ("Pantry Daily Low Stock Alert", "Emails the pantry admin every morning about items at or below minimum stock.",
      low_stock_flow, [SHAREPOINT, OUTLOOK]),
     ("Pantry Supplier Order Email", "Emails each supplier their part of an approved order and marks it Ordered.",

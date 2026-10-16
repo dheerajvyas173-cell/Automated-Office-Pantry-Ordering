@@ -29,7 +29,7 @@ Approval limits used throughout: **over ₹5,000 or over 50 units** needs the of
 
 ### Note 3: Approval threshold (requirement 2)
 - The **flow enforces** the rule, so it can't be bypassed from the app. It adds up the order's line quantities and compares the total amount and units with the limits in its **Settings** step.
-  - **Over a limit:** the office manager gets an Approvals request in Outlook or Teams, and the requester is emailed the outcome.
+  - **Over a limit:** the office manager gets an email with **Approve / Reject** buttons, and the requester is emailed the outcome.
   - **Under both limits:** the order is approved automatically ("Auto-approved (under limits)"), logged in Approval History, and the requester is emailed.
 - The **app previews** the rule in the cart: a green "Auto-approved" or amber "Needs office manager approval" note updates as you add items.
 - The Approvals screen only lists orders that need a decision, and shows why ("Over ₹5,000" / "Over 50 units").
@@ -53,7 +53,7 @@ Four read-only SharePoint "Get items" tools: pantry stock, recent orders, recent
 ### Note 6: Notifications (requirement 5)
 | Event | Who | How |
 |---|---|---|
-| Order needs approval | Office manager | Approvals request (Outlook, Teams, Power Automate app) |
+| Order needs approval | Office manager | Outlook email with Approve / Reject buttons |
 | Approved / auto-approved / rejected | Requester | Outlook email with approver comments |
 | Approved | Each supplier | Outlook purchase order email |
 | Line without a supplier | Pantry admin | Outlook email |
@@ -72,7 +72,7 @@ Four read-only SharePoint "Get items" tools: pantry stock, recent orders, recent
    - Submit, then open **My requests**: within 1–2 minutes the tracker moves to Approved, then Ordered.
    - Show the supplier's email.
 4. **New request** again. Add Coffee Beans Arabica 1kg (low stock) with quantity 5 (₹6,000). The cart shows the amber **Needs office manager approval** note.
-   - Submit. Show the approval request in Outlook or Teams and approve it there.
+   - Submit. Show the approval email in Outlook and click **Approve**.
    - Show the requester's email and the supplier's email.
 5. Switch the role to **Approver**. Under **Approvals**, show the "Over ₹5,000" reason and reject a different request with a comment.
 6. Switch the role to **Pantry Admin**. Under **Receiving**, mark the order received, then show that Current Stock went up in the SharePoint list.

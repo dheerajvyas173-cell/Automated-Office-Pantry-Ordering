@@ -25,7 +25,7 @@ One Power Platform solution, `PantrySupplyOrdering` (publisher prefix `cr`), imp
  │ Flow: Pantry Order   │  │ Flow: Pantry Supplier│  │ Flow: Pantry Daily    │
  │ Approval             │  │ Order Email          │  │ Low Stock Alert       │
  │ over ₹5,000 or 50 u. │  │ PO email per supplier│  │ email table of items  │
- │ → Approvals request  │  │ → mark Ordered       │  │ at/below minimum      │
+ │ → Approve/Reject mail│  │ → mark Ordered       │  │ at/below minimum      │
  │ else → auto-approve  │  └──────────┬───────────┘  └──────────┬────────────┘
  └──────────┬───────────┘             │                         │
             ▼                         ▼                         ▼

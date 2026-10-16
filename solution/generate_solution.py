@@ -576,12 +576,13 @@ def main():
     """
     site_var = [(sharepoint.SITE_VAR, "Pantry SharePoint site",
                  "URL of the SharePoint site that holds the pantry lists", sharepoint.SITE_URL)]
-    latest = write_zip("PantrySupplyOrdering_SharePoint.zip", "2.0.2.0", [], [], {}, flows=True, canvas=True,
+    latest = write_zip("PantrySupplyOrdering_SharePoint.zip", "2.0.3.0", [], [], {}, flows=True, canvas=True,
                        agent=True, env_vars=site_var)
     # Hotfix: only the three order flows, imported switched on, into the same solution. They use
-    # only standard SharePoint actions, so they pass DLP policies that block HTTP requests.
+    # only standard SharePoint and Outlook actions, so they pass DLP policies that block HTTP
+    # requests and the Approvals connector.
     order_flows = ["Pantry Order Approval", "Pantry Supplier Order Email", "Pantry Daily Low Stock Alert"]
-    write_zip("PantryOrderFlowsFix.zip", "2.0.2.0", [], [], {},
+    write_zip("PantryOrderFlowsFix.zip", "2.0.3.0", [], [], {},
               flows={"only": order_flows, "switched_on": order_flows}, env_vars=site_var)
     for name in ("customizations.xml", "solution.xml", "[Content_Types].xml"):
         with open(os.path.join(SOLUTION_DIR, name), "w", encoding="utf-8") as f:

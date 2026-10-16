@@ -13,7 +13,6 @@ All data lives in five SharePoint lists. There are no Dataverse tables.
 2. Browse to `PantrySupplyOrdering_SharePoint.zip` → **Next**.
 3. **Connections:** pick, or create, a connection for each:
    - **Pantry - SharePoint** (SharePoint)
-   - **Pantry - Approvals** (Approvals)
    - **Pantry - Office 365 Outlook** (Office 365 Outlook)
 4. **Environment variable "Pantry SharePoint site":** keep `https://dheerajvyas173gmail.sharepoint.com/sites/OfficePantry`, or enter another site address. The site doesn't need to exist yet.
 5. **Import**.

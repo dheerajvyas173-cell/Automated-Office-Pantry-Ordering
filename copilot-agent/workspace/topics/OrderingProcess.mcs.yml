@@ -26,7 +26,7 @@ beginDialog:
             1. Open the **Pantry Supply Ordering** app and choose **New request**.
             2. **Inventory check:** you can request items at or below their minimum stock level. Well-stocked items are disabled (pantry admins can override).
             3. Add quantities, pick a required-by date and select **Submit request**. The app shows whether the order needs approval before you submit.
-            4. **Approval limits:** orders over 5,000 INR or 50 units go to the office manager, who approves in Outlook, Teams or the app. Smaller orders are approved automatically.
+            4. **Approval limits:** orders over 5,000 INR or 50 units go to the office manager, who approves or rejects from an email (or the app). Smaller orders are approved automatically.
             5. You're emailed when your order is approved or rejected. Approved orders are emailed to each item's preferred supplier automatically and marked **Ordered**.
             6. When the delivery arrives, the pantry admin marks it **Received** and stock levels go up.
 
